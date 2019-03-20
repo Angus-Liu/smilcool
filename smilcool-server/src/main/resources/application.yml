@@ -5,7 +5,7 @@ server:
 spring:
   # 数据源配置
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/smilcool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/smilcool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
 #  servlet:
@@ -22,11 +22,11 @@ mybatis:
     # 下划线风格映射到驼峰命名（便于数据库字段映射到 java 对象属性）
     map-underscore-to-camel-case: true
 
-## log 配置
-#logging:
-#  level:
-#    # mybatis 日志级别为 debug
-#    com.candle.core.dao: debug
+# log 配置
+logging:
+  level:
+    # mybatis 日志级别为 debug
+    com.smilcool.server.core.dao: debug
 #    com.candle.common.util: debug
 #
 ## 文件存储配置

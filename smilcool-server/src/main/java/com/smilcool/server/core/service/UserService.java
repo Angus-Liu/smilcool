@@ -1,5 +1,6 @@
 package com.smilcool.server.core.service;
 
+import com.smilcool.server.common.pojo.vo.UserVO;
 import com.smilcool.server.core.model.User;
 
 /**
@@ -7,5 +8,5 @@ import com.smilcool.server.core.model.User;
  * @date 2019/3/20
  */
 public interface UserService {
-    User login(String identifier, String password);
+    UserVO login(String username, String password);
 }

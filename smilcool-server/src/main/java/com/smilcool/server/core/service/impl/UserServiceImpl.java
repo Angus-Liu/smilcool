@@ -1,8 +1,11 @@
 package com.smilcool.server.core.service.impl;
 
+import com.smilcool.server.common.exception.SmilcoolException;
+import com.smilcool.server.common.pojo.vo.UserVO;
 import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.model.User;
 import com.smilcool.server.core.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +20,13 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User login(String identifier, String password) {
-//        userMapper.
-        return null;
+    public UserVO login(String username, String password) {
+        User user = userMapper.selectByUsernameAndPassword(username, password);
+        if (user == null) {
+            throw new SmilcoolException("用户不存在！");
+        }
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO);
+        return userVO;
     }
 }
