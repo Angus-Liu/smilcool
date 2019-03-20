@@ -1,4 +1,4 @@
-package com.smilcool.server.core.config;
+package com.smilcool.server.base.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;

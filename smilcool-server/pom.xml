@@ -76,8 +76,11 @@
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>1.3.7</version>
                 <configuration>
+                    <!-- 指定 generatorConfig 位置，位于 classpath 根目录可省略 -->
                     <configurationFile>src/main/resources/config/generatorConfig.xml</configurationFile>
+                    <!-- 输出详细信息 -->
                     <verbose>true</verbose>
+                    <!-- 允许覆盖生成的文件 -->
                     <overwrite>true</overwrite>
                 </configuration>
                 <dependencies>
