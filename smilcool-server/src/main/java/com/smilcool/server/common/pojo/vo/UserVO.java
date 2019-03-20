@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smilcool.server.common.util.serializer.UserStateSerializer;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -15,8 +18,10 @@ import java.util.Date;
 public class UserVO {
     private Integer id;
 
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     private String nickname;
@@ -40,6 +45,8 @@ public class UserVO {
 
     private String phone;
 
+    @NotBlank(message = "邮箱不能为空")
+    @Email(message = "邮箱格式错误")
     private String email;
 
     @JsonSerialize(using = UserStateSerializer.class)

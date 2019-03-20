@@ -9,4 +9,6 @@ import com.smilcool.server.core.model.User;
  */
 public interface UserService {
     UserVO login(String username, String password);
+
+    void register(UserVO userVO);
 }

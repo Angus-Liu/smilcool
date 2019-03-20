@@ -29,4 +29,20 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user, userVO);
         return userVO;
     }
+
+    @Override
+    public void register(UserVO userVO) {
+        User selected = userMapper.selectByUsername(userVO.getUsername());
+        if (selected != null) {
+            throw new SmilcoolException("用户名已存在");
+        }
+        selected = userMapper.selectByEmail(userVO.getEmail());
+        if (selected != null) {
+            throw new SmilcoolException("邮箱已注册");
+        }
+        User user = new User();
+        BeanUtils.copyProperties(userVO, user);
+
+        userMapper.insertSelective(user);
+    }
 }

@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class Result {
+public class Result<T> {
     /**
      * 响应业务请求情况
      */
@@ -28,10 +28,10 @@ public class Result {
     /**
      * 反馈数据
      */
-    private Object data;
+    private T data;
 
-    public static Result success(Object data) {
-        return new Result(true, 200, "OK", data);
+    public static <T> Result success(T data) {
+        return new Result<>(true, 200, "SUCCESS", data);
     }
 
     public static Result success() {
@@ -39,7 +39,7 @@ public class Result {
     }
 
     public static Result error(String msg) {
-        return new Result(false, 500, msg, null);
+        return new Result<>(false, 500, msg, null);
     }
 
     public static Result error() {
