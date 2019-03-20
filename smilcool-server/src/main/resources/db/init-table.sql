@@ -120,7 +120,7 @@ CREATE TABLE `resource` (
   `id`               int(11)    NOT NULL AUTO_INCREMENT COMMENT '资源ID',
   `user_id`          int(11)    NOT NULL COMMENT '发布用户ID',
   `resource_type_id` int(11)    NOT NULL COMMENT '资源类目ID',
-  `like`             int(11)    NOT NULL DEFAULT '0' COMMENT '点赞数',
+  `zan`             int(11)    NOT NULL DEFAULT '0' COMMENT '点赞数',
   `pv`               int(11)    NOT NULL DEFAULT '0' COMMENT '浏览量',
   `state`            int(1)     NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
   `remark`           varchar(255)        DEFAULT NULL COMMENT '备注',
@@ -236,9 +236,9 @@ CREATE TABLE `comment` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='评论表';
 
-# 点赞表（like）
-DROP TABLE IF EXISTS `like`;
-CREATE TABLE `like` (
+# 点赞表（zan）
+DROP TABLE IF EXISTS `zan`;
+CREATE TABLE `zan` (
   `id`          int(11)    NOT NULL AUTO_INCREMENT COMMENT '评论ID',
   `user_id`     int(11)    NOT NULL COMMENT '点赞用户ID',
   `resource_id` int(11)    NOT NULL COMMENT '点赞资源ID',
