@@ -9,7 +9,7 @@ public class Resource {
 
     private Integer resourceTypeId;
 
-    private Integer like;
+    private Integer zan;
 
     private Integer pv;
 
@@ -47,12 +47,12 @@ public class Resource {
         this.resourceTypeId = resourceTypeId;
     }
 
-    public Integer getLike() {
-        return like;
+    public Integer getZan() {
+        return zan;
     }
 
-    public void setLike(Integer like) {
-        this.like = like;
+    public void setZan(Integer zan) {
+        this.zan = zan;
     }
 
     public Integer getPv() {

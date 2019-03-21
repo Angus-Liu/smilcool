@@ -74,7 +74,7 @@
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false"/>-->
 
-        <!--<table tableName="like"-->
+        <!--<table tableName="zan"-->
                <!--enableCountByExample="false"-->
                <!--enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false"-->

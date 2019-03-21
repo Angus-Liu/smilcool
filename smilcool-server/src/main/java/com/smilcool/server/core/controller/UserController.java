@@ -3,7 +3,6 @@ package com.smilcool.server.core.controller;
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.common.pojo.vo.UserVO;
 import com.smilcool.server.common.util.BindingResultUtil;
-import com.smilcool.server.core.model.User;
 import com.smilcool.server.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;

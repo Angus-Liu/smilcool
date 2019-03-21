@@ -11,14 +11,14 @@ import lombok.Data;
 @AllArgsConstructor
 public class Result<T> {
     /**
-     * 响应业务请求情况
+     * 业务请求情况
      */
     private Boolean success;
 
     /**
-     * 响应业务状态
+     * 业务状态码
      */
-    private Integer status;
+    private Integer code;
 
     /**
      * 反馈消息
@@ -31,7 +31,7 @@ public class Result<T> {
     private T data;
 
     public static <T> Result success(T data) {
-        return new Result<>(true, 200, "SUCCESS", data);
+        return new Result<>(true, 200, null, data);
     }
 
     public static Result success() {
