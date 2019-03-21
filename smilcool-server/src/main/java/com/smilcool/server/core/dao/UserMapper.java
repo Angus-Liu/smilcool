@@ -1,6 +1,6 @@
 package com.smilcool.server.core.dao;
 
-import com.smilcool.server.core.model.User;
+import com.smilcool.server.core.pojo.po.User;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {

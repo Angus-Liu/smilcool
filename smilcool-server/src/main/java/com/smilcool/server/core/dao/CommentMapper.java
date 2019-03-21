@@ -1,6 +1,6 @@
 package com.smilcool.server.core.dao;
 
-import com.smilcool.server.core.model.Comment;
+import com.smilcool.server.core.pojo.po.Comment;
 
 public interface CommentMapper {
     int deleteByPrimaryKey(Integer id);

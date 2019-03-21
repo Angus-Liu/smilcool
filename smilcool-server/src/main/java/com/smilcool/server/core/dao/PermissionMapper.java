@@ -1,6 +1,6 @@
 package com.smilcool.server.core.dao;
 
-import com.smilcool.server.core.model.Permission;
+import com.smilcool.server.core.pojo.po.Permission;
 
 public interface PermissionMapper {
     int deleteByPrimaryKey(Integer id);

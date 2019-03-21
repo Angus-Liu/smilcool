@@ -1,4 +1,4 @@
-package com.smilcool.server.core.model;
+package com.smilcool.server.core.pojo.po;
 
 public class UserWithBLOBs extends User {
     private byte[] sslCipher;

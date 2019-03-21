@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smilcool.server.core.dao.LostFoundMapper">
-  <resultMap id="BaseResultMap" type="com.smilcool.server.core.model.LostFound">
+  <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.LostFound">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
     <result column="type" jdbcType="INTEGER" property="type" />
@@ -30,7 +30,7 @@
     delete from lost_found
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smilcool.server.core.model.LostFound">
+  <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.LostFound">
     insert into lost_found (id, resource_id, type, 
       title, name, time, 
       address, image, description, 
@@ -42,7 +42,7 @@
       #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{isDel,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.smilcool.server.core.model.LostFound">
+  <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.LostFound">
     insert into lost_found
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -127,7 +127,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.model.LostFound">
+  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.LostFound">
     update lost_found
     <set>
       <if test="resourceId != null">
@@ -169,7 +169,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.model.LostFound">
+  <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.LostFound">
     update lost_found
     set resource_id = #{resourceId,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},

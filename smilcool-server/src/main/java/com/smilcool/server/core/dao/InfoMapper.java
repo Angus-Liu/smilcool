@@ -1,6 +1,6 @@
 package com.smilcool.server.core.dao;
 
-import com.smilcool.server.core.model.Info;
+import com.smilcool.server.core.pojo.po.Info;
 
 public interface InfoMapper {
     int deleteByPrimaryKey(Integer id);

@@ -1,21 +1,23 @@
-package com.smilcool.server.core.model;
+package com.smilcool.server.core.pojo.po;
 
 import java.util.Date;
 
-public class Data {
+public class LostFound {
     private Integer id;
 
     private Integer resourceId;
+
+    private Integer type;
 
     private String title;
 
     private String name;
 
-    private String size;
+    private Date time;
 
-    private String url;
+    private String address;
 
-    private Integer downloads;
+    private String image;
 
     private String description;
 
@@ -43,6 +45,14 @@ public class Data {
         this.resourceId = resourceId;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -59,28 +69,28 @@ public class Data {
         this.name = name;
     }
 
-    public String getSize() {
-        return size;
+    public Date getTime() {
+        return time;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
-    public String getUrl() {
-        return url;
+    public String getAddress() {
+        return address;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public Integer getDownloads() {
-        return downloads;
+    public String getImage() {
+        return image;
     }
 
-    public void setDownloads(Integer downloads) {
-        this.downloads = downloads;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getDescription() {

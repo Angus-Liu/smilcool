@@ -1,7 +1,7 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
-import com.smilcool.server.core.model.Resource;
+import com.smilcool.server.core.pojo.po.Resource;
 import com.smilcool.server.core.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

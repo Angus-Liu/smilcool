@@ -1,15 +1,19 @@
-package com.smilcool.server.core.model;
+package com.smilcool.server.core.pojo.po;
 
 import java.util.Date;
 
-public class Info {
+public class Comment {
     private Integer id;
+
+    private Integer parentId;
+
+    private Integer userId;
 
     private Integer resourceId;
 
-    private String title;
+    private Integer replyUserId;
 
-    private String image;
+    private String content;
 
     private String remark;
 
@@ -19,14 +23,28 @@ public class Info {
 
     private Boolean isDel;
 
-    private String content;
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getResourceId() {
@@ -37,20 +55,20 @@ public class Info {
         this.resourceId = resourceId;
     }
 
-    public String getTitle() {
-        return title;
+    public Integer getReplyUserId() {
+        return replyUserId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setReplyUserId(Integer replyUserId) {
+        this.replyUserId = replyUserId;
     }
 
-    public String getImage() {
-        return image;
+    public String getContent() {
+        return content;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getRemark() {
@@ -83,13 +101,5 @@ public class Info {
 
     public void setIsDel(Boolean isDel) {
         this.isDel = isDel;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 }

@@ -1,6 +1,6 @@
 package com.smilcool.server.core.dao;
 
-import com.smilcool.server.core.model.Data;
+import com.smilcool.server.core.pojo.po.Data;
 
 public interface DataMapper {
     int deleteByPrimaryKey(Integer id);

@@ -1,17 +1,19 @@
-package com.smilcool.server.core.model;
+package com.smilcool.server.core.pojo.po;
 
 import java.util.Date;
 
-public class Resource {
+public class Permission {
     private Integer id;
 
-    private Integer userId;
+    private Integer parentId;
 
-    private Integer resourceTypeId;
+    private String name;
 
-    private Integer zan;
+    private String url;
 
-    private Integer pv;
+    private Integer type;
+
+    private Integer seq;
 
     private Integer state;
 
@@ -31,36 +33,44 @@ public class Resource {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
-    public Integer getResourceTypeId() {
-        return resourceTypeId;
+    public String getName() {
+        return name;
     }
 
-    public void setResourceTypeId(Integer resourceTypeId) {
-        this.resourceTypeId = resourceTypeId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getZan() {
-        return zan;
+    public String getUrl() {
+        return url;
     }
 
-    public void setZan(Integer zan) {
-        this.zan = zan;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public Integer getPv() {
-        return pv;
+    public Integer getType() {
+        return type;
     }
 
-    public void setPv(Integer pv) {
-        this.pv = pv;
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Integer seq) {
+        this.seq = seq;
     }
 
     public Integer getState() {

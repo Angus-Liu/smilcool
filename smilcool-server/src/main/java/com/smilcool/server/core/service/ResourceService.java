@@ -1,6 +1,6 @@
 package com.smilcool.server.core.service;
 
-import com.smilcool.server.core.model.Resource;
+import com.smilcool.server.core.pojo.po.Resource;
 
 import java.util.List;
 

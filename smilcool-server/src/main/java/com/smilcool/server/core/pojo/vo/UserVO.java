@@ -1,4 +1,4 @@
-package com.smilcool.server.common.pojo.vo;
+package com.smilcool.server.core.pojo.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

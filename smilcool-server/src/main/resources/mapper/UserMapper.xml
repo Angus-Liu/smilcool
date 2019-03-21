@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smilcool.server.core.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.smilcool.server.core.model.User">
+    <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.User">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -37,7 +37,7 @@
         FROM user
         WHERE id = #{id,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.smilcool.server.core.model.User">
+    <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.User">
         INSERT INTO user (id, username, password,
                           nickname, avatar, sex,
                           birthday, sign, intro,
@@ -53,7 +53,7 @@
                 #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
                 #{isDel,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.model.User">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.User">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -174,7 +174,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.model.User">
+    <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.User">
         update user
         <set>
             <if test="username != null">
@@ -234,7 +234,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.model.User">
+    <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.User">
         UPDATE user
         SET username    = #{username,jdbcType=VARCHAR},
             password    = #{password,jdbcType=VARCHAR},
@@ -257,7 +257,7 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectByUsernameAndPassword" resultType="com.smilcool.server.core.model.User">
+    <select id="selectByUsernameAndPassword" resultType="com.smilcool.server.core.pojo.po.User">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user
@@ -265,14 +265,14 @@
         AND password = #{password}
     </select>
 
-    <select id="selectByUsername" resultType="com.smilcool.server.core.model.User">
+    <select id="selectByUsername" resultType="com.smilcool.server.core.pojo.po.User">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user
         WHERE username = #{username}
     </select>
 
-    <select id="selectByEmail" resultType="com.smilcool.server.core.model.User">
+    <select id="selectByEmail" resultType="com.smilcool.server.core.pojo.po.User">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user

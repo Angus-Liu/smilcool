@@ -1,23 +1,15 @@
-package com.smilcool.server.core.model;
+package com.smilcool.server.core.pojo.po;
 
 import java.util.Date;
 
-public class SecondHand {
+public class Info {
     private Integer id;
 
     private Integer resourceId;
 
     private String title;
 
-    private String name;
-
-    private Double price;
-
-    private String address;
-
     private String image;
-
-    private String description;
 
     private String remark;
 
@@ -26,6 +18,8 @@ public class SecondHand {
     private Date updateTime;
 
     private Boolean isDel;
+
+    private String content;
 
     public Integer getId() {
         return id;
@@ -51,44 +45,12 @@ public class SecondHand {
         this.title = title;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getRemark() {
@@ -121,5 +83,13 @@ public class SecondHand {
 
     public void setIsDel(Boolean isDel) {
         this.isDel = isDel;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smilcool.server.core.dao.RoleMapper">
-  <resultMap id="BaseResultMap" type="com.smilcool.server.core.model.Role">
+  <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Role">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="state" jdbcType="INTEGER" property="state" />
@@ -23,7 +23,7 @@
     delete from role
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smilcool.server.core.model.Role">
+  <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Role">
     insert into role (id, name, state, 
       remark, create_time, update_time, 
       is_del)
@@ -31,7 +31,7 @@
       #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{isDel,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.smilcool.server.core.model.Role">
+  <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Role">
     insert into role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.model.Role">
+  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Role">
     update role
     <set>
       <if test="name != null">
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.model.Role">
+  <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Role">
     update role
     set name = #{name,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},

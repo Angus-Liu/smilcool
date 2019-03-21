@@ -1,6 +1,6 @@
 package com.smilcool.server.core.dao;
 
-import com.smilcool.server.core.model.UserRole;
+import com.smilcool.server.core.pojo.po.UserRole;
 
 public interface UserRoleMapper {
     int deleteByPrimaryKey(Integer id);

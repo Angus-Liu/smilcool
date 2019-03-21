@@ -1,6 +1,6 @@
 package com.smilcool.server.core.dao;
 
-import com.smilcool.server.core.model.RolePermission;
+import com.smilcool.server.core.pojo.po.RolePermission;
 
 public interface RolePermissionMapper {
     int deleteByPrimaryKey(Integer id);

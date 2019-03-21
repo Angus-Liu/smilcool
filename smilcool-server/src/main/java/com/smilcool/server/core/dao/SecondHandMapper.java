@@ -1,6 +1,6 @@
 package com.smilcool.server.core.dao;
 
-import com.smilcool.server.core.model.SecondHand;
+import com.smilcool.server.core.pojo.po.SecondHand;
 
 public interface SecondHandMapper {
     int deleteByPrimaryKey(Integer id);

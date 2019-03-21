@@ -1,9 +1,9 @@
 package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.common.exception.SmilcoolException;
-import com.smilcool.server.common.pojo.vo.UserVO;
+import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.dao.UserMapper;
-import com.smilcool.server.core.model.User;
+import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

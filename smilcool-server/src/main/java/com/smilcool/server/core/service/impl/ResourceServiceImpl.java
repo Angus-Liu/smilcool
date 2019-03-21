@@ -1,7 +1,7 @@
 package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.core.dao.ResourceMapper;
-import com.smilcool.server.core.model.Resource;
+import com.smilcool.server.core.pojo.po.Resource;
 import com.smilcool.server.core.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
