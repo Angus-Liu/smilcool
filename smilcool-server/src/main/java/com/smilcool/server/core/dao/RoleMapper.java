@@ -2,6 +2,8 @@ package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Role;
 
+import java.util.List;
+
 public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,8 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    Role selectByName(String name);
+
+    List<Role> selectAll();
 }

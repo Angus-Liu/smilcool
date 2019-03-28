@@ -7,21 +7,13 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/3/21
- */
 @Data
-public class ResourceVO {
+public class RoleVO {
     private Integer id;
 
-    private Integer userId;
+    private String name;
 
-    private Integer resourceTypeId;
-
-    private Integer zan;
-
-    private Integer pv;
+    private String description;
 
     @JsonSerialize(using = CommonStateSerializer.class)
     private Integer state;

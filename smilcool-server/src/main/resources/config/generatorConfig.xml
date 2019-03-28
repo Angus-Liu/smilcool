@@ -38,7 +38,7 @@
         </javaModelGenerator>
 
         <!-- targetProject：mapper 映射文件生成的位置 -->
-        <sqlMapGenerator targetPackage="mapper"
+        <sqlMapGenerator targetPackage="mapper/gen"
                          targetProject="src/main/resources">
             <!-- enableSubPackages:是否让 schema 作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>

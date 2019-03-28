@@ -16,13 +16,12 @@ import java.util.List;
  * @date 2019/3/20
  */
 @RestController
-@RequestMapping("/resource")
 public class ResourceController {
 
     @Autowired
     private ResourceService resourceService;
 
-    @GetMapping("/list")
+    @GetMapping("/resources")
     public Result list() {
         List<ResourceVO> resourceList = resourceService.list();
         return Result.success(resourceList);

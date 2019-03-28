@@ -1,6 +1,7 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
+import com.smilcool.server.core.pojo.form.LoginForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.common.util.BindingResultUtil;
 import com.smilcool.server.core.service.UserService;
@@ -22,9 +23,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/login")
-    public Result login(String username, String password) {
-        UserVO loginUser = userService.login(username, password);
+    @PostMapping("/login")
+    public Result login(@RequestBody LoginForm loginForm) {
+        UserVO loginUser = userService.login(loginForm);
         return Result.success(loginUser);
     }
 
@@ -37,7 +38,7 @@ public class UserController {
 
     @GetMapping("/list")
     public Result list() {
-        List<UserVO> users = userService.list();
-        return Result.success(users);
+        List<UserVO> userList = userService.list();
+        return Result.success(userList);
     }
 }

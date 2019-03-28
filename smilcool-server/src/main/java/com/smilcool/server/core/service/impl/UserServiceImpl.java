@@ -2,6 +2,7 @@ package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
+import com.smilcool.server.core.pojo.form.LoginForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.pojo.po.User;
@@ -28,10 +29,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO login(String username, String password) {
-        User user = userMapper.selectByUsernameAndPassword(username, password);
+    public UserVO login(LoginForm loginForm) {
+        User user = userMapper.selectByUsernameAndPassword(loginForm.getUsername(), loginForm.getPassword());
         if (user == null) {
-            throw new SmilcoolException("用户不存在！");
+            throw new SmilcoolException("用户名或密码错误！");
         }
         return BeanUtil.copyProp(user, UserVO.class);
     }

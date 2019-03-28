@@ -31,13 +31,14 @@ CREATE TABLE `user` (
 # 角色表（role）
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `id`          int(11)     NOT NULL AUTO_INCREMENT COMMENT '角色ID',
-  `name`        varchar(20) NOT NULL COMMENT '角色名',
-  `state`       int(1)      NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
-  `remark`      varchar(255)         DEFAULT NULL COMMENT '备注',
-  `create_time` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `is_del`      tinyint(1)  NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `name`        varchar(20)  NOT NULL COMMENT '角色名',
+  `description` varchar(255) NOT NULL COMMENT '角色描述',
+  `state`       int(1)       NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
+  `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
+  `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_del`      tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
@@ -49,6 +50,7 @@ CREATE TABLE `permission` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '权限ID',
   `parent_id`   int(11)               DEFAULT NULL COMMENT '父级ID',
   `name`        varchar(255) NOT NULL COMMENT '权限名',
+  `description` varchar(255) NOT NULL COMMENT '权限描述',
   `url`         varchar(255) NOT NULL COMMENT '请求地址（可填正则表达式）',
   `type`        int(1)       NOT NULL DEFAULT '3' COMMENT '类型：1-菜单，2-按钮，3-其他',
   `seq`         int(11)      NOT NULL DEFAULT '0' COMMENT '顺序',
@@ -120,7 +122,7 @@ CREATE TABLE `resource` (
   `id`               int(11)    NOT NULL AUTO_INCREMENT COMMENT '资源ID',
   `user_id`          int(11)    NOT NULL COMMENT '发布用户ID',
   `resource_type_id` int(11)    NOT NULL COMMENT '资源类目ID',
-  `zan`             int(11)    NOT NULL DEFAULT '0' COMMENT '点赞数',
+  `zan`              int(11)    NOT NULL DEFAULT '0' COMMENT '点赞数',
   `pv`               int(11)    NOT NULL DEFAULT '0' COMMENT '浏览量',
   `state`            int(1)     NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
   `remark`           varchar(255)        DEFAULT NULL COMMENT '备注',
