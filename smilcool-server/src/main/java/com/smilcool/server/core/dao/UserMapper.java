@@ -3,6 +3,8 @@ package com.smilcool.server.core.dao;
 import com.smilcool.server.core.pojo.po.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -21,4 +23,6 @@ public interface UserMapper {
     User selectByUsername(String username);
 
     User selectByEmail(String email);
+
+    List<User> selectAll();
 }

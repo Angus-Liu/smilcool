@@ -6,12 +6,10 @@ import com.smilcool.server.common.util.BindingResultUtil;
 import com.smilcool.server.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Angus
@@ -26,14 +24,20 @@ public class UserController {
 
     @RequestMapping("/login")
     public Result login(String username, String password) {
-        UserVO userVO = userService.login(username, password);
-        return Result.success(userVO);
+        UserVO loginUser = userService.login(username, password);
+        return Result.success(loginUser);
     }
 
     @PostMapping("/register")
     public Result register(@RequestBody @Valid UserVO userVO, BindingResult bindingResult) {
         BindingResultUtil.validate(bindingResult);
-        userService.register(userVO);
-        return Result.success();
+        UserVO registerUser = userService.register(userVO);
+        return Result.success(registerUser);
+    }
+
+    @GetMapping("/list")
+    public Result list() {
+        List<UserVO> users = userService.list();
+        return Result.success(users);
     }
 }

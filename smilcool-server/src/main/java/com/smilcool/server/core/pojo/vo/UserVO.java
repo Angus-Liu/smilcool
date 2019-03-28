@@ -1,14 +1,16 @@
 package com.smilcool.server.core.pojo.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smilcool.server.common.util.serializer.UserStateSerializer;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Date;
+
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
 /**
  * @author Angus
@@ -21,6 +23,10 @@ public class UserVO {
     @NotBlank(message = "用户名不能为空")
     private String username;
 
+    /**
+     *  @JsonProperty(access = WRITE_ONLY) 防止序列化该字段
+     */
+    @JsonProperty(access = WRITE_ONLY)
     @NotBlank(message = "密码不能为空")
     private String password;
 

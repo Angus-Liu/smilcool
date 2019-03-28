@@ -53,7 +53,8 @@
                 #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
                 #{isDel,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.User">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.User"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -277,5 +278,11 @@
         <include refid="Base_Column_List"/>
         FROM user
         WHERE email = #{email}
+    </select>
+
+    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
     </select>
 </mapper>
