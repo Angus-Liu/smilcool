@@ -1,6 +1,7 @@
 package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.common.exception.SmilcoolException;
+import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.pojo.po.User;
@@ -25,9 +26,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new SmilcoolException("用户不存在！");
         }
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
-        return userVO;
+        return BeanUtil.copyProp(user, UserVO.class);
     }
 
     @Override
@@ -40,9 +39,8 @@ public class UserServiceImpl implements UserService {
         if (selected != null) {
             throw new SmilcoolException("邮箱已注册");
         }
-        User user = new User();
-        BeanUtils.copyProperties(userVO, user);
 
+        User user = BeanUtil.copyProp(userVO, User.class);
         userMapper.insertSelective(user);
     }
 }
