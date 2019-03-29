@@ -17,8 +17,8 @@ spring:
   # Swagger 配置
   swagger:
     enabled: true # 生产环境应关闭
-    title: Smilcool API Docs
-    description: Smilcool 接口文档
+    title: Smilcool API DOCS
+    description: Smilcool API DOCS - Smilcool 接口文档
     version: 1.0
     contact:
       name: Angus Liu

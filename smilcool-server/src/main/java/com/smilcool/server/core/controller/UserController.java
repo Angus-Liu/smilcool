@@ -19,7 +19,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/3/20
  */
-@Api(description = "用户接口")
+@Api(description = "用户接口", tags = {"1.1"})
 @RestController
 @RequestMapping("/user")
 public class UserController {

@@ -1,6 +1,10 @@
 package com.smilcool.server.core.dao;
 
+import com.smilcool.server.core.pojo.po.Permission;
 import com.smilcool.server.core.pojo.po.RolePermission;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RolePermissionMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +18,11 @@ public interface RolePermissionMapper {
     int updateByPrimaryKeySelective(RolePermission record);
 
     int updateByPrimaryKey(RolePermission record);
+
+    RolePermission selectByRoleIdAndPermissionId(@Param("roleId") Integer roleId,
+                                                 @Param("permissionId") Integer permissionId);
+
+    List<RolePermission> selectAll();
+
+    List<Permission> selectPermissionListByRoleId(Integer roleId);
 }

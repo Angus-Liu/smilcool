@@ -36,6 +36,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleVO getById(Integer id) {
         Role role = roleMapper.selectByPrimaryKey(id);
+        if (role == null) {
+            throw new SmilcoolException("角色不存在");
+        }
         return BeanUtil.copyProp(role, RoleVO.class);
     }
 

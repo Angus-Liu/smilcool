@@ -3,6 +3,7 @@ package com.smilcool.server.core.controller;
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.common.util.BindingResultUtil;
 import com.smilcool.server.core.pojo.form.RoleAddForm;
+import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.pojo.vo.RolePermissionVO;
 import com.smilcool.server.core.pojo.vo.RoleVO;
 import com.smilcool.server.core.service.RolePermissionService;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/3/28
  */
-@Api(description = "角色接口")
+@Api(description = "角色接口", tags = {"1.2"})
 @RestController
 public class RoleController {
 
@@ -45,10 +46,17 @@ public class RoleController {
         return Result.success(roles);
     }
 
-    @ApiOperation(value = "角色信息", notes = "通过 id 获取角色信息及其对应权限信息")
+    @ApiOperation(value = "角色信息", notes = "通过 id 获取角色信息")
     @GetMapping("/roles/{id}")
-    public Result<RolePermissionVO> get(@PathVariable("id") Integer id) {
-        RolePermissionVO rolePermission = rolePermissionService.getByRoleId(id);
-        return Result.success(rolePermission);
+    public Result<RoleVO> get(@PathVariable("id") Integer id) {
+        RoleVO role = roleService.getById(id);
+        return Result.success(role);
+    }
+
+    @ApiOperation(value = "角色信息", notes = "通过 id 获取角色对应权限信息")
+    @GetMapping("/roles/{id}/permissions")
+    public Result<List<PermissionVO>> getPermission(@PathVariable("id") Integer id) {
+        List<PermissionVO> permissionList = rolePermissionService.getPermissionListByRoleId(id);
+        return Result.success(permissionList);
     }
 }
