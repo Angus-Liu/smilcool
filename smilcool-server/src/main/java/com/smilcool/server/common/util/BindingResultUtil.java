@@ -21,7 +21,6 @@ public class BindingResultUtil {
                     .ifPresent(fieldError -> {
                         throw new SmilcoolException(fieldError.getDefaultMessage());
                     });
-            throw new SmilcoolException("字段校验错误");
         }
     }
 }

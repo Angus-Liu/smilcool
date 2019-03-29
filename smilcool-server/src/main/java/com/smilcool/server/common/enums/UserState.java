@@ -39,4 +39,5 @@ public enum UserState {
 
     public String getDesc() {
         return desc;
-    }}
+    }
+}

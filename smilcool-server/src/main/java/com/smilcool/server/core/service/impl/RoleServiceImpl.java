@@ -2,9 +2,13 @@ package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
+import com.smilcool.server.core.dao.PermissionMapper;
 import com.smilcool.server.core.dao.RoleMapper;
+import com.smilcool.server.core.dao.RolePermissionMapper;
 import com.smilcool.server.core.pojo.form.RoleAddForm;
+import com.smilcool.server.core.pojo.po.Permission;
 import com.smilcool.server.core.pojo.po.Role;
+import com.smilcool.server.core.pojo.po.RolePermission;
 import com.smilcool.server.core.pojo.vo.RoleVO;
 import com.smilcool.server.core.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private PermissionMapper permissionMapper;
+
+    private RolePermissionMapper rolePermissionMapper;
 
     @Override
     public RoleVO getById(Integer id) {

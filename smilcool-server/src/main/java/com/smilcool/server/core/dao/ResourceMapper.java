@@ -1,6 +1,7 @@
 package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Resource;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

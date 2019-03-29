@@ -39,7 +39,8 @@ CREATE TABLE `role` (
   `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_del`      tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_name` (`name`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='角色表';
@@ -59,7 +60,8 @@ CREATE TABLE `permission` (
   `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_del`      tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_name` (`name`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='权限表';
@@ -69,7 +71,7 @@ DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
   `id`          int(11)    NOT NULL AUTO_INCREMENT COMMENT '用户角色ID',
   `user_id`     int(11)    NOT NULL COMMENT '用户ID',
-  `role_id`     int(11)    NOT NULL COMMENT '角色ID',
+  `role_id`     int(11)    NOT NULL DEFAULT '0' COMMENT '角色ID：0-普通用户',
   `state`       int(1)     NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
   `create_time` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

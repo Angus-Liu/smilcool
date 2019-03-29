@@ -40,7 +40,8 @@
                 #{seq,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
                 #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Permission">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Permission"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into permission
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -173,4 +174,18 @@
             is_del      = #{isDel,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Permission">
+        select
+        <include refid="Base_Column_List"/>
+        from permission
+    </select>
+
+    <select id="selectByName" resultType="com.smilcool.server.core.pojo.po.Permission">
+        select
+        <include refid="Base_Column_List"/>
+        from permission
+        where name = #{name}
+    </select>
+
 </mapper>

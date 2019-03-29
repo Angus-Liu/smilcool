@@ -8,27 +8,32 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/smilcool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
-#  servlet:
-#    # 文件上传下载配置
-#    multipart:
-#      max-file-size: 500MB
-#      max-request-size: 500MB
+  #  servlet:
+  #    # 文件上传下载配置
+  #    multipart:
+  #      max-file-size: 500MB
+  #      max-request-size: 500MB
 
-# mybatis 配置
+  # Swagger 配置
+  swagger:
+    enabled: true # 生产环境应关闭
+    title: Smilcool API Docs
+    description: Smilcool 接口文档
+    version: 1.0
+    contact:
+      name: Angus Liu
+    base-package: com.smilcool.server.core.controller
+
+# MyBatis 配置
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-#  type-aliases-package: com.smilcool.server.core.model
+  #  type-aliases-package: com.smilcool.server.core.model
   configuration:
     # 下划线风格映射到驼峰命名（便于数据库字段映射到 java 对象属性）
     map-underscore-to-camel-case: true
 
-# log 配置
+# Log 配置
 logging:
   level:
     # mybatis 日志级别为 debug
     com.smilcool.server.core.dao: debug
-#    com.candle.common.util: debug
-#
-## 文件存储配置
-#storage:
-#  path: D:/Temp/candle/

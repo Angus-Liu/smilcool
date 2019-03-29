@@ -3,26 +3,30 @@ package com.smilcool.server.core.pojo.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smilcool.server.common.util.serializer.CommonStateSerializer;
+import com.smilcool.server.common.util.serializer.PermissionTypeSerializer;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Angus
- * @date 2019/3/21
  */
 @Data
-public class ResourceVO {
+public class PermissionVO {
     private Integer id;
 
-    private Integer userId;
+    private Integer parentId;
 
-    private Integer resourceTypeId;
+    private String name;
 
-    private Integer zan;
+    private String description;
 
-    private Integer pv;
+    private String url;
+
+    @JsonSerialize(using = PermissionTypeSerializer.class)
+    private Integer type;
+
+    private Integer seq;
 
     @JsonSerialize(using = CommonStateSerializer.class)
     private Integer state;

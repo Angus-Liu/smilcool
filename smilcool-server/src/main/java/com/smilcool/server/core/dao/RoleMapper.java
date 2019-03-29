@@ -1,6 +1,8 @@
 package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Role;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
