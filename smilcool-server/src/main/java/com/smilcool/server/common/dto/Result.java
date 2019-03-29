@@ -23,7 +23,7 @@ public class Result<T> {
      * 时间戳
      */
     @ApiModelProperty("时间戳")
-    private long timestamp = System.currentTimeMillis();
+    private long timestamp;
 
     /**
      * 状态码
@@ -45,6 +45,7 @@ public class Result<T> {
 
     private Result(Boolean success, Integer code, String msg, T data) {
         this.success = success;
+        this.timestamp = System.currentTimeMillis();
         this.code = code;
         this.msg = msg;
         this.data = data;
