@@ -6,6 +6,7 @@ import com.smilcool.server.core.dao.RoleMapper;
 import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.dao.UserRoleMapper;
 import com.smilcool.server.core.pojo.form.UserRoleAddForm;
+import com.smilcool.server.core.pojo.po.Role;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.po.UserRole;
 import com.smilcool.server.core.pojo.vo.UserRoleVO;
@@ -37,6 +38,12 @@ public class UserRoleServiceImpl implements UserRoleService {
     private UserRoleVO getById(Integer id) {
         UserRole userRole = userRoleMapper.selectByPrimaryKey(id);
         return BeanUtil.copyProp(userRole, UserRoleVO.class);
+    }
+
+    @Override
+    public List<Role> getRoleByUserId(Integer userId) {
+        List<Role> roleList = userRoleMapper.selectRoleByUserId(userId);
+        return roleList;
     }
 
     @Override

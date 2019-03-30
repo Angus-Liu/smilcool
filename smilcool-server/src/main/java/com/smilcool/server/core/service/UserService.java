@@ -14,6 +14,8 @@ public interface UserService {
 
     void checkExist(Integer id);
 
+    UserVO getById(Integer id);
+
     /**
      * 用户注册
      *

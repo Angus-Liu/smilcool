@@ -29,6 +29,7 @@ CREATE TABLE `user` (
   COMMENT ='用户表';
 
 # 角色表（role）
+/* Table structure for table `role` */
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '角色ID',
@@ -44,6 +45,18 @@ CREATE TABLE `role` (
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='角色表';
+/*Data for the table `role` */
+INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
+VALUES (0, 'normal', '普通用户', 1, '注册用户默认角色为普通用户');
+
+INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
+VALUES (1, 'super-admin', '超级管理员', 1, '超级管理员由系统内定，具有至高无上的权利');
+
+INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
+VALUES (2, 'admin', '管理员', 1, '管理员由超级管理员指定，具有相关操作权利');
+
+INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
+VALUES (9, 'member', '会员', 1, '会员比普通用户多了一些特殊权利');
 
 # 权限表（permission）
 DROP TABLE IF EXISTS `permission`;

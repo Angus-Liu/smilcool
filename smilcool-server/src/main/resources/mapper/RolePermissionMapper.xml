@@ -143,4 +143,15 @@
         LEFT JOIN permission p ON rp.permission_id = p.id
         WHERE rp.role_id = #{roleId}
     </select>
+
+    <select id="selectPermissionListByRoleIdList" resultType="com.smilcool.server.core.pojo.po.Permission">
+        SELECT DISTINCT
+        <include refid="Permission_Base_Column_List"/>
+        FROM role_permission rp
+        LEFT JOIN permission p ON rp.permission_id = p.id
+        WHERE rp.role_id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.smilcool.server.core.service;
 
 import com.smilcool.server.core.pojo.form.RolePermissionAddForm;
+import com.smilcool.server.core.pojo.po.Permission;
 import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.pojo.vo.RolePermissionVO;
 
@@ -21,5 +22,16 @@ public interface RolePermissionService {
      * @param roleId 角色 id
      * @return
      */
-    List<PermissionVO> getPermissionListByRoleId(Integer roleId);
+    List<Permission> getPermissionListByRoleId(Integer roleId);
+
+    /**
+     * 获取角色对应的权限信息
+     *
+     * @param roleId 角色 id
+     * @return
+     */
+    List<PermissionVO> getPermissionVOListByRoleId(Integer roleId);
+
+
+    List<Permission> getPermissionListByRoleIdList(List<Integer> roleIdList);
 }

@@ -124,10 +124,21 @@
     </select>
 
     <select id="selectByUserIdAndRoleId" resultType="com.smilcool.server.core.pojo.po.UserRole">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from user_role
+        FROM user_role
         WHERE user_id = #{userId}
-        and role_id = #{roleId}
+        AND role_id = #{roleId}
+    </select>
+
+    <sql id="Role_Base_Column_List">
+        r.id, r.name, r.description, r.state, r.remark, r.create_time, r.update_time, r.is_del
+    </sql>
+    <select id="selectRoleByUserId" resultType="com.smilcool.server.core.pojo.po.Role">
+        SELECT
+        <include refid="Role_Base_Column_List"/>
+        FROM user_role ur LEFT JOIN role r
+        ON ur.role_id = r.id
+        WHERE ur.user_id = #{userId}
     </select>
 </mapper>

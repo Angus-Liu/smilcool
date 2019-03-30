@@ -26,6 +26,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @ApiOperation("用户登录")
     @PostMapping("/user/login")
     public Result<UserVO> login(@RequestBody UserLoginForm userLoginForm) {
@@ -46,5 +47,12 @@ public class UserController {
     public Result<List<UserVO>> list() {
         List<UserVO> userList = userService.list();
         return Result.success(userList);
+    }
+
+    @ApiOperation(value = "用户信息", notes = "通过用户 id 获取用户信息（包括角色与权限信息）")
+    @GetMapping("/user/{id}")
+    public Result<UserVO> get(@PathVariable("id") Integer id) {
+        UserVO user = userService.getById(id);
+        return Result.success(user);
     }
 }

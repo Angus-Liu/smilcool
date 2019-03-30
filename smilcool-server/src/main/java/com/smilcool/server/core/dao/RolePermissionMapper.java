@@ -25,4 +25,6 @@ public interface RolePermissionMapper {
     List<RolePermission> selectAll();
 
     List<Permission> selectPermissionListByRoleId(Integer roleId);
+
+    List<Permission> selectPermissionListByRoleIdList(List<Integer> roleIdList);
 }

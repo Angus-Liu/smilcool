@@ -68,8 +68,18 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     }
 
     @Override
-    public List<PermissionVO> getPermissionListByRoleId(Integer roleId) {
-        List<Permission> permissionList = rolePermissionMapper.selectPermissionListByRoleId(roleId);
+    public List<Permission> getPermissionListByRoleId(Integer roleId) {
+        return rolePermissionMapper.selectPermissionListByRoleId(roleId);
+    }
+
+    @Override
+    public List<PermissionVO> getPermissionVOListByRoleId(Integer roleId) {
+        List<Permission> permissionList = getPermissionListByRoleId(roleId);
         return BeanUtil.copyProp(permissionList, PermissionVO.class);
+    }
+
+    @Override
+    public List<Permission> getPermissionListByRoleIdList(List<Integer> roleIdList) {
+        return rolePermissionMapper.selectPermissionListByRoleIdList(roleIdList);
     }
 }
