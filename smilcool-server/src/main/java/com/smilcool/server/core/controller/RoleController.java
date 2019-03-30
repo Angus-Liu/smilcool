@@ -32,7 +32,7 @@ public class RoleController {
     private RolePermissionService rolePermissionService;
 
     @ApiOperation("角色添加")
-    @PostMapping("/roles")
+    @PostMapping("/role")
     public Result<RoleVO> add(@RequestBody @Valid RoleAddForm roleAddForm, BindingResult bindingResult) {
         BindingResultUtil.validate(bindingResult);
         RoleVO roleVO = roleService.add(roleAddForm);
@@ -40,21 +40,21 @@ public class RoleController {
     }
 
     @ApiOperation("角色列表")
-    @GetMapping("/roles")
+    @GetMapping("/role")
     public Result<List<RoleVO>> list() {
         List<RoleVO> roles = roleService.list();
         return Result.success(roles);
     }
 
-    @ApiOperation(value = "角色信息", notes = "通过 id 获取角色信息")
-    @GetMapping("/roles/{id}")
+    @ApiOperation(value = "角色信息", notes = "通过角色 id 获取角色信息")
+    @GetMapping("/role/{id}")
     public Result<RoleVO> get(@PathVariable("id") Integer id) {
         RoleVO role = roleService.getById(id);
         return Result.success(role);
     }
 
-    @ApiOperation(value = "角色信息", notes = "通过 id 获取角色对应权限信息")
-    @GetMapping("/roles/{id}/permissions")
+    @ApiOperation(value = "角色权限信息", notes = "通过角色 id 获取角色对应权限信息")
+    @GetMapping("/role/{id}/permission")
     public Result<List<PermissionVO>> getPermission(@PathVariable("id") Integer id) {
         List<PermissionVO> permissionList = rolePermissionService.getPermissionListByRoleId(id);
         return Result.success(permissionList);

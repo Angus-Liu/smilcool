@@ -28,6 +28,14 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    public void checkExist(Integer id) {
+        Permission permission = permissionMapper.selectByPrimaryKey(id);
+        if (permission == null) {
+            throw new SmilcoolException("权限不存在");
+        }
+    }
+
+    @Override
     public List<PermissionVO> list() {
         List<Permission> permissionList = permissionMapper.selectAll();
         return BeanUtil.copyProp(permissionList, PermissionVO.class);

@@ -10,6 +10,8 @@ import java.util.List;
  * @date 2019/3/29
  */
 public interface PermissionService {
+    void checkExist(Integer id);
+
     List<PermissionVO> list();
 
     PermissionVO add(PermissionAddForm permissionAddForm);

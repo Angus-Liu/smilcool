@@ -11,7 +11,9 @@ import com.smilcool.server.core.pojo.po.Role;
 import com.smilcool.server.core.pojo.po.RolePermission;
 import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.pojo.vo.RolePermissionVO;
+import com.smilcool.server.core.service.PermissionService;
 import com.smilcool.server.core.service.RolePermissionService;
+import com.smilcool.server.core.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +28,10 @@ import java.util.List;
 public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Autowired
-    private RoleMapper roleMapper;
+    private RoleService roleService;
 
     @Autowired
-    private PermissionMapper permissionMapper;
+    private PermissionService permissionService;
 
     @Autowired
     private RolePermissionMapper rolePermissionMapper;
@@ -41,25 +43,20 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     }
 
     @Override
-    public RolePermissionVO add(RolePermissionAddForm rolePermissionAddForm) {
+    public RolePermissionVO add(RolePermissionAddForm form
+    ) {
         // 检查角色是否存在
-        Role role = roleMapper.selectByPrimaryKey(rolePermissionAddForm.getRoleId());
-        if (role == null) {
-            throw new SmilcoolException("角色不存在");
-        }
+        roleService.checkExist(form.getRoleId());
         // 检查权限是否存在
-        Permission permission = permissionMapper.selectByPrimaryKey(rolePermissionAddForm.getPermissionId());
-        if (permission == null) {
-            throw new SmilcoolException("权限不存在");
-        }
+        permissionService.checkExist(form.getPermissionId());
         // 检查角色是否已被赋予该权限
-        RolePermission select = rolePermissionMapper.selectByRoleIdAndPermissionId(rolePermissionAddForm.getRoleId(),
-                rolePermissionAddForm.getPermissionId());
-        if (select != null) {
+        RolePermission rolePermission = rolePermissionMapper
+                .selectByRoleIdAndPermissionId(form.getRoleId(), form.getPermissionId());
+        if (rolePermission != null) {
             throw new SmilcoolException("角色已被赋予该权限");
         }
-        // 插入角色权限关联记录
-        RolePermission rolePermission = BeanUtil.copyProp(rolePermissionAddForm, RolePermission.class);
+        // 插入角色权限记录
+        rolePermission = BeanUtil.copyProp(form, RolePermission.class);
         rolePermissionMapper.insertSelective(rolePermission);
         return getById(rolePermission.getId());
     }

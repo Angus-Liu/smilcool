@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface UserService {
 
+    void checkExist(Integer id);
+
     /**
      * 用户注册
      *

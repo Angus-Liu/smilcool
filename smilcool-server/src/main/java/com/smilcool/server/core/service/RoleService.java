@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface RoleService {
 
+    void checkExist(Integer id);
+
     RoleVO getById(Integer id);
 
     RoleVO add(RoleAddForm roleAddForm);

@@ -29,14 +29,14 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @ApiOperation("权限列表")
-    @GetMapping("/permissions")
+    @GetMapping("/permission")
     public Result<List<PermissionVO>> list() {
         List<PermissionVO> permissionList = permissionService.list();
         return Result.success(permissionList);
     }
 
     @ApiOperation("权限添加")
-    @PostMapping("/permissions")
+    @PostMapping("/permission")
     public Result<PermissionVO> add(@RequestBody @Valid PermissionAddForm permissionAddForm, BindingResult bindingResult) {
         BindingResultUtil.validate(bindingResult);
         PermissionVO permission = permissionService.add(permissionAddForm);

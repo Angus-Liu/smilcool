@@ -41,6 +41,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void checkExist(Integer id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        if (user == null) {
+            throw new SmilcoolException("用户不存在");
+        }
+    }
+
+    @Override
     public UserVO login(UserLoginForm userLoginForm) {
         User user = userMapper.selectByUsernameAndPassword(userLoginForm.getUsername(), userLoginForm.getPassword());
         if (user == null) {

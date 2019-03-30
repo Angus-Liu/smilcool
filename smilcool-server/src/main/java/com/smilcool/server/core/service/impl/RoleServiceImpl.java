@@ -34,6 +34,14 @@ public class RoleServiceImpl implements RoleService {
     private RolePermissionMapper rolePermissionMapper;
 
     @Override
+    public void checkExist(Integer id) {
+        Role role = roleMapper.selectByPrimaryKey(id);
+        if (role == null) {
+            throw new SmilcoolException("角色不存在");
+        }
+    }
+
+    @Override
     public RoleVO getById(Integer id) {
         Role role = roleMapper.selectByPrimaryKey(id);
         if (role == null) {

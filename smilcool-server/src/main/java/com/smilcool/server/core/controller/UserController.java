@@ -21,21 +21,20 @@ import java.util.List;
  */
 @Api(description = "用户接口", tags = {"1.1"})
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserService userService;
 
     @ApiOperation("用户登录")
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public Result<UserVO> login(@RequestBody UserLoginForm userLoginForm) {
         UserVO loginUser = userService.login(userLoginForm);
         return Result.success(loginUser);
     }
 
     @ApiOperation("用户注册")
-    @PostMapping("/register")
+    @PostMapping("/user/register")
     public Result<UserVO> register(@RequestBody @Valid UserRegisterForm userRegisterForm, BindingResult bindingResult) {
         BindingResultUtil.validate(bindingResult);
         UserVO registerUser = userService.register(userRegisterForm);
@@ -43,7 +42,7 @@ public class UserController {
     }
 
     @ApiOperation("用户列表")
-    @GetMapping("/list")
+    @GetMapping("/user")
     public Result<List<UserVO>> list() {
         List<UserVO> userList = userService.list();
         return Result.success(userList);
