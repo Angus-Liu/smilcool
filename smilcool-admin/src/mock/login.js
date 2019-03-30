@@ -1,4 +1,5 @@
-import { getParams } from '@/libs/util'
+import { getParams } from '@/libs/util';
+
 const USER_MAP = {
   super_admin: {
     name: 'super_admin',
@@ -14,18 +15,18 @@ const USER_MAP = {
     token: 'admin',
     avator: 'https://avatars0.githubusercontent.com/u/20942571?s=460&v=4'
   }
-}
+};
 
 export const login = req => {
-  req = JSON.parse(req.body)
-  return { token: USER_MAP[req.userName].token }
-}
+  req = JSON.parse(req.body);
+  return { token: USER_MAP[req.username].token };
+};
 
 export const getUserInfo = req => {
-  const params = getParams(req.url)
-  return USER_MAP[params.token]
-}
+  const params = getParams(req.url);
+  return USER_MAP[params.token];
+};
 
 export const logout = req => {
-  return null
-}
+  return null;
+};

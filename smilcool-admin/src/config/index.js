@@ -18,8 +18,10 @@ export default {
    */
   baseUrl: {
     // dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
-    dev: 'http://localhost:8100/',
-    pro: 'https://produce.com'
+    // pro: 'https://produce.com'
+    // 已设置代理，这里不用填写服务器地址
+    dev: '',
+    pro: ''
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home
@@ -34,4 +36,4 @@ export default {
       developmentOff: true // 设为true后在开发环境不会收集错误信息，方便开发中排查错误
     }
   }
-}
+};

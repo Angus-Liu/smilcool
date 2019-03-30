@@ -42,4 +42,4 @@ export default {
       label: 'HR人事'
     }
   ]
-}
+};

@@ -465,7 +465,7 @@ export default [
   },
   {
     path: '/401',
-    name: 'error_401',
+    name: 'error-401',
     meta: {
       hideInMenu: true
     },

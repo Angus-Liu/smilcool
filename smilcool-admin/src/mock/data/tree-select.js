@@ -38,7 +38,7 @@ export const treeData = [
       }
     ]
   }
-]
+];
 
 export const newTreeData = [
   {
@@ -79,4 +79,4 @@ export const newTreeData = [
       }
     ]
   }
-]
+];
