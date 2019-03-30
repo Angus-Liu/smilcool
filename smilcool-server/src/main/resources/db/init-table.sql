@@ -29,7 +29,6 @@ CREATE TABLE `user` (
   COMMENT ='用户表';
 
 # 角色表（role）
-/* Table structure for table `role` */
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '角色ID',
@@ -45,7 +44,7 @@ CREATE TABLE `role` (
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='角色表';
-/*Data for the table `role` */
+
 INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
 VALUES (0, 'normal', '普通用户', 1, '注册用户默认角色为普通用户');
 
