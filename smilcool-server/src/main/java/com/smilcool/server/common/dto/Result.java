@@ -59,11 +59,15 @@ public class Result<T> {
         return success(null);
     }
 
+    public static Result error(Integer code, String msg) {
+        return new Result<>(false, code, msg, null);
+    }
+
     public static Result error(String msg) {
-        return new Result<>(false, 500, msg, null);
+        return error(400, null);
     }
 
     public static Result error() {
-        return error(null);
+        return error(400, null);
     }
 }

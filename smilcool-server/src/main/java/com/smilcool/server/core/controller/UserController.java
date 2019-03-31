@@ -8,14 +8,14 @@ import com.smilcool.server.core.pojo.form.UserSearchForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.common.util.BindingResultUtil;
 import com.smilcool.server.core.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Angus
@@ -28,7 +28,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
 
     @ApiOperation("用户登录")
     @PostMapping("/user/login")
@@ -47,15 +46,15 @@ public class UserController {
 
     @ApiOperation("用户列表")
     @GetMapping("/user")
-    public Result<Page<UserVO>> getUsers() {
-        Page<UserVO> userListPage = userService.getUsers();
+    public Result<List<UserVO>> getUserList() {
+        List<UserVO> userListPage = userService.getUserList();
         return Result.success(userListPage);
     }
 
-    @ApiOperation("用户列表")
+    @ApiOperation("用户列表（分页条件查询）")
     @GetMapping("/user/condition")
-    public Result<Page<UserVO>> getUsersByCondition(Page page, UserSearchForm userSearchForm) {
-        Page<UserVO> userListPage = userService.getUsersByCondition(page, userSearchForm);
+    public Result<Page<UserVO>> getUserPage(Page page, UserSearchForm userSearchForm) {
+        Page<UserVO> userListPage = userService.getUserPage(page, userSearchForm);
         return Result.success(userListPage);
     }
 

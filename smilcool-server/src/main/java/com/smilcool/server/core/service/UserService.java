@@ -34,7 +34,7 @@ public interface UserService {
      */
     UserVO register(UserRegisterForm userRegisterForm);
 
-    Page<UserVO> getUsers();
+    List<UserVO> getUserList();
 
-    Page<UserVO> getUsersByCondition(Page page, UserSearchForm userSearchForm);
+    Page<UserVO> getUserPage(Page page, UserSearchForm userSearchForm);
 }
