@@ -43,11 +43,12 @@ class HttpRequest {
       this.queue[url] = true;
 
       // 打印请求参数
-      const { method, data } = config;
+      const { method, params, data } = config;
       log.info('Request --->');
       log.info('Method', method);
       log.info('URL', this.baseUrl + url);
-      log.info('Param', data);
+      log.info('Params', params);
+      log.info('Data', data);
 
       return config;
     }, error => {
@@ -102,6 +103,22 @@ class HttpRequest {
     options = Object.assign(this.getInsideConfig(), options);
     this.interceptors(instance, options.url);
     return instance(options);
+  }
+
+  get (url, params) {
+    return this.request({
+      method: 'get',
+      url,
+      params
+    });
+  }
+
+  post (url, data) {
+    return this.request({
+      method: 'post',
+      url,
+      data
+    });
   }
 }
 

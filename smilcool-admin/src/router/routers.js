@@ -1,5 +1,5 @@
-import Main from '@/components/main'
-import parentView from '@/components/parent-view'
+import Main from '@/components/main';
+import parentView from '@/components/parent-view';
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -51,15 +51,6 @@ export default [
     ]
   },
   {
-    path: '',
-    name: 'github',
-    meta: {
-      title: 'GitHub仓库',
-      href: 'https://github.com/Angus-Liu/smilcool',
-      icon: 'logo-github'
-    }
-  },
-  {
     path: '/message',
     name: 'message',
     component: Main,
@@ -80,11 +71,49 @@ export default [
     ]
   },
   {
-    path: '/account',
-    name: 'account',
+    path: '/project',
+    name: 'project',
     meta: {
-      icon: 'md-people',
-      title: '账户管理'
+      icon: 'md-cube',
+      title: '项目管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'author',
+        name: 'author',
+        meta: {
+          title: '关于作者',
+          href: 'https://github.com/Angus-Liu',
+          icon: 'md-contact'
+        }
+      },
+      {
+        path: 'github',
+        name: 'github',
+        meta: {
+          title: '托管仓库',
+          href: 'https://github.com/Angus-Liu/smilcool',
+          icon: 'logo-github'
+        }
+      },
+      {
+        path: 'doc',
+        name: 'doc',
+        meta: {
+          title: '接口文档',
+          icon: 'ios-paper'
+        },
+        component: () => import('@/view/project/doc')
+      }
+    ]
+  },
+  {
+    path: '/system',
+    name: 'system',
+    meta: {
+      icon: 'md-settings',
+      title: '系统管理'
     },
     component: Main,
     children: [
@@ -95,7 +124,7 @@ export default [
           icon: 'md-person',
           title: '用户管理'
         },
-        component: () => import('@/view/account/user')
+        component: () => import('@/view/system/userManage')
       },
       {
         path: 'role',
@@ -487,4 +516,4 @@ export default [
     },
     component: () => import('@/view/error-page/404.vue')
   }
-]
+];

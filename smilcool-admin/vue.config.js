@@ -48,7 +48,7 @@ module.exports = {
       '/api': {
         // 后台服务器的ip地址
         target: 'http://localhost:8100',
-        pathRewrite: { '^/api': '/' },
+        pathRewrite: { '^/api': '' },
         changeOrigin: true
       }
     }
