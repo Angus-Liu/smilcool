@@ -6,6 +6,7 @@ import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.UserRoleMapper;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
+import com.smilcool.server.core.pojo.form.UserSearchForm;
 import com.smilcool.server.core.pojo.po.Permission;
 import com.smilcool.server.core.pojo.po.Role;
 import com.smilcool.server.core.pojo.po.UserRole;
@@ -114,16 +115,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserVO> list() {
+    public Page<UserVO> getUsers() {
         Page page = new Page();
-        Page<UserVO> userListPage = BeanUtil.copyProp(userMapper.selectAll(page), UserVO.class);
-        userListPage.getRecords().forEach(user -> {
+        Page<UserVO> userPage = BeanUtil.copyProp(userMapper.selectAll(page), UserVO.class);
+        userPage.getRecords().forEach(user -> {
             // 获取用户角色信息（角色描述）
             List<String> roles = new ArrayList<>();
             userRoleService.getRoleByUserId(user.getId())
                     .forEach(role -> roles.add(role.getDescription()));
             user.setRoles(roles);
         });
-        return userListPage;
+        return userPage;
+    }
+
+    @Override
+    public Page<UserVO> getUsersByCondition(Page page, UserSearchForm userSearchForm) {
+        User condition = BeanUtil.copyProp(userSearchForm, User.class);
+        Page<UserVO> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserVO.class);
+        userPage.getRecords().forEach(user -> {
+            // 获取用户角色信息（角色描述）
+            List<String> roles = new ArrayList<>();
+            userRoleService.getRoleByUserId(user.getId())
+                    .forEach(role -> roles.add(role.getDescription()));
+            user.setRoles(roles);
+        });
+        return userPage;
     }
 }

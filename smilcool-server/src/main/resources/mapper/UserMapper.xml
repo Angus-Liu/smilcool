@@ -290,4 +290,42 @@
         SELECT id
         FROM user
     </select>
+
+    <select id="selectByCondition" resultType="com.smilcool.server.core.pojo.po.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        <where>
+            <if test="user.username != null">
+                username = #{user.username}
+            </if>
+            <if test="user.nickname != null">
+                AND nickname = #{user.nickname}
+            </if>
+            <if test="user.sex != null">
+                AND sex = #{user.sex}
+            </if>
+            <if test="user.birthday != null">
+                AND birthday = #{user.birthday}
+            </if>
+            <if test="user.grade != null">
+                AND grade = #{user.grade}
+            </if>
+            <if test="user.college != null">
+                AND college = #{user.college}
+            </if>
+            <if test="user.major != null">
+                AND major = #{user.major}
+            </if>
+            <if test="user.phone != null">
+                AND phone = #{user.phone}
+            </if>
+            <if test="user.email != null">
+                AND email = #{user.email}
+            </if>
+            <if test="user.state != null">
+                AND state = #{user.state}
+            </if>
+        </where>
+    </select>
 </mapper>

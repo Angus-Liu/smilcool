@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
+ * HTTP 请求及响应拦截切面
+ *
  * @author Angus
  * @date 2019/3/20
  */

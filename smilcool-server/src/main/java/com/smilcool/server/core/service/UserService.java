@@ -3,6 +3,7 @@ package com.smilcool.server.core.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
+import com.smilcool.server.core.pojo.form.UserSearchForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
 
 import java.util.List;
@@ -33,5 +34,7 @@ public interface UserService {
      */
     UserVO register(UserRegisterForm userRegisterForm);
 
-    Page<UserVO> list();
+    Page<UserVO> getUsers();
+
+    Page<UserVO> getUsersByCondition(Page page, UserSearchForm userSearchForm);
 }

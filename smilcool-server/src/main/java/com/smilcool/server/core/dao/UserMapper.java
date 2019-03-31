@@ -1,12 +1,13 @@
 package com.smilcool.server.core.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.po.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface UserMapper {
+public interface UserMapper extends BaseMapper {
     int deleteByPrimaryKey(Integer id);
 
     int insert(User record);
@@ -28,4 +29,6 @@ public interface UserMapper {
     Page<User> selectAll(Page page);
 
     List<Integer> selectUserIdListAll();
+
+    Page<User> selectByCondition(Page page, @Param("user") User condition);
 }
