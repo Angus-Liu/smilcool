@@ -1,5 +1,6 @@
 package com.smilcool.server.core.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
@@ -32,5 +33,5 @@ public interface UserService {
      */
     UserVO register(UserRegisterForm userRegisterForm);
 
-    List<UserVO> list();
+    Page<UserVO> list();
 }

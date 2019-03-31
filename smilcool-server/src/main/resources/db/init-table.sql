@@ -28,7 +28,7 @@ CREATE TABLE `user` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='用户表';
 
-# 角色表（role）
+# 角色表（roles）
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '角色ID',
@@ -57,7 +57,7 @@ VALUES (2, 'admin', '管理员', 1, '管理员由超级管理员指定，具有�
 INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
 VALUES (9, 'member', '会员', 1, '会员比普通用户多了一些特殊权利');
 
-# 权限表（permission）
+# 权限表（permissions）
 DROP TABLE IF EXISTS `permission`;
 CREATE TABLE `permission` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '权限ID',

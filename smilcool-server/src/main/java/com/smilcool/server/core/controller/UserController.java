@@ -1,5 +1,6 @@
 package com.smilcool.server.core.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
@@ -44,9 +45,9 @@ public class UserController {
 
     @ApiOperation("用户列表")
     @GetMapping("/user")
-    public Result<List<UserVO>> list() {
-        List<UserVO> userList = userService.list();
-        return Result.success(userList);
+    public Result<Page<UserVO>> list() {
+        Page<UserVO> userListPage = userService.list();
+        return Result.success(userListPage);
     }
 
     @ApiOperation(value = "用户信息", notes = "通过用户 id 获取用户信息（包括角色与权限信息）")

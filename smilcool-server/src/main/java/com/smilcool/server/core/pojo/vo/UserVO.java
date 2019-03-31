@@ -72,12 +72,12 @@ public class UserVO {
     private Boolean isDel;
 
     /**
-     * 角色信息（角色名集合）
+     * 角色信息
      */
     private List<String> roles;
 
     /**
-     * 权限信息（权限名集合）
+     * 权限信息
      */
     private List<String> permissions;
 }

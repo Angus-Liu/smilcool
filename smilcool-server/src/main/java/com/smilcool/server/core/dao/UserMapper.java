@@ -1,5 +1,6 @@
 package com.smilcool.server.core.dao;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.po.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,5 +25,7 @@ public interface UserMapper {
 
     User selectByEmail(String email);
 
-    List<User> selectAll();
+    Page<User> selectAll(Page page);
+
+    List<Integer> selectUserIdListAll();
 }

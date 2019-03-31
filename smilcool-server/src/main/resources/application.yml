@@ -24,13 +24,16 @@ spring:
       name: Angus Liu
     base-package: com.smilcool.server.core.controller
 
-# MyBatis 配置
+# MyBatis & MyBatis-Plus 配置
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
   #  type-aliases-package: com.smilcool.server.core.model
   configuration:
     # 下划线风格映射到驼峰命名（便于数据库字段映射到 java 对象属性）
     map-underscore-to-camel-case: true
+
+mybatis-plus:
+  # 替代原 mybatis.mapper-locations
+  mapper-locations: classpath:mapper/*.xml
 
 # Log 配置
 logging:

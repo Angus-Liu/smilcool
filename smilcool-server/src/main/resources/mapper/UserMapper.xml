@@ -285,4 +285,9 @@
         <include refid="Base_Column_List"/>
         FROM user
     </select>
+
+    <select id="selectUserIdListAll" resultType="java.lang.Integer">
+        SELECT id
+        FROM user
+    </select>
 </mapper>

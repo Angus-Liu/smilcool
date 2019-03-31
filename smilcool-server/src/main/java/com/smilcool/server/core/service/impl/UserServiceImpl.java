@@ -1,5 +1,6 @@
 package com.smilcool.server.core.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.UserRoleMapper;
@@ -20,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Angus
@@ -106,6 +106,7 @@ public class UserServiceImpl implements UserService {
         User user = BeanUtil.copyProp(userRegisterForm, User.class);
         userMapper.insertSelective(user);
         // 添加用户-角色记录（用户注册时角色默认为普通用户 - normal）
+        // TODO: role 表添加默认状态字段，查询获取为默认状态的 role 为新注册用户赋值
         UserRole userRole = new UserRole(user.getId());
         userRoleMapper.insertSelective(userRole);
         // 返回用户信息
@@ -113,8 +114,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserVO> list() {
-        List<User> userList = userMapper.selectAll();
-        return BeanUtil.copyProp(userList, UserVO.class);
+    public Page<UserVO> list() {
+        Page page = new Page();
+        Page<UserVO> userListPage = BeanUtil.copyProp(userMapper.selectAll(page), UserVO.class);
+        userListPage.getRecords().forEach(user -> {
+            // 获取用户角色信息（角色描述）
+            List<String> roles = new ArrayList<>();
+            userRoleService.getRoleByUserId(user.getId())
+                    .forEach(role -> roles.add(role.getDescription()));
+            user.setRoles(roles);
+        });
+        return userListPage;
     }
 }

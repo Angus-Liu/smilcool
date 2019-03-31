@@ -1,5 +1,6 @@
 package com.smilcool.server.common.util;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -51,5 +52,21 @@ public class BeanUtil {
             }
         });
         return targetList;
+    }
+
+    /**
+     * 拷贝分页对象
+     *
+     * @param sourcePage 待拷贝分页
+     * @param targetType 目标类型
+     * @param <T>        目标类型
+     * @return 目标类型分页对象
+     */
+    public static <T> Page<T> copyProp(Page<?> sourcePage, Class<T> targetType) {
+        Page<T> targetPage = new Page<>();
+        BeanUtils.copyProperties(sourcePage, targetPage);
+        List<T> targetList = copyProp(sourcePage.getRecords(), targetType);
+        targetPage.setRecords(targetList);
+        return targetPage;
     }
 }
