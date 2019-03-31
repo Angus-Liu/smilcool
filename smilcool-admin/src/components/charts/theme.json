@@ -241,25 +241,25 @@
     },
     "categoryAxis": {
         "axisLine": {
-            "show": true,
+            "showMore": true,
             "lineStyle": {
                 "color": "#cccccc"
             }
         },
         "axisTick": {
-            "show": false,
+            "showMore": false,
             "lineStyle": {
                 "color": "#333"
             }
         },
         "axisLabel": {
-            "show": true,
+            "showMore": true,
             "textStyle": {
                 "color": "#999999"
             }
         },
         "splitLine": {
-            "show": true,
+            "showMore": true,
             "lineStyle": {
                 "color": [
                     "#eeeeee"
@@ -267,7 +267,7 @@
             }
         },
         "splitArea": {
-            "show": false,
+            "showMore": false,
             "areaStyle": {
                 "color": [
                     "rgba(250,250,250,0.05)",
@@ -278,25 +278,25 @@
     },
     "valueAxis": {
         "axisLine": {
-            "show": true,
+            "showMore": true,
             "lineStyle": {
                 "color": "#cccccc"
             }
         },
         "axisTick": {
-            "show": false,
+            "showMore": false,
             "lineStyle": {
                 "color": "#333"
             }
         },
         "axisLabel": {
-            "show": true,
+            "showMore": true,
             "textStyle": {
                 "color": "#999999"
             }
         },
         "splitLine": {
-            "show": true,
+            "showMore": true,
             "lineStyle": {
                 "color": [
                     "#eeeeee"
@@ -304,7 +304,7 @@
             }
         },
         "splitArea": {
-            "show": false,
+            "showMore": false,
             "areaStyle": {
                 "color": [
                     "rgba(250,250,250,0.05)",
@@ -315,25 +315,25 @@
     },
     "logAxis": {
         "axisLine": {
-            "show": true,
+            "showMore": true,
             "lineStyle": {
                 "color": "#cccccc"
             }
         },
         "axisTick": {
-            "show": false,
+            "showMore": false,
             "lineStyle": {
                 "color": "#333"
             }
         },
         "axisLabel": {
-            "show": true,
+            "showMore": true,
             "textStyle": {
                 "color": "#999999"
             }
         },
         "splitLine": {
-            "show": true,
+            "showMore": true,
             "lineStyle": {
                 "color": [
                     "#eeeeee"
@@ -341,7 +341,7 @@
             }
         },
         "splitArea": {
-            "show": false,
+            "showMore": false,
             "areaStyle": {
                 "color": [
                     "rgba(250,250,250,0.05)",
@@ -352,25 +352,25 @@
     },
     "timeAxis": {
         "axisLine": {
-            "show": true,
+            "showMore": true,
             "lineStyle": {
                 "color": "#cccccc"
             }
         },
         "axisTick": {
-            "show": false,
+            "showMore": false,
             "lineStyle": {
                 "color": "#333"
             }
         },
         "axisLabel": {
-            "show": true,
+            "showMore": true,
             "textStyle": {
                 "color": "#999999"
             }
         },
         "splitLine": {
-            "show": true,
+            "showMore": true,
             "lineStyle": {
                 "color": [
                     "#eeeeee"
@@ -378,7 +378,7 @@
             }
         },
         "splitArea": {
-            "show": false,
+            "showMore": false,
             "areaStyle": {
                 "color": [
                     "rgba(250,250,250,0.05)",

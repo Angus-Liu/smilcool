@@ -3,38 +3,58 @@
     <Card>
       <!-- 筛选栏 -->
       <div>
-        <Form ref="formInline" inline :label-width="50">
-          <FormItem label="用户名">
-            <Input placeholder="Enter something..."></Input>
+        <Form :model="userSearchForm" inline :label-width="70">
+          <FormItem label="用户名" prop="username">
+            <Input class="form-item" v-model="userSearchForm.username" placeholder="Enter something..."></Input>
           </FormItem>
-          <FormItem label="昵称">
-            <Input placeholder="Enter something..."></Input>
+          <FormItem label="邮箱" prop="email">
+            <Input class="form-item" v-model="userSearchForm.email" placeholder="Enter something..."></Input>
           </FormItem>
-          <span v-show="show">
-            <FormItem label="性别">
-            <Select v-model="model2" size="small" style="width:100px">
+          <FormItem label="昵称" prop="nickname">
+            <Input class="form-item" v-model="userSearchForm.nickname" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="角色" prop="role">
+            <Select class="form-item" v-model="userSearchForm.role">
               <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
           </FormItem>
-          <FormItem label="年级">
-            <DatePicker type="year" placeholder="Select grade" style="width: 100px"></DatePicker>
+          <FormItem label="状态" prop="state">
+            <Select class="form-item" v-model="userSearchForm.state">
+              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            </Select>
           </FormItem>
-          <FormItem label="邮箱">
-            <Input placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="手机">
-            <Input placeholder="Enter something..."></Input>
-          </FormItem>
+          <span v-show="more.show">
+            <FormItem label="手机" prop="phone">
+              <Input class="form-item" v-model="userSearchForm.phone" placeholder="Enter something..."></Input>
+            </FormItem>
+            <FormItem label="性别" prop="sex">
+              <Select class="form-item" v-model="userSearchForm.sex">
+                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="年级" prop="grade">
+              <DatePicker class="form-item" type="year" v-model="userSearchForm.grade"
+                          placeholder="Select grade"></DatePicker>
+            </FormItem>
+            <FormItem label="学院" prop="college">
+              <Select class="form-item" v-model="userSearchForm.college">
+                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="专业" props="major">
+              <Select class="form-item" v-model="userSearchForm.major">
+                <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              </Select>
+            </FormItem>
           </span>
-          <FormItem label="角色">
-            <Select v-model="model1" style="width:100px">
-              <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
-          </FormItem>
-          <Form-item>
-            <Button type="primary" icon="ios-search" @click="handleSearch">筛选</Button>
+          <FormItem>
+            <Button class="btn-search" type="primary" icon="ios-search" @click="getUserPage">筛选</Button>
             <Button @click="handleReset">清空</Button>
-          </Form-item>
+            <a class="drop-down" @click="showMore">
+              {{ more.content }}
+              <Icon :type="more.icon"/>
+            </a>
+          </FormItem>
         </Form>
       </div>
       <div>
@@ -64,7 +84,11 @@ export default {
   data () {
     return {
       // 表单设置
-      show: false,
+      more: {
+        show: false,
+        content: '展开',
+        icon: 'ios-arrow-down'
+      },
       // 表格设置
       loading: true,
       // 表单数据
@@ -103,6 +127,7 @@ export default {
         phone: null,
         email: null,
         state: null,
+        role: null,
         current: 1,
         size: 10
       },
@@ -117,6 +142,22 @@ export default {
     };
   },
   methods: {
+    // 表单操作
+    showMore () {
+      if (!this.more.show) {
+        this.more = {
+          show: true,
+          content: '收起',
+          icon: 'ios-arrow-up'
+        };
+      } else {
+        this.more = {
+          show: false,
+          content: '展开',
+          icon: 'ios-arrow-down'
+        };
+      }
+    },
     show (index) {
       this.$Modal.info({
         title: 'User Info',
@@ -172,5 +213,14 @@ export default {
 <style scoped>
   .page {
     margin-top: 1em;
+  }
+
+  .form-item {
+    width: 150px;
+  }
+
+  .btn-search {
+    margin-left: -35px;
+    margin-right: 5px;
   }
 </style>

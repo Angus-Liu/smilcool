@@ -13,7 +13,7 @@
     </div>
     <div class="page">
       <iframe :src="url" frameborder="0" width="100%" height="90%" scrolling="auto" @load="spinShow = false"></iframe>
-      <Spin fix v-if="spinShow"></Spin>
+      <Spin size="large" fix v-if="spinShow"></Spin>
     </div>
   </Card>
 </template>

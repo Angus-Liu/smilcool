@@ -90,7 +90,7 @@ export default {
           stack: '总量',
           label: {
             normal: {
-              show: true,
+              showMore: true,
               position: 'top'
             }
           },
