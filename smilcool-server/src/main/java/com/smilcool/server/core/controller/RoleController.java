@@ -1,8 +1,9 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
-import com.smilcool.server.common.util.BindingResultUtil;
+import com.smilcool.server.common.util.validation.BindingResultUtil;
 import com.smilcool.server.core.pojo.form.RoleAddForm;
+import com.smilcool.server.core.pojo.form.RoleUpdateForm;
 import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.pojo.vo.RoleVO;
 import com.smilcool.server.core.service.RolePermissionService;
@@ -49,6 +50,16 @@ public class RoleController {
     @GetMapping("/role/{id}")
     public Result<RoleVO> get(@PathVariable("id") Integer id) {
         RoleVO role = roleService.getById(id);
+        return Result.success(role);
+    }
+
+    @ApiOperation(value = "更新角色")
+    @PutMapping("/role/{id}")
+    public Result<RoleVO> update(@PathVariable("id") Integer id,
+                                 @RequestBody @Valid RoleUpdateForm roleUpdateForm,
+                                 BindingResult bindingResult) {
+        BindingResultUtil.validate(bindingResult);
+        RoleVO role = roleService.updateById(id, roleUpdateForm);
         return Result.success(role);
     }
 

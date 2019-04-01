@@ -15,7 +15,6 @@ public class RoleVO {
 
     private String description;
 
-    @JsonSerialize(using = CommonStateSerializer.class)
     private Integer state;
 
     private String remark;

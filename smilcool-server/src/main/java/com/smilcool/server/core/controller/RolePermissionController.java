@@ -1,7 +1,7 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
-import com.smilcool.server.common.util.BindingResultUtil;
+import com.smilcool.server.common.util.validation.BindingResultUtil;
 import com.smilcool.server.core.pojo.form.RolePermissionAddForm;
 import com.smilcool.server.core.pojo.vo.RolePermissionVO;
 import com.smilcool.server.core.service.RolePermissionService;

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Angus
  * @date 2019/3/31
  */
-@Api(description = "错误拦截接口", hidden = true)
+@Api(description = "错误拦截接口", tags = {"5.0"}, hidden = true)
 @RestController
 public class ErrorsController implements ErrorController {
     @Override

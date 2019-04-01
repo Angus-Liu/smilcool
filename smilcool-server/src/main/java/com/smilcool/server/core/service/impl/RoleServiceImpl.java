@@ -6,11 +6,13 @@ import com.smilcool.server.core.dao.PermissionMapper;
 import com.smilcool.server.core.dao.RoleMapper;
 import com.smilcool.server.core.dao.RolePermissionMapper;
 import com.smilcool.server.core.pojo.form.RoleAddForm;
+import com.smilcool.server.core.pojo.form.RoleUpdateForm;
 import com.smilcool.server.core.pojo.po.Permission;
 import com.smilcool.server.core.pojo.po.Role;
 import com.smilcool.server.core.pojo.po.RolePermission;
 import com.smilcool.server.core.pojo.vo.RoleVO;
 import com.smilcool.server.core.service.RoleService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,8 +56,8 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public RoleVO add(RoleAddForm roleAddForm) {
-        Role selected = roleMapper.selectByName(roleAddForm.getName());
-        if (selected != null) {
+        Role select = roleMapper.selectByName(roleAddForm.getName());
+        if (select != null) {
             throw new SmilcoolException("角色已存在");
         }
         Role role = Role.builder()
@@ -71,5 +73,26 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleVO> list() {
         List<Role> roleList = roleMapper.selectAll();
         return BeanUtil.copyProp(roleList, RoleVO.class);
+    }
+
+    @Override
+    public RoleVO updateById(Integer id, RoleUpdateForm roleUpdateForm) {
+        Role select = roleMapper.selectByPrimaryKey(id);
+        if (select == null) {
+            throw new SmilcoolException("角色不存在");
+        }
+        select = roleMapper.selectByName(roleUpdateForm.getName());
+        if (select != null && !select.getId().equals(id)) {
+            throw new SmilcoolException("角色已存在");
+        }
+        Role role = Role.builder()
+                .id(id)
+                .name(roleUpdateForm.getName())
+                .description(roleUpdateForm.getDescription())
+                .remark(roleUpdateForm.getRemark())
+                .state(roleUpdateForm.getState())
+                .build();
+        roleMapper.updateByPrimaryKeySelective(role);
+        return getById(id);
     }
 }

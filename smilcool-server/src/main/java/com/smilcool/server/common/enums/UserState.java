@@ -1,5 +1,7 @@
 package com.smilcool.server.common.enums;
 
+import java.util.Arrays;
+
 /**
  * 状态：0-未激活，1-正常，-1-停用
  *
@@ -27,6 +29,22 @@ public enum UserState {
             }
         }
         return INVALID;
+    }
+
+    public static boolean check(int state) {
+        for (UserState userState : UserState.values()) {
+            if (userState.state == state) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int[] enums() {
+        return Arrays.stream(UserState.values())
+                .filter(value -> value != INVALID)
+                .mapToInt(UserState::getState)
+                .toArray();
     }
 
     public static String desc(int state) {

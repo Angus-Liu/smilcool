@@ -6,7 +6,7 @@ import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.form.UserSearchForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
-import com.smilcool.server.common.util.BindingResultUtil;
+import com.smilcool.server.common.util.validation.BindingResultUtil;
 import com.smilcool.server.core.service.UserService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @ApiOperation("用户列表（分页条件查询）")
-    @GetMapping("/user/condition")
+    @GetMapping("/user/page")
     public Result<Page<UserVO>> getUserPage(Page page, UserSearchForm userSearchForm) {
         Page<UserVO> userListPage = userService.getUserPage(page, userSearchForm);
         return Result.success(userListPage);

@@ -1,9 +1,9 @@
 package com.smilcool.server.core.pojo.form;
 
+import com.smilcool.server.common.util.validation.anno.CheckEnum;
+import com.smilcool.server.common.util.validation.anno.CheckEnum.EnumType;
 import lombok.Data;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -23,8 +23,7 @@ public class PermissionAddForm {
     @NotBlank(message = "请求地址不能为空")
     private String url;
 
-    @Min(value = 1, message = "类型取值为[1-菜单，2-按钮，3-其他]")
-    @Max(value = 3, message = "类型取值为[1-菜单，2-按钮，3-其他]")
+    @CheckEnum(value = EnumType.PERMISSION_TYPE, message = "类型取值为[1-菜单，2-按钮，3-其他]")
     private Integer type;
 
     private Integer seq;

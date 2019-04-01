@@ -1,5 +1,7 @@
 package com.smilcool.server.common.enums;
 
+import java.util.Arrays;
+
 /**
  * @author Angus
  * @date 2019/3/29
@@ -12,6 +14,8 @@ public enum PermissionType {
 
     int type;
     String desc;
+
+    public static final int[] x = {2};
 
     PermissionType(int type, String desc) {
         this.type = type;
@@ -26,6 +30,14 @@ public enum PermissionType {
         }
         return INVALID;
     }
+
+    public static int[] enums() {
+        return Arrays.stream(PermissionType.values())
+                .filter(value -> value != INVALID)
+                .mapToInt(PermissionType::getType)
+                .toArray();
+    }
+
 
     public static String desc(int type) {
         return of(type).desc;

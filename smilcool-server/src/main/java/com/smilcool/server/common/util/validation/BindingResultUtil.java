@@ -1,4 +1,4 @@
-package com.smilcool.server.common.util;
+package com.smilcool.server.common.util.validation;
 
 import com.smilcool.server.common.exception.SmilcoolException;
 import org.springframework.validation.BindingResult;

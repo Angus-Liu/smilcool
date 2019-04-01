@@ -1,5 +1,7 @@
 package com.smilcool.server.common.enums;
 
+import java.util.Arrays;
+
 /**
  * @author Angus
  * @date 2019/3/21
@@ -25,6 +27,22 @@ public enum CommonState {
             }
         }
         return INVALID;
+    }
+
+    public static boolean check(int state) {
+        for (CommonState commonState : CommonState.values()) {
+            if (commonState.state == state) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int[] enums() {
+        return Arrays.stream(CommonState.values())
+                .filter(value -> value != INVALID)
+                .mapToInt(CommonState::getState)
+                .toArray();
     }
 
     public static String desc(int state) {

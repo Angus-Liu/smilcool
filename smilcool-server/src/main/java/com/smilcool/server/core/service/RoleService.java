@@ -1,6 +1,7 @@
 package com.smilcool.server.core.service;
 
 import com.smilcool.server.core.pojo.form.RoleAddForm;
+import com.smilcool.server.core.pojo.form.RoleUpdateForm;
 import com.smilcool.server.core.pojo.vo.RoleVO;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface RoleService {
     RoleVO add(RoleAddForm roleAddForm);
 
     List<RoleVO> list();
+
+    RoleVO updateById(Integer id, RoleUpdateForm roleUpdateForm);
 }

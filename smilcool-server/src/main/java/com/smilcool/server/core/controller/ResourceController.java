@@ -29,4 +29,8 @@ public class ResourceController {
         List<ResourceVO> resourceList = resourceService.list();
         return Result.success(resourceList);
     }
+
+//    public Result<ResourceVO> add() {
+//
+//    }
 }
