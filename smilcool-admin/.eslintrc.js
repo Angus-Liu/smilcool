@@ -15,7 +15,7 @@ module.exports = {
     'no-undef': 'off',
     camelcase: 'off',
     // 配置分号结尾，个人习惯
-    'semi': ['error', 'always']
+    // 'semi': ['error', 'always']
   },
   parserOptions: {
     parser: 'babel-eslint'

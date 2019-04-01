@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <Card>
-      <!-- 筛选栏 -->
-      <div>
-        <Form :model="userSearchForm" inline :label-width="70">
-          <FormItem label="用户名" prop="username">
-            <Input class="form-item" v-model="userSearchForm.username" placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="邮箱" prop="email">
-            <Input class="form-item" v-model="userSearchForm.email" placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="昵称" prop="nickname">
-            <Input class="form-item" v-model="userSearchForm.nickname" placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="角色" prop="role">
-            <Select class="form-item" v-model="userSearchForm.role">
-              <Option v-for="item in sex" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
-          </FormItem>
-          <FormItem label="状态" prop="state">
-            <Select class="form-item" v-model="userSearchForm.state">
-              <Option v-for="item in sex" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
-          </FormItem>
-          <span v-show="more.show">
+  <Card>
+    <!-- 筛选栏 -->
+    <Form :model="userSearchForm" inline :label-width="70">
+      <FormItem label="用户名" prop="username">
+        <Input class="form-item" v-model="userSearchForm.username" placeholder="Enter something..."></Input>
+      </FormItem>
+      <FormItem label="邮箱" prop="email">
+        <Input class="form-item" v-model="userSearchForm.email" placeholder="Enter something..."></Input>
+      </FormItem>
+      <FormItem label="昵称" prop="nickname">
+        <Input class="form-item" v-model="userSearchForm.nickname" placeholder="Enter something..."></Input>
+      </FormItem>
+      <FormItem label="角色" prop="role">
+        <Select class="form-item" v-model="userSearchForm.role">
+          <Option v-for="item in sex" :value="item.value" :key="item.value">{{ item.label }}</Option>
+        </Select>
+      </FormItem>
+      <FormItem label="状态" prop="state">
+        <Select class="form-item" v-model="userSearchForm.state">
+          <Option v-for="item in state" :value="item.value" :key="item.value">{{ item.label }}</Option>
+        </Select>
+      </FormItem>
+      <span v-show="more.show">
             <FormItem label="手机" prop="phone">
               <Input class="form-item" v-model="userSearchForm.phone" placeholder="Enter something..."/>
             </FormItem>
@@ -47,39 +45,37 @@
               </Select>
             </FormItem>
           </span>
-          <FormItem>
-            <Button class="btn-search" type="primary" icon="ios-search" @click="getUserPage">筛选</Button>
-            <Button class="btn-reset" @click="handleReset">清空</Button>
-            <a class="drop-down" @click="showMore">{{ more.content }}
-              <Icon :type="more.icon"/>
-            </a>
-          </FormItem>
-        </Form>
-      </div>
-      <div>
-        <Table :columns="columns" :data="page.records" :loading="loading" border stripe>
-          <template slot-scope="{ row }" slot="username">
-            <strong>{{ row.username }}</strong>
-          </template>
-          <template slot-scope="{ row, index }" slot="roles">
-            <Tag v-for="(role, index) in row.roles" :key="index" color="success">{{ role }}</Tag>
-          </template>
-          <template slot-scope="{ row, index }" slot="action">
-            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">详细信息</Button>
-          </template>
-        </Table>
-      </div>
-      <!-- 分页 -->
-      <Row class="page" justify="end" type="flex">
-        <Page :total="page.total" :current="page.current" :page-size="page.size"
-              @on-change="handleCurrentChange" @on-page-size-change="handlePageSizeChange"
-              show-sizer show-total show-elevator/>
-      </Row>
-    </Card>
-  </div>
+      <FormItem>
+        <Button class="btn-search" type="primary" icon="ios-search" @click="getUserPage">筛选</Button>
+        <Button class="btn-reset" @click="handleReset">清空</Button>
+        <a class="drop-down" @click="showMore">{{ more.content }}
+          <Icon :type="more.icon"/>
+        </a>
+      </FormItem>
+    </Form>
+    <!-- 表格 -->
+    <Table :columns="columns" :data="page.records" :loading="loading" border stripe>
+      <template slot-scope="{ row }" slot="username">
+        <strong>{{ row.username }}</strong>
+      </template>
+      <template slot-scope="{ row, index }" slot="roles">
+        <Tag v-for="(role, index) in row.roles" :key="index" color="success">{{ role }}</Tag>
+      </template>
+      <template slot-scope="{ row, index }" slot="action">
+        <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">详细信息</Button>
+      </template>
+    </Table>
+    <!-- 分页 -->
+    <Row class="page" justify="end" type="flex">
+      <Page :total="page.total" :current="page.current" :page-size="page.size"
+            @on-change="handleCurrentChange" @on-page-size-change="handlePageSizeChange"
+            show-sizer show-total show-elevator/>
+    </Row>
+  </Card>
 </template>
 <script>
 export default {
+  name: 'UserManage',
   data () {
     return {
       // 表单设置
@@ -89,6 +85,11 @@ export default {
         icon: 'ios-arrow-down'
       },
       // 查询表单 - 性别
+      state: [
+        { value: 0, label: '未激活' },
+        { value: 1, label: '正常' },
+        { value: -1, label: '停用' },
+      ],
       sex: [
         { value: '男', label: '男' },
         { value: '女', label: '女' },
@@ -113,6 +114,7 @@ export default {
       loading: true,
       // 表格数据
       columns: [
+        { type: 'index', width: 60, align: 'center', fixed: 'left' },
         { title: '用户名', slot: 'username', width: '150', fixed: 'left' },
         { title: '昵称', key: 'nickname', width: '150' },
         { title: '性别', key: 'sex', align: 'center', width: '80' },
@@ -166,7 +168,7 @@ export default {
     },
     getUserPage () {
       this.loading = true;
-      this.$axios.get('/api/user/condition', this.userSearchForm)
+      this.$axios.get('/api/user/page', this.userSearchForm)
         .then(res => {
           // 获取响应体中统一接口交互对象 result
           let result = res.data;

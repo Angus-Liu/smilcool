@@ -120,6 +120,14 @@ class HttpRequest {
       data
     });
   }
+
+  put (url, data) {
+    return this.request({
+      method: 'put',
+      url,
+      data
+    });
+  }
 }
 
 export default HttpRequest;

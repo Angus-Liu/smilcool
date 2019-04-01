@@ -124,7 +124,7 @@ export default [
           icon: 'md-person',
           title: '用户管理'
         },
-        component: () => import('@/view/system/userManage')
+        component: () => import('@/view/system/UserManage')
       },
       {
         path: 'role',
@@ -133,7 +133,7 @@ export default [
           icon: 'md-person-add',
           title: '角色管理'
         },
-        component: () => import('@/view/components/tree-select')
+        component: () => import('@/view/system/RoleManage')
       },
       {
         path: 'permission',
@@ -142,7 +142,7 @@ export default [
           icon: 'md-key',
           title: '权限管理'
         },
-        component: () => import('@/view/components/tree-select')
+        component: () => import('@/view/system/PermissionManage')
       }
     ]
   },
@@ -162,7 +162,7 @@ export default [
           icon: 'md-person',
           title: '用户管理'
         },
-        component: () => import('@/view/system/userManage')
+        component: () => import('@/view/system/UserManage')
       },
       {
         path: 'role',
