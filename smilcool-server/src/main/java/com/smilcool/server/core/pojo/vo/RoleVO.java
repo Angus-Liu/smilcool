@@ -26,5 +26,5 @@ public class RoleVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    private Boolean isDel;
+    private Boolean deleted;
 }

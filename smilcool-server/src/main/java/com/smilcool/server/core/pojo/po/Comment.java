@@ -21,7 +21,7 @@ public class Comment {
 
     private Date updateTime;
 
-    private Boolean isDel;
+    private Boolean deleted;
 
     public Integer getId() {
         return id;
@@ -95,11 +95,11 @@ public class Comment {
         this.updateTime = updateTime;
     }
 
-    public Boolean getIsDel() {
-        return isDel;
+    public Boolean getdeleted() {
+        return deleted;
     }
 
-    public void setIsDel(Boolean isDel) {
-        this.isDel = isDel;
+    public void setdeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

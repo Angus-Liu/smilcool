@@ -69,7 +69,7 @@ public class UserVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    private Boolean isDel;
+    private Boolean deleted;
 
     /**
      * 角色信息

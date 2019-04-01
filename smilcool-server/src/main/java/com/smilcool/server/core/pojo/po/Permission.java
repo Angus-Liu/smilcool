@@ -28,5 +28,5 @@ public class Permission {
 
     private Date updateTime;
 
-    private Boolean isDel;
+    private Boolean deleted;
 }

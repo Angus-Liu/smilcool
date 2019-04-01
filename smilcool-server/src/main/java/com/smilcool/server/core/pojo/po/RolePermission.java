@@ -18,5 +18,5 @@ public class RolePermission {
 
     private Date updateTime;
 
-    private Boolean isDel;
+    private Boolean deleted;
 }

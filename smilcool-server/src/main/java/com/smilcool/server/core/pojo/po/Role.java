@@ -22,5 +22,5 @@ public class Role {
 
     private Date updateTime;
 
-    private Boolean isDel;
+    private Boolean deleted;
 }

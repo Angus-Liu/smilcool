@@ -8,10 +8,10 @@
         <result column="state" jdbcType="INTEGER" property="state"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="is_del" jdbcType="BIT" property="isDel"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, role_id, permission_id, state, create_time, update_time, is_del
+        id, role_id, permission_id, state, create_time, update_time, deleted
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -27,10 +27,10 @@
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.RolePermission">
         INSERT INTO role_permission (id, role_id, permission_id,
                                      state, create_time, update_time,
-                                     is_del)
+                                     deleted)
         VALUES (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{permissionId,jdbcType=INTEGER},
                 #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-                #{isDel,jdbcType=BIT})
+                #{deleted,jdbcType=BIT})
     </insert>
     <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.RolePermission"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -54,8 +54,8 @@
             <if test="updateTime != null">
                 update_time,
             </if>
-            <if test="isDel != null">
-                is_del,
+            <if test="deleted != null">
+                deleted,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -77,8 +77,8 @@
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="isDel != null">
-                #{isDel,jdbcType=BIT},
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
             </if>
         </trim>
     </insert>
@@ -100,8 +100,8 @@
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="isDel != null">
-                is_del = #{isDel,jdbcType=BIT},
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -113,7 +113,7 @@
             state         = #{state,jdbcType=INTEGER},
             create_time   = #{createTime,jdbcType=TIMESTAMP},
             update_time   = #{updateTime,jdbcType=TIMESTAMP},
-            is_del        = #{isDel,jdbcType=BIT}
+            deleted        = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -134,7 +134,7 @@
     <sql id="Permission_Base_Column_List">
         p.id, p.parent_id, p.name, p.description, p.url,
         p.type, p.seq, p.state, p.remark, p.create_time,
-        p.update_time, p.is_del
+        p.update_time, p.deleted
     </sql>
     <select id="selectPermissionListByRoleId" resultType="com.smilcool.server.core.pojo.po.Permission">
         SELECT

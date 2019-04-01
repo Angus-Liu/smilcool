@@ -20,11 +20,11 @@
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="is_del" jdbcType="BIT" property="isDel"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, username, password, nickname, avatar, sex, birthday, sign, intro, grade, college,
-    major, phone, email, state, remark, create_time, update_time, is_del
+    major, phone, email, state, remark, create_time, update_time, deleted
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -44,14 +44,14 @@
                           grade, college, major,
                           phone, email, state,
                           remark, create_time, update_time,
-                          is_del)
+                          deleted)
         VALUES (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
                 #{nickname,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
                 #{birthday,jdbcType=TIMESTAMP}, #{sign,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR},
                 #{grade,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR},
                 #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
                 #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-                #{isDel,jdbcType=BIT})
+                #{deleted,jdbcType=BIT})
     </insert>
     <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.User"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -111,8 +111,8 @@
             <if test="updateTime != null">
                 update_time,
             </if>
-            <if test="isDel != null">
-                is_del,
+            <if test="deleted != null">
+                deleted,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -170,8 +170,8 @@
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="isDel != null">
-                #{isDel,jdbcType=BIT},
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
             </if>
         </trim>
     </insert>
@@ -229,8 +229,8 @@
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="isDel != null">
-                is_del = #{isDel,jdbcType=BIT},
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -254,7 +254,7 @@
             remark      = #{remark,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             update_time = #{updateTime,jdbcType=TIMESTAMP},
-            is_del      = #{isDel,jdbcType=BIT}
+            deleted      = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 

@@ -9,13 +9,13 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="is_del" jdbcType="BIT" property="isDel" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.Info">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, resource_id, title, image, remark, create_time, update_time, is_del
+    id, resource_id, title, image, remark, create_time, update_time, deleted
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -35,11 +35,11 @@
   <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Info">
     insert into info (id, resource_id, title, 
       image, remark, create_time, 
-      update_time, is_del, content
+      update_time, deleted, content
       )
     values (#{id,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{image,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR}
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Info">
@@ -66,8 +66,8 @@
       <if test="updateTime != null">
         update_time,
       </if>
-      <if test="isDel != null">
-        is_del,
+      <if test="deleted != null">
+        deleted,
       </if>
       <if test="content != null">
         content,
@@ -95,8 +95,8 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDel != null">
-        #{isDel,jdbcType=BIT},
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -124,8 +124,8 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDel != null">
-        is_del = #{isDel,jdbcType=BIT},
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -141,7 +141,7 @@
       remark = #{remark,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_del = #{isDel,jdbcType=BIT},
+      deleted = #{deleted,jdbcType=BIT},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -153,7 +153,7 @@
       remark = #{remark,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_del = #{isDel,jdbcType=BIT}
+      deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

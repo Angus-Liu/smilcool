@@ -24,7 +24,7 @@ public class UserRole {
 
     private Date updateTime;
 
-    private Boolean isDel;
+    private Boolean deleted;
 
     public UserRole(Integer userId) {
         this.userId = userId;

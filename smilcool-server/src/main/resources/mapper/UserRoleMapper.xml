@@ -8,10 +8,10 @@
         <result column="state" jdbcType="INTEGER" property="state"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="is_del" jdbcType="BIT" property="isDel"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, role_id, state, create_time, update_time, is_del
+        id, user_id, role_id, state, create_time, update_time, deleted
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -27,10 +27,10 @@
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.UserRole">
         INSERT INTO user_role (id, user_id, role_id,
                                state, create_time, update_time,
-                               is_del)
+                               deleted)
         VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER},
                 #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-                #{isDel,jdbcType=BIT})
+                #{deleted,jdbcType=BIT})
     </insert>
     <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.UserRole"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -54,8 +54,8 @@
             <if test="updateTime != null">
                 update_time,
             </if>
-            <if test="isDel != null">
-                is_del,
+            <if test="deleted != null">
+                deleted,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -77,8 +77,8 @@
             <if test="updateTime != null">
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="isDel != null">
-                #{isDel,jdbcType=BIT},
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
             </if>
         </trim>
     </insert>
@@ -100,8 +100,8 @@
             <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="isDel != null">
-                is_del = #{isDel,jdbcType=BIT},
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -113,7 +113,7 @@
             state       = #{state,jdbcType=INTEGER},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             update_time = #{updateTime,jdbcType=TIMESTAMP},
-            is_del      = #{isDel,jdbcType=BIT}
+            deleted      = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -132,7 +132,7 @@
     </select>
 
     <sql id="Role_Base_Column_List">
-        r.id, r.name, r.description, r.state, r.remark, r.create_time, r.update_time, r.is_del
+        r.id, r.name, r.description, r.state, r.remark, r.create_time, r.update_time, r.deleted
     </sql>
     <select id="selectRoleByUserId" resultType="com.smilcool.server.core.pojo.po.Role">
         SELECT

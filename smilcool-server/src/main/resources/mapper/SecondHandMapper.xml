@@ -13,11 +13,11 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="is_del" jdbcType="BIT" property="isDel" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
     id, resource_id, title, name, price, address, image, description, remark, create_time, 
-    update_time, is_del
+    update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,12 +33,12 @@
     insert into second_hand (id, resource_id, title, 
       name, price, address, 
       image, description, remark, 
-      create_time, update_time, is_del
+      create_time, update_time, deleted
       )
     values (#{id,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{address,jdbcType=VARCHAR}, 
       #{image,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT}
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.SecondHand">
@@ -77,8 +77,8 @@
       <if test="updateTime != null">
         update_time,
       </if>
-      <if test="isDel != null">
-        is_del,
+      <if test="deleted != null">
+        deleted,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -115,8 +115,8 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDel != null">
-        #{isDel,jdbcType=BIT},
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -153,8 +153,8 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDel != null">
-        is_del = #{isDel,jdbcType=BIT},
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -171,7 +171,7 @@
       remark = #{remark,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      is_del = #{isDel,jdbcType=BIT}
+      deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
+import io.swagger.annotations.Api;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Angus
  * @date 2019/3/31
  */
+@Api(description = "错误拦截接口", hidden = true)
 @RestController
 public class ErrorsController implements ErrorController {
     @Override
