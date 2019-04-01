@@ -64,7 +64,7 @@ public class Result<T> {
     }
 
     public static Result error(String msg) {
-        return error(400, null);
+        return error(400, msg);
     }
 
     public static Result error() {
