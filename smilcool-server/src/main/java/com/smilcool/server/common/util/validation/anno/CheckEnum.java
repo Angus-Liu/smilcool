@@ -11,6 +11,8 @@ import javax.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.ElementType.TYPE_USE;
@@ -30,15 +32,18 @@ public @interface CheckEnum {
      * 添加枚举的原因在于，注解的属性不支持变量，原本的想法是让 CheckEnum 的 value 为 int[] 型，
      * 但在使用时 @CheckEnum(value = CommonState.enums(),...) 会报错，故而设置一个枚举作为中专站
      */
-    enum EnumType {
-        EMPTY(new int[]{}),
+    enum EnumType{
+        EMPTY(new HashSet<>()),
         COMMON_STATE(CommonState.enums()),
         USER_STATE(UserState.enums()),
         PERMISSION_TYPE(PermissionType.enums());
 
-        public int[] enums;
+        /**
+         * 可枚举值集合
+         */
+        public Set<?> enums;
 
-        EnumType(int[] enums) {
+        EnumType(Set<?> enums) {
             this.enums = enums;
         }
     }

@@ -1,6 +1,8 @@
 package com.smilcool.server.common.enums;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Angus
@@ -31,11 +33,12 @@ public enum PermissionType {
         return INVALID;
     }
 
-    public static int[] enums() {
-        return Arrays.stream(PermissionType.values())
+    public static Set<Integer> enums() {
+        Set<Integer> typeSet = new HashSet<>();
+        Arrays.stream(PermissionType.values())
                 .filter(value -> value != INVALID)
-                .mapToInt(PermissionType::getType)
-                .toArray();
+                .forEach(value -> typeSet.add(value.type));
+        return typeSet;
     }
 
 

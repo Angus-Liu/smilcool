@@ -8,6 +8,7 @@ import com.smilcool.server.common.util.validation.anno.CheckEnum;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Angus
@@ -15,7 +16,10 @@ import java.util.Optional;
  */
 public class CheckEnumValidator implements ConstraintValidator<CheckEnum, Integer> {
 
-    private int[] enums;
+    /**
+     * 可枚举值集合
+     */
+    private Set<?> enums;
 
     @Override
     public void initialize(CheckEnum checkEnum) {
@@ -35,11 +39,6 @@ public class CheckEnumValidator implements ConstraintValidator<CheckEnum, Intege
         if (enums == null) {
             return false;
         }
-        for (int e : enums) {
-            if (value == e) {
-                return true;
-            }
-        }
-        return false;
+        return enums.contains(value);
     }
 }

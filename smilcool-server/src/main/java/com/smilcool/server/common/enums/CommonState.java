@@ -1,6 +1,8 @@
 package com.smilcool.server.common.enums;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Angus
@@ -29,20 +31,12 @@ public enum CommonState {
         return INVALID;
     }
 
-    public static boolean check(int state) {
-        for (CommonState commonState : CommonState.values()) {
-            if (commonState.state == state) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static int[] enums() {
-        return Arrays.stream(CommonState.values())
+    public static Set<Integer> enums() {
+        Set<Integer> stateSet = new HashSet<>();
+        Arrays.stream(CommonState.values())
                 .filter(value -> value != INVALID)
-                .mapToInt(CommonState::getState)
-                .toArray();
+                .forEach(value -> stateSet.add(value.state));
+        return stateSet;
     }
 
     public static String desc(int state) {
