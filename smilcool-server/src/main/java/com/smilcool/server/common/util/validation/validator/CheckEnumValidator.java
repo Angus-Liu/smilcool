@@ -17,16 +17,14 @@ import java.util.Set;
 public class CheckEnumValidator implements ConstraintValidator<CheckEnum, Integer> {
 
     /**
-     * 可枚举值集合
+     * 可枚举值
      */
-    private Set<?> enums;
+    private CheckEnum.EnumType enumType;
 
     @Override
     public void initialize(CheckEnum checkEnum) {
-        // 获取枚举类型
-        CheckEnum.EnumType value = checkEnum.value();
-        // 获取枚举类型值对应数组
-        this.enums = value.enums;
+        // 获取可枚举值
+        this.enumType = checkEnum.value();
     }
 
     @Override
@@ -35,10 +33,7 @@ public class CheckEnumValidator implements ConstraintValidator<CheckEnum, Intege
         if (value == null) {
             return true;
         }
-        // 可枚举的值为空直接报错
-        if (enums == null) {
-            return false;
-        }
-        return enums.contains(value);
+        // 可枚举的值为空或值不在可枚举值中报错
+        return enumType.enums != null && enumType.enums.contains(value);
     }
 }
