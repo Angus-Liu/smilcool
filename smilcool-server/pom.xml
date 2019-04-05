@@ -52,12 +52,12 @@
             <artifactId>swagger-spring-boot-starter</artifactId>
             <version>2.1.5-RELEASE</version>
         </dependency>
-        <!-- SpringBoot 热部署 -->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-devtools</artifactId>-->
-        <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
+        <!-- Shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring-boot-web-starter</artifactId>
+            <version>1.4.0</version>
+        </dependency>
         <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
@@ -76,6 +76,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- SpringBoot 热部署 -->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-devtools</artifactId>-->
+        <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
