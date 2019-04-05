@@ -3,9 +3,13 @@ package com.smilcool.server.base.handler;
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.common.exception.SmilcoolException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.ShiroException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.naming.AuthenticationException;
 
 /**
  * 全局异常处理
@@ -24,9 +28,34 @@ public class ExceptionsHandler {
      */
     @ResponseBody
     @ExceptionHandler(SmilcoolException.class)
-    public Result handleAutumnException(SmilcoolException e) {
+    public Result handleException(SmilcoolException e) {
         return Result.error(e.getMessage());
     }
+
+    /**
+     * 处理认证异常
+     *
+     * @param e
+     * @return
+     */
+    @ResponseBody
+    @ExceptionHandler(AuthenticationException.class)
+    public Result handleException(AuthenticationException e) {
+        return Result.error(401, e.getMessage());
+    }
+
+    /**
+     * 处理授权异常
+     *
+     * @param e
+     * @return
+     */
+    @ResponseBody
+    @ExceptionHandler(AuthorizationException.class)
+    public Result handleException(AuthorizationException e) {
+        return Result.error(403, e.getMessage());
+    }
+
 
     /**
      * 处理其他系统异常

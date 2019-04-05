@@ -2,12 +2,9 @@ package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
-import com.smilcool.server.core.dao.PermissionMapper;
-import com.smilcool.server.core.dao.RoleMapper;
 import com.smilcool.server.core.dao.RolePermissionMapper;
 import com.smilcool.server.core.pojo.form.RolePermissionAddForm;
 import com.smilcool.server.core.pojo.po.Permission;
-import com.smilcool.server.core.pojo.po.Role;
 import com.smilcool.server.core.pojo.po.RolePermission;
 import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.pojo.vo.RolePermissionVO;
@@ -16,9 +13,9 @@ import com.smilcool.server.core.service.RolePermissionService;
 import com.smilcool.server.core.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Angus
@@ -81,5 +78,15 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     @Override
     public List<Permission> getPermissionListByRoleIdList(List<Integer> roleIdList) {
         return rolePermissionMapper.selectPermissionListByRoleIdList(roleIdList);
+    }
+
+    @Override
+    public Set<String> getPermissionNames(Integer userId) {
+        return rolePermissionMapper.selectPermissionNameByUserId(userId);
+    }
+
+    @Override
+    public Set<String> getPermissionNames(String username) {
+       return rolePermissionMapper.selectPermissionNameByUsername(username);
     }
 }

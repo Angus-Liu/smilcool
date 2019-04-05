@@ -2,12 +2,9 @@ package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
-import com.smilcool.server.core.dao.RoleMapper;
-import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.dao.UserRoleMapper;
 import com.smilcool.server.core.pojo.form.UserRoleAddForm;
 import com.smilcool.server.core.pojo.po.Role;
-import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.po.UserRole;
 import com.smilcool.server.core.pojo.vo.UserRoleVO;
 import com.smilcool.server.core.service.RoleService;
@@ -17,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Angus
@@ -41,9 +38,24 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public List<Role> getRoleByUserId(Integer userId) {
+    public List<Role> getRoles(Integer userId) {
         List<Role> roleList = userRoleMapper.selectRoleByUserId(userId);
         return roleList;
+    }
+
+    @Override
+    public Set<String> getRoleNames(Integer userId) {
+        return userRoleMapper.selectRoleNameByUserId(userId);
+    }
+
+    @Override
+    public Set<String> getRoleNames(String username) {
+        return userRoleMapper.selectRoleNameByUsername(username);
+    }
+
+    @Override
+    public Set<String> getRoleDescriptions(Integer userId) {
+        return userRoleMapper.selectRoleDescriptionByUserId(userId);
     }
 
     @Override
@@ -67,5 +79,11 @@ public class UserRoleServiceImpl implements UserRoleService {
         userRole = BeanUtil.copyProp(form, UserRole.class);
         userRoleMapper.insertSelective(userRole);
         return getById(userRole.getId());
+    }
+
+    @Override
+    public void addDefault(Integer userId) {
+        UserRole userRole = new UserRole(userId);
+        userRoleMapper.insertSelective(userRole);
     }
 }

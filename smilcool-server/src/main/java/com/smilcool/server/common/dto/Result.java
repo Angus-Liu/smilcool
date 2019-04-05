@@ -13,6 +13,23 @@ import lombok.Data;
 @AllArgsConstructor
 @ApiModel("统一接口交互对象")
 public class Result<T> {
+
+    enum Code {
+        OK(200),
+        CLIENT_ERROR(400),
+        UNAUTHORIZED(401),
+        FORBIDDEN(403),
+        NOT_FOUND(404),
+        SYSTEM_ERROR(500);
+
+        public int code;
+
+        Code(int code) {
+            this.code = code;
+        }
+    }
+
+
     /**
      * 请求情况
      */
@@ -27,6 +44,11 @@ public class Result<T> {
 
     /**
      * 状态码
+     * 400 Client Error
+     * 401 Unauthorized
+     * 403 Forbidden
+     * 404 Not Found
+     * 500 System Error
      */
     @ApiModelProperty("状态码")
     private Integer code;

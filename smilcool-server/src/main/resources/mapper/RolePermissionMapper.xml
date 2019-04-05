@@ -113,7 +113,7 @@
             state         = #{state,jdbcType=INTEGER},
             create_time   = #{createTime,jdbcType=TIMESTAMP},
             update_time   = #{updateTime,jdbcType=TIMESTAMP},
-            deleted        = #{deleted,jdbcType=BIT}
+            deleted       = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
@@ -153,5 +153,32 @@
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>
+    </select>
+
+
+    <select id="selectPermissionNameByUserId" resultType="java.lang.String">
+        SELECT DISTINCT p.name
+        FROM role_permission rp
+                 LEFT JOIN permission p ON rp.permission_id = p.id
+        WHERE rp.role_id IN (
+            SELECT r.id
+            FROM user_role ur
+                     LEFT JOIN role r ON ur.role_id = r.id
+            WHERE ur.user_id = #{id}
+        )
+    </select>
+
+
+    <select id="selectPermissionNameByUsername" resultType="java.lang.String">
+        SELECT DISTINCT p.name
+        FROM role_permission rp
+                 LEFT JOIN permission p ON rp.permission_id = p.id
+        WHERE rp.role_id IN (
+            SELECT r.id
+            FROM user_role ur
+                     LEFT JOIN user u ON ur.user_id = u.id
+                     LEFT JOIN role r ON ur.role_id = r.id
+            WHERE u.username = #{username}
+        )
     </select>
 </mapper>

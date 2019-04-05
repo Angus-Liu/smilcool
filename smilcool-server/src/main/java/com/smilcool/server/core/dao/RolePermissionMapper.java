@@ -5,6 +5,7 @@ import com.smilcool.server.core.pojo.po.RolePermission;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface RolePermissionMapper {
     int deleteByPrimaryKey(Integer id);
@@ -27,4 +28,8 @@ public interface RolePermissionMapper {
     List<Permission> selectPermissionListByRoleId(Integer roleId);
 
     List<Permission> selectPermissionListByRoleIdList(List<Integer> roleIdList);
+
+    Set<String> selectPermissionNameByUserId(Integer userId);
+
+    Set<String> selectPermissionNameByUsername(String username);
 }

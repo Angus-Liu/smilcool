@@ -6,6 +6,7 @@ import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.pojo.vo.RolePermissionVO;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Angus
@@ -34,4 +35,8 @@ public interface RolePermissionService {
 
 
     List<Permission> getPermissionListByRoleIdList(List<Integer> roleIdList);
+
+    Set<String> getPermissionNames(Integer userId);
+
+    Set<String> getPermissionNames(String username);
 }

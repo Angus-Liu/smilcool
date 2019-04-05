@@ -3,13 +3,9 @@ package com.smilcool.server.core.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
-import com.smilcool.server.core.dao.UserRoleMapper;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.form.UserSearchForm;
-import com.smilcool.server.core.pojo.po.Permission;
-import com.smilcool.server.core.pojo.po.Role;
-import com.smilcool.server.core.pojo.po.UserRole;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.pojo.po.User;
@@ -20,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Angus
@@ -39,9 +35,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private UserRoleMapper userRoleMapper;
-
     /**
      * 获取用户信息
      *
@@ -49,28 +42,20 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public UserVO getById(Integer id) {
+    public UserVO get(Integer id) {
         // 获取用户基础信息
         User user = userMapper.selectByPrimaryKey(id);
         if (user == null) {
             throw new SmilcoolException("用户不存在");
         }
         // 获取用户角色信息
-        List<Role> roleList = userRoleService.getRoleByUserId(id);
-        List<String> roleNameList = new ArrayList<>();
-        List<Integer> roleIdList = new ArrayList<>();
-        roleList.forEach(role -> {
-            roleNameList.add(role.getName());
-            roleIdList.add(role.getId());
-        });
+        Set<String> roleNames = userRoleService.getRoleNames(user.getId());
         // 获取用户权限信息
-        List<Permission> permissionList = rolePermissionService.getPermissionListByRoleIdList(roleIdList);
-        List<String> permissionNameList = new ArrayList<>();
-        permissionList.forEach(permission -> permissionNameList.add(permission.getName()));
+        Set<String> permissionNames = rolePermissionService.getPermissionNames(user.getId());
         // 整合用户信息
         UserVO userVO = BeanUtil.copyProp(user, UserVO.class);
-        userVO.setRoles(roleNameList);
-        userVO.setPermissions(permissionNameList);
+        userVO.setRoles(roleNames);
+        userVO.setPermissions(permissionNames);
         return userVO;
     }
 
@@ -88,7 +73,12 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new SmilcoolException("用户名或密码错误！");
         }
-        return getById(user.getId());
+        return get(user.getId());
+    }
+
+    @Override
+    public User get(String username, String password) {
+        return userMapper.selectByUsernameAndPassword(username, password);
     }
 
 
@@ -108,36 +98,51 @@ public class UserServiceImpl implements UserService {
         userMapper.insertSelective(user);
         // 添加用户-角色记录（用户注册时角色默认为普通用户 - normal）
         // TODO: role 表添加默认状态字段，查询获取为默认状态的 role 为新注册用户赋值
-        UserRole userRole = new UserRole(user.getId());
-        userRoleMapper.insertSelective(userRole);
+        userRoleService.addDefault(user.getId());
         // 返回用户信息
-        return getById(user.getId());
+        return get(user.getId());
     }
 
     @Override
-    public List<UserVO> getUserList() {
+    public List<UserVO> getUsers() {
         List<UserVO> userList = BeanUtil.copyProp(userMapper.selectAll(), UserVO.class);
         userList.forEach(user -> {
             // 获取用户角色信息（角色描述）
-            List<String> roles = new ArrayList<>();
-            userRoleService.getRoleByUserId(user.getId())
-                    .forEach(role -> roles.add(role.getDescription()));
-            user.setRoles(roles);
+            Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());
+            user.setRoles(roleDescriptions);
         });
         return userList;
     }
 
     @Override
-    public Page<UserVO> getUserPage(Page page, UserSearchForm userSearchForm) {
+    public Page<UserVO> getUsers(Page page, UserSearchForm userSearchForm) {
         User condition = BeanUtil.copyProp(userSearchForm, User.class);
         Page<UserVO> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserVO.class);
         userPage.getRecords().forEach(user -> {
             // 获取用户角色信息（角色描述）
-            List<String> roles = new ArrayList<>();
-            userRoleService.getRoleByUserId(user.getId())
-                    .forEach(role -> roles.add(role.getDescription()));
-            user.setRoles(roles);
+            Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());
+            user.setRoles(roleDescriptions);
         });
         return userPage;
+    }
+
+    @Override
+    public Set<String> getRoles(Integer id) {
+        return userRoleService.getRoleNames(id);
+    }
+
+    @Override
+    public Set<String> getRoles(String username) {
+        return userRoleService.getRoleNames(username);
+    }
+
+    @Override
+    public Set<String> getPermissions(Integer id) {
+        return rolePermissionService.getPermissionNames(id);
+    }
+
+    @Override
+    public Set<String> getPermissions(String username) {
+        return rolePermissionService.getPermissionNames(username);
     }
 }

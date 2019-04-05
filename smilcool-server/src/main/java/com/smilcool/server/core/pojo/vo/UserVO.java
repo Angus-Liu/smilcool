@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 
@@ -74,10 +75,10 @@ public class UserVO {
     /**
      * 角色信息
      */
-    private List<String> roles;
+    private Set<String> roles;
 
     /**
      * 权限信息
      */
-    private List<String> permissions;
+    private Set<String> permissions;
 }

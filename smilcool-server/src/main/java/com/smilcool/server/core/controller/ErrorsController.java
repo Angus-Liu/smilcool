@@ -27,7 +27,15 @@ public class ErrorsController implements ErrorController {
     public Result handleError(HttpServletRequest request) {
         // 获取 statusCode：401、403、404、500
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        return Result.error(statusCode, "Oops！服务器无法处理你的请求 :(");
+        String msg;
+        switch (statusCode) {
+            case 404:
+                msg = "请求的路径不存在";
+                break;
+            default:
+                msg = "Oops！服务器无法处理你的请求 :(";
+        }
+        return Result.error(statusCode, msg);
     }
 }
 
