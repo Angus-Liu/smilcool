@@ -3,15 +3,18 @@ package com.smilcool.server.core.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
+import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.form.UserSearchForm;
-import com.smilcool.server.core.pojo.vo.UserVO;
-import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.pojo.po.User;
+import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.RolePermissionService;
 import com.smilcool.server.core.service.UserRoleService;
 import com.smilcool.server.core.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,11 +72,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO login(UserLoginForm userLoginForm) {
-        User user = userMapper.selectByUsernameAndPassword(userLoginForm.getUsername(), userLoginForm.getPassword());
-        if (user == null) {
-            throw new SmilcoolException("用户名或密码错误！");
-        }
-        return get(user.getId());
+        // Shiro 身份认证
+        Subject currentUser = SecurityUtils.getSubject();
+        String username = userLoginForm.getUsername();
+        String password = userLoginForm.getPassword();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        currentUser.login(token);
+        return get((Integer) currentUser.getPrincipal());
     }
 
     @Override

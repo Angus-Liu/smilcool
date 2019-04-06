@@ -1,7 +1,6 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
-import com.smilcool.server.common.util.validation.BindingResultUtil;
 import com.smilcool.server.core.pojo.form.RoleAddForm;
 import com.smilcool.server.core.pojo.form.RoleUpdateForm;
 import com.smilcool.server.core.pojo.vo.PermissionVO;
@@ -11,7 +10,6 @@ import com.smilcool.server.core.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,8 +31,7 @@ public class RoleController {
 
     @ApiOperation("角色添加")
     @PostMapping("/role")
-    public Result<RoleVO> add(@RequestBody @Valid RoleAddForm roleAddForm, BindingResult bindingResult) {
-        BindingResultUtil.validate(bindingResult);
+    public Result<RoleVO> add(@RequestBody @Valid RoleAddForm roleAddForm) {
         RoleVO roleVO = roleService.add(roleAddForm);
         return Result.success(roleVO);
     }
@@ -56,9 +53,7 @@ public class RoleController {
     @ApiOperation(value = "更新角色")
     @PutMapping("/role/{id}")
     public Result<RoleVO> update(@PathVariable("id") Integer id,
-                                 @RequestBody @Valid RoleUpdateForm roleUpdateForm,
-                                 BindingResult bindingResult) {
-        BindingResultUtil.validate(bindingResult);
+                                 @RequestBody @Valid RoleUpdateForm roleUpdateForm) {
         RoleVO role = roleService.updateById(id, roleUpdateForm);
         return Result.success(role);
     }

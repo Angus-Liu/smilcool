@@ -1,14 +1,12 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
-import com.smilcool.server.common.util.validation.BindingResultUtil;
 import com.smilcool.server.core.pojo.form.RolePermissionAddForm;
 import com.smilcool.server.core.pojo.vo.RolePermissionVO;
 import com.smilcool.server.core.service.RolePermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,9 +24,7 @@ public class RolePermissionController {
 
     @ApiOperation("角色权限添加")
     @PostMapping("/role-permission")
-    public Result<RolePermissionVO> add(@RequestBody @Valid RolePermissionAddForm rolePermissionAddForm,
-                                        BindingResult bindingResult) {
-        BindingResultUtil.validate(bindingResult);
+    public Result<RolePermissionVO> add(@RequestBody @Valid RolePermissionAddForm rolePermissionAddForm) {
         RolePermissionVO rolePermission = rolePermissionService.add(rolePermissionAddForm);
         return Result.success(rolePermission);
     }

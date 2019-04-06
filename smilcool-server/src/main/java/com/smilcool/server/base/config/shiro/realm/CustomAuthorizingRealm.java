@@ -1,4 +1,4 @@
-package com.smilcool.server.base.config.shiro;
+package com.smilcool.server.base.config.shiro.realm;
 
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.service.UserService;
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Angus
  * @date 2019/4/5
  */
-public class ShiroRealm extends AuthorizingRealm {
+public class CustomAuthorizingRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
@@ -26,7 +26,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        int id = (int) principals.getPrimaryPrincipal();
+        Integer id = (Integer) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         // 获取角色信息
         authorizationInfo.setRoles(userService.getRoles(id));
@@ -49,7 +49,7 @@ public class ShiroRealm extends AuthorizingRealm {
         String password = String.valueOf(upToken.getPassword());
         User user = userService.get(username, password);
         if (user == null) {
-            throw new AuthenticationException("用户名或密码错误");
+            throw new AccountException("用户名或密码错误");
         }
         // 为减少连表操作，SimpleAuthenticationInfo 的 principal 由 username 改为 userId
         return new SimpleAuthenticationInfo(user.getId(), password, getName());

@@ -31,8 +31,8 @@ public class HttpAspect {
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         log.info("Request <---");
-        log.info("URL: {}", request.getRequestURL());
         log.info("Method: {}", request.getMethod());
+        log.info("URL: {}", request.getRequestURL());
         log.info("IP: {}", request.getRemoteAddr());
         log.info("SessionID: {}", request.getSession().getId());
         log.info("Class-Method: {}", joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());

@@ -6,12 +6,11 @@ import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.form.UserSearchForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
-import com.smilcool.server.common.util.validation.BindingResultUtil;
 import com.smilcool.server.core.service.UserService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,16 +30,14 @@ public class UserController {
 
     @ApiOperation("用户登录")
     @PostMapping("/user/login")
-    public Result<UserVO> login(@RequestBody UserLoginForm userLoginForm) {
-        UserVO loginUser = userService.login(userLoginForm);
-        // TODO: Shiro login
-        return Result.success(loginUser);
+    public Result<UserVO> login(@RequestBody @Valid UserLoginForm userLoginForm) {
+        UserVO user = userService.login(userLoginForm);
+        return Result.success(user);
     }
 
     @ApiOperation("用户注册")
     @PostMapping("/user/register")
-    public Result<UserVO> register(@RequestBody @Valid UserRegisterForm userRegisterForm, BindingResult bindingResult) {
-        BindingResultUtil.validate(bindingResult);
+    public Result<UserVO> register(@RequestBody @Valid UserRegisterForm userRegisterForm) {
         UserVO registerUser = userService.register(userRegisterForm);
         return Result.success(registerUser);
     }

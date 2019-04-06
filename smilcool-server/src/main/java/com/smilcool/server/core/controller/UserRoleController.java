@@ -1,14 +1,12 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
-import com.smilcool.server.common.util.validation.BindingResultUtil;
 import com.smilcool.server.core.pojo.form.UserRoleAddForm;
 import com.smilcool.server.core.pojo.vo.UserRoleVO;
 import com.smilcool.server.core.service.UserRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,9 +35,7 @@ public class UserRoleController {
 
     @ApiOperation("用户角色添加")
     @PostMapping("/user-role")
-    public Result<UserRoleVO> add(@RequestBody @Valid UserRoleAddForm userRoleAddForm,
-                                  BindingResult bindingResult) {
-        BindingResultUtil.validate(bindingResult);
+    public Result<UserRoleVO> add(@RequestBody @Valid UserRoleAddForm userRoleAddForm) {
         UserRoleVO userRole = userRoleService.add(userRoleAddForm);
         return Result.success(userRole);
     }

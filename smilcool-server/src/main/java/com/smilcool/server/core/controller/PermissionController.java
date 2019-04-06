@@ -1,14 +1,12 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
-import com.smilcool.server.common.util.validation.BindingResultUtil;
 import com.smilcool.server.core.pojo.form.PermissionAddForm;
 import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.service.PermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,8 +35,7 @@ public class PermissionController {
 
     @ApiOperation("权限添加")
     @PostMapping("/permission")
-    public Result<PermissionVO> add(@RequestBody @Valid PermissionAddForm permissionAddForm, BindingResult bindingResult) {
-        BindingResultUtil.validate(bindingResult);
+    public Result<PermissionVO> add(@RequestBody @Valid PermissionAddForm permissionAddForm) {
         PermissionVO permission = permissionService.add(permissionAddForm);
         return Result.success(permission);
     }
