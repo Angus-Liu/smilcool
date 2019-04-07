@@ -19,7 +19,7 @@ CREATE TABLE `user` (
   `remark`      varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_username` (`username`),
   UNIQUE KEY `uk_phone` (`phone`),
@@ -34,28 +34,29 @@ CREATE TABLE `role` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '角色ID',
   `name`        varchar(20)  NOT NULL COMMENT '角色名',
   `description` varchar(255) NOT NULL COMMENT '角色描述',
+  `default`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '是否为默认角色：0-不是，1-是',
   `state`       int(1)       NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
   `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
   `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='角色表';
 
-INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-VALUES (0, 'normal', '普通用户', 1, '注册用户默认角色为普通用户');
+INSERT INTO `role`(`id`, `name`, `description`, `default`, `state`, `remark`)
+  VALUES (0, 'normal', '普通用户', 1, 1, '注册用户默认角色为普通用户');
 
 INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-VALUES (1, 'super-admin', '超级管理员', 1, '超级管理员由系统内定，具有至高无上的权利');
+  VALUES (1, 'super-admin', '超级管理员', 1, '超级管理员由系统内定，具有至高无上的权利');
 
 INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-VALUES (2, 'admin', '管理员', 1, '管理员由超级管理员指定，具有相关操作权利');
+  VALUES (2, 'admin', '管理员', 1, '管理员由超级管理员指定，具有相关操作权利');
 
 INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-VALUES (9, 'member', '会员', 1, '会员比普通用户多了一些特殊权利');
+  VALUES (9, 'member', '会员', 1, '会员比普通用户多了一些特殊权利');
 
 # 权限表（permissions）
 DROP TABLE IF EXISTS `permission`;
@@ -64,14 +65,14 @@ CREATE TABLE `permission` (
   `parent_id`   int(11)               DEFAULT NULL COMMENT '父级ID',
   `name`        varchar(255) NOT NULL COMMENT '权限名',
   `description` varchar(255) NOT NULL COMMENT '权限描述',
-  `url`         varchar(255) NOT NULL COMMENT '请求地址（可填正则表达式）',
+  `url`         varchar(255) NOT NULL COMMENT '请求地址',
   `type`        int(1)       NOT NULL DEFAULT '3' COMMENT '类型：1-菜单，2-按钮，3-其他',
   `seq`         int(11)      NOT NULL DEFAULT '0' COMMENT '顺序',
   `state`       int(1)       NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
   `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
   `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`)
 ) ENGINE = INNODB
@@ -83,11 +84,11 @@ DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
   `id`          int(11)    NOT NULL AUTO_INCREMENT COMMENT '用户角色ID',
   `user_id`     int(11)    NOT NULL COMMENT '用户ID',
-  `role_id`     int(11)    NOT NULL DEFAULT '0' COMMENT '角色ID：0-普通用户',
+  `role_id`     int(11)    NOT NULL DEFAULT '0' COMMENT '角色ID',
   `state`       int(1)     NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
   `create_time` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_user_role` (`user_id`, `role_id`)
 ) ENGINE = INNODB
@@ -103,12 +104,38 @@ CREATE TABLE `role_permission` (
   `state`         int(1)     NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
   `create_time`   datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time`   datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`        tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`       tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_role_permission` (`role_id`, `permission_id`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='角色权限表';
+
+# 权限控制规则映射表
+DROP TABLE IF EXISTS `rule_map`;
+CREATE TABLE `rule_map` (
+  `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '规则映射ID',
+  `url`         varchar(255) NOT NULL COMMENT '请求地址',
+  `description` varchar(255) NOT NULL COMMENT '描述',
+  `type`        int(1)       NOT NULL DEFAULT '3' COMMENT '类型：1-菜单，2-按钮，3-其他',
+  `authc`       tinyint(1)   NOT NULL DEFAULT '0' COMMENT '是否需要认证',
+  `use_roles`   tinyint(1)   NOT NULL DEFAULT '0' COMMENT '使用角色规则',
+  `roles`       varchar(255)          DEFAULT NULL COMMENT '角色策略',
+  `use_perms`   tinyint(1)   NOT NULL DEFAULT '0' COMMENT '使用权限规则',
+  `perms`       varchar(255)          DEFAULT NULL COMMENT '权限策略',
+  `use_rest`    tinyint(1)   NOT NULL DEFAULT '0' COMMENT '使用HTTP方法规则',
+  `rest`        varchar(255)          DEFAULT NULL COMMENT 'HTTP方法策略',
+  `seq`         int(11)      NOT NULL DEFAULT '0' COMMENT '顺序',
+  `state`       int(1)       NOT NULL DEFAULT '1' COMMENT '状态：1-正常，-1-停用',
+  `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
+  `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_url` (`url`)
+) ENGINE = INNODB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT ='权限控制策略表';
 
 # 资源类目表（resource_type）
 DROP TABLE IF EXISTS `resource_type`;
@@ -123,7 +150,7 @@ CREATE TABLE `resource_type` (
   `remark`      varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   KEY `idx_parent_id` (`parent_id`)
 ) ENGINE = INNODB
@@ -142,7 +169,7 @@ CREATE TABLE `resource` (
   `remark`           varchar(255)        DEFAULT NULL COMMENT '备注',
   `create_time`      datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time`      datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`           tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`          tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   KEY `idx_user_id` (`user_id`),
   KEY `idx_resource_type_id` (`resource_type_id`)
@@ -161,7 +188,7 @@ CREATE TABLE `info` (
   `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
   `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_resource_id` (`resource_id`)
 ) ENGINE = INNODB
@@ -182,7 +209,7 @@ CREATE TABLE `data` (
   `remark`      varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_resource_id` (`resource_id`)
 ) ENGINE = INNODB
@@ -204,7 +231,7 @@ CREATE TABLE `lost_found` (
   `remark`      varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_resource_id` (`resource_id`)
 ) ENGINE = INNODB
@@ -225,7 +252,7 @@ CREATE TABLE `second_hand` (
   `remark`      varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_resource_id` (`resource_id`)
 ) ENGINE = INNODB
@@ -244,7 +271,7 @@ CREATE TABLE `comment` (
   `remark`        varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time`   datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time`   datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`        tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`       tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   KEY `idx_user_id` (`user_id`),
   KEY `idx_resource_id` (`resource_id`)
@@ -262,7 +289,7 @@ CREATE TABLE `zan` (
   `remark`      varchar(255)        DEFAULT NULL COMMENT '备注',
   `create_time` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`      tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `deleted`     tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   KEY `idx_user_id` (`user_id`),
   KEY `idx_resource_id` (`resource_id`)
