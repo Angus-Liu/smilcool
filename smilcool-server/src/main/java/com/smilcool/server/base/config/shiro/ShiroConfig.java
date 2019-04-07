@@ -5,9 +5,6 @@ import com.smilcool.server.base.config.shiro.filter.CustomHttpMethodPermissionFi
 import com.smilcool.server.base.config.shiro.filter.CustomPermissionsAuthorizationFilter;
 import com.smilcool.server.base.config.shiro.filter.CustomRolesAuthorizationFilter;
 import com.smilcool.server.base.config.shiro.realm.CustomAuthorizingRealm;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -16,9 +13,7 @@ import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -75,9 +70,8 @@ public class ShiroConfig {
 
         filterChainDefinitionMap.put("/user/login", "anon");
         filterChainDefinitionMap.put("/user/register", "anon");
-        filterChainDefinitionMap.put("/user", "authc, rest[user]");
-        filterChainDefinitionMap.put("/user/page", "authc, roles[admin]");
-        filterChainDefinitionMap.put("/role", "authc, perms[role]");
+        filterChainDefinitionMap.put("/user", "roles[admin]");
+        filterChainDefinitionMap.put("/role", "perms[role]");
         filterChainDefinitionMap.put("/**", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -88,11 +82,10 @@ public class ShiroConfig {
      *
      * @return
      */
-    @Bean
-    protected CacheManager cacheManager() {
-        return new MemoryConstrainedCacheManager();
-    }
-
+//    @Bean
+//    protected CacheManager cacheManager() {
+//        return new MemoryConstrainedCacheManager();
+//    }
     private FormAuthenticationFilter authc() {
         return new CustomFormAuthenticationFilter();
     }

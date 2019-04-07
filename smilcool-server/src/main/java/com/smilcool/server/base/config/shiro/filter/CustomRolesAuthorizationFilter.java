@@ -25,7 +25,7 @@ public class CustomRolesAuthorizationFilter extends RolesAuthorizationFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
         Subject subject = getSubject(request, response);
-        if (subject.getPrincipal() == null) {
+        if (!subject.isAuthenticated()) {
             HttpServletResponseUtil.sendJson((HttpServletResponse) response,
                     HttpServletResponse.SC_UNAUTHORIZED,
                     Result.error(401, "身份验证失败，请重新登录"));
