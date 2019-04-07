@@ -11,8 +11,9 @@ import java.io.IOException;
 
 /**
  * 原 RolesAuthorizationFilter 要求当前用户具有映射值指定的角色，否则
- * 拒绝访问，根据用户登录情况重定向到 loginUrl 或 unauthorizedUrl。这
- * 里重写 RolesAuthorizationFilter 的 onAccessDenied 方法，在角色验证
+ * 拒绝访问，根据用户登录情况重定向到 loginUrl 或 unauthorizedUrl。未
+ * 设置 unauthorizedUrl 时，会直接向返回 401 Unauthorized 错误。这里
+ * 重写 RolesAuthorizationFilter 的 onAccessDenied 方法，在角色验证
  * 未通过时，直接向前端返回错误信息，不进行重定向
  *
  * @author Angus

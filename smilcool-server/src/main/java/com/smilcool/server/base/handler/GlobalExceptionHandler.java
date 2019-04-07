@@ -17,8 +17,8 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 1.全局异常处理（处理 RESTful API 导致的异常）
- * 2.实现 ErrorController 捕获 404、405 等异常 （处理资源和方法映射导致的异常）
+ * 1.RestControllerAdvice 结合 ExceptionHandler 实现全局异常处理
+ * 2.实现 ErrorController 捕获 ExceptionHandler 未能捕获的异常
  * - 不破坏原 SpringBoot WebMVC 配置
  * - 可解决 Vue Router History 模式刷新问题 https://router.vuejs.org/zh/guide/essentials/history-mode.html
  *
@@ -45,25 +45,25 @@ public class GlobalExceptionHandler implements ErrorController {
         String path = (String) request.getAttribute(WebUtils.ERROR_REQUEST_URI_ATTRIBUTE);
         String message = (String) request.getAttribute(WebUtils.ERROR_MESSAGE_ATTRIBUTE);
         Exception exception = (Exception) request.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE);
-        log.info("status: {}", status);
-        log.info("method: {}", method);
-        log.info("path: {}", path);
-        log.info("message: {}", message);
+        log.info("status: {}; method: {}; path: {}; message: {};", status, method, path, message);
         log.error("exception: ", exception);
         String msg;
         switch (status) {
-            case 404: {
+            case 401:
+                msg = path + " Unauthorized";
+                break;
+            case 403:
+                msg = path + " Forbidden";
+                break;
+            case 404:
                 msg = path + " Not Found";
                 break;
-            }
-            case 405: {
-                msg = "Request method '" + method + "' not supported";
+            case 405:
+                msg = method + " Not Supported";
                 break;
-            }
-            default: {
+            default:
                 msg = "Oops！服务器无法处理你的请求 :(";
                 break;
-            }
         }
         return Result.error(status, msg);
     }

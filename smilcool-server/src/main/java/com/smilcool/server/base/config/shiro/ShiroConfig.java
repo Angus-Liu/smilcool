@@ -5,6 +5,7 @@ import com.smilcool.server.base.config.shiro.filter.CustomHttpMethodPermissionFi
 import com.smilcool.server.base.config.shiro.filter.CustomPermissionsAuthorizationFilter;
 import com.smilcool.server.base.config.shiro.filter.CustomRolesAuthorizationFilter;
 import com.smilcool.server.base.config.shiro.realm.CustomAuthorizingRealm;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -15,7 +16,9 @@ import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -57,9 +60,19 @@ public class ShiroConfig {
         filters.put("perms", perms());
         filters.put("rest", rest());
         filters.put("roles", roles());
-        // 配置过滤器链
+        // 配置过滤器链映射
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        // TODO：从数据库获取
+        // TODO：从数据库获取，考虑是否单独增加一张表存储 shiro 过滤器链
+        // 注册 数据库中所有的权限 及其对应url
+        // List<Permission> allPermission = permissionRepository.findAll();//数据库中查询所有权限
+        // for (Permission p : allPermission) {
+        //     filterMap.put(p.getUrl(), "perms[" + p.getName() + "]");    //拦截器中注册所有的权限
+        // }
+        // filterMap.put("/static/**", "anon");    //公开访问的资源
+        // filterMap.put("/open/api/**", "anon");  //公开接口地址
+        // filterMap.put("/logout", "logout");     //配置登出页,shiro已经帮我们实现了跳转
+        // filterMap.put("/**", "authc");          //所有资源都需要经过验证
+
         filterChainDefinitionMap.put("/user/login", "anon");
         filterChainDefinitionMap.put("/user/register", "anon");
         filterChainDefinitionMap.put("/user", "authc, rest[user]");
