@@ -2,6 +2,7 @@ package com.smilcool.server.base.config.shiro.filter;
 
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.common.util.HttpServletResponseUtil;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 
 import javax.servlet.ServletRequest;
@@ -22,9 +23,16 @@ import java.io.IOException;
 public class CustomPermissionsAuthorizationFilter extends PermissionsAuthorizationFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
-        HttpServletResponseUtil.sendJson((HttpServletResponse) response,
-                HttpServletResponse.SC_FORBIDDEN,
-                Result.error(403, "用户无相关权限，禁止访问"));
+        Subject subject = getSubject(request, response);
+        if (subject.getPrincipal() == null) {
+            HttpServletResponseUtil.sendJson((HttpServletResponse) response,
+                    HttpServletResponse.SC_UNAUTHORIZED,
+                    Result.error(401, "身份验证失败，请重新登录"));
+        } else {
+            HttpServletResponseUtil.sendJson((HttpServletResponse) response,
+                    HttpServletResponse.SC_FORBIDDEN,
+                    Result.error(403, "用户无相关权限，禁止访问"));
+        }
         return false;
     }
 }

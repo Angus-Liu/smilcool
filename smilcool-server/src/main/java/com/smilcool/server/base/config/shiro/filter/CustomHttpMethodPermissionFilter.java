@@ -2,6 +2,7 @@ package com.smilcool.server.base.config.shiro.filter;
 
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.common.util.HttpServletResponseUtil;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 
 import javax.servlet.ServletRequest;
@@ -17,13 +18,18 @@ import java.io.IOException;
  * 时，直接向前端返回错误信息，不进行重定向
  * <br/>
  * 表示 HTTP 方法的操作：
- *   POST -> CREATE_ACTION = "create";
- *    GET ->   READ_ACTION = "read";
- *    PUT -> UPDATE_ACTION = "update";
+ * POST -> CREATE_ACTION = "create";
+ * GET ->   READ_ACTION = "read";
+ * PUT -> UPDATE_ACTION = "update";
  * DELETE -> DELETE_ACTION = "delete";
  * <br/>
  * 例：
- * rest[user] = user:create; user:read; user:update; user:delete
+ * /user - rest[user]
+ * ANY /user - user
+ * POST /user - user:create
+ * GET  /user - user:read
+ * PUT  /user - user:update
+ * DELETE /user - user:delete
  *
  * @author Angus
  * @date 2019/4/6
@@ -32,9 +38,16 @@ public class CustomHttpMethodPermissionFilter extends HttpMethodPermissionFilter
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
-        HttpServletResponseUtil.sendJson((HttpServletResponse) response,
-                HttpServletResponse.SC_FORBIDDEN,
-                Result.error(403, "用户无相关 HTTP 方法权限，禁止访问"));
+        Subject subject = getSubject(request, response);
+        if (subject.getPrincipal() == null) {
+            HttpServletResponseUtil.sendJson((HttpServletResponse) response,
+                    HttpServletResponse.SC_UNAUTHORIZED,
+                    Result.error(401, "身份验证失败，请重新登录"));
+        } else {
+            HttpServletResponseUtil.sendJson((HttpServletResponse) response,
+                    HttpServletResponse.SC_FORBIDDEN,
+                    Result.error(403, "用户无相关 HTTP 方法权限，禁止访问"));
+        }
         return false;
     }
 }
