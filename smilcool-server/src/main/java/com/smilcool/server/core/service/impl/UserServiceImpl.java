@@ -82,6 +82,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void logout() {
+        // Shiro 身份注销
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.logout();
+    }
+
+    @Override
     public User get(String username, String password) {
         return userMapper.selectByUsernameAndPassword(username, password);
     }

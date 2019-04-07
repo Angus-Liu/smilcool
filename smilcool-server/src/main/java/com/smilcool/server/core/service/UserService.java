@@ -29,6 +29,11 @@ public interface UserService {
     UserVO login(UserLoginForm userLoginForm);
 
     /**
+     * 用户注销
+     */
+    void logout();
+
+    /**
      * 通过用户名和密码获取用户
      *
      * @param username 用户名

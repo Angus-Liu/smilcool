@@ -35,6 +35,13 @@ public class UserController {
         return Result.success(user);
     }
 
+    @ApiOperation("用户注销")
+    @PostMapping("/user/logout")
+    public Result logout() {
+        userService.logout();
+        return Result.success();
+    }
+
     @ApiOperation("用户注册")
     @PostMapping("/user/register")
     public Result<UserVO> register(@RequestBody @Valid UserRegisterForm userRegisterForm) {
