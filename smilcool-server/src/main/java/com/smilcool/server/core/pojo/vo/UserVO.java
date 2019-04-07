@@ -52,11 +52,7 @@ public class UserVO {
     private String phone;
 
     private String email;
-
-    /**
-     * JsonSerialize：使用指定的 Serializer 序列化该字段
-     */
-    @JsonSerialize(using = UserStateSerializer.class)
+    
     private Integer state;
 
     private String remark;

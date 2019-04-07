@@ -68,10 +68,10 @@ public class ShiroConfig {
         // filterMap.put("/logout", "logout");     //配置登出页,shiro已经帮我们实现了跳转
         // filterMap.put("/**", "authc");          //所有资源都需要经过验证
 
-        filterChainDefinitionMap.put("/user/login", "anon");
-        filterChainDefinitionMap.put("/user/register", "anon");
-        filterChainDefinitionMap.put("/user", "roles[admin]");
-        filterChainDefinitionMap.put("/role", "perms[role]");
+//        filterChainDefinitionMap.put("/user/login", "anon");
+//        filterChainDefinitionMap.put("/user/register", "anon");
+//        filterChainDefinitionMap.put("/user", "roles[super-admin]");
+//        filterChainDefinitionMap.put("/role", "perms[role]");
         filterChainDefinitionMap.put("/**", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -86,6 +86,7 @@ public class ShiroConfig {
 //    protected CacheManager cacheManager() {
 //        return new MemoryConstrainedCacheManager();
 //    }
+
     private FormAuthenticationFilter authc() {
         return new CustomFormAuthenticationFilter();
     }

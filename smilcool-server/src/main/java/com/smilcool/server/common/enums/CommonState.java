@@ -9,9 +9,9 @@ import java.util.Set;
  * @date 2019/3/21
  */
 public enum CommonState {
+    Disable(0, "停用"),
     Normal(1, "正常"),
-    Disable(-1, "停用"),
-    INVALID(-100, "无效状态"),
+    INVALID(100, "无效状态"),
     ;
 
     int state;

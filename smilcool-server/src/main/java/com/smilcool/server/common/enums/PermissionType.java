@@ -12,7 +12,7 @@ public enum PermissionType {
     MENU(1, "菜单"),
     BUTTON(2, "按钮"),
     OTHER(3, "其他"),
-    INVALID(-100, "无效类型");
+    INVALID(100, "无效类型");
 
     int type;
     String desc;

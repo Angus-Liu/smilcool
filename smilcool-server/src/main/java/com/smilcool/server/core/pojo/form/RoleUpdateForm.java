@@ -24,7 +24,7 @@ public class RoleUpdateForm {
     @NotBlank(message = "角色描述不能为空")
     String description;
 
-    @CheckEnum(value = EnumType.COMMON_STATE, message = "状态取值为[-1-停用，1-启用]")
+    @CheckEnum(value = EnumType.COMMON_STATE, message = "状态取值为[0-停用，1-启用]")
     Integer state;
 
     /**
