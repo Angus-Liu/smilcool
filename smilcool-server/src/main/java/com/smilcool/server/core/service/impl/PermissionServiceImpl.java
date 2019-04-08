@@ -36,13 +36,21 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<PermissionVO> list() {
-        List<Permission> permissionList = permissionMapper.selectAll();
-        return BeanUtil.copyProp(permissionList, PermissionVO.class);
+    public List<PermissionVO> getPermissionList(Integer parentId) {
+        // 获取 parent_id 为 parentId 的列表，parentId 为空时获取所有列表
+        List<Permission> permissions = permissionMapper.selectPermissionByParentId(parentId);
+        List<PermissionVO> permissionList = BeanUtil.copyProp(permissions, PermissionVO.class);
+        // 递归获取子列表
+        permissionList.forEach(item -> item.setChildren(getPermissionList(item.getId())));
+        return permissionList;
     }
 
     @Override
     public PermissionVO add(PermissionAddForm permissionAddForm) {
+        Integer parentId = permissionAddForm.getParentId();
+        if (parentId != null && permissionMapper.selectByPrimaryKey(parentId) == null) {
+            throw new SmilcoolException("父级权限不存在");
+        }
         Permission selected = permissionMapper.selectByName(permissionAddForm.getName());
         if (selected != null) {
             throw new SmilcoolException("权限已存在");

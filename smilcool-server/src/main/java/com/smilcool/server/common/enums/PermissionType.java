@@ -9,9 +9,9 @@ import java.util.Set;
  * @date 2019/3/29
  */
 public enum PermissionType {
-    MENU(1, "菜单"),
-    BUTTON(2, "按钮"),
-    OTHER(3, "其他"),
+    MENU(0, "菜单"),
+    BUTTON(1, "按钮"),
+    OTHER(2, "其他"),
     INVALID(100, "无效类型");
 
     int type;

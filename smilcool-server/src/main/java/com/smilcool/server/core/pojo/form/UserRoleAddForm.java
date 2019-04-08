@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class UserRoleAddForm {
-    @NotNull(message = "用户 id 不能为空")
+    @NotNull(message = "用户 ID 不能为空")
     Integer userId;
-    @NotNull(message = "角色 id 不能为空")
+    @NotNull(message = "角色 ID 不能为空")
     Integer roleId;
 }

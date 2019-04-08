@@ -7,10 +7,7 @@ import com.smilcool.server.core.service.PermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -28,8 +25,8 @@ public class PermissionController {
 
     @ApiOperation("权限列表")
     @GetMapping("/permission")
-    public Result<List<PermissionVO>> list() {
-        List<PermissionVO> permissionList = permissionService.list();
+    public Result<List<PermissionVO>> getPermissionList(@RequestParam(required = false) Integer parentId) {
+        List<PermissionVO> permissionList = permissionService.getPermissionList(parentId);
         return Result.success(permissionList);
     }
 

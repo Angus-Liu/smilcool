@@ -171,14 +171,22 @@
             remark      = #{remark,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             update_time = #{updateTime,jdbcType=TIMESTAMP},
-            deleted      = #{deleted,jdbcType=BIT}
+            deleted     = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Permission">
-        select
+    <select id="selectPermissionByParentId" resultType="com.smilcool.server.core.pojo.po.Permission">
+        SELECT
         <include refid="Base_Column_List"/>
-        from permission
+        FROM permission
+        <choose>
+            <when test="parentId == null">
+                WHERE parent_id is NULL
+            </when>
+            <when test="parentId != null">
+                WHERE parent_id = #{parentId}
+            </when>
+        </choose>
     </select>
 
     <select id="selectByName" resultType="com.smilcool.server.core.pojo.po.Permission">

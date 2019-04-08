@@ -66,7 +66,7 @@ CREATE TABLE `permission` (
   `name`        varchar(255) NOT NULL COMMENT '权限名',
   `description` varchar(255) NOT NULL COMMENT '权限描述',
   `url`         varchar(255) NOT NULL COMMENT '请求地址',
-  `type`        int(1)       NOT NULL DEFAULT '3' COMMENT '类型：1-菜单，2-按钮，3-其他',
+  `type`        int(1)       NOT NULL DEFAULT '0' COMMENT '类型：0-菜单，1-按钮，2-其他',
   `seq`         int(11)      NOT NULL DEFAULT '0' COMMENT '顺序',
   `state`       int(1)       NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',
   `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',

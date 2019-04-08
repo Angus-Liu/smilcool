@@ -3,10 +3,10 @@ package com.smilcool.server.core.pojo.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smilcool.server.common.util.serializer.CommonStateSerializer;
-import com.smilcool.server.common.util.serializer.PermissionTypeSerializer;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Angus
@@ -23,7 +23,6 @@ public class PermissionVO {
 
     private String url;
 
-    @JsonSerialize(using = PermissionTypeSerializer.class)
     private Integer type;
 
     private Integer seq;
@@ -40,4 +39,6 @@ public class PermissionVO {
     private Date updateTime;
 
     private Boolean deleted;
+
+    private List<PermissionVO> children;
 }

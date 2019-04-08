@@ -1,6 +1,7 @@
 package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Permission;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,8 +19,7 @@ public interface PermissionMapper {
 
     int updateByPrimaryKey(Permission record);
 
-    List<Permission> selectAll();
-
     Permission selectByName(String name);
 
+    List<Permission> selectPermissionByParentId(@Param("parentId") Integer parentId);
 }

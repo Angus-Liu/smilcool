@@ -23,7 +23,7 @@ public class PermissionAddForm {
     @NotBlank(message = "请求地址不能为空")
     private String url;
 
-    @CheckEnum(value = EnumType.PERMISSION_TYPE, message = "类型取值为[1-菜单，2-按钮，3-其他]")
+    @CheckEnum(value = EnumType.PERMISSION_TYPE, message = "类型取值为[0-菜单，1-按钮，2-其他]")
     private Integer type;
 
     private Integer seq;

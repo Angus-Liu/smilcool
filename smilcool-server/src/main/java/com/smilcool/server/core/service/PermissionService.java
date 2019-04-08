@@ -12,7 +12,7 @@ import java.util.List;
 public interface PermissionService {
     void checkExist(Integer id);
 
-    List<PermissionVO> list();
+    List<PermissionVO> getPermissionList(Integer parentId);
 
     PermissionVO add(PermissionAddForm permissionAddForm);
 }
