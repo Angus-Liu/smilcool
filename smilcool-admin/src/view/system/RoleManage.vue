@@ -8,7 +8,7 @@
     <!-- 表格 -->
     <Table :columns="columns" :data="roleList" border stripe>
       <template slot-scope="{ row }" slot="state">
-        <Tag :color="row.state === 1? 'green': 'red'">{{row.state === 1? '正常': '停用'}}</Tag>
+        <Tag :color="state[row.state].color">{{state[row.state].label}}</Tag>
       </template>
       <template slot-scope="{ row, index }" slot="action">
         <Button class="btn" type="primary" size="small" @click="editRole(index)">编辑</Button>
@@ -56,7 +56,7 @@ export default {
         { title: '备注', key: 'remark', tooltip: true },
         { title: '创建时间', key: 'createTime', align: 'center', width: '150' },
         { title: '更新时间', key: 'updateTime', align: 'center', width: '150' },
-        { title: '操作', slot: 'action', align: 'center', width: '200', fixed: 'right' }
+        { title: '操作', slot: 'action', align: 'center', width: '200' }
       ],
       roleList: [],
       // 角色模态框数据
@@ -74,8 +74,8 @@ export default {
         }
       },
       state: [
-        { value: 1, label: '正常' },
-        { value: -1, label: '停用' }
+        { value: 0, label: '停用', color: 'red' },
+        { value: 1, label: '正常', color: 'green' }
       ]
     };
   },
@@ -130,6 +130,9 @@ export default {
               this.$Message.error(result.msg);
             }
             this.roleModal.submitLoading = false;
+          })
+          .catch(error => {
+            this.roleModal.submitLoading = false;
           });
       } else {
         // 更新角色
@@ -142,6 +145,9 @@ export default {
             } else {
               this.$Message.error(result.msg);
             }
+            this.roleModal.submitLoading = false;
+          })
+          .catch(error => {
             this.roleModal.submitLoading = false;
           });
       }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from '@/store';
-import { Message } from 'iview';
+import router from '../router/index';
 import Log from './log';
 
 // 自定义日志工具
@@ -58,31 +58,31 @@ class HttpRequest {
     instance.interceptors.response.use(res => {
       this.destroy(url);
       const { status, data } = res;
-
       // 打印响应参数
-      log.info('Response <---');
+      log.info('Success Response <---');
+      log.info('URL', this.baseUrl + url);
+      log.info('Status', status);
+      log.info('Data', data);
+      return { status, data };
+
+    }, error => {
+      const { status, data } = error.response;
+      log.info('Error Response <---');
       log.info('URL', this.baseUrl + url);
       log.info('Status', status);
       log.info('Data', data);
 
-      // 处理后台返回的错误信息
-      // data.success 存在且为 false（为了兼容模拟端口，后期删除）
-      // if (data.success !== undefined && data.success !== null && !data.success) {
-      //   // 全局提示
-      //   Message.error(data.msg);
-      // }
-      // 后台接口成功响应，直接返回响应体
-      // 此时 res 结构如下
-      // {
-      //   "success": "请求情况",
-      //   "code": "状态码",
-      //   "data": "反馈数据",
-      //   "msg": "反馈消息",
-      //   "timestamp": "时间戳"
-      // }
-      // return data;
-      return { status, data };
-    }, error => {
+      switch (status) {
+        case 401:
+          log.info('跳转到登录页面');
+          router.push('/login');
+          break;
+        case 403:
+          log.info('权限不足');
+          break;
+        default:
+      }
+
       this.destroy(url);
       let errorInfo = error.response;
       if (!errorInfo) {

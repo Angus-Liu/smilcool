@@ -1,7 +1,7 @@
 <template>
   <Card>
     <!-- 筛选栏 -->
-    <Form :model="userSearchForm" inline :label-width="70">
+    <Form ref="userSearchForm" :model="userSearchForm" inline :label-width="70">
       <FormItem label="用户名" prop="username">
         <Input class="form-item" v-model="userSearchForm.username" placeholder="Enter something..."></Input>
       </FormItem>
@@ -46,8 +46,8 @@
             </FormItem>
           </span>
       <FormItem>
-        <Button class="btn-search" type="primary" icon="ios-search" @click="getUserPage">筛选</Button>
-        <Button class="btn-reset" @click="handleReset">清空</Button>
+        <Button class="btn btn-search" type="primary" icon="ios-search" @click="getUserPage">筛选</Button>
+        <Button class="btn" @click="handleReset">清空</Button>
         <a class="drop-down" @click="showMore">{{ more.content }}
           <Icon :type="more.icon"/>
         </a>
@@ -60,6 +60,9 @@
       </template>
       <template slot-scope="{ row, index }" slot="roles">
         <Tag v-for="(role, index) in row.roles" :key="index" color="success">{{ role }}</Tag>
+      </template>
+      <template slot-scope="{ row }" slot="state">
+        <Tag :color="state[row.state].color">{{state[row.state].label}}</Tag>
       </template>
       <template slot-scope="{ row, index }" slot="action">
         <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">详细信息</Button>
@@ -84,11 +87,11 @@ export default {
         content: '展开',
         icon: 'ios-arrow-down'
       },
-      // 查询表单 - 性别
+      // 查询表单
       state: [
-        { value: 0, label: '未激活' },
-        { value: 1, label: '正常' },
-        { value: -1, label: '停用' },
+        { value: 0, label: '未激活', color: 'default' },
+        { value: 1, label: '正常', color: 'green' },
+        { value: 2, label: '停用', color: 'red' },
       ],
       sex: [
         { value: '男', label: '男' },
@@ -97,18 +100,9 @@ export default {
       ],
       // 查询表单
       userSearchForm: {
-        username: null,
-        nickname: null,
-        sex: null,
-        grade: null,
-        college: null,
-        major: null,
-        phone: null,
-        email: null,
-        state: null,
-        role: null,
-        current: 1,
-        size: 10
+        username: null, nickname: null, sex: null, grade: null,
+        college: null, major: null, phone: null, email: null,
+        state: null, role: null, current: 1, size: 10
       },
       // 表格设置
       loading: true,
@@ -124,7 +118,7 @@ export default {
         { title: '专业', key: 'major', align: 'center', width: '100' },
         { title: '手机', key: 'phone', align: 'center', width: '100' },
         { title: '邮箱', key: 'email', width: '150' },
-        { title: '状态', key: 'state', align: 'center', width: '100' },
+        { title: '状态', slot: 'state', align: 'center', width: '100' },
         { title: '角色', slot: 'roles', align: 'center', width: '200' },
         { title: '备注', key: 'remark', width: '100', tooltip: true },
         { title: '创建时间', key: 'createTime', align: 'center', width: '150' },
@@ -132,13 +126,7 @@ export default {
         { title: '操作', slot: 'action', align: 'center', width: '150', fixed: 'right' }
       ],
       // 分页对象
-      page: {
-        records: [],
-        total: 0,
-        size: 10,
-        current: 1,
-        pages: 1
-      }
+      page: { records: [], total: 0, size: 10, current: 1, pages: 1 }
     };
   },
   methods: {
@@ -179,19 +167,15 @@ export default {
     },
     // 表单操作
     handleReset () {
-      this.userSearchForm = {
-        username: null,
-        nickname: null,
-        sex: null,
-        grade: null,
-        college: null,
-        major: null,
-        phone: null,
-        email: null,
-        state: null,
-        current: this.page.current,
-        size: this.page.size
-      };
+      // this.userSearchForm = {
+      //   username: null, nickname: null, sex: null, grade: null,
+      //   college: null, major: null, phone: null, email: null,
+      //   state: null, current: this.page.current, size: this.page.size
+      // };
+      this.$refs.userSearchForm.resetFields();
+      this.userSearchForm.current = 1;
+      this.userSearchForm.size = 10;
+      this.getUserPage();
     },
     // 分页操作
     handleCurrentChange (current) {
@@ -221,12 +205,11 @@ export default {
     width: 150px;
   }
 
-  .btn-search {
-    margin-left: -35px;
+  .btn {
     margin-right: 5px;
   }
 
-  .btn-reset {
-    margin-right: 5px;
+  .btn-search {
+    margin-left: -35px;
   }
 </style>

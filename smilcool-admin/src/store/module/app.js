@@ -13,7 +13,7 @@ import {
 } from '@/libs/util'
 import { saveErrorLogger } from '@/api/data'
 import router from '@/router'
-import routers from '@/router/routers'
+import routers from '@/router/routes'
 import config from '@/config'
 const { homeName } = config
 

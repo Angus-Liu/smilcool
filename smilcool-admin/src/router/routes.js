@@ -143,6 +143,15 @@ export default [
           title: '权限管理'
         },
         component: () => import('@/view/system/PermissionManage')
+      },
+      {
+        path: 'rule',
+        name: 'rule',
+        meta: {
+          icon: 'md-remove-circle',
+          title: '规则配置'
+        },
+        component: () => import('@/view/system/PermissionManage')
       }
     ]
   },
@@ -153,36 +162,7 @@ export default [
       icon: 'md-folder',
       title: '资源管理'
     },
-    component: Main,
-    children: [
-      {
-        path: 'user',
-        name: 'user',
-        meta: {
-          icon: 'md-person',
-          title: '用户管理'
-        },
-        component: () => import('@/view/system/UserManage')
-      },
-      {
-        path: 'role',
-        name: 'role',
-        meta: {
-          icon: 'md-person-add',
-          title: '角色管理'
-        },
-        component: () => import('@/view/components/tree-select')
-      },
-      {
-        path: 'permission',
-        name: 'permission',
-        meta: {
-          icon: 'md-key',
-          title: '权限管理'
-        },
-        component: () => import('@/view/components/tree-select')
-      }
-    ]
+    component: Main
   },
   {
     path: '/components',

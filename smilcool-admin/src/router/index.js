@@ -1,19 +1,21 @@
 import Vue from 'vue';
-import Router from 'vue-router';
-import routes from './routers';
+import VueRouter from 'vue-router';
+import routes from './routes';
 import store from '@/store';
 import { LoadingBar } from 'iview';
-import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util';
+import { canTurnTo, getToken, setTitle, setToken } from '@/libs/util';
 import config from '@/config';
 
 const { homeName } = config;
 
-Vue.use(Router);
-const router = new Router({
+Vue.use(VueRouter);
+
+const router = new VueRouter({
   // 使用浏览器 History 模式
   mode: 'history',
   routes
 });
+
 const LOGIN_PAGE_NAME = 'login';
 
 // 路由跳转前进行权限控制

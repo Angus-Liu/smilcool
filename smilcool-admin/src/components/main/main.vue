@@ -45,7 +45,7 @@ import Language from './components/language'
 import ErrorStore from './components/error-store'
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import { getNewTagList, routeEqual } from '@/libs/util'
-import routers from '@/router/routers'
+import routes from '@/router/routes'
 import minLogo from '@/assets/images/logo-mini.png'
 import maxLogo from '@/assets/images/logo.png'
 import './main.less'
@@ -166,7 +166,7 @@ export default {
      * @description 初始化设置面包屑导航和标签导航
      */
     this.setTagNavList()
-    this.setHomeRoute(routers)
+    this.setHomeRoute(routes)
     const { name, params, query, meta } = this.$route
     this.addTag({
       route: { name, params, query, meta }
