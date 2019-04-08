@@ -5,6 +5,11 @@ import com.smilcool.server.base.config.shiro.filter.CustomHttpMethodPermissionFi
 import com.smilcool.server.base.config.shiro.filter.CustomPermissionsAuthorizationFilter;
 import com.smilcool.server.base.config.shiro.filter.CustomRolesAuthorizationFilter;
 import com.smilcool.server.base.config.shiro.realm.CustomAuthorizingRealm;
+import com.smilcool.server.core.pojo.po.RuleMap;
+import com.smilcool.server.core.service.RuleMapService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -12,19 +17,25 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Angus
  * @date 2019/4/5
  */
+@Slf4j
 @Configuration
 public class ShiroConfig {
+
+    @Autowired
+    private RuleMapService ruleMapService;
 
     /**
      * 设置自定义 Realm
@@ -57,24 +68,41 @@ public class ShiroConfig {
         filters.put("roles", roles());
         // 配置过滤器链映射
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        // TODO：从数据库获取，考虑是否单独增加一张表存储 shiro 过滤器链
-        // 注册 数据库中所有的权限 及其对应url
-        // List<Permission> allPermission = permissionRepository.findAll();//数据库中查询所有权限
-        // for (Permission p : allPermission) {
-        //     filterMap.put(p.getUrl(), "perms[" + p.getName() + "]");    //拦截器中注册所有的权限
-        // }
-        // filterMap.put("/static/**", "anon");    //公开访问的资源
-        // filterMap.put("/open/api/**", "anon");  //公开接口地址
-        // filterMap.put("/logout", "logout");     //配置登出页,shiro已经帮我们实现了跳转
-        // filterMap.put("/**", "authc");          //所有资源都需要经过验证
-
-//        filterChainDefinitionMap.put("/user/login", "anon");
-//        filterChainDefinitionMap.put("/user/register", "anon");
-//        filterChainDefinitionMap.put("/user", "roles[super-admin]");
-//        filterChainDefinitionMap.put("/role", "perms[role]");
-        filterChainDefinitionMap.put("/**", "anon");
+        // 从数据库获取规则映射
+        List<RuleMap> ruleMapList = ruleMapService.getRuleMapList();
+        ruleMapList.forEach(ruleMap -> filterChainDefinitionMap.put(ruleMap.getUrl(), buildRule(ruleMap)));
+        log.info("filterChainDefinitionMap: {}", filterChainDefinitionMap);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 构建过滤规则
+     *
+     * @param ruleMap
+     * @return
+     */
+    private String buildRule(RuleMap ruleMap) {
+        StringBuilder rule = new StringBuilder();
+        // 是否需要身份验证
+        if (ruleMap.getAuthc()) {
+            rule.append("authc");
+        } else {
+            rule.append("anon");
+        }
+        // 是否需要角色验证
+        if (ruleMap.getUseRoles()) {
+            rule.append(",roles[").append(ruleMap.getRoles()).append("]");
+        }
+        // 是否需要权限验证
+        if (ruleMap.getUsePerms()) {
+            rule.append(",perms[").append(ruleMap.getPerms()).append("]");
+        }
+        // 是否需要 HTTP 方法（REST）验证
+        if (ruleMap.getUseRest()) {
+            rule.append(",rest[").append(ruleMap.getRest()).append("]");
+        }
+        return rule.toString();
     }
 
     /**
@@ -82,10 +110,10 @@ public class ShiroConfig {
      *
      * @return
      */
-//    @Bean
-//    protected CacheManager cacheManager() {
-//        return new MemoryConstrainedCacheManager();
-//    }
+    @Bean
+    protected CacheManager cacheManager() {
+        return new MemoryConstrainedCacheManager();
+    }
 
     private FormAuthenticationFilter authc() {
         return new CustomFormAuthenticationFilter();

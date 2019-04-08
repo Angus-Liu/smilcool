@@ -2,6 +2,8 @@ package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.RuleMap;
 
+import java.util.List;
+
 public interface RuleMapMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface RuleMapMapper {
     int updateByPrimaryKeySelective(RuleMap record);
 
     int updateByPrimaryKey(RuleMap record);
+
+    List<RuleMap> selectAll();
 }

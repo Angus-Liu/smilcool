@@ -151,7 +151,7 @@ export default [
           icon: 'md-remove-circle',
           title: '规则配置'
         },
-        component: () => import('@/view/system/PermissionManage')
+        component: () => import('@/view/system/RuleMapManage')
       }
     ]
   },

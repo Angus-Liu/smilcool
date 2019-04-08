@@ -2,6 +2,7 @@ import axios from 'axios';
 import store from '@/store';
 import router from '../router/index';
 import Log from './log';
+import { Message } from 'iview';
 
 // 自定义日志工具
 const log = new Log('src/libs/axios.js');
@@ -80,9 +81,13 @@ class HttpRequest {
         case 403:
           log.info('权限不足');
           break;
+        case 500:
+          log.info('服务端异常');
+          break;
         default:
       }
-
+      // 提示错误信息
+      Message.error(data.msg);
       this.destroy(url);
       let errorInfo = error.response;
       if (!errorInfo) {
