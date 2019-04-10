@@ -76,7 +76,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleVO updateById(Integer id, RoleUpdateForm roleUpdateForm) {
+    public RoleVO updateRole(Integer id, RoleUpdateForm roleUpdateForm) {
         Role select = roleMapper.selectByPrimaryKey(id);
         if (select == null) {
             throw new SmilcoolException("角色不存在");

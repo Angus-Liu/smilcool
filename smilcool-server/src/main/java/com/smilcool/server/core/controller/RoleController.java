@@ -31,36 +31,36 @@ public class RoleController {
 
     @ApiOperation("角色添加")
     @PostMapping("/role")
-    public Result<RoleVO> add(@RequestBody @Valid RoleAddForm roleAddForm) {
+    public Result<RoleVO> addRole(@RequestBody @Valid RoleAddForm roleAddForm) {
         RoleVO roleVO = roleService.add(roleAddForm);
         return Result.success(roleVO);
     }
 
     @ApiOperation("角色列表")
     @GetMapping("/role")
-    public Result<List<RoleVO>> list() {
+    public Result<List<RoleVO>> getRoleList() {
         List<RoleVO> roles = roleService.list();
         return Result.success(roles);
     }
 
     @ApiOperation(value = "角色信息", notes = "通过角色 id 获取角色信息")
     @GetMapping("/role/{id}")
-    public Result<RoleVO> get(@PathVariable("id") Integer id) {
+    public Result<RoleVO> getRole(@PathVariable("id") Integer id) {
         RoleVO role = roleService.getById(id);
         return Result.success(role);
     }
 
     @ApiOperation(value = "更新角色")
     @PutMapping("/role/{id}")
-    public Result<RoleVO> update(@PathVariable("id") Integer id,
-                                 @RequestBody @Valid RoleUpdateForm roleUpdateForm) {
-        RoleVO role = roleService.updateById(id, roleUpdateForm);
+    public Result<RoleVO> updateRole(@PathVariable("id") Integer id,
+                                     @RequestBody @Valid RoleUpdateForm roleUpdateForm) {
+        RoleVO role = roleService.updateRole(id, roleUpdateForm);
         return Result.success(role);
     }
 
     @ApiOperation(value = "角色权限信息", notes = "通过角色 id 获取角色对应权限信息")
     @GetMapping("/role/{id}/permission")
-    public Result<List<PermissionVO>> getPermission(@PathVariable("id") Integer id) {
+    public Result<List<PermissionVO>> getPermissionList(@PathVariable("id") Integer id) {
         List<PermissionVO> permissionList = rolePermissionService.getPermissionVOListByRoleId(id);
         return Result.success(permissionList);
     }
