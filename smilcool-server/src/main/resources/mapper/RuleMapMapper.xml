@@ -47,7 +47,8 @@
                 #{seq,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
                 #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.RuleMap">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.RuleMap"
+    useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into rule_map
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -236,6 +237,13 @@
         <include refid="Base_Column_List"/>
         FROM rule_map
         ORDER BY seq ASC
+    </select>
+
+    <select id="selectByUrl" resultType="com.smilcool.server.core.pojo.po.RuleMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rule_map
+        WHERE url = #{url}
     </select>
 
 </mapper>

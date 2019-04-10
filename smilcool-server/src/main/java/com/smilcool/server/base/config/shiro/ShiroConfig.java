@@ -10,9 +10,9 @@ import com.smilcool.server.core.service.RuleMapService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
@@ -21,10 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Angus
@@ -48,32 +45,17 @@ public class ShiroConfig {
     }
 
     /**
-     * 设置自定义过滤器时，需要通过 shiroFilterFactoryBean 进行设置。
-     * 不设置过滤器时，可以简化为只配置 shiroFilterChainDefinition
-     * 简化配置参考官网：https://shiro.apache.org/spring-boot.html
+     * 配置过滤器链映射
      *
-     * @param securityManager
      * @return
      */
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        // 设置 SecurityManager
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // 设置过滤器
-        Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
-        filters.put("authc", authc());
-        filters.put("perms", perms());
-        filters.put("rest", rest());
-        filters.put("roles", roles());
-        // 配置过滤器链映射
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
+        DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         // 从数据库获取规则映射
         List<RuleMap> ruleMapList = ruleMapService.getRuleMapList();
-        ruleMapList.forEach(ruleMap -> filterChainDefinitionMap.put(ruleMap.getUrl(), buildRule(ruleMap)));
-        log.info("filterChainDefinitionMap: {}", filterChainDefinitionMap);
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        return shiroFilterFactoryBean;
+        ruleMapList.forEach(ruleMap -> chainDefinition.addPathDefinition(ruleMap.getUrl(), buildRule(ruleMap)));
+        return chainDefinition;
     }
 
     /**
@@ -115,19 +97,43 @@ public class ShiroConfig {
         return new MemoryConstrainedCacheManager();
     }
 
-    private FormAuthenticationFilter authc() {
+    /**
+     * 原 FormAuthenticationFilter 过滤器对应标识为 authc
+     *
+     * @return
+     */
+    @Bean
+    public FormAuthenticationFilter authc() {
         return new CustomFormAuthenticationFilter();
     }
 
-    private RolesAuthorizationFilter roles() {
+    /**
+     * 原 RolesAuthorizationFilter 过滤器对应标识为 roles
+     *
+     * @return
+     */
+    @Bean
+    public RolesAuthorizationFilter roles() {
         return new CustomRolesAuthorizationFilter();
     }
 
-    private PermissionsAuthorizationFilter perms() {
+    /**
+     * 原 PermissionsAuthorizationFilter 过滤器对应标识为 perms
+     *
+     * @return
+     */
+    @Bean
+    public PermissionsAuthorizationFilter perms() {
         return new CustomPermissionsAuthorizationFilter();
     }
 
-    private HttpMethodPermissionFilter rest() {
+    /**
+     * 原 HttpMethodPermissionFilter 过滤器对应标识为 rest
+     *
+     * @return
+     */
+    @Bean
+    public HttpMethodPermissionFilter rest() {
         return new CustomHttpMethodPermissionFilter();
     }
 }

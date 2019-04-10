@@ -1,5 +1,6 @@
 package com.smilcool.server.core.service;
 
+import com.smilcool.server.core.pojo.form.RuleMapAddForm;
 import com.smilcool.server.core.pojo.po.RuleMap;
 
 import java.util.List;
@@ -10,4 +11,6 @@ import java.util.List;
  */
 public interface RuleMapService {
     List<RuleMap> getRuleMapList();
+
+    RuleMap addRuleMap(RuleMapAddForm ruleMapAddForm);
 }

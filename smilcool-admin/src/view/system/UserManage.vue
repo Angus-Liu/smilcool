@@ -59,7 +59,7 @@
         <strong>{{ row.username }}</strong>
       </template>
       <template slot-scope="{ row, index }" slot="roles">
-        <Tag v-for="(role, index) in row.roles" :key="index" color="success">{{ role }}</Tag>
+        <Tag v-for="(role, index) in row.roles" :key="index" type="border" color="primary">{{ role }}</Tag>
       </template>
       <template slot-scope="{ row }" slot="state">
         <Tag :color="state[row.state].color">{{state[row.state].label}}</Tag>
@@ -89,9 +89,9 @@ export default {
       },
       // 查询表单
       state: [
-        { value: 0, label: '未激活', color: 'default' },
+        { value: 0, label: '未激活', color: 'orange' },
         { value: 1, label: '正常', color: 'green' },
-        { value: 2, label: '停用', color: 'red' },
+        { value: 2, label: '停用', color: 'default' },
       ],
       sex: [
         { value: '男', label: '男' },

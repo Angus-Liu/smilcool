@@ -18,4 +18,6 @@ public interface RuleMapMapper {
     int updateByPrimaryKey(RuleMap record);
 
     List<RuleMap> selectAll();
+
+    RuleMap selectByUrl(String url);
 }

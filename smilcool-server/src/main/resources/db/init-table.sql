@@ -117,7 +117,7 @@ CREATE TABLE `rule_map` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '规则映射ID',
   `url`         varchar(255) NOT NULL COMMENT '请求地址',
   `description` varchar(255) NOT NULL COMMENT '描述',
-  `type`        int(1)       NOT NULL DEFAULT '3' COMMENT '类型：1-菜单，2-按钮，3-其他',
+  `type`        int(1)       NOT NULL DEFAULT '0' COMMENT '类型：0-菜单，1-按钮，2-其他',
   `authc`       tinyint(1)   NOT NULL DEFAULT '0' COMMENT '是否需要认证',
   `use_roles`   tinyint(1)   NOT NULL DEFAULT '0' COMMENT '使用角色规则',
   `roles`       varchar(255)          DEFAULT NULL COMMENT '角色策略',
