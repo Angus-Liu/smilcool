@@ -115,6 +115,11 @@ public class ShiroConfig {
         return new MemoryConstrainedCacheManager();
     }
 
+    /**
+     * 使用 Bean 注入时，原过滤器仍然生效，页面依旧会跳转到 /login.jsp，无法达到替代效果
+     *
+     * @return
+     */
     private FormAuthenticationFilter authc() {
         return new CustomFormAuthenticationFilter();
     }
