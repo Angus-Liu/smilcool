@@ -17,26 +17,26 @@
         <Form ref="permissionForm" :model="permission" :label-width="85">
           <FormItem label="类型" prop="type">
             <RadioGroup :value="types[permission.type].label">
-              <Radio v-for="item in types" :label="item.label"></Radio>
+              <Radio v-for="item in types" :label="item.label"/>
             </RadioGroup>
           </FormItem>
           <FormItem label="ID" prop="id">
-            <Input class="form-item" v-model="permission.id" placeholder="Enter something..."></Input>
+            <Input class="form-item" v-model="permission.id"/>
           </FormItem>
           <FormItem label="名称" prop="name">
-            <Input class="form-item" v-model="permission.name" placeholder="Enter something..."></Input>
+            <Input class="form-item" v-model="permission.name"/>
           </FormItem>
           <FormItem label="描述" prop="description">
-            <Input class="form-item" v-model="permission.description" placeholder="Enter something..."></Input>
+            <Input class="form-item" v-model="permission.description"/>
           </FormItem>
           <FormItem label="URL" prop="url">
-            <Input class="form-item" v-model="permission.url" placeholder="Enter something..."></Input>
+            <Input class="form-item" v-model="permission.url"/>
           </FormItem>
           <FormItem label="创建时间" prop="createTime">
-            <Input class="form-item" v-model="permission.createTime" placeholder="Enter something..."></Input>
+            <Input class="form-item" v-model="permission.createTime"/>
           </FormItem>
           <FormItem label="更新时间" prop="updateTime">
-            <Input class="form-item" v-model="permission.updateTime" placeholder="Enter something..."></Input>
+            <Input class="form-item" v-model="permission.updateTime"/>
           </FormItem>
           <FormItem>
             <Button class="btn" type="primary" icon="ios-search" @click="handleUpdate">更新</Button>
@@ -57,7 +57,7 @@ export default {
     return {
       permissionList: [],
       permission: {
-        id: 1,
+        id: null,
         parentId: null,
         name: null,
         description: null,
