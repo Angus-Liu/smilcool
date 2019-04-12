@@ -1,24 +1,25 @@
-package com.smilcool.server.core.pojo.po;
+package com.smilcool.server.core.pojo.vo;
+
+import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
-@lombok.Data
-public class Data {
+@Data
+public class ResourceTypeVO {
     private Integer id;
 
-    private Integer resourceId;
-
-    private String title;
+    private Integer parentId;
 
     private String name;
 
-    private String size;
-
     private String url;
 
-    private Integer downloads;
-
     private String description;
+
+    private Integer seq;
+
+    private Integer state;
 
     private String remark;
 
@@ -27,4 +28,6 @@ public class Data {
     private Date updateTime;
 
     private Boolean deleted;
+
+    private List<ResourceTypeVO> children;
 }

@@ -13,7 +13,7 @@ import java.util.Set;
  * @date 2019/3/29
  */
 public interface RolePermissionService {
-    RolePermissionVO add(RolePermissionAddForm rolePermissionAddForm);
+    RolePermissionVO add(RolePermissionAddForm form);
 
     List<RolePermissionVO> list();
 

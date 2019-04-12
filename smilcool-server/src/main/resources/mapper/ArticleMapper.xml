@@ -1,209 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smilcool.server.core.dao.ArticleMapper">
-  <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Article">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="intro" jdbcType="VARCHAR" property="intro" />
-    <result column="label" jdbcType="VARCHAR" property="label" />
-    <result column="image" jdbcType="VARCHAR" property="image" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="deleted" jdbcType="BIT" property="deleted" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.Article">
-    <result column="markdown_content" jdbcType="LONGVARCHAR" property="markdownContent" />
-    <result column="html_content" jdbcType="LONGVARCHAR" property="htmlContent" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, user_id, resource_id, title, intro, label, image, remark, create_time, update_time, 
-    deleted
-  </sql>
-  <sql id="Blob_Column_List">
-    markdown_content, html_content
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from article
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from article
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Article">
-    insert into article (id, user_id, resource_id, 
-      title, intro, label, 
-      image, remark, create_time, 
-      update_time, deleted, markdown_content, 
-      html_content)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, 
-      #{title,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, 
-      #{image,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{markdownContent,jdbcType=LONGVARCHAR}, 
-      #{htmlContent,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Article">
-    insert into article
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="resourceId != null">
-        resource_id,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="intro != null">
-        intro,
-      </if>
-      <if test="label != null">
-        label,
-      </if>
-      <if test="image != null">
-        image,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="deleted != null">
-        deleted,
-      </if>
-      <if test="markdownContent != null">
-        markdown_content,
-      </if>
-      <if test="htmlContent != null">
-        html_content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="resourceId != null">
-        #{resourceId,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="intro != null">
-        #{intro,jdbcType=VARCHAR},
-      </if>
-      <if test="label != null">
-        #{label,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null">
-        #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleted != null">
-        #{deleted,jdbcType=BIT},
-      </if>
-      <if test="markdownContent != null">
-        #{markdownContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="htmlContent != null">
-        #{htmlContent,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Article">
-    update article
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="resourceId != null">
-        resource_id = #{resourceId,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="intro != null">
-        intro = #{intro,jdbcType=VARCHAR},
-      </if>
-      <if test="label != null">
-        label = #{label,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null">
-        image = #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleted != null">
-        deleted = #{deleted,jdbcType=BIT},
-      </if>
-      <if test="markdownContent != null">
-        markdown_content = #{markdownContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="htmlContent != null">
-        html_content = #{htmlContent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.Article">
-    update article
-    set user_id = #{userId,jdbcType=INTEGER},
-      resource_id = #{resourceId,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      intro = #{intro,jdbcType=VARCHAR},
-      label = #{label,jdbcType=VARCHAR},
-      image = #{image,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT},
-      markdown_content = #{markdownContent,jdbcType=LONGVARCHAR},
-      html_content = #{htmlContent,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Article">
-    update article
-    set user_id = #{userId,jdbcType=INTEGER},
-      resource_id = #{resourceId,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      intro = #{intro,jdbcType=VARCHAR},
-      label = #{label,jdbcType=VARCHAR},
-      image = #{image,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Article">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="resource_id" jdbcType="INTEGER" property="resourceId"/>
+        <result column="resource_type_id" jdbcType="INTEGER" property="resourceTypeId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="brief" jdbcType="VARCHAR" property="brief"/>
+        <result column="label" jdbcType="VARCHAR" property="label"/>
+        <result column="cover" jdbcType="VARCHAR" property="cover"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.Article">
+        <result column="markdown_content" jdbcType="LONGVARCHAR" property="markdownContent"/>
+        <result column="html_content" jdbcType="LONGVARCHAR" property="htmlContent"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, resource_id, resource_type_id, title, brief, label, cover, remark, create_time,
+    update_time, deleted
+    </sql>
+    <sql id="Blob_Column_List">
+        markdown_content, html_content
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from article
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE
+        FROM article
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Article">
+        INSERT INTO article (id, user_id, resource_id,
+                             resource_type_id, title, brief,
+                             label, cover, remark,
+                             create_time, update_time, deleted,
+                             markdown_content, html_content)
+        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER},
+                #{resourceTypeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR},
+                #{label,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT},
+                #{markdownContent,jdbcType=LONGVARCHAR}, #{htmlContent,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Article"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="resourceId != null">
+                resource_id,
+            </if>
+            <if test="resourceTypeId != null">
+                resource_type_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="brief != null">
+                brief,
+            </if>
+            <if test="label != null">
+                label,
+            </if>
+            <if test="cover != null">
+                cover,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="markdownContent != null">
+                markdown_content,
+            </if>
+            <if test="htmlContent != null">
+                html_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceId != null">
+                #{resourceId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceTypeId != null">
+                #{resourceTypeId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="brief != null">
+                #{brief,jdbcType=VARCHAR},
+            </if>
+            <if test="label != null">
+                #{label,jdbcType=VARCHAR},
+            </if>
+            <if test="cover != null">
+                #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+            <if test="markdownContent != null">
+                #{markdownContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="htmlContent != null">
+                #{htmlContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Article">
+        update article
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceId != null">
+                resource_id = #{resourceId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceTypeId != null">
+                resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="brief != null">
+                brief = #{brief,jdbcType=VARCHAR},
+            </if>
+            <if test="label != null">
+                label = #{label,jdbcType=VARCHAR},
+            </if>
+            <if test="cover != null">
+                cover = #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+            <if test="markdownContent != null">
+                markdown_content = #{markdownContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="htmlContent != null">
+                html_content = #{htmlContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.Article">
+        UPDATE article
+        SET user_id          = #{userId,jdbcType=INTEGER},
+            resource_id      = #{resourceId,jdbcType=INTEGER},
+            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            title            = #{title,jdbcType=VARCHAR},
+            brief            = #{brief,jdbcType=VARCHAR},
+            label            = #{label,jdbcType=VARCHAR},
+            cover            = #{cover,jdbcType=VARCHAR},
+            remark           = #{remark,jdbcType=VARCHAR},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            deleted          = #{deleted,jdbcType=BIT},
+            markdown_content = #{markdownContent,jdbcType=LONGVARCHAR},
+            html_content     = #{htmlContent,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Article">
+        UPDATE article
+        SET user_id          = #{userId,jdbcType=INTEGER},
+            resource_id      = #{resourceId,jdbcType=INTEGER},
+            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            title            = #{title,jdbcType=VARCHAR},
+            brief            = #{brief,jdbcType=VARCHAR},
+            label            = #{label,jdbcType=VARCHAR},
+            cover            = #{cover,jdbcType=VARCHAR},
+            remark           = #{remark,jdbcType=VARCHAR},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            update_time      = #{updateTime,jdbcType=TIMESTAMP},
+            deleted          = #{deleted,jdbcType=BIT}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Article">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from article
+    </select>
+
 </mapper>

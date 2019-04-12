@@ -21,5 +21,5 @@ public interface PermissionMapper {
 
     Permission selectByName(String name);
 
-    List<Permission> selectPermissionByParentId(@Param("parentId") Integer parentId);
+    List<Permission> selectByParentId(@Param("parentId") Integer parentId);
 }

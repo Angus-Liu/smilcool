@@ -9,13 +9,15 @@ public class Article {
 
     private Integer resourceId;
 
+    private Integer resourceTypeId;
+
     private String title;
 
-    private String intro;
+    private String brief;
 
     private String label;
 
-    private String image;
+    private String cover;
 
     private String remark;
 
@@ -53,6 +55,14 @@ public class Article {
         this.resourceId = resourceId;
     }
 
+    public Integer getResourceTypeId() {
+        return resourceTypeId;
+    }
+
+    public void setResourceTypeId(Integer resourceTypeId) {
+        this.resourceTypeId = resourceTypeId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -61,12 +71,12 @@ public class Article {
         this.title = title;
     }
 
-    public String getIntro() {
-        return intro;
+    public String getBrief() {
+        return brief;
     }
 
-    public void setIntro(String intro) {
-        this.intro = intro;
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 
     public String getLabel() {
@@ -77,12 +87,12 @@ public class Article {
         this.label = label;
     }
 
-    public String getImage() {
-        return image;
+    public String getCover() {
+        return cover;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public String getRemark() {

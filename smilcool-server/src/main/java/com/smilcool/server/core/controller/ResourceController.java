@@ -25,12 +25,15 @@ public class ResourceController {
 
     @ApiOperation("资源列表")
     @GetMapping("/resource")
-    public Result<List<ResourceVO>> list() {
-        List<ResourceVO> resourceList = resourceService.list();
+    public Result<List<ResourceVO>> getResourceList() {
+        List<ResourceVO> resourceList = resourceService.getResourceList();
         return Result.success(resourceList);
     }
 
-//    public Result<ResourceVO> addDefault() {
-//
-//    }
+    @ApiOperation("资源信息")
+    @GetMapping("/resource/{id}")
+    public Result<ResourceVO> getResource(@PathVariable Integer id) {
+        ResourceVO resource = resourceService.getResource(id);
+        return Result.success(resource);
+    }
 }

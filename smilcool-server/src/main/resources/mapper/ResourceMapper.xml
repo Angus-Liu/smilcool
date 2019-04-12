@@ -36,7 +36,8 @@
                 #{zan,jdbcType=INTEGER}, #{pv,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
                 #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Resource">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Resource"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into resource
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -146,7 +147,7 @@
             remark           = #{remark,jdbcType=VARCHAR},
             create_time      = #{createTime,jdbcType=TIMESTAMP},
             update_time      = #{updateTime,jdbcType=TIMESTAMP},
-            deleted           = #{deleted,jdbcType=BIT}
+            deleted          = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 

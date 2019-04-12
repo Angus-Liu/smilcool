@@ -186,10 +186,11 @@ CREATE TABLE `article` (
   `id`               int(11)      NOT NULL AUTO_INCREMENT COMMENT '文章ID',
   `user_id`          int(11)      NOT NULL COMMENT '发布用户ID',
   `resource_id`      int(11)      NOT NULL COMMENT '资源ID',
-  `title`            varchar(255) NOT NULL DEFAULT '呀，忘记写标题了' COMMENT '标题',
-  `intro`            varchar(255) NOT NULL DEFAULT '咦？什么简介也没有呢' COMMENT '简介',
-  `label`            varchar(255) NOT NULL DEFAULT '[]' COMMENT '标签',
-  `image`            varchar(255)          DEFAULT NULL COMMENT '主图',
+  `resource_type_id` int(11)      NOT NULL COMMENT '资源类目ID',
+  `title`            varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+  `brief`            varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
+  `label`            varchar(255) NOT NULL DEFAULT '' COMMENT '标签',
+  `cover`            varchar(255)          DEFAULT NULL COMMENT '封面',
   `markdown_content` text                  DEFAULT NULL COMMENT '内容（markdown格式）',
   `html_content`     text                  DEFAULT NULL COMMENT '内容（html格式）',
   `remark`           varchar(255)          DEFAULT NULL COMMENT '备注',
@@ -197,7 +198,8 @@ CREATE TABLE `article` (
   `update_time`      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted`          tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_resource_id` (`resource_id`)
+  UNIQUE KEY `uk_resource_id` (`resource_id`),
+  KEY `idx_user_id` (`user_id`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='文章表';

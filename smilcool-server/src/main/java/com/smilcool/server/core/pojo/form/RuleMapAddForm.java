@@ -36,6 +36,4 @@ public class RuleMapAddForm {
     private Integer state;
 
     private String remark;
-
-    private Boolean deleted;
 }

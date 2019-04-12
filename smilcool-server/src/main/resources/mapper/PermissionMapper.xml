@@ -175,7 +175,7 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectPermissionByParentId" resultType="com.smilcool.server.core.pojo.po.Permission">
+    <select id="selectByParentId" resultType="com.smilcool.server.core.pojo.po.Permission">
         SELECT
         <include refid="Base_Column_List"/>
         FROM permission

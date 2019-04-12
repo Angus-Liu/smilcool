@@ -14,5 +14,5 @@ public interface PermissionService {
 
     List<PermissionVO> getPermissionList(Integer parentId);
 
-    PermissionVO add(PermissionAddForm permissionAddForm);
+    PermissionVO add(PermissionAddForm form);
 }

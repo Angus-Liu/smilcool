@@ -14,22 +14,6 @@ import lombok.Data;
 @ApiModel("统一接口交互对象")
 public class Result<T> {
 
-    enum Code {
-        OK(200),
-        CLIENT_ERROR(400),
-        UNAUTHORIZED(401),
-        FORBIDDEN(403),
-        NOT_FOUND(404),
-        SYSTEM_ERROR(500);
-
-        public int code;
-
-        Code(int code) {
-            this.code = code;
-        }
-    }
-
-
     /**
      * 请求情况
      */

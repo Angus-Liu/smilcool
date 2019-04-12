@@ -25,4 +25,9 @@ public class Resource {
     private Date updateTime;
 
     private Boolean deleted;
+
+    public Resource(Integer userId, Integer resourceTypeId) {
+        this.userId = userId;
+        this.resourceTypeId = resourceTypeId;
+    }
 }

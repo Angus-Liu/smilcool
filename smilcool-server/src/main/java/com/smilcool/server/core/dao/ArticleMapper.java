@@ -2,6 +2,8 @@ package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Article;
 
+import java.util.List;
+
 public interface ArticleMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +18,6 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(Article record);
 
     int updateByPrimaryKey(Article record);
+
+    List<Article> selectAll();
 }

@@ -1,4 +1,4 @@
-package com.smilcool.server.core.controller;
+package com.smilcool.server.core.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.dto.Result;

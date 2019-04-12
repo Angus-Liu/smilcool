@@ -1,24 +1,40 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
+import com.smilcool.server.core.pojo.form.ResourceTypeAddForm;
 import com.smilcool.server.core.pojo.po.ResourceType;
+import com.smilcool.server.core.pojo.vo.ResourceTypeVO;
+import com.smilcool.server.core.service.ResourceTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Angus
  * @date 2019/4/1
  */
-@Api(description = "资源类型接口", tags = {"2.2"})
+@Api(description = "资源类型接口", tags = {"2.0"})
 @RestController
 public class ResourceTypeController {
 
+    @Autowired
+    private ResourceTypeService resourceTypeService;
+
+    @ApiOperation("资源类型添加")
+    @PostMapping("/resource-type")
+    public Result<ResourceType> addResource(@RequestBody @Valid ResourceTypeAddForm resourceTypeAddForm) {
+        ResourceType resourceType = resourceTypeService.addResourceType(resourceTypeAddForm);
+        return Result.success(resourceType);
+    }
+
     @ApiOperation("资源类型列表")
-    @RequestMapping("/resource-type")
-    public Result<ResourceType> list() {
-        return Result.success();
+    @GetMapping("/resource-type")
+    public Result<List<ResourceTypeVO>> getResourceTypeList(@RequestParam(required = false) Integer parentId) {
+        List<ResourceTypeVO> resourceTypeList = resourceTypeService.getResourceTypeList(parentId);
+        return Result.success(resourceTypeList);
     }
 }
