@@ -28,6 +28,9 @@ CREATE TABLE `user` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='用户表';
 
+# 用户信息表（user_info）
+# TODO
+
 # 角色表（roles）
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
@@ -47,16 +50,16 @@ CREATE TABLE `role` (
   COMMENT ='角色表';
 
 INSERT INTO `role`(`id`, `name`, `description`, `default`, `state`, `remark`)
-  VALUES (0, 'normal', '普通用户', 1, 1, '注册用户默认角色为普通用户');
+VALUES (0, 'normal', '普通用户', 1, 1, '注册用户默认角色为普通用户');
 
 INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-  VALUES (1, 'super-admin', '超级管理员', 1, '超级管理员由系统内定，具有至高无上的权利');
+VALUES (1, 'super-admin', '超级管理员', 1, '超级管理员由系统内定，具有至高无上的权利');
 
 INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-  VALUES (2, 'admin', '管理员', 1, '管理员由超级管理员指定，具有相关操作权利');
+VALUES (2, 'admin', '管理员', 1, '管理员由超级管理员指定，具有相关操作权利');
 
 INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-  VALUES (9, 'member', '会员', 1, '会员比普通用户多了一些特殊权利');
+VALUES (9, 'member', '会员', 1, '会员比普通用户多了一些特殊权利');
 
 # 权限表（permissions）
 DROP TABLE IF EXISTS `permission`;
@@ -177,23 +180,27 @@ CREATE TABLE `resource` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='资源表';
 
-# 资讯表（info）
-DROP TABLE IF EXISTS `info`;
-CREATE TABLE `info` (
-  `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '资讯ID',
-  `resource_id` int(11)      NOT NULL COMMENT '资源ID',
-  `title`       varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `image`       varchar(255)          DEFAULT NULL COMMENT '主图',
-  `content`     text                  DEFAULT NULL COMMENT '内容',
-  `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
-  `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+# 文章表（article）
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article` (
+  `id`               int(11)      NOT NULL AUTO_INCREMENT COMMENT '文章ID',
+  `user_id`          int(11)      NOT NULL COMMENT '发布用户ID',
+  `resource_id`      int(11)      NOT NULL COMMENT '资源ID',
+  `title`            varchar(255) NOT NULL DEFAULT '呀，忘记写标题了' COMMENT '标题',
+  `intro`            varchar(255) NOT NULL DEFAULT '咦？什么简介也没有呢' COMMENT '简介',
+  `label`            varchar(255) NOT NULL DEFAULT '[]' COMMENT '标签',
+  `image`            varchar(255)          DEFAULT NULL COMMENT '主图',
+  `markdown_content` text                  DEFAULT NULL COMMENT '内容（markdown格式）',
+  `html_content`     text                  DEFAULT NULL COMMENT '内容（html格式）',
+  `remark`           varchar(255)          DEFAULT NULL COMMENT '备注',
+  `create_time`      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`      datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`          tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_resource_id` (`resource_id`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
-  COMMENT ='资讯表';
+  COMMENT ='文章表';
 
 # 资料表（data）
 DROP TABLE IF EXISTS `data`;
