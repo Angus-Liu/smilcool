@@ -1,20 +1,19 @@
 package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Article;
-import com.smilcool.server.core.pojo.po.ArticleWithBLOBs;
 
 public interface ArticleMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(ArticleWithBLOBs record);
+    int insert(Article record);
 
-    int insertSelective(ArticleWithBLOBs record);
+    int insertSelective(Article record);
 
-    ArticleWithBLOBs selectByPrimaryKey(Integer id);
+    Article selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(ArticleWithBLOBs record);
+    int updateByPrimaryKeySelective(Article record);
 
-    int updateByPrimaryKeyWithBLOBs(ArticleWithBLOBs record);
+    int updateByPrimaryKeyWithBLOBs(Article record);
 
     int updateByPrimaryKey(Article record);
 }

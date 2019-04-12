@@ -25,6 +25,10 @@ public class Article {
 
     private Boolean deleted;
 
+    private String markdownContent;
+
+    private String htmlContent;
+
     public Integer getId() {
         return id;
     }
@@ -111,5 +115,21 @@ public class Article {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getMarkdownContent() {
+        return markdownContent;
+    }
+
+    public void setMarkdownContent(String markdownContent) {
+        this.markdownContent = markdownContent;
+    }
+
+    public String getHtmlContent() {
+        return htmlContent;
+    }
+
+    public void setHtmlContent(String htmlContent) {
+        this.htmlContent = htmlContent;
     }
 }

@@ -14,7 +14,7 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.ArticleWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.Article">
     <result column="markdown_content" jdbcType="LONGVARCHAR" property="markdownContent" />
     <result column="html_content" jdbcType="LONGVARCHAR" property="htmlContent" />
   </resultMap>
@@ -37,7 +37,7 @@
     delete from article
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.ArticleWithBLOBs">
+  <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Article">
     insert into article (id, user_id, resource_id, 
       title, intro, label, 
       image, remark, create_time, 
@@ -49,7 +49,7 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{markdownContent,jdbcType=LONGVARCHAR}, 
       #{htmlContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.ArticleWithBLOBs">
+  <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Article">
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -134,7 +134,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.ArticleWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Article">
     update article
     <set>
       <if test="userId != null">
@@ -176,7 +176,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.ArticleWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.Article">
     update article
     set user_id = #{userId,jdbcType=INTEGER},
       resource_id = #{resourceId,jdbcType=INTEGER},
