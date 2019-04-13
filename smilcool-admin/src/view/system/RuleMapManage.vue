@@ -2,9 +2,9 @@
   <Card>
     <!-- 操作栏 -->
     <Row class="row-action">
-        <Button class="btn" @click="addRuleMap" type="primary" icon="md-add">添加规则映射</Button>
-        <Button class="btn" @click="getRuleMapList" icon="md-refresh">刷新</Button>
-        <Alert class="row-action-alert" type="warning" show-icon>为使规则生效，更新后需要重启服务端</Alert>
+      <Button class="btn" @click="addRuleMap" type="primary" icon="md-add">添加规则映射</Button>
+      <Button class="btn" @click="getRuleMapList" icon="md-refresh">刷新</Button>
+      <Alert class="row-action-alert" type="warning" show-icon>为使规则生效，更新后需要重启服务端</Alert>
     </Row>
     <!-- 表格 -->
     <Table :columns="columns" :data="ruleMapList" border stripe>
@@ -138,6 +138,7 @@ export default {
 <style lang="less" scoped>
   .row-action {
     margin-bottom: 10px;
+
     .row-action-alert {
       display: inline-block;
     }
