@@ -2,26 +2,22 @@
   <div class="header">
     <div class="nav">
       <div class="nav-logo">
-        <img class="nav-logo-img" src="../../assets/static/logo.png">
+        <img class="nav-logo-img" src="../../assets/logo.png">
       </div>
       <div class="nav-avatar">
-        <at-dropdown>
+        <Dropdown>
           <sui-image class="nav-avatar-img" circular src="http://img.angus-liu.cn/avatar.png"/>
-          <at-dropdown-menu slot="menu">
-            <at-dropdown-item>深圳</at-dropdown-item>
-            <at-dropdown-item>广州</at-dropdown-item>
-            <at-dropdown-item disabled>上海</at-dropdown-item>
-            <at-dropdown-item divided>北京</at-dropdown-item>
-            <at-dropdown-item>杭州</at-dropdown-item>
-          </at-dropdown-menu>
-        </at-dropdown>
+          <DropdownMenu slot="list">
+            <DropdownItem>驴打滚</DropdownItem>
+            <DropdownItem>炸酱面</DropdownItem>
+            <DropdownItem disabled>豆汁儿</DropdownItem>
+            <DropdownItem>冰糖葫芦</DropdownItem>
+            <DropdownItem divided>北京烤鸭</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </div>
       <div class="nav-search">
-        <at-input class="nav-search-input" v-model="input" placeholder="请输入内容" append-button size="large">
-          <template slot="append">
-            <i class="icon icon-search"></i>
-          </template>
-        </at-input>
+        <Input search placeholder="Enter something..."/>
       </div>
     </div>
   </div>
@@ -30,12 +26,12 @@
 <script>
 export default {
   name: 'Header',
-  data () {
+  data() {
     return {
       input: ''
     };
   },
-  mounted () {
+  mounted() {
 
   }
 };
