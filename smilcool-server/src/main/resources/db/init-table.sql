@@ -146,7 +146,7 @@ CREATE TABLE `resource_type` (
   `id`          int(11)       NOT NULL AUTO_INCREMENT COMMENT '资源类目ID',
   `parent_id`   int(11)                DEFAULT NULL COMMENT '父级ID',
   `name`        varchar(20)   NOT NULL COMMENT '资源类目名',
-  `url`         varchar(255)  NOT NULL COMMENT '链接',
+  `tag`         varchar(255)  NOT NULL COMMENT '资源类目标签',
   `description` varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
   `seq`         int(11)       NOT NULL DEFAULT '0' COMMENT '顺序',
   `state`       int(1)        NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',

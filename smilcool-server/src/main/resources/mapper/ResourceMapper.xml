@@ -157,4 +157,18 @@
         from resource
     </select>
 
+    <select id="selectByCondition" resultType="com.smilcool.server.core.pojo.po.Resource">
+        select
+        <include refid="Base_Column_List"/>
+        from resource
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            <if test="resourceTypeId != null">
+                AND resource_type_id = #{resourceTypeId}
+            </if>
+        </where>
+    </select>
+
 </mapper>

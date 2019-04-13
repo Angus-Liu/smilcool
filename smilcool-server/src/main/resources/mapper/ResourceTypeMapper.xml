@@ -5,7 +5,7 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="seq" jdbcType="INTEGER" property="seq"/>
         <result column="state" jdbcType="INTEGER" property="state"/>
@@ -15,7 +15,7 @@
         <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, parent_id, name, url, description, seq, state, remark, create_time, update_time,
+        id, parent_id, name, tag, description, seq, state, remark, create_time, update_time,
     deleted
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -31,11 +31,11 @@
     </delete>
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.ResourceType">
         INSERT INTO resource_type (id, parent_id, name,
-                                   url, description, seq,
+                                   tag, description, seq,
                                    state, remark, create_time,
                                    update_time, deleted)
         VALUES (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
-                #{url,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER},
+                #{tag,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER},
                 #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
                 #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
     </insert>
@@ -52,8 +52,8 @@
             <if test="name != null">
                 name,
             </if>
-            <if test="url != null">
-                url,
+            <if test="tag != null">
+                tag,
             </if>
             <if test="description != null">
                 description,
@@ -87,8 +87,8 @@
             <if test="name != null">
                 #{name,jdbcType=VARCHAR},
             </if>
-            <if test="url != null">
-                #{url,jdbcType=VARCHAR},
+            <if test="tag != null">
+                #{tag,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
@@ -122,8 +122,8 @@
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="url != null">
-                url = #{url,jdbcType=VARCHAR},
+            <if test="tag != null">
+                tag = #{tag,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
@@ -153,7 +153,7 @@
         UPDATE resource_type
         SET parent_id   = #{parentId,jdbcType=INTEGER},
             name        = #{name,jdbcType=VARCHAR},
-            url         = #{url,jdbcType=VARCHAR},
+            tag         = #{tag,jdbcType=VARCHAR},
             description = #{description,jdbcType=VARCHAR},
             seq         = #{seq,jdbcType=INTEGER},
             state       = #{state,jdbcType=INTEGER},
@@ -176,6 +176,13 @@
                 WHERE parent_id = #{parentId}
             </when>
         </choose>
+    </select>
+
+    <select id="selectByTag" resultType="com.smilcool.server.core.pojo.po.ResourceType">
+        select
+        <include refid="Base_Column_List"/>
+        from resource_type
+        WHERE tag = #{tag}
     </select>
 
 </mapper>
