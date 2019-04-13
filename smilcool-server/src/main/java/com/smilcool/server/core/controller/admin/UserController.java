@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
-import com.smilcool.server.core.pojo.form.UserSearchForm;
+import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.UserService;
 import io.swagger.annotations.Api;
@@ -21,7 +21,7 @@ import java.util.List;
  * @date 2019/3/20
  */
 @Slf4j
-@Api(description = "用户接口", tags = {"1.1"})
+@Api(tags = "1.1", description = "用户接口")
 @RestController
 public class UserController {
 
@@ -58,15 +58,15 @@ public class UserController {
 
     @ApiOperation("用户列表（分页条件查询）")
     @GetMapping("/user/page")
-    public Result<Page<UserVO>> getUserPage(Page page, UserSearchForm userSearchForm) {
-        Page<UserVO> userListPage = userService.getUsers(page, userSearchForm);
+    public Result<Page<UserVO>> getUserPage(Page page, UserQueryForm userQueryForm) {
+        Page<UserVO> userListPage = userService.getUsers(page, userQueryForm);
         return Result.success(userListPage);
     }
 
     @ApiOperation(value = "用户信息", notes = "通过用户 id 获取用户信息（包括角色与权限信息）")
     @GetMapping("/user/{id}")
     public Result<UserVO> get(@PathVariable("id") Integer id) {
-        UserVO user = userService.get(id);
+        UserVO user = userService.getUser(id);
         return Result.success(user);
     }
 }

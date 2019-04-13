@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Angus
  * @date 2019/4/1
  */
-@Api(description = "资料接口", tags = {"2.6"})
+@Api(tags = "2.6", description = "资料接口")
 @RestController
 public class DataController {
 

@@ -13,7 +13,7 @@ public class ResourceTypeVO {
 
     private String name;
 
-    private String url;
+    private String tag;
 
     private String description;
 
@@ -26,8 +26,6 @@ public class ResourceTypeVO {
     private Date createTime;
 
     private Date updateTime;
-
-    private Boolean deleted;
 
     private List<ResourceTypeVO> children;
 }

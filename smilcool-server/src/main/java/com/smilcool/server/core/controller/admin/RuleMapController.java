@@ -17,7 +17,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/4/8
  */
-@Api(description = "规则映射接口", tags = {"1.6"})
+@Api(tags = "1.6", description = "规则映射接口")
 @RestController
 public class RuleMapController {
 

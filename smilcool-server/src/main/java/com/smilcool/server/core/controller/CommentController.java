@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Angus
  * @date 2019/4/1
  */
-@Api(description = "评论接口", tags = {"3.1"})
+@Api(tags = "3.1", description = "评论接口")
 @RestController
 public class CommentController {
 

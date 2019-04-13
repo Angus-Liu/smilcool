@@ -19,4 +19,6 @@ public interface ResourceTypeMapper {
     int updateByPrimaryKey(ResourceType record);
 
     List<ResourceType> selectByParentId(@Param("parentId") Integer parentId);
+
+    ResourceType selectByTag(String tag);
 }

@@ -16,7 +16,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/3/29
  */
-@Api(description = "权限接口", tags = {"1.3"})
+@Api(tags = "1.3", description = "权限接口")
 @RestController
 public class PermissionController {
 

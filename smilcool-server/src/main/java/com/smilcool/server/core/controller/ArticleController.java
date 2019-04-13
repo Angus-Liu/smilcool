@@ -16,7 +16,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/4/12
  */
-@Api(description = "文章接口", tags = {"2.2"})
+@Api(tags = "2.2", description = "文章接口")
 @RestController
 public class ArticleController {
 

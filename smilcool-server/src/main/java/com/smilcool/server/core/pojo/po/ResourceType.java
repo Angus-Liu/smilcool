@@ -12,7 +12,7 @@ public class ResourceType {
 
     private String name;
 
-    private String url;
+    private String tag;
 
     private String description;
 

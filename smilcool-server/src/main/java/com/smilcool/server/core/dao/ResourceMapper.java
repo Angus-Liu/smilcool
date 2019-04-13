@@ -19,4 +19,6 @@ public interface ResourceMapper {
     int updateByPrimaryKey(Resource record);
 
     List<Resource> selectAll();
+
+    List<Resource> selectByCondition(Resource condition);
 }

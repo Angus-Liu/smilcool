@@ -19,7 +19,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/3/28
  */
-@Api(description = "角色接口", tags = {"1.2"})
+@Api(tags = "1.2", description = "角色接口")
 @RestController
 public class RoleController {
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Angus
  * @date 2019/4/1
  */
-@Api(description = "二手交易接口", tags = {"2.5"})
+@Api(tags = "2.5", description = "二手交易接口")
 @RestController
 public class SecondHandController {
 

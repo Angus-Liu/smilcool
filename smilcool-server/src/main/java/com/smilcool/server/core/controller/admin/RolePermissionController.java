@@ -16,7 +16,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/3/29
  */
-@Api(description = "角色权限接口", tags = {"1.5"})
+@Api(tags = "1.5", description = "角色权限接口")
 @RestController
 public class RolePermissionController {
     @Autowired

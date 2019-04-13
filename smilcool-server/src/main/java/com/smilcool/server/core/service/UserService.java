@@ -3,7 +3,7 @@ package com.smilcool.server.core.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
-import com.smilcool.server.core.pojo.form.UserSearchForm;
+import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.vo.UserVO;
 
@@ -18,7 +18,7 @@ public interface UserService {
 
     void checkExist(Integer id);
 
-    UserVO get(Integer id);
+    UserVO getUser(Integer id);
 
     /**
      * 用户注册
@@ -40,19 +40,19 @@ public interface UserService {
      * @param password 密码
      * @return
      */
-    User get(String username, String password);
+    User getUser(String username, String password);
 
     /**
      * 用户注册
      *
-     * @param userRegisterForm 用户注册表单的那
+     * @param form 用户注册表单的那
      * @return 用户信息
      */
-    UserVO register(UserRegisterForm userRegisterForm);
+    UserVO register(UserRegisterForm form);
 
     List<UserVO> getUsers();
 
-    Page<UserVO> getUsers(Page page, UserSearchForm userSearchForm);
+    Page<UserVO> getUsers(Page page, UserQueryForm form);
 
     Set<String> getRoles(Integer id);
 

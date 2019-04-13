@@ -17,7 +17,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/4/1
  */
-@Api(description = "资源类型接口", tags = {"2.0"})
+@Api(tags = "2.0", description = "资源类型接口")
 @RestController
 public class ResourceTypeController {
 
@@ -36,5 +36,12 @@ public class ResourceTypeController {
     public Result<List<ResourceTypeVO>> getResourceTypeList(@RequestParam(required = false) Integer parentId) {
         List<ResourceTypeVO> resourceTypeList = resourceTypeService.getResourceTypeList(parentId);
         return Result.success(resourceTypeList);
+    }
+
+    @ApiOperation("资源类型信息")
+    @GetMapping("/resource-type/{tag}")
+    public Result<ResourceTypeVO> getResourceTypeListByTag(@PathVariable String tag) {
+        ResourceTypeVO resourceType = resourceTypeService.getResourceType(tag);
+        return Result.success(resourceType);
     }
 }

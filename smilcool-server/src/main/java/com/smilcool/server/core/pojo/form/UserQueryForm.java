@@ -7,7 +7,7 @@ import lombok.Data;
  * @date 2019/3/31
  */
 @Data
-public class UserSearchForm {
+public class UserQueryForm {
 
     private String username;
 

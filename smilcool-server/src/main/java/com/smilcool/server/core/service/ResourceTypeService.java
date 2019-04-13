@@ -15,6 +15,8 @@ public interface ResourceTypeService {
 
     ResourceType getResourceType(Integer id);
 
+    ResourceTypeVO getResourceType(String tag);
+
     List<ResourceTypeVO> getResourceTypeList(Integer parentId);
 
     void checkExist(Integer id);

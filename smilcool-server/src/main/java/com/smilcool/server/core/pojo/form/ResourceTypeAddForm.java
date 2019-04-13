@@ -15,7 +15,8 @@ public class ResourceTypeAddForm {
     @NotBlank(message = "资源类型名不能为空")
     private String name;
 
-    private String url;
+    @NotBlank(message = "资源类型标签不能为空")
+    private String tag;
 
     @NotBlank(message = "资源类型描述不能为空")
     private String description;

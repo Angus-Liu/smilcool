@@ -1,5 +1,6 @@
 package com.smilcool.server.core.service;
 
+import com.smilcool.server.core.pojo.form.ResourceQueryForm;
 import com.smilcool.server.core.pojo.vo.ResourceVO;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface ResourceService {
 
     List<ResourceVO> getResourceList();
 
+    List<ResourceVO> getResourceList(ResourceQueryForm form);
 }

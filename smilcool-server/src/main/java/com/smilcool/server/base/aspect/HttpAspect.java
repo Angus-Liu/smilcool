@@ -21,7 +21,7 @@ import java.util.Arrays;
 @Component
 public class HttpAspect {
 
-    @Pointcut(value = "execution(public * com.smilcool.server.core.controller.*.*(..))")
+    @Pointcut(value = "execution(public * com.smilcool.server.core.controller..*Controller.*(..))")
     public void pointcut() {
     }
 

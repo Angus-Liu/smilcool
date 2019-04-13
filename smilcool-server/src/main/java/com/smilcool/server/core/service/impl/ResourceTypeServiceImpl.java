@@ -39,6 +39,19 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
     }
 
     @Override
+    public ResourceTypeVO getResourceType(String tag) {
+        // 获取 tag 为指定值的列表
+        ResourceType select = resourceTypeMapper.selectByTag(tag);
+        if (select == null) {
+            throw new SmilcoolException("资源类型不存在");
+        }
+        ResourceTypeVO resourceType = BeanUtil.copyProp(select, ResourceTypeVO.class);
+        // 获取子列表
+        resourceType.setChildren(getResourceTypeList(resourceType.getId()));
+        return resourceType;
+    }
+
+    @Override
     public List<ResourceTypeVO> getResourceTypeList(Integer parentId) {
         // 获取 parent_id 为 parentId 的列表，parentId 为空时获取所有列表
         List<ResourceType> resourceTypes = resourceTypeMapper.selectByParentId(parentId);

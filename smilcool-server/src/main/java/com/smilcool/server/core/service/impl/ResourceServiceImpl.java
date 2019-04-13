@@ -3,6 +3,7 @@ package com.smilcool.server.core.service.impl;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.ResourceMapper;
+import com.smilcool.server.core.pojo.form.ResourceQueryForm;
 import com.smilcool.server.core.pojo.po.Resource;
 import com.smilcool.server.core.pojo.vo.ResourceVO;
 import com.smilcool.server.core.service.ResourceService;
@@ -55,6 +56,13 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public List<ResourceVO> getResourceList() {
         List<Resource> resourceList = resourceMapper.selectAll();
+        return BeanUtil.copyProp(resourceList, ResourceVO.class);
+    }
+
+    @Override
+    public List<ResourceVO> getResourceList(ResourceQueryForm form) {
+        Resource condition = BeanUtil.copyProp(form, Resource.class);
+        List<Resource> resourceList = resourceMapper.selectByCondition(condition);
         return BeanUtil.copyProp(resourceList, ResourceVO.class);
     }
 }

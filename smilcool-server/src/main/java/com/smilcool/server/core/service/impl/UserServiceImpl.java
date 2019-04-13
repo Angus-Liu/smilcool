@@ -5,8 +5,8 @@ import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
+import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
-import com.smilcool.server.core.pojo.form.UserSearchForm;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.RolePermissionService;
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public UserVO get(Integer id) {
+    public UserVO getUser(Integer id) {
         // 获取用户基础信息
         User user = userMapper.selectByPrimaryKey(id);
         if (user == null) {
@@ -71,14 +71,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO login(UserLoginForm userLoginForm) {
+    public UserVO login(UserLoginForm form) {
         // Shiro 身份认证
         Subject currentUser = SecurityUtils.getSubject();
-        String username = userLoginForm.getUsername();
-        String password = userLoginForm.getPassword();
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(form.getUsername(), form.getPassword());
         currentUser.login(token);
-        return get((Integer) currentUser.getPrincipal());
+        return getUser((Integer) currentUser.getPrincipal());
     }
 
     @Override
@@ -89,30 +87,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(String username, String password) {
+    public User getUser(String username, String password) {
         return userMapper.selectByUsernameAndPassword(username, password);
     }
 
 
     @Transactional
     @Override
-    public UserVO register(UserRegisterForm userRegisterForm) {
-        User selected = userMapper.selectByUsername(userRegisterForm.getUsername());
+    public UserVO register(UserRegisterForm form) {
+        User selected = userMapper.selectByUsername(form.getUsername());
         if (selected != null) {
             throw new SmilcoolException("用户名已存在");
         }
-        selected = userMapper.selectByEmail(userRegisterForm.getEmail());
+        selected = userMapper.selectByEmail(form.getEmail());
         if (selected != null) {
             throw new SmilcoolException("邮箱已注册");
         }
         // 添加用户记录
-        User user = BeanUtil.copyProp(userRegisterForm, User.class);
+        User user = BeanUtil.copyProp(form, User.class);
         userMapper.insertSelective(user);
         // 添加用户-角色记录（用户注册时角色默认为普通用户 - normal）
         // TODO: role 表添加默认状态字段，查询获取为默认状态的 role 为新注册用户赋值
         userRoleService.addDefault(user.getId());
         // 返回用户信息
-        return get(user.getId());
+        return getUser(user.getId());
     }
 
     @Override
@@ -127,8 +125,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserVO> getUsers(Page page, UserSearchForm userSearchForm) {
-        User condition = BeanUtil.copyProp(userSearchForm, User.class);
+    public Page<UserVO> getUsers(Page page, UserQueryForm form) {
+        User condition = BeanUtil.copyProp(form, User.class);
         Page<UserVO> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserVO.class);
         userPage.getRecords().forEach(user -> {
             // 获取用户角色信息（角色描述）

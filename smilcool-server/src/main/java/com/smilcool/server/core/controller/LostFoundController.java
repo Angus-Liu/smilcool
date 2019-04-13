@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Angus
  * @date 2019/4/1
  */
-@Api(description = "失物寻物接口", tags = {"2.4"})
+@Api(tags = "2.4", description = "失物寻物接口")
 @RestController
 public class LostFoundController {
 

@@ -47,7 +47,7 @@ public class CustomAuthorizingRealm extends AuthorizingRealm {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = upToken.getUsername();
         String password = String.valueOf(upToken.getPassword());
-        User user = userService.get(username, password);
+        User user = userService.getUser(username, password);
         if (user == null) {
             throw new AccountException("用户名或密码错误");
         }
