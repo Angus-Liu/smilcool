@@ -140,7 +140,7 @@ CREATE TABLE `rule_map` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='权限控制策略表';
 
-# 资源类目表（resource_type）
+# 资源类型表（resource_type）
 DROP TABLE IF EXISTS `resource_type`;
 CREATE TABLE `resource_type` (
   `id`          int(11)       NOT NULL AUTO_INCREMENT COMMENT '资源类目ID',
@@ -158,14 +158,14 @@ CREATE TABLE `resource_type` (
   KEY `idx_parent_id` (`parent_id`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
-  COMMENT ='资源类目表';
+  COMMENT ='资源类型表';
 
 # 资源表（resource）
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE `resource` (
   `id`               int(11)    NOT NULL AUTO_INCREMENT COMMENT '资源ID',
   `user_id`          int(11)    NOT NULL COMMENT '发布用户ID',
-  `resource_type_id` int(11)    NOT NULL COMMENT '资源类目ID',
+  `resource_type_id` int(11)    NOT NULL COMMENT '资源类型ID',
   `zan`              int(11)    NOT NULL DEFAULT '0' COMMENT '点赞数',
   `pv`               int(11)    NOT NULL DEFAULT '0' COMMENT '浏览量',
   `state`            int(1)     NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',
@@ -250,18 +250,20 @@ CREATE TABLE `lost_found` (
 # 二手物品表（second_hand）
 DROP TABLE IF EXISTS `second_hand`;
 CREATE TABLE `second_hand` (
-  `id`          int(11)       NOT NULL AUTO_INCREMENT COMMENT '二手物品ID',
-  `resource_id` int(11)       NOT NULL COMMENT '资源ID',
-  `title`       varchar(255)  NOT NULL DEFAULT '' COMMENT '标题',
-  `name`        varchar(255)  NOT NULL DEFAULT '' COMMENT '物品名称',
-  `price`       double(8, 2)  NOT NULL DEFAULT '0.00' COMMENT '物品价格',
-  `address`     varchar(255)  NOT NULL COMMENT '交易地址',
-  `image`       varchar(255)           DEFAULT NULL COMMENT '主图',
-  `description` varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
-  `remark`      varchar(255)           DEFAULT NULL COMMENT '备注',
-  `create_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`     tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `id`               int(11)       NOT NULL AUTO_INCREMENT COMMENT '二手物品ID',
+  `user_id`          int(11)       NOT NULL COMMENT '发布用户ID',
+  `resource_id`      int(11)       NOT NULL COMMENT '资源ID',
+  `resource_type_id` int(11)       NOT NULL COMMENT '资源类型ID',
+  `title`            varchar(255)  NOT NULL DEFAULT '' COMMENT '标题',
+  `name`             varchar(255)  NOT NULL DEFAULT '' COMMENT '物品名称',
+  `price`            double(8, 2)  NOT NULL DEFAULT '0.00' COMMENT '物品价格',
+  `address`          varchar(255)  NOT NULL COMMENT '交易地址',
+  `image`            varchar(1000)          DEFAULT NULL COMMENT '图片',
+  `description`      varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
+  `remark`           varchar(255)           DEFAULT NULL COMMENT '备注',
+  `create_time`      datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`      datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`          tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_resource_id` (`resource_id`)
 ) ENGINE = INNODB
