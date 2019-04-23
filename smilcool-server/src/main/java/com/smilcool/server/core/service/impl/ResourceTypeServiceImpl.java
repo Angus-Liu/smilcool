@@ -47,17 +47,17 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
         }
         ResourceTypeVO resourceType = BeanUtil.copyProp(select, ResourceTypeVO.class);
         // 获取子列表
-        resourceType.setChildren(getResourceTypeList(resourceType.getId()));
+        resourceType.setChildren(getResourceTypeListWithChildren(resourceType.getId()));
         return resourceType;
     }
 
     @Override
-    public List<ResourceTypeVO> getResourceTypeList(Integer parentId) {
+    public List<ResourceTypeVO> getResourceTypeListWithChildren(Integer parentId) {
         // 获取 parent_id 为 parentId 的列表，parentId 为空时获取所有列表
         List<ResourceType> resourceTypes = resourceTypeMapper.selectByParentId(parentId);
         List<ResourceTypeVO> resourceTypeList = BeanUtil.copyProp(resourceTypes, ResourceTypeVO.class);
         // 递归获取子列表
-        resourceTypeList.forEach(resourceType -> resourceType.setChildren(getResourceTypeList(resourceType.getId())));
+        resourceTypeList.forEach(resourceType -> resourceType.setChildren(getResourceTypeListWithChildren(resourceType.getId())));
         return resourceTypeList;
     }
 
@@ -67,5 +67,13 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
         if (resourceType == null) {
             throw new SmilcoolException("资源类型不存在");
         }
+    }
+
+    @Override
+    public List<ResourceTypeVO> getResourceTypeList(Integer parentId) {
+        // 获取 parent_id 为 parentId 的列表，parentId 为空时获取所有列表
+        List<ResourceType> resourceTypes = resourceTypeMapper.selectByParentId(parentId);
+        List<ResourceTypeVO> resourceTypeList = BeanUtil.copyProp(resourceTypes, ResourceTypeVO.class);
+        return resourceTypeList;
     }
 }

@@ -1,6 +1,9 @@
 package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Comment;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CommentMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,8 @@ public interface CommentMapper {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    List<Comment> selectByResourceId(Integer resourceId);
+
+    List<Comment> selectByParentId(Integer parentId);
 }

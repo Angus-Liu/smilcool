@@ -32,8 +32,15 @@ public class ResourceTypeController {
     }
 
     @ApiOperation("资源类型列表")
-    @GetMapping("/resource-type")
+    @GetMapping("/resource-type-with-children")
     public Result<List<ResourceTypeVO>> getResourceTypeList(@RequestParam(required = false) Integer parentId) {
+        List<ResourceTypeVO> resourceTypeList = resourceTypeService.getResourceTypeListWithChildren(parentId);
+        return Result.success(resourceTypeList);
+    }
+
+    @ApiOperation(value = "资源类型列表")
+    @GetMapping("/resource-type")
+    public Result<List<ResourceTypeVO>> getParentResourceTypeList(@RequestParam(required = false) Integer parentId) {
         List<ResourceTypeVO> resourceTypeList = resourceTypeService.getResourceTypeList(parentId);
         return Result.success(resourceTypeList);
     }

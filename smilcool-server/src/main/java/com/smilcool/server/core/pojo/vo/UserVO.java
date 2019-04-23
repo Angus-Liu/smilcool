@@ -68,6 +68,8 @@ public class UserVO {
 
     private Boolean deleted;
 
+    // TODO: 2019/4/23 UserVO 中不应该包含 roles 和 permissions
+
     /**
      * 角色信息
      */

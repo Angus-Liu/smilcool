@@ -1,153 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smilcool.server.core.dao.CommentMapper">
-  <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Comment">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
-    <result column="reply_user_id" jdbcType="INTEGER" property="replyUserId" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="deleted" jdbcType="BIT" property="deleted" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, parent_id, user_id, resource_id, reply_user_id, content, remark, create_time, 
+    <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Comment">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="resource_id" jdbcType="INTEGER" property="resourceId"/>
+        <result column="reply_user_id" jdbcType="INTEGER" property="replyUserId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, parent_id, user_id, resource_id, reply_user_id, content, remark, create_time,
     update_time, deleted
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from comment
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from comment
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Comment">
-    insert into comment (id, parent_id, user_id, 
-      resource_id, reply_user_id, content, 
-      remark, create_time, update_time, 
-      deleted)
-    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{resourceId,jdbcType=INTEGER}, #{replyUserId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{deleted,jdbcType=BIT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Comment">
-    insert into comment
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="parentId != null">
-        parent_id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="resourceId != null">
-        resource_id,
-      </if>
-      <if test="replyUserId != null">
-        reply_user_id,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="deleted != null">
-        deleted,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="resourceId != null">
-        #{resourceId,jdbcType=INTEGER},
-      </if>
-      <if test="replyUserId != null">
-        #{replyUserId,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleted != null">
-        #{deleted,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Comment">
-    update comment
-    <set>
-      <if test="parentId != null">
-        parent_id = #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="resourceId != null">
-        resource_id = #{resourceId,jdbcType=INTEGER},
-      </if>
-      <if test="replyUserId != null">
-        reply_user_id = #{replyUserId,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleted != null">
-        deleted = #{deleted,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Comment">
-    update comment
-    set parent_id = #{parentId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
-      resource_id = #{resourceId,jdbcType=INTEGER},
-      reply_user_id = #{replyUserId,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from comment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE
+        FROM comment
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Comment">
+        INSERT INTO comment (id, parent_id, user_id,
+                             resource_id, reply_user_id, content,
+                             remark, create_time, update_time,
+                             deleted)
+        VALUES (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+                #{resourceId,jdbcType=INTEGER}, #{replyUserId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
+                #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+                #{deleted,jdbcType=BIT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Comment"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="resourceId != null">
+                resource_id,
+            </if>
+            <if test="replyUserId != null">
+                reply_user_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceId != null">
+                #{resourceId,jdbcType=INTEGER},
+            </if>
+            <if test="replyUserId != null">
+                #{replyUserId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Comment">
+        update comment
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceId != null">
+                resource_id = #{resourceId,jdbcType=INTEGER},
+            </if>
+            <if test="replyUserId != null">
+                reply_user_id = #{replyUserId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Comment">
+        UPDATE comment
+        SET parent_id     = #{parentId,jdbcType=INTEGER},
+            user_id       = #{userId,jdbcType=INTEGER},
+            resource_id   = #{resourceId,jdbcType=INTEGER},
+            reply_user_id = #{replyUserId,jdbcType=INTEGER},
+            content       = #{content,jdbcType=VARCHAR},
+            remark        = #{remark,jdbcType=VARCHAR},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP},
+            deleted       = #{deleted,jdbcType=BIT}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByResourceId" resultType="com.smilcool.server.core.pojo.po.Comment">
+        select
+        <include refid="Base_Column_List"/>
+        from comment
+        WHERE resource_id = #{resourceId}
+        AND parent_id is NULL
+    </select>
+
+    <select id="selectByParentId" resultType="com.smilcool.server.core.pojo.po.Comment">
+        select
+        <include refid="Base_Column_List"/>
+        from comment
+        WHERE parent_id = #{parentId}
+    </select>
 </mapper>
