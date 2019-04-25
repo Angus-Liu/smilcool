@@ -14,6 +14,12 @@ spring:
   #      max-file-size: 500MB
   #      max-request-size: 500MB
 
+  # Redis 配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: root
+
   # Swagger 配置
   swagger:
     enabled: true # 生产环境应关闭
@@ -23,6 +29,7 @@ spring:
     contact:
       name: Angus Liu
     base-package: com.smilcool.server.core.controller
+
 
 # MyBatis-Plus 配置（替代原 MyBatis 配置）
 mybatis-plus:

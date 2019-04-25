@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
         User user = BeanUtil.copyProp(form, User.class);
         userMapper.insertSelective(user);
         // 添加用户-角色记录（用户注册时角色默认为普通用户 - normal）
-        // TODO: role 表添加默认状态字段，查询获取为默认状态的 role 为新注册用户赋值
+        // TODO: 2019/4/24  role 表添加默认状态字段，查询获取为默认状态的 role 为新注册用户赋值
         userRoleService.addDefault(user.getId());
         // 返回用户信息
         return getUser(user.getId());

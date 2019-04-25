@@ -67,6 +67,7 @@ public class ShiroConfig {
         filters.put("rest", rest());
         filters.put("roles", roles());
         // 配置过滤器链映射
+        // TODO: 2019/4/25 后期是否可以通过修改 filterChainDefinitionMap 来动态更改权限控制
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 从数据库获取规则映射
         List<RuleMap> ruleMapList = ruleMapService.getRuleMapList();
