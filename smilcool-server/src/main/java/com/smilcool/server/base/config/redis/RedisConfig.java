@@ -3,6 +3,7 @@ package com.smilcool.server.base.config.redis;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
  */
 @EnableCaching
 @Configuration
-public class RedisConfig {
+public class RedisConfig extends CachingConfigurerSupport {
     // TODO: 2019/4/24 缓存
     // TODO: 2019/4/24 限流
 
@@ -46,4 +47,6 @@ public class RedisConfig {
         template.afterPropertiesSet();
         return template;
     }
+
+    // TODO: 2019/4/26 配置自定义 CacheManager
 }

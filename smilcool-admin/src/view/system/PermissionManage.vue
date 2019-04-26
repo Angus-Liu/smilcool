@@ -7,17 +7,17 @@
     </Row>
     <Row>
       <!-- 权限列表 -->
-      <Col span="5">
+      <iCol span="5">
         <div class="tree-bar">
           <Tree :data="permissionList" @on-select-change="handleSelectPermission" show-checkbox></Tree>
         </div>
-      </Col>
-      <Col span="7" offset="2">
+      </iCol>
+      <iCol span="7" offset="2">
         <!-- 权限详情 -->
         <Form ref="permissionForm" :model="permission" :label-width="85">
           <FormItem label="类型" prop="type">
             <RadioGroup :value="types[permission.type].label">
-              <Radio v-for="item in types" :label="item.label"/>
+              <Radio v-for="item in types" :label="item.label" :key="item.type"/>
             </RadioGroup>
           </FormItem>
           <FormItem label="ID" prop="id">
@@ -43,7 +43,7 @@
             <Button class="btn" @click="handleReset">重置</Button>
           </FormItem>
         </Form>
-      </Col>
+      </iCol>
     </Row>
     <!-- 表格 -->
   </Card>

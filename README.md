@@ -6,10 +6,11 @@
 - [x] MyBaits 集成
 - [x] Swagger 集成
 - [x] Shiro 集成
-- [ ] Redis 集成
+- [x] Redis 集成
 - [ ] ElasticSearch 集成
-- [ ] RocketMQ 消息队列
-- [ ] QuartZ 定时任务
+- [ ] Netty 集成
+- [ ] RocketMQ 集成
+- [ ] QuartZ 集成
 
 
 

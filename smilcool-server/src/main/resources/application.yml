@@ -21,7 +21,6 @@ spring:
     password: root
   # Cache 配置
   cache:
-    cache-names: test
     type: redis
 
   # Swagger 配置
