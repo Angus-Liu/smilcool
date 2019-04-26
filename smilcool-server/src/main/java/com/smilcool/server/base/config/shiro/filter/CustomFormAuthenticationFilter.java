@@ -22,6 +22,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+        // TODO: 2019/4/26 也可以为 WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
         HttpServletResponseUtil.sendJson((HttpServletResponse) response,
                 HttpServletResponse.SC_UNAUTHORIZED,
                 Result.error(401, "身份验证失败，请重新登录"));

@@ -19,6 +19,10 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: root
+  # Cache 配置
+  cache:
+    cache-names: test
+    type: redis
 
   # Swagger 配置
   swagger:

@@ -8,8 +8,6 @@ import com.smilcool.server.base.config.shiro.realm.CustomAuthorizingRealm;
 import com.smilcool.server.core.pojo.po.RuleMap;
 import com.smilcool.server.core.service.RuleMapService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -27,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Shiro 配置
+ *
  * @author Angus
  * @date 2019/4/5
  */
@@ -44,7 +44,8 @@ public class ShiroConfig {
      */
     @Bean
     public Realm realm() {
-        return new CustomAuthorizingRealm();
+        CustomAuthorizingRealm realm = new CustomAuthorizingRealm();
+        return realm;
     }
 
     /**
@@ -111,10 +112,11 @@ public class ShiroConfig {
      *
      * @return
      */
-    @Bean
-    protected CacheManager cacheManager() {
-        return new MemoryConstrainedCacheManager();
-    }
+    // TODO: 2019/4/26 改为 Redis 托管
+//    @Bean
+//    protected CacheManager cacheManager() {
+//        return new MemoryConstrainedCacheManager();
+//    }
 
     /**
      * 使用 Bean 注入时，原过滤器仍然生效，页面依旧会跳转到 /login.jsp，无法达到替代效果

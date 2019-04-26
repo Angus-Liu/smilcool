@@ -2,17 +2,20 @@ package com.smilcool.server.base.config.shiro.realm;
 
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 /**
  * @author Angus
  * @date 2019/4/5
  */
+@Slf4j
 public class CustomAuthorizingRealm extends AuthorizingRealm {
 
     @Autowired
@@ -26,7 +29,9 @@ public class CustomAuthorizingRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        // PrimaryPrincipal 为 userId
         Integer id = (Integer) principals.getPrimaryPrincipal();
+        log.info("获取用户 {} 授权信息", id);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         // 获取角色信息
         authorizationInfo.setRoles(userService.getRoles(id));
