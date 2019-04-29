@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header/>
-    <div class="child-container">
+    <div class="article-container">
       <router-view/>
     </div>
     <Footer/>
@@ -27,7 +27,7 @@ export default {
   height: 100%;
   overflow: auto;
 
-  .child-container {
+  .article-container {
     width: 1440px;
     min-height: calc(100% - 170px);
     margin: 0 auto;

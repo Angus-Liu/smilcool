@@ -11,8 +11,8 @@ import 'semantic-ui-css/semantic.min.css';
 // axios
 import HttpRequest from '@/utils/axios';
 // mavonEditor: https://github.com/hinesboy/mavonEditor
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
+import mavonEditor from 'mavon-editor';
+import 'mavon-editor/dist/css/index.css';
 
 Vue.config.productionTip = false;
 

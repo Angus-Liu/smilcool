@@ -1,61 +1,44 @@
 <template>
   <div>
     <article>
-      <div class="child-container">
-        <h1 class="article-title">{{article.title}}</h1>
-        <div class="author"></div>
-        <div class="markdown-body" v-html="article.htmlContent"></div>
+      <section>
+        <h1 class="article-title">{{articleInfo.article.title}}</h1>
+        <span class="author"></span>
+        <p class="markdown-body" v-html="articleInfo.article.htmlContent"></p>
+        <div class="comment-input">
+          <label>
+            <Input v-model="comment" type="textarea" :rows="3" placeholder="添加评论"/>
+          </label>
+        </div>
+      </section>
+      <section>
         <div class="article-comment">
-          <h3 is="sui-header" dividing>评论</h3>
+          <h3 is="sui-header" dividing>评论列表</h3>
           <sui-comment-group>
-            <sui-comment>
-              <sui-comment-avatar src="http://img.angus-liu.cn/avatar.png"/>
+            <sui-comment v-for="comment in articleInfo.commentList" :key="comment.id">
+              <sui-comment-avatar :src="comment.postUser.avatar"/>
               <sui-comment-content>
-                <a is="sui-comment-author">文刀</a>
+                <a is="sui-comment-author">{{comment.postUser.nickname}}</a>
                 <sui-comment-metadata>
-                  <span>5分钟前</span>
+                  <span>{{comment.createTime}}</span>
                 </sui-comment-metadata>
-                <sui-comment-text>写的太好了，为你点赞👍</sui-comment-text>
+                <sui-comment-text>{{comment.content}}</sui-comment-text>
                 <sui-comment-actions>
                   <sui-comment-action @click="reply">回复</sui-comment-action>
                 </sui-comment-actions>
               </sui-comment-content>
-            </sui-comment>
-
-            <sui-comment>
-              <sui-comment-avatar src="http://img.angus-liu.cn/avatar1.png"/>
-              <sui-comment-content>
-                <a is="sui-comment-author">赫本</a>
-                <sui-comment-metadata>
-                  <span>今天下午 5:42</span>
-                </sui-comment-metadata>
-                <sui-comment-text>不错不错，学到了👏</sui-comment-text>
-                <sui-comment-actions>
-                  <sui-comment-action @click="reply">回复</sui-comment-action>
-                </sui-comment-actions>
-              </sui-comment-content>
-              <sui-comment-group>
-                <sui-comment>
-                  <sui-comment-avatar src="http://img.angus-liu.cn/avatar.png"/>
+              <sui-comment-group v-if="comment.children.length !== 0">
+                <sui-comment v-for="child in comment.children" :key="child.id">
+                  <sui-comment-avatar :src="child.postUser.avatar"/>
                   <sui-comment-content>
-                    <a is="sui-comment-author">文刀</a>
+                    <a is="sui-comment-author">{{child.postUser.nickname}}</a>
                     <sui-comment-metadata>
-                      <span>5分钟前</span>
+                      <span>{{child.createTime}}</span>
                     </sui-comment-metadata>
-                    <sui-comment-text>@赫本 哇，女神，居然能在这碰到你😍</sui-comment-text>
-                    <sui-comment-actions>
-                      <sui-comment-action @click="reply">回复</sui-comment-action>
-                    </sui-comment-actions>
-                  </sui-comment-content>
-                </sui-comment>
-                <sui-comment id="comment-12">
-                  <sui-comment-avatar src="http://img.angus-liu.cn/avatar1.png"/>
-                  <sui-comment-content>
-                    <a is="sui-comment-author">赫本</a>
-                    <sui-comment-metadata>
-                      <span>刚刚</span>
-                    </sui-comment-metadata>
-                    <sui-comment-text>@文刀 说明很有缘分嘛😉</sui-comment-text>
+                    <sui-comment-text>
+                      <a :href="child.replyUser.id">@{{child.replyUser.nickname}}</a>
+                      {{child.content}}
+                    </sui-comment-text>
                     <sui-comment-actions>
                       <sui-comment-action @click="reply">回复</sui-comment-action>
                     </sui-comment-actions>
@@ -65,7 +48,7 @@
             </sui-comment>
           </sui-comment-group>
         </div>
-      </div>
+      </section>
     </article>
     <aside>
 
@@ -79,35 +62,69 @@ export default {
   props: ['id'],
   data() {
     return {
-      article: {}
+      articleInfo: {
+        article: {
+          id: 1,
+          userId: 1,
+          resourceId: 1,
+          resourceTypeId: 4,
+          title: '2019-2020 设计趋势·图形篇',
+          brief: '2019-2020 设计趋势报告，源自我们平时日常设计工作的总结归纳，本次由ISUX首尔主笔新视角。',
+          label: '',
+          cover: 'http://img.angus-liu.cn/cover01.jpg',
+          createTime: '2019-04-12 17:30:46',
+          updateTime: '2019-04-29 18:39:09',
+          markdownContent: '',
+          htmlContent: ''
+        },
+        commentList: [{
+          resourceId: 1,
+          parentId: null,
+          id: 1,
+          userId: 1,
+          postUser: {
+            id: 1,
+            username: 'admin',
+            nickname: '管理员',
+            avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+          },
+          replyUserId: null,
+          replyUser: null,
+          content: '写的太好了，为你点赞👍',
+          createTime: '2019-04-23 20:59:24',
+          children: []
+        }]
+      },
+      comment: ""
     };
   },
   methods: {
     reply() {
       alert('回复');
+    },
+    getArticle() {
+      this.$axios.get(`/api/article/${this.id}`)
+        .then(res => {
+          let result = res.data;
+          this.articleInfo = result.data;
+        });
     }
   },
   mounted() {
-    this.$axios.get(`/api/article/${this.id}`)
-      .then(res => {
-        let result = res.data;
-        this.article = result.data;
-      });
+    this.getArticle();
   }
 };
 </script>
 
 <style lang="less" scoped>
 article {
+  width: 960px;
 
-  .child-container {
-    width: 960px;
+  section {
     margin: 10px;
+    padding: 2em;
     background: #fefefe;
-  }
-
-  .child-container {
-    padding: 1em 2em;
+    border-radius: 2px;
 
     .article-title {
       padding-bottom: 10px;
@@ -115,9 +132,7 @@ article {
     }
 
     .article-comment {
-      margin-top: 30px;
     }
   }
-
 }
 </style>
