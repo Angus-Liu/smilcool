@@ -2,6 +2,7 @@ package com.smilcool.server.core.service;
 
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleVO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface ArticleService {
 
     Article getArticle(Integer id);
 
-    List<Article> getArticleList();
+    List<ArticleVO> getArticleList();
 
     Article addArticle(ArticleAddForm form);
 }

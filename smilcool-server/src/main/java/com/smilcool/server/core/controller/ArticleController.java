@@ -3,6 +3,7 @@ package com.smilcool.server.core.controller;
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,8 +34,8 @@ public class ArticleController {
 
     @ApiOperation("文章列表")
     @GetMapping("/article")
-    public Result<List<Article>> getArticleList() {
-        List<Article> articleList = articleService.getArticleList();
+    public Result<List<ArticleVO>> getArticleList() {
+        List<ArticleVO> articleList = articleService.getArticleList();
         return Result.success(articleList);
     }
 

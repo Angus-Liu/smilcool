@@ -5,6 +5,7 @@ import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.ArticleMapper;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
 import com.smilcool.server.core.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getArticleList() {
-        return articleMapper.selectAll();
+    public List<ArticleVO> getArticleList() {
+        List<Article> articleList = articleMapper.selectAll();
+        return BeanUtil.copyProp(articleList, ArticleVO.class);
     }
 
     @Transactional
