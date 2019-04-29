@@ -15,6 +15,8 @@ public class ArticleVO {
 
     private Integer userId;
 
+    // TODO 发布用户信息
+
     private Integer resourceId;
 
     private Integer resourceTypeId;

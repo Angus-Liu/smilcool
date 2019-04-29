@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author Angus
- * @date 2019/3/20
+ * @date 2019/4/29
  */
 @Data
-public class UserVO {
+public class UserDetailInfo {
     private Integer id;
 
     private String username;
@@ -42,12 +43,19 @@ public class UserVO {
 
     private String remark;
 
-    /**
-     * JsonFormat：按照指定格式序列化日期时间
-     */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+    /**
+     * 角色信息
+     */
+    private Set<String> roles;
+
+    /**
+     * 权限信息
+     */
+    private Set<String> permissions;
 }

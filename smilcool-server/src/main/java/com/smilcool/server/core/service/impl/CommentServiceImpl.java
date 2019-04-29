@@ -45,20 +45,26 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<CommentVO> getCommentList() {
+        List<Comment> comments = commentMapper.selectAll();
+        return BeanUtil.copyProp(comments, CommentVO.class);
+    }
+
+    @Override
     public List<CommentVO> getCommentList(Integer resourceId) {
         List<Comment> comments = commentMapper.selectByResourceId(resourceId);
         List<CommentVO> commentList = BeanUtil.copyProp(comments, CommentVO.class);
 
         commentList.forEach(comment -> {
             // 获取发布用户信息
-            comment.setUser(userService.getUser(comment.getUserId()));
+            comment.setPostUser(userService.getUserSimpleInfo(comment.getUserId()));
             // 获取子评论信息
             List<Comment> results = commentMapper.selectByParentId(comment.getId());
             List<CommentVO> children = BeanUtil.copyProp(results, CommentVO.class);
             // 获取子评论发布用户和回复用户信息
             children.forEach(child -> {
-                child.setUser(userService.getUser(child.getUserId()));
-                child.setReplyUser(userService.getUser(child.getReplyUserId()));
+                child.setPostUser(userService.getUserSimpleInfo(child.getUserId()));
+                child.setReplyUser(userService.getUserSimpleInfo(child.getReplyUserId()));
             });
             comment.setChildren(children);
         });

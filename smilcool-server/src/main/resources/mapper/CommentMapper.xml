@@ -167,4 +167,10 @@
         from comment
         WHERE parent_id = #{parentId}
     </select>
+
+    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Comment">
+        select
+        <include refid="Base_Column_List"/>
+        from comment
+    </select>
 </mapper>

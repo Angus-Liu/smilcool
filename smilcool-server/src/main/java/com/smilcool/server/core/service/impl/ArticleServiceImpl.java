@@ -5,8 +5,11 @@ import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.ArticleMapper;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleInfo;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
+import com.smilcool.server.core.pojo.vo.CommentVO;
 import com.smilcool.server.core.service.ArticleService;
+import com.smilcool.server.core.service.CommentService;
 import com.smilcool.server.core.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +25,14 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
+    private ArticleMapper articleMapper;
+
+    @Autowired
     private ResourceService resourceService;
 
     @Autowired
-    private ArticleMapper articleMapper;
+    private CommentService commentService;
+
 
     @Override
     public Article getArticle(Integer id) {
@@ -52,5 +59,20 @@ public class ArticleServiceImpl implements ArticleService {
         article.setResourceId(resourceId);
         articleMapper.insertSelective(article);
         return getArticle(article.getId());
+    }
+
+    @Override
+    public ArticleInfo getArticleInfo(Integer id) {
+        // 获取文章
+        Article article = articleMapper.selectByPrimaryKey(id);
+        if (article == null) {
+            throw new SmilcoolException("文章不存在");
+        }
+        // 获取评论
+        List<CommentVO> commentList = commentService.getCommentList(article.getResourceId());
+        ArticleInfo articleInfo = new ArticleInfo();
+        articleInfo.setArticle(BeanUtil.copyProp(article, ArticleVO.class));
+        articleInfo.setCommentList(commentList);
+        return articleInfo;
     }
 }

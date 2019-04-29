@@ -33,8 +33,9 @@ public class CommentController {
 
     @ApiOperation("评论列表")
     @GetMapping("/comment")
-    public Result<List<Comment>> getCommentList() {
-        return Result.success();
+    public Result<List<CommentVO>> getCommentList() {
+        List<CommentVO> commentList = commentService.getCommentList();
+        return Result.success(commentList);
     }
 
     @ApiOperation("评论列表")

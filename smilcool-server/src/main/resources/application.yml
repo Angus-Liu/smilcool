@@ -23,6 +23,11 @@ spring:
   cache:
     type: redis
 
+  # Jackson 配置
+  #  jackson:
+  #    # null 值不进行序列化
+  #    default-property-inclusion: non_null
+
   # Swagger 配置
   swagger:
     enabled: true # 生产环境应关闭

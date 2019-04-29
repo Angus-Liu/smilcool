@@ -3,6 +3,7 @@ package com.smilcool.server.core.controller;
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleInfo;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
 import io.swagger.annotations.Api;
@@ -41,9 +42,9 @@ public class ArticleController {
 
     @ApiOperation("文章信息")
     @GetMapping("/article/{id}")
-    public Result<Article> getArticleList(@PathVariable Integer id) {
-        Article article = articleService.getArticle(id);
-        return Result.success(article);
+    public Result<ArticleInfo> getArticleInfo(@PathVariable Integer id) {
+        ArticleInfo articleInfo = articleService.getArticleInfo(id);
+        return Result.success(articleInfo);
     }
 
 }

@@ -21,4 +21,6 @@ public interface CommentMapper {
     List<Comment> selectByResourceId(Integer resourceId);
 
     List<Comment> selectByParentId(Integer parentId);
+
+    List<Comment> selectAll();
 }
