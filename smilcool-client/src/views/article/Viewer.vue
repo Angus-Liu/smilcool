@@ -7,7 +7,8 @@
         <p class="markdown-body" v-html="articleInfo.article.htmlContent"></p>
         <div class="comment-input">
           <label>
-            <Input v-model="comment" type="textarea" :rows="3" placeholder="添加评论"/>
+            <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
+                   @on-enter="addComment"/>
           </label>
         </div>
       </section>
@@ -24,7 +25,7 @@
                 </sui-comment-metadata>
                 <sui-comment-text>{{comment.content}}</sui-comment-text>
                 <sui-comment-actions>
-                  <sui-comment-action @click="reply">回复</sui-comment-action>
+                  <sui-comment-action @click="reply(comment.id, comment.postUser)">回复</sui-comment-action>
                 </sui-comment-actions>
               </sui-comment-content>
               <sui-comment-group v-if="comment.children.length !== 0">
@@ -40,7 +41,7 @@
                       {{child.content}}
                     </sui-comment-text>
                     <sui-comment-actions>
-                      <sui-comment-action @click="reply">回复</sui-comment-action>
+                      <sui-comment-action @click="reply(comment.id, child.postUser)">回复</sui-comment-action>
                     </sui-comment-actions>
                   </sui-comment-content>
                 </sui-comment>
@@ -95,18 +96,60 @@ export default {
           children: []
         }]
       },
-      comment: ""
+      comment: {
+        resourceId: null,
+        parentId: null,
+        userId: 2,
+        replyUserId: null,
+        value: '',
+        content: ''
+      }
     };
   },
   methods: {
-    reply() {
-      alert('回复');
+    reply(parentId, replyUser) {
+      this.comment.parentId = parentId;
+      this.comment.replyUserId = replyUser.id;
+      this.comment.value = `@${replyUser.nickname} `;
+      this.$refs.commentInput.focus();
     },
     getArticle() {
       this.$axios.get(`/api/article/${this.id}`)
         .then(res => {
           let result = res.data;
           this.articleInfo = result.data;
+        });
+    },
+    getCommentList() {
+      this.$axios.get(`/api/${this.articleInfo.article.resourceId}/comment`)
+        .then(res => {
+          let result = res.data;
+          this.articleInfo.commentList = result.data;
+        });
+    }
+    ,
+    addComment() {
+      this.comment.resourceId = this.articleInfo.article.resourceId;
+      if (this.comment.replyUserId !== null) {
+        let index = this.comment.value.indexOf(' ');
+        this.comment.content = this.comment.value.substr(index + 1);
+      } else {
+        this.comment.content = this.comment.value;
+      }
+      console.log(this.comment.content);
+      this.$axios.post('/api/comment', this.comment)
+        .then(res => {
+          this.comment = {
+            resourceId: null,
+            parentId: null,
+            userId: 2,
+            replyUserId: null,
+            value: '',
+            content: ''
+          };
+          let result = res.data;
+          console.log(result);
+          this.getCommentList();
         });
     }
   },
