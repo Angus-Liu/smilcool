@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Log from './log';
+import { Message } from 'iview';
 
 // 自定义日志工具
 const log = new Log('src/utils/axios.js');
@@ -25,7 +26,7 @@ class HttpRequest {
       const { status, data } = res;
       // 打印响应参数
       log.info('Success Response <---');
-      log.info('URL', this.baseUrl + url);
+      log.info('URL', url);
       log.info('Status', status);
       log.info('Data', data);
       return { status, data };
@@ -38,6 +39,9 @@ class HttpRequest {
       log.info('Data', data);
 
       switch (status) {
+        case 400:
+          log.info('业务异常');
+          break;
         case 401:
           log.info('跳转到登录页面');
           break;
@@ -49,6 +53,9 @@ class HttpRequest {
           break;
         default:
       }
+
+      Message.error(data.msg);
+
       return Promise.reject(error);
     });
   }

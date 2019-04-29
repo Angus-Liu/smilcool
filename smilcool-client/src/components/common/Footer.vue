@@ -1,7 +1,7 @@
 <template>
-    <div class="footer">
-      This is footer
-    </div>
+    <footer>
+      我是页脚，页脚是我
+    </footer>
 </template>
 
 <script>
@@ -11,10 +11,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.footer {
-  color: white;
+footer {
   height: 100px;
-  background: darkslategray;
+  background: #ff4159;
+  margin-top: 5px;
 }
 
 </style>

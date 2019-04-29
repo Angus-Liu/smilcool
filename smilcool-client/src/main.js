@@ -10,7 +10,7 @@ import SuiVue from 'semantic-ui-vue';
 import 'semantic-ui-css/semantic.min.css';
 // axios
 import HttpRequest from '@/utils/axios';
-// mavonEditor
+// mavonEditor: https://github.com/hinesboy/mavonEditor
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 

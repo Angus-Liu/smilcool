@@ -1,12 +1,18 @@
 <template>
-  <div class="header">
-    <div class="nav">
-      <div class="nav-logo">
-        <img class="nav-logo-img" src="../../assets/logo.png">
-      </div>
-      <div class="nav-avatar">
+  <header>
+    <div class="container">
+      <img class="logo" src="../../assets/logo.png">
+      <nav>
+        <ul>
+          <li><a href="#">校园资讯</a></li>
+          <li><a href="#">资料分享</a></li>
+          <li><a href="#">物品小站</a></li>
+          <li><a href="#">校内论坛</a></li>
+        </ul>
+      </nav>
+      <div class="avatar">
         <Dropdown>
-          <sui-image class="nav-avatar-img" circular src="http://img.angus-liu.cn/avatar.png"/>
+          <sui-image class="avatar-img" circular src="http://img.angus-liu.cn/avatar.png"/>
           <DropdownMenu slot="list">
             <DropdownItem>驴打滚</DropdownItem>
             <DropdownItem>炸酱面</DropdownItem>
@@ -16,11 +22,11 @@
           </DropdownMenu>
         </Dropdown>
       </div>
-      <div class="nav-search">
+      <div class="search">
         <Input search placeholder="Enter something..."/>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -38,53 +44,61 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.header {
-  position: fixed;
-  right: 0;
-  left: 0;
-  height: 56px;
-  background: #eee;
-  border-bottom: 1px #eee solid;
+header {
+  /*position: fixed;*/
+  width: 100%;
+  height: 70px;
+  background: #fff;
+  box-shadow: 0 1px 3px #eee;
+  z-index: 999;
+  margin-bottom: 5px;
+}
 
-  .nav {
-    max-width: 1440px; // 1440px
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 3px;
-    background: red;
+.container {
+  width: 1440px;
+  margin: 0 auto;
 
-    .nav-search {
-      float: right;
-      display: inline-block;
-      width: 300px;
-      height: 56px;
+  .logo {
+    float: left;
+    height: 55px;
+    margin-top: 10px;
+  }
 
-      .nav-search-input {
-        margin-top: 12px;
-      }
-    }
+  nav {
+    float: left;
+    margin-left: 30px;
+    line-height: 70px;
 
-    .nav-logo {
-      float: left;
-      height: 100%;
+    ul {
+      list-style-type: none;
+      padding-top: 5px;
+      font-size: 16px;
 
-      .nav-logo-img {
-        height: 100%;
-        padding-top: 7px;
-      }
-    }
+      li {
+        display: inline-block;
+        margin-right: 20px;
 
-    .nav-avatar {
-      float: right;
-      height: 50px;
-      padding: 3px;
-
-      .nav-avatar-img {
-        height: 50px;
-        margin-bottom: 5px;
+        a {
+          text-decoration: none;
+        }
       }
     }
   }
-}
 
+  .avatar {
+    float: right;
+
+    .avatar-img {
+      height: 58px;
+      margin-top: 6px;
+    }
+  }
+
+  .search {
+    width: 300px;
+    float: right;
+    margin-top: 20px;
+    margin-right: 30px;
+  }
+}
 </style>

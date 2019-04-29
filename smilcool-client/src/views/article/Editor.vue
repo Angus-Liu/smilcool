@@ -1,36 +1,36 @@
 <template>
   <Tabs class="tabs-container" :animated="false">
-    <TabPane label="信息" name="name1">
-      <Form ref="articleAddForm" :model="articleAddForm" :label-width="40">
-        <FormItem label="标题" prop="title">
-          <Input v-model="articleAddForm.title" placeholder="Enter something..."></Input>
-        </FormItem>
-        <FormItem label="简介" prop="brief">
-          <Input type="textarea" v-model="articleAddForm.brief" placeholder="Enter something..."></Input>
-        </FormItem>
-        <FormItem label="封面" prop="cover">
-          <Upload action="//jsonplaceholder.typicode.com/posts/">
-            <Button icon="ios-cloud-upload-outline">Upload files</Button>
-          </Upload>
-        </FormItem>
-        <FormItem label="标签" prop="label">
-          <Row>
-            <Tag v-for="(item, index) in labelArr" :key="index" type="dot" color="primary" :name="item"
-                 closable @on-close="removeLabel">
-              {{item}}
+    <TabPane label="信息">
+      <div class="info-container">
+        <Form ref="articleAddForm" :model="articleAddForm" :label-width="40">
+          <FormItem label="标题" prop="title">
+            <Input class="form-item" v-model="articleAddForm.title" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="简介" prop="brief">
+            <Input class="form-item" type="textarea" v-model="articleAddForm.brief"
+                   placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="封面" prop="cover">
+            <Upload action="//jsonplaceholder.typicode.com/posts/">
+              <Button icon="ios-cloud-upload-outline">Upload files</Button>
+            </Upload>
+          </FormItem>
+          <FormItem label="标签" prop="label">
+            <Tag v-for="(item, index) in labelArr" :key="index" :name="item" @on-close="removeLabel"
+                 closable type="dot" color="primary">{{item}}
             </Tag>
             <Input prefix="ios-bookmark-outline" v-model="label" placeholder="添加标签" style="width: 100px"
                    @on-enter="addLabel"/>
-          </Row>
-        </FormItem>
-        <FormItem>
-          <Button shape="circle" icon="ios-cloud-upload-outline" @click="submitArticle">提交</Button>
-        </FormItem>
-      </Form>
+          </FormItem>
+          <FormItem>
+            <Button shape="circle" icon="ios-cloud-upload-outline" @click="submitArticle">提交</Button>
+          </FormItem>
+        </Form>
+      </div>
     </TabPane>
-    <TabPane label="正文" name="name2">
+    <TabPane label="正文">
       <div class="editor-container">
-        <mavon-editor class="editor" v-model="articleAddForm.markdownContent" @change="contentChange"/>
+        <mavon-editor class="editor" v-model="articleAddForm.markdownContent" @change="contentChange" :boxShadow="false"/>
       </div>
     </TabPane>
   </Tabs>
@@ -91,14 +91,14 @@ export default {
   margin: 0 auto;
   padding: 5px 0;
 
-  .action-container {
-    height: 50px;
-    margin-bottom: 10px;
+  .info-container {
+    margin: 20px auto;
+    height: 600px;
   }
 
   .editor-container {
-    padding: 0 7px;
-    height: 800px;
+    margin: 0 10px;
+    height: 600px;
 
     .editor {
       height: 100%;
