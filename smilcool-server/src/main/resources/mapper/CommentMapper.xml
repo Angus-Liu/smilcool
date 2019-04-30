@@ -141,16 +141,16 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Comment">
         UPDATE comment
-        SET parent_id     = #{parentId,jdbcType=INTEGER},
-            user_id       = #{userId,jdbcType=INTEGER},
-            resource_id   = #{resourceId,jdbcType=INTEGER},
+            SET parent_id = #{parentId,jdbcType=INTEGER},
+            user_id = #{userId,jdbcType=INTEGER},
+            resource_id = #{resourceId,jdbcType=INTEGER},
             reply_user_id = #{replyUserId,jdbcType=INTEGER},
-            content       = #{content,jdbcType=VARCHAR},
-            remark        = #{remark,jdbcType=VARCHAR},
-            create_time   = #{createTime,jdbcType=TIMESTAMP},
-            update_time   = #{updateTime,jdbcType=TIMESTAMP},
-            deleted       = #{deleted,jdbcType=BIT}
-        WHERE id = #{id,jdbcType=INTEGER}
+            content = #{content,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            deleted = #{deleted,jdbcType=BIT}
+            WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
     <select id="selectByResourceId" resultType="com.smilcool.server.core.pojo.po.Comment">
@@ -159,6 +159,7 @@
         from comment
         WHERE resource_id = #{resourceId}
         AND parent_id is NULL
+        ORDER BY create_time DESC
     </select>
 
     <select id="selectByParentId" resultType="com.smilcool.server.core.pojo.po.Comment">
@@ -166,6 +167,7 @@
         <include refid="Base_Column_List"/>
         from comment
         WHERE parent_id = #{parentId}
+        ORDER BY create_time ASC
     </select>
 
     <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Comment">

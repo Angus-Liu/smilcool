@@ -18,4 +18,6 @@ public interface ResourceService {
     List<ResourceVO> getResourceList();
 
     List<ResourceVO> getResourceList(ResourceQueryForm form);
+
+    void increaseResourceCommentCount(Integer id);
 }

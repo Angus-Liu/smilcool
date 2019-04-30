@@ -65,4 +65,10 @@ public class ResourceServiceImpl implements ResourceService {
         List<Resource> resourceList = resourceMapper.selectByCondition(condition);
         return BeanUtil.copyProp(resourceList, ResourceVO.class);
     }
+
+    @Override
+    public void increaseResourceCommentCount(Integer id) {
+        // TODO 解决并发下丢失修改问题
+        resourceMapper.updateCommentCountByIdAndCount(id, 1);
+    }
 }
