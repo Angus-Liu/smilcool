@@ -23,7 +23,7 @@ public class ArticleAddForm {
     @NotBlank(message = "简介不能为空")
     private String brief;
 
-    private String label;
+    private String tags;
 
     private String cover;
 

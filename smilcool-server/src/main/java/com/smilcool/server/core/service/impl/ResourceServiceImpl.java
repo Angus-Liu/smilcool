@@ -23,13 +23,13 @@ import java.util.List;
 public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
+    private ResourceMapper resourceMapper;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
     private ResourceTypeService resourceTypeService;
-
-    @Autowired
-    private ResourceMapper resourceMapper;
 
     @Transactional
     @Override

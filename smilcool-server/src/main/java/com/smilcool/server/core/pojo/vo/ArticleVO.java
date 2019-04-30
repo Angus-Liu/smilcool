@@ -25,7 +25,7 @@ public class ArticleVO {
 
     private String brief;
 
-    private String label;
+    private String tags;
 
     private String cover;
 

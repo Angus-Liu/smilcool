@@ -20,9 +20,11 @@ public class ResourceVO {
 
     private Integer resourceTypeId;
 
-    private Integer zan;
+    private Integer zanCount;
 
-    private Integer pv;
+    private Integer pvCount;
+
+    private Integer commentCount;
 
     @JsonSerialize(using = CommonStateSerializer.class)
     private Integer state;

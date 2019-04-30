@@ -32,6 +32,7 @@ public class CommentServiceImpl implements CommentService {
         // TODO: 2019/4/23 userId 应该是登陆用户
         Comment comment = BeanUtil.copyProp(form, Comment.class);
         commentMapper.insertSelective(comment);
+        // 指定资源的评论数加1
         return getComment(comment.getId());
     }
 

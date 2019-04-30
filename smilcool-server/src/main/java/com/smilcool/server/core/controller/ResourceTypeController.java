@@ -46,9 +46,9 @@ public class ResourceTypeController {
     }
 
     @ApiOperation("资源类型信息")
-    @GetMapping("/resource-type/{tag}")
-    public Result<ResourceTypeVO> getResourceTypeListByTag(@PathVariable String tag) {
-        ResourceTypeVO resourceType = resourceTypeService.getResourceType(tag);
+    @GetMapping("/resource-type/{name}")
+    public Result<ResourceTypeVO> getResourceTypeListByName(@PathVariable String name) {
+        ResourceTypeVO resourceType = resourceTypeService.getResourceType(name);
         return Result.success(resourceType);
     }
 }

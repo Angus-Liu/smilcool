@@ -20,5 +20,5 @@ public interface ResourceTypeMapper {
 
     List<ResourceType> selectByParentId(@Param("parentId") Integer parentId);
 
-    ResourceType selectByTag(String tag);
+    ResourceType selectByName(String name);
 }

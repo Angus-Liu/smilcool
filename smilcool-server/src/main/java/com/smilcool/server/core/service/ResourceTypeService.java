@@ -15,7 +15,7 @@ public interface ResourceTypeService {
 
     ResourceType getResourceType(Integer id);
 
-    ResourceTypeVO getResourceType(String tag);
+    ResourceTypeVO getResourceType(String name);
 
     List<ResourceTypeVO> getResourceTypeListWithChildren(Integer parentId);
 

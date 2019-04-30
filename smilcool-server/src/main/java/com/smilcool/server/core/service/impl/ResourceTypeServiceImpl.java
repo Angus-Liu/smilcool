@@ -39,9 +39,9 @@ public class ResourceTypeServiceImpl implements ResourceTypeService {
     }
 
     @Override
-    public ResourceTypeVO getResourceType(String tag) {
-        // 获取 tag 为指定值的列表
-        ResourceType select = resourceTypeMapper.selectByTag(tag);
+    public ResourceTypeVO getResourceType(String name) {
+        // 获取 name 为指定值的列表
+        ResourceType select = resourceTypeMapper.selectByName(name);
         if (select == null) {
             throw new SmilcoolException("资源类型不存在");
         }

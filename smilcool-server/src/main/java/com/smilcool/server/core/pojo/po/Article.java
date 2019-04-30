@@ -15,7 +15,7 @@ public class Article {
 
     private String brief;
 
-    private String label;
+    private String tags;
 
     private String cover;
 
@@ -79,12 +79,12 @@ public class Article {
         this.brief = brief;
     }
 
-    public String getLabel() {
-        return label;
+    public String getTags() {
+        return tags;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public String getCover() {

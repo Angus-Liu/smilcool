@@ -14,9 +14,11 @@ public class Resource {
 
     private Integer resourceTypeId;
 
-    private Integer zan;
+    private Integer zanCount;
 
-    private Integer pv;
+    private Integer pvCount;
+
+    private Integer commentCount;
 
     private Integer state;
 

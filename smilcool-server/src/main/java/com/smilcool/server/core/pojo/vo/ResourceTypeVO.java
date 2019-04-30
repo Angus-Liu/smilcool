@@ -14,8 +14,6 @@ public class ResourceTypeVO {
 
     private String name;
 
-    private String tag;
-
     private String description;
 
     private Integer seq;
