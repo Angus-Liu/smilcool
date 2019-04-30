@@ -16,7 +16,7 @@
                   </router-link>
                   <p class="article-brief">{{article.brief}}</p>
                   <span class="article-author">
-                  <sui-image src="http://img.angus-liu.cn/avatar.png" avatar/>
+                  <sui-image src="http://img.angus-liu.cn/avatar/avatar07.png" avatar/>
                   <span>文刀</span>
                 </span>
                 </div>

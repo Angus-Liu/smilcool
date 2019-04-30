@@ -1,6 +1,7 @@
 <template>
   <div>
     <article>
+      <!-- 正文 -->
       <section>
         <h1 class="article-title">{{articleInfo.article.title}}</h1>
         <span class="author"></span>
@@ -12,6 +13,8 @@
           </label>
         </div>
       </section>
+
+      <!-- 评论 -->
       <section>
         <div class="article-comment">
           <h3 is="sui-header" dividing>评论列表</h3>
@@ -21,7 +24,7 @@
               <sui-comment-content>
                 <a is="sui-comment-author">{{comment.postUser.nickname}}</a>
                 <sui-comment-metadata>
-                  <span>{{comment.createTime}}</span>
+                  <Time :time="comment.createTime"/>
                 </sui-comment-metadata>
                 <sui-comment-text>{{comment.content}}</sui-comment-text>
                 <sui-comment-actions>
@@ -34,7 +37,7 @@
                   <sui-comment-content>
                     <a is="sui-comment-author">{{child.postUser.nickname}}</a>
                     <sui-comment-metadata>
-                      <span>{{child.createTime}}</span>
+                      <Time :time="child.createTime"/>
                     </sui-comment-metadata>
                     <sui-comment-text>
                       <a :href="child.replyUser.id">@{{child.replyUser.nickname}}</a>
@@ -81,7 +84,7 @@ export default {
         commentList: [{
           resourceId: 1,
           parentId: null,
-          id: 1,
+          id: -1,
           userId: 1,
           postUser: {
             id: 1,
@@ -110,6 +113,7 @@ export default {
     reply(parentId, replyUser) {
       this.comment.parentId = parentId;
       this.comment.replyUserId = replyUser.id;
+      // TODO 是否可以只改 placeholder 不用这么麻烦
       this.comment.value = `@${replyUser.nickname} `;
       this.$refs.commentInput.focus();
     },
@@ -130,10 +134,14 @@ export default {
     ,
     addComment() {
       this.comment.resourceId = this.articleInfo.article.resourceId;
-      if (this.comment.replyUserId !== null) {
+      // 判断是评论还是回复
+      if (this.comment.value.startsWith('@') && this.comment.replyUserId !== null) {
+        // 回复时去掉评论内容中的回复用户名
         let index = this.comment.value.indexOf(' ');
         this.comment.content = this.comment.value.substr(index + 1);
       } else {
+        this.comment.parentId = null;
+        this.comment.replyUserId = null;
         this.comment.content = this.comment.value;
       }
       console.log(this.comment.content);
