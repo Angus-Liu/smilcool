@@ -82,13 +82,6 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
-        <!--<table tableName="zan"
-                enableCountByExample="false"
-                enableUpdateByExample="false"
-                enableDeleteByExample="false"
-                enableSelectByExample="false"
-                selectByExampleQueryId="false"/>-->
-
         <!--<table tableName="lost_found"
                enableCountByExample="false"
                enableUpdateByExample="false"
@@ -145,6 +138,13 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
+        <!--<table tableName="tag"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                selectByExampleQueryId="false"/>-->
+
         <!--<table tableName="user"
                enableCountByExample="false"
                enableUpdateByExample="false"
@@ -158,5 +158,12 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
+
+        <!--<table tableName="zan"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                selectByExampleQueryId="false"/>-->
     </context>
 </generatorConfiguration>
