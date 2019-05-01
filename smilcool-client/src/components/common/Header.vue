@@ -11,16 +11,22 @@
         </ul>
       </nav>
       <div class="avatar">
-        <Dropdown @on-click="handleClick">
+        <Dropdown @on-click="handleClick" v-if="user">
           <sui-image class="avatar-img" circular :src="user.avatar"/>
           <DropdownMenu slot="list">
-            <DropdownItem name="login">临时登录</DropdownItem>
-            <DropdownItem name="login2">临时登录</DropdownItem>
-            <DropdownItem>豆汁儿</DropdownItem>
-            <DropdownItem>冰糖葫芦</DropdownItem>
-            <DropdownItem divided>退出登录</DropdownItem>
+            <DropdownItem name="homepage">我的主页</DropdownItem>
+            <DropdownItem name="collect">收藏列表</DropdownItem>
+            <DropdownItem name="help">帮助反馈</DropdownItem>
+            <DropdownItem divided name="logout">退出登录</DropdownItem>
           </DropdownMenu>
         </Dropdown>
+        <sui-image class="avatar-img" v-else circular @click.native="loginRegisterModel.show = true"
+                   :src="require('../../assets/anonymous-avatar.png')"/>
+      </div>
+      <div class="notification">
+        <Badge dot>
+          <Icon type="ios-notifications-outline" size="26"></Icon>
+        </Badge>
       </div>
       <div class="search">
         <Input search placeholder="Enter something..."/>
@@ -39,7 +45,7 @@
           <sui-input type="password" placeholder="请输入密码" v-model="loginForm.password"/>
         </sui-form-field>
         <sui-form-field>
-          <sui-button style="width: 100%" basic primary @click.native="login">登录</sui-button>
+          <sui-button style="width: 100%" basic primary @click.prevent="login">登录</sui-button>
         </sui-form-field>
         <sui-form-field>
           <div>
@@ -51,16 +57,19 @@
       <!-- 注册表单 -->
       <sui-form v-else>
         <sui-form-field>
-          <sui-input placeholder="请输入邮箱"/>
+          <sui-input placeholder="请输入用户名" v-model="registerForm.username"/>
         </sui-form-field>
         <sui-form-field>
-          <sui-input type="password" placeholder="请输入密码"/>
+          <sui-input type="email" placeholder="请输入邮箱" v-model="registerForm.email"/>
         </sui-form-field>
         <sui-form-field>
-          <sui-input type="password" placeholder="请确认密码"/>
+          <sui-input type="password" placeholder="请输入密码" v-model="registerForm.password"/>
         </sui-form-field>
         <sui-form-field>
-          <sui-button style="width: 100%" basic primary @click.native="register">注册</sui-button>
+          <sui-input type="password" placeholder="请确认密码" v-model="registerForm.rePassword"/>
+        </sui-form-field>
+        <sui-form-field>
+          <sui-button style="width: 100%" basic primary @click.prevent="register">注册</sui-button>
         </sui-form-field>
         <sui-form-field>
           <div style="overflow: hidden">
@@ -68,42 +77,6 @@
           </div>
         </sui-form-field>
       </sui-form>
-
-      <!-- 登录表单 -->
-      <!--<Form ref="loginForm" v-if="loginRegisterModel.isLogin" :model="loginForm" :rules="rules">-->
-      <!--  <FormItem prop="用户名">-->
-      <!--    <Input type="text" v-model="loginForm.username" size="large" placeholder="请输入用户名或邮箱"/>-->
-      <!--  </FormItem>-->
-      <!--  <FormItem prop="密码">-->
-      <!--    <Input type="password" v-model="loginForm.password" size="large" placeholder="请输入密码"/>-->
-      <!--  </FormItem>-->
-      <!--  <FormItem>-->
-      <!--    <Button type="primary" size="large" ghost long @click="login">登录</Button>-->
-      <!--  </FormItem>-->
-      <!--  <div style="font-size: 1rem">-->
-      <!--    <span>没有账号？<a @click="showRegisterForm">注册</a></span>-->
-      <!--    <a style="float:right" href="#">忘记密码</a>-->
-      <!--  </div>-->
-      <!--</Form>-->
-
-      <!-- 注册表单 -->
-      <!--<Form ref="registerForm" v-else :model="registerForm" :rules="rules">-->
-      <!--  <FormItem prop="email">-->
-      <!--    <Input type="text" v-model="registerForm.email" size="large" placeholder="请输入邮箱"/>-->
-      <!--  </FormItem>-->
-      <!--  <FormItem prop="password">-->
-      <!--    <Input type="password" v-model="registerForm.password" size="large" placeholder="请输入密码"/>-->
-      <!--  </FormItem>-->
-      <!--  <FormItem prop="repassword">-->
-      <!--    <Input type="password" v-model="registerForm.password" size="large" placeholder="请确认密码"/>-->
-      <!--  </FormItem>-->
-      <!--  <FormItem>-->
-      <!--    <Button type="primary" size="large" ghost long @click="register">注册</Button>-->
-      <!--  </FormItem>-->
-      <!--  <div style="font-size: 1rem; overflow: hidden">-->
-      <!--    <a style="float:right" @click="showLoginForm">已有账号登录</a>-->
-      <!--  </div>-->
-      <!--</Form>-->
     </Modal>
   </header>
 </template>
@@ -114,27 +87,6 @@ export default {
   data() {
     return {
       input: '',
-      user: {
-        id: -1,
-        username: 'anonymous',
-        nickname: '游客',
-        avatar: require('../../assets/anonymous-avatar.png'),
-        sex: '保密',
-        birthday: '1970-01-01',
-        sign: '一句话介绍自己',
-        intro: '这个人很神秘，什么也没写',
-        grade: '未填写',
-        college: '未填写',
-        major: '未填写',
-        phone: null,
-        email: 'anonymous@example.com',
-        state: 1,
-        remark: null,
-        createTime: '1970-01-01 00:00:00',
-        updateTime: '1970-01-01 00:00:00',
-        roles: ['role_anonymous'],
-        permissions: []
-      },
       loginRegisterModel: {
         show: false,
         title: '登录',
@@ -145,22 +97,26 @@ export default {
         password: ''
       },
       registerForm: {
+        username: '',
         email: '',
-        password: ''
+        password: '',
+        rePassword: ''
       },
       rules: {}
 
     };
   },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    }
+  },
   methods: {
     handleClick(dropdownItemName) {
       switch (dropdownItemName) {
-        case 'login':
-          console.log('执行登录操作');
-          this.loginRegisterModel.show = true;
-          break;
-        case 'login2':
-          console.log('执行登录操作');
+        case 'logout':
+          // 退出
+          this.$store.commit('userLogout');
           break;
         default:
           console.log('执行其他操作');
@@ -183,18 +139,38 @@ export default {
       } else if (this.loginForm.password.length === 0) {
         this.showErrorNotice('登录失败', '请填写密码');
       } else {
+        // TODO 后期需要搬到 vuex
         this.$axios.post('/api/user/login', this.loginForm)
           .then(res => {
             let result = res.data;
             if (result.success) {
               this.loginRegisterModel.show = false;
-              this.user = result.data;
+              // 保存到 vuex
+              this.$store.commit('userLogin', result.data);
+              this.loginForm = {
+                username: '',
+                password: ''
+              }
             }
           });
       }
     },
     register() {
-      alert('注册');
+      if (this.registerForm.username.length === 0) {
+        this.showErrorNotice('注册失败', '请填写用户名');
+      } else if (this.registerForm.email.length === 0
+        || !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.registerForm.email)) {
+        this.showErrorNotice('注册失败', '请填写合法的邮箱');
+      } else if (this.registerForm.password.length === 0
+        || this.registerForm.password !== this.registerForm.rePassword) {
+        this.showErrorNotice('注册失败', '两次输入的密码不一致');
+      } else {
+        // TODO 后期需要搬到 vuex
+        this.$axios.post('/api/user/register', this.registerForm)
+          .then(res => {
+            let result = res.data;
+          });
+      }
     }
   },
   mounted() {
@@ -246,11 +222,15 @@ header {
 
   .avatar {
     float: right;
+    width: 58px;
+    height: 58px;
+    margin-top: 6px;
+  }
 
-    .avatar-img {
-      height: 58px;
-      margin-top: 6px;
-    }
+  .notification {
+    float: right;
+    margin-top: 22px;
+    margin-right: 30px;
   }
 
   .search {
