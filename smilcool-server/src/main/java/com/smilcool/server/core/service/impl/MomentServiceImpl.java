@@ -53,7 +53,7 @@ public class MomentServiceImpl implements MomentService {
             momentInfo.setPostUser(userService.getUserSimpleInfo(moment.getUserId()));
             // 所属资源信息
             momentInfo.setResource(resourceService.getResource(moment.getResourceId()));
-            // 评论信息
+            // TODO 评论信息不应该包含
             momentInfo.setCommentList(commentService.getCommentList(moment.getResourceId()));
             momentInfoList.add(momentInfo);
         });
