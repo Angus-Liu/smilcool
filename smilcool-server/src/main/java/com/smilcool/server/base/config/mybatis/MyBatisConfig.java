@@ -1,4 +1,4 @@
-package com.smilcool.server.base.config;
+package com.smilcool.server.base.config.mybatis;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;

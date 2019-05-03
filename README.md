@@ -7,6 +7,7 @@
 - [x] Swagger 集成
 - [x] Shiro 集成
 - [x] Redis 集成
+- [ ] JWT 集成
 - [ ] ElasticSearch 集成
 - [ ] Netty 集成
 - [ ] RocketMQ 集成

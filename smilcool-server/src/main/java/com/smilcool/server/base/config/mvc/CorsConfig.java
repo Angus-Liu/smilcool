@@ -1,4 +1,4 @@
-package com.smilcool.server.base.config;
+package com.smilcool.server.base.config.mvc;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
