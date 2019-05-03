@@ -1,10 +1,15 @@
 <template>
   <header>
     <div class="container">
-      <img class="logo" src="../../assets/logo.png">
+      <router-link to="/main">
+        <img class="logo" src="../../assets/logo.png">
+      </router-link>
       <nav>
         <ul>
-          <li><a href="#">文章动态</a></li>
+          <li><a href="#">文章资讯</a></li>
+          <li>
+            <router-link to="/moment">校园动态</router-link>
+          </li>
           <li><a href="#">资料分享</a></li>
           <li><a href="#">物品小站</a></li>
           <li><a href="#">校内论坛</a></li>
@@ -16,7 +21,7 @@
           <DropdownMenu slot="list">
             <DropdownItem name="homepage">我的主页</DropdownItem>
             <DropdownItem name="collect">收藏列表</DropdownItem>
-            <DropdownItem name="help">帮助反馈</DropdownItem>
+            <DropdownItem name="account">账号管理</DropdownItem>
             <DropdownItem divided name="logout">退出登录</DropdownItem>
           </DropdownMenu>
         </Dropdown>
@@ -212,10 +217,6 @@ header {
       li {
         display: inline-block;
         margin-right: 20px;
-
-        a {
-          text-decoration: none;
-        }
       }
     }
   }
@@ -242,6 +243,10 @@ header {
 
   .ivu-form-item:last-child {
     margin-bottom: 0;
+  }
+
+  .router-link-active {
+    color: red;
   }
 }
 </style>

@@ -15,6 +15,7 @@ import com.smilcool.server.core.service.UserRoleService;
 import com.smilcool.server.core.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RolePermissionService rolePermissionService;
 
+
+    @Override
+    public User getCurrentUser() {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser.isAuthenticated()) {
+            // TODO 从缓存中获取
+            return getUser((Integer) currentUser.getPrincipal());
+        } else {
+            throw new UnauthenticatedException("用户未认证");
+        }
+    }
 
     @Override
     public void checkExist(Integer id) {

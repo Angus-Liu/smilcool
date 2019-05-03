@@ -13,8 +13,6 @@ public class Moment {
 
     private String content;
 
-    private String image;
-
     private String remark;
 
     private Date createTime;
@@ -22,6 +20,8 @@ public class Moment {
     private Date updateTime;
 
     private Boolean deleted;
+
+    private String image;
 
     public Integer getId() {
         return id;
@@ -63,14 +63,6 @@ public class Moment {
         this.content = content;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -101,5 +93,13 @@ public class Moment {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

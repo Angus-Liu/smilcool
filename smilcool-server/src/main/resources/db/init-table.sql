@@ -184,16 +184,16 @@ CREATE TABLE `resource` (
 # 动态表（moment）
 DROP TABLE IF EXISTS `moment`;
 CREATE TABLE `moment` (
-  `id`               int(11)    NOT NULL AUTO_INCREMENT COMMENT '动态ID',
-  `user_id`          int(11)    NOT NULL COMMENT '发布用户ID',
-  `resource_id`      int(11)    NOT NULL COMMENT '资源ID',
-  `resource_type_id` int(11)    NOT NULL COMMENT '资源类目ID',
-  `content`          varchar(1000)       DEFAULT NULL COMMENT '内容',
-  `image`            varchar(1000)       DEFAULT NULL COMMENT '图片数组',
-  `remark`           varchar(255)        DEFAULT NULL COMMENT '备注',
-  `create_time`      datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`      datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`          tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `id`               int(11)       NOT NULL AUTO_INCREMENT COMMENT '动态ID',
+  `user_id`          int(11)       NOT NULL COMMENT '发布用户ID',
+  `resource_id`      int(11)       NOT NULL COMMENT '资源ID',
+  `resource_type_id` int(11)       NOT NULL COMMENT '资源类目ID',
+  `content`          varchar(1000) NOT NULL DEFAULT '' COMMENT '内容',
+  `image`            json COMMENT '图片数组',
+  `remark`           varchar(255)           DEFAULT NULL COMMENT '备注',
+  `create_time`      datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`      datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`          tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_resource_id` (`resource_id`),
   KEY `idx_user_id` (`user_id`)

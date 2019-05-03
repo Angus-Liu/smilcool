@@ -17,6 +17,10 @@ export default new Router({
           path: 'main',
           name: 'main',
           component: () => import('@/views/main/Main')
+        },{
+          path: 'moment',
+          name: 'moment',
+          component: () => import('@/views/moment/Moment')
         },
         {
           path: 'editor',
