@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smilcool.server.core.dao.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Message">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="send_user_id" jdbcType="INTEGER" property="sendUserId"/>
+        <result column="accept_user_id" jdbcType="INTEGER" property="acceptUserId"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.Message">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, send_user_id, accept_user_id, type, state, create_time, update_time, deleted
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from message
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE
+        FROM message
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Message">
+        INSERT INTO message (id, send_user_id, accept_user_id,
+                             type, state, create_time,
+                             update_time, deleted, content)
+        VALUES (#{id,jdbcType=INTEGER}, #{sendUserId,jdbcType=INTEGER}, #{acceptUserId,jdbcType=INTEGER},
+                #{type,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Message">
+        insert into message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sendUserId != null">
+                send_user_id,
+            </if>
+            <if test="acceptUserId != null">
+                accept_user_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="sendUserId != null">
+                #{sendUserId,jdbcType=INTEGER},
+            </if>
+            <if test="acceptUserId != null">
+                #{acceptUserId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Message">
+        update message
+        <set>
+            <if test="sendUserId != null">
+                send_user_id = #{sendUserId,jdbcType=INTEGER},
+            </if>
+            <if test="acceptUserId != null">
+                accept_user_id = #{acceptUserId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.Message">
+        UPDATE message
+        SET send_user_id   = #{sendUserId,jdbcType=INTEGER},
+            accept_user_id = #{acceptUserId,jdbcType=INTEGER},
+            type           = #{type,jdbcType=INTEGER},
+            state          = #{state,jdbcType=INTEGER},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP},
+            deleted        = #{deleted,jdbcType=BIT},
+            content        = #{content,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Message">
+        UPDATE message
+        SET send_user_id   = #{sendUserId,jdbcType=INTEGER},
+            accept_user_id = #{acceptUserId,jdbcType=INTEGER},
+            type           = #{type,jdbcType=INTEGER},
+            state          = #{state,jdbcType=INTEGER},
+            create_time    = #{createTime,jdbcType=TIMESTAMP},
+            update_time    = #{updateTime,jdbcType=TIMESTAMP},
+            deleted        = #{deleted,jdbcType=BIT}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

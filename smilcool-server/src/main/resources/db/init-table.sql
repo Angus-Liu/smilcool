@@ -230,7 +230,7 @@ DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '文章ID',
   `name`        varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `count`       int(4)       NOT NULL DEFAULT 0 COMMENT '计数',
+  `count`       int(4)       NOT NULL DEFAULT '0' COMMENT '计数',
   `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
   `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -343,3 +343,36 @@ CREATE TABLE `zan` (
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='点赞表';
+
+# 好友关联表（friend）
+DROP TABLE IF EXISTS `friend`;
+CREATE TABLE `friend` (
+  `id`             int(11)    NOT NULL AUTO_INCREMENT COMMENT '好友关联ID',
+  `user_id`        int(11)    NOT NULL COMMENT '用户ID',
+  `friend_user_id` int(11)    NOT NULL COMMENT '好友ID',
+  `create_time`    datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `deleted`        tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`)
+) ENGINE = INNODB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT ='好友表';
+
+# 消息表（friend）
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+  `id`             int(11)    NOT NULL AUTO_INCREMENT COMMENT '朋友关联ID',
+  `send_user_id`   int(11)    NOT NULL COMMENT '发送用户ID',
+  `accept_user_id` int(11)    NOT NULL COMMENT '接收用户ID',
+  `type`           int(1)     NOT NULL DEFAULT '0' COMMENT '类型：0-文本，1-图片，2-文件',
+  `content`        text       NOT NULL COMMENT '内容',
+  `state`          int(1)     NOT NULL DEFAULT '0' COMMENT '状态：0-未签收，1-已签收',
+  `create_time`    datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`    datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`        tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  PRIMARY KEY (`id`),
+  KEY `idx_send_user_id` (`send_user_id`),
+  KEY `idx_accept_user_id` (`accept_user_id`)
+) ENGINE = INNODB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT ='朋友表';

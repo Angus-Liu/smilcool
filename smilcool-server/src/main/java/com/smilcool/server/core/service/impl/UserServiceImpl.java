@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    // TODO 2019/5/4 改为 validate
     @Override
     public void checkExist(Integer id) {
         User user = userMapper.selectByPrimaryKey(id);

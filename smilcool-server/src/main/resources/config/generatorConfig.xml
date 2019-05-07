@@ -75,7 +75,21 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
+        <!--<table tableName="friend"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
         <!--<table tableName="lost_found"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
+        <!--<table tableName="message"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
