@@ -50,6 +50,10 @@ mybatis-plus:
 logging:
   level:
     # MyBatis 日志级别为 debug
+    com.smilcool.server.base.config: debug
     com.smilcool.server.core.dao: debug
     com.smilcool.server.core.controller: debug
 
+# netty 配置
+netty:
+  port: 8088

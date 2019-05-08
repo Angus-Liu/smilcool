@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Message">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="send_user_id" jdbcType="INTEGER" property="sendUserId"/>
-        <result column="accept_user_id" jdbcType="INTEGER" property="acceptUserId"/>
+        <result column="receive_user_id" jdbcType="INTEGER" property="receiveUserId"/>
         <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="state" jdbcType="INTEGER" property="state"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -15,7 +15,7 @@
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, send_user_id, accept_user_id, type, state, create_time, update_time, deleted
+        id, send_user_id, receive_user_id, type, state, create_time, update_time, deleted
     </sql>
     <sql id="Blob_Column_List">
         content
@@ -34,14 +34,15 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Message">
-        INSERT INTO message (id, send_user_id, accept_user_id,
+        INSERT INTO message (id, send_user_id, receive_user_id,
                              type, state, create_time,
                              update_time, deleted, content)
-        VALUES (#{id,jdbcType=INTEGER}, #{sendUserId,jdbcType=INTEGER}, #{acceptUserId,jdbcType=INTEGER},
+        VALUES (#{id,jdbcType=INTEGER}, #{sendUserId,jdbcType=INTEGER}, #{receiveUserId,jdbcType=INTEGER},
                 #{type,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
                 #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Message">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Message"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into message
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -50,8 +51,8 @@
             <if test="sendUserId != null">
                 send_user_id,
             </if>
-            <if test="acceptUserId != null">
-                accept_user_id,
+            <if test="receiveUserId != null">
+                receive_user_id,
             </if>
             <if test="type != null">
                 type,
@@ -79,8 +80,8 @@
             <if test="sendUserId != null">
                 #{sendUserId,jdbcType=INTEGER},
             </if>
-            <if test="acceptUserId != null">
-                #{acceptUserId,jdbcType=INTEGER},
+            <if test="receiveUserId != null">
+                #{receiveUserId,jdbcType=INTEGER},
             </if>
             <if test="type != null">
                 #{type,jdbcType=INTEGER},
@@ -108,8 +109,8 @@
             <if test="sendUserId != null">
                 send_user_id = #{sendUserId,jdbcType=INTEGER},
             </if>
-            <if test="acceptUserId != null">
-                accept_user_id = #{acceptUserId,jdbcType=INTEGER},
+            <if test="receiveUserId != null">
+                receive_user_id = #{receiveUserId,jdbcType=INTEGER},
             </if>
             <if test="type != null">
                 type = #{type,jdbcType=INTEGER},
@@ -134,25 +135,42 @@
     </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.Message">
         UPDATE message
-        SET send_user_id   = #{sendUserId,jdbcType=INTEGER},
-            accept_user_id = #{acceptUserId,jdbcType=INTEGER},
-            type           = #{type,jdbcType=INTEGER},
-            state          = #{state,jdbcType=INTEGER},
-            create_time    = #{createTime,jdbcType=TIMESTAMP},
-            update_time    = #{updateTime,jdbcType=TIMESTAMP},
-            deleted        = #{deleted,jdbcType=BIT},
-            content        = #{content,jdbcType=LONGVARCHAR}
+        SET send_user_id    = #{sendUserId,jdbcType=INTEGER},
+            receive_user_id = #{receiveUserId,jdbcType=INTEGER},
+            type            = #{type,jdbcType=INTEGER},
+            state           = #{state,jdbcType=INTEGER},
+            create_time     = #{createTime,jdbcType=TIMESTAMP},
+            update_time     = #{updateTime,jdbcType=TIMESTAMP},
+            deleted         = #{deleted,jdbcType=BIT},
+            content         = #{content,jdbcType=LONGVARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Message">
         UPDATE message
-        SET send_user_id   = #{sendUserId,jdbcType=INTEGER},
-            accept_user_id = #{acceptUserId,jdbcType=INTEGER},
-            type           = #{type,jdbcType=INTEGER},
-            state          = #{state,jdbcType=INTEGER},
-            create_time    = #{createTime,jdbcType=TIMESTAMP},
-            update_time    = #{updateTime,jdbcType=TIMESTAMP},
-            deleted        = #{deleted,jdbcType=BIT}
+        SET send_user_id    = #{sendUserId,jdbcType=INTEGER},
+            receive_user_id = #{receiveUserId,jdbcType=INTEGER},
+            type            = #{type,jdbcType=INTEGER},
+            state           = #{state,jdbcType=INTEGER},
+            create_time     = #{createTime,jdbcType=TIMESTAMP},
+            update_time     = #{updateTime,jdbcType=TIMESTAMP},
+            deleted         = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="selectByReceiveUserIdAndState" resultType="com.smilcool.server.core.pojo.po.Message">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from message
+        where receive_user_id = #{receiveUserId}
+        and state = #{state}
+    </select>
+
+    <update id="updateStateById">
+        UPDATE message
+        SET state = #{state}
+        WHERE id = #{id}
+    </update>
+
 </mapper>
