@@ -1,7 +1,7 @@
 package com.smilcool.server.base.config.netty;
 
 import com.smilcool.server.base.config.netty.handler.ChatHandler;
-import com.smilcool.server.base.config.netty.handler.HeartBeatHandler;
+import com.smilcool.server.base.config.netty.handler.HeartbeatHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -24,7 +24,7 @@ public class ChildChannelInitializer extends ChannelInitializer<SocketChannel> {
     private ChatHandler chatHandler;
 
     @Autowired
-    private HeartBeatHandler heartBeatHandler;
+    private HeartbeatHandler heartbeatHandler;
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
@@ -33,13 +33,14 @@ public class ChildChannelInitializer extends ChannelInitializer<SocketChannel> {
         pipeline.addLast(new HttpServerCodec())
                 // ChunkedWriteHandler 提供对写大数据流的支持
                 .addLast(new ChunkedWriteHandler())
-                // 对 HttpMessage 进行聚合，聚合成 HttpRequest 或 HttpResponse
-                .addLast(new HttpObjectAggregator(1024 * 64))
+                // 对 HttpMessage 进行聚合，聚合成 FullHttpRequest 或 FullHttpResponse
+                .addLast(new HttpObjectAggregator(64 * 1024))
                 // 检测空闲状态 Handler
+                // TODO 2019/5/8 后期修改为 30s 左右
                 .addLast(new IdleStateHandler(8, 10, 12))
-                // 自定义心跳处理 Handler
-                .addLast(heartBeatHandler)
-                // websocket 服务器处理协议，用于指定给客户端连接访问的路由，以及处理一些繁杂的事务
+                // 自定义心跳处理 Handler（空闲状态检测及处理）
+                .addLast(heartbeatHandler)
+                // WebSocket 服务器处理协议 Handler，用于指定给客户端连接访问的路由，以及处理一些繁杂的事务
                 .addLast(new WebSocketServerProtocolHandler("/ws"))
                 // 自定义 Handler，用于消息处理
                 .addLast(chatHandler);

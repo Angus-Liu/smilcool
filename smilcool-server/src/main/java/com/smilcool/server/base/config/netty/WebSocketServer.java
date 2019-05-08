@@ -21,10 +21,9 @@ import javax.annotation.PreDestroy;
 @Component
 public class WebSocketServer {
 
-    private EventLoopGroup parentGroup;
-    private EventLoopGroup childGroup;
+    private EventLoopGroup eventLoopGroup;
     private ServerBootstrap serverBootstrap;
-    private ChannelFuture future;
+    private ChannelFuture channelFuture;
 
     @Value("${netty.port}")
     private Integer port;
@@ -32,25 +31,22 @@ public class WebSocketServer {
 
     @Autowired
     public WebSocketServer(ChildChannelInitializer childChannelInitializer) {
-        parentGroup = new NioEventLoopGroup();
-        childGroup = new NioEventLoopGroup();
+        eventLoopGroup = new NioEventLoopGroup();
         serverBootstrap = new ServerBootstrap()
-                .group(parentGroup, childGroup)
+                .group(eventLoopGroup)
                 .channel(NioServerSocketChannel.class)
                 .childHandler(childChannelInitializer);
-
-        // TODO 2019/5/8 这里也可以直接启动
     }
 
     /**
      * PostConstruct 注解作用为 Spring Bean 初始化之后执行该方法
-     *
+     * <p>
      * 注解 @PostConstruct 与 @PreDestroy 详解及实例
      * https://blog.csdn.net/wo541075754/article/details/52174900
      */
     @PostConstruct
-    public void start() {
-        future = serverBootstrap.bind(port);
+    public void start() throws InterruptedException {
+        channelFuture = serverBootstrap.bind(port).sync();
         log.debug("Netty 启动...");
     }
 
@@ -59,8 +55,10 @@ public class WebSocketServer {
      */
     @PreDestroy
     public void destroy() throws InterruptedException {
-        parentGroup.shutdownGracefully().sync();
-        childGroup.shutdownGracefully().sync();
+        // 关闭 Server Channel
+        channelFuture.channel().close().sync();
+        // 关闭 EventLoopGroup
+        eventLoopGroup.shutdownGracefully().sync();
         log.debug("Netty 关闭...");
     }
 }

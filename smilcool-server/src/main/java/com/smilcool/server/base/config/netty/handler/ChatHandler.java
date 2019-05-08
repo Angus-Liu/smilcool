@@ -16,11 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * 自定义处理消息的 Handler
@@ -57,6 +54,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             // 连接
             case CONNECT: {
                 // 建立连接时，将 channel 与 userId 进行进行关联
+                // TODO 2019/5/8 应该是获取当前登录用户 id，不是直接获取
                 Integer userId = receiveMessage.getSendUserId();
                 userIdChannelMap.put(userId, channel);
                 log.debug("CONNECT 消息: userId = {}, channel = {}", userId, channel.id().asShortText());
@@ -67,6 +65,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             // 聊天
             case CHAT: {
                 // 把聊天记录保存到数据库，并标记消息的签收状态为未签收
+                // TODO 2019/5/8 发送用户应该是获取当前登录用户 id，不是直接获取
                 log.debug("CHAT 消息: sendUserId = {}, receiveUserId = {}", receiveMessage.getSendUserId(), receiveMessage.getReceiveUserId());
                 Message sendMessage = messageService.addMessage(receiveMessage);
                 // 发送消息
@@ -107,7 +106,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        log.error("Websocket 发生异常", cause);
+        log.error("发生异常", cause);
         // 关闭 channel 并移除
         ctx.channel().close();
         channelGroup.remove(ctx.channel());
@@ -116,9 +115,9 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
     /**
      * 发送消息
      *
-     * @param sendMessage
+     * @param sendMessage 待发送消息
      */
-    public void sendTo(Message sendMessage) {
+    private void sendTo(Message sendMessage) {
         Integer receiveUserId = sendMessage.getReceiveUserId();
         Optional.ofNullable(userIdChannelMap.get(receiveUserId))
                 .ifPresent(receiveChannel -> {
