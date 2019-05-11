@@ -1,12 +1,14 @@
 <template>
   <header>
     <div class="container">
-      <router-link to="/main">
+      <router-link to="/">
         <img class="logo" src="../../assets/logo.png">
       </router-link>
       <nav>
         <ul>
-          <li><a href="#">文章资讯</a></li>
+          <li>
+            <router-link to="/article">文章资讯</router-link>
+          </li>
           <li>
             <router-link to="/moment">校园动态</router-link>
           </li>
@@ -18,8 +20,12 @@
       <div class="avatar">
         <Dropdown @on-click="handleClick" v-if="user">
           <sui-image class="avatar-img" circular :src="user.avatar"/>
-          <DropdownMenu slot="list">
+          <DropdownMenu class="avatar-menu-list" slot="list">
             <DropdownItem name="homepage">我的主页</DropdownItem>
+            <router-link to="/article/editor">
+              <DropdownItem name="collect">发表文章</DropdownItem>
+            </router-link>
+            <DropdownItem name="collect">发布动态</DropdownItem>
             <DropdownItem name="collect">收藏列表</DropdownItem>
             <DropdownItem name="account">账号管理</DropdownItem>
             <DropdownItem divided name="logout">退出登录</DropdownItem>

@@ -37,7 +37,7 @@
             <sui-card-description class="moment-content">
               <p>{{moment.content}}</p>
               <sui-image-group class="moment-image-group" v-if="moment.imageArr" size="small">
-                <sui-image v-for="image in moment.imageArr" :src="image"/>
+                <sui-image v-for="(image, index) in moment.imageArr" :src="image" :key="index"/>
               </sui-image-group>
             </sui-card-description>
 
@@ -98,10 +98,11 @@ export default {
     getMomentList() {
       this.$axios.get('/api/moment')
         .then(res => {
+          // TODO 2019/5/8 数据结构改变，需要重构
           let result = res.data;
           this.momentList = result.data;
           this.momentList.forEach(moment => {
-            if (moment.image !== null) {
+            if (moment.image !== null && moment.image.length !== 0) {
               moment.imageArr = JSON.parse(moment.image);
             }
           })
@@ -118,8 +119,6 @@ export default {
 
 .container {
   display: flex;
-  margin-top: 20px;
-  /*background: #eee;*/
 }
 
 .dock {

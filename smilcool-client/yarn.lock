@@ -4480,12 +4480,12 @@ hex-color-regex@^1.1.0:
 
 highlight.js-async-webpack@^1.0.4:
   version "1.0.4"
-  resolved "http://registry.npm.taobao.org/highlight.js-async-webpack/download/highlight.js-async-webpack-1.0.4.tgz#c06b67bf99f049045d62b756e5855b0912ec616c"
+  resolved "https://registry.npm.taobao.org/highlight.js-async-webpack/download/highlight.js-async-webpack-1.0.4.tgz#c06b67bf99f049045d62b756e5855b0912ec616c"
   integrity sha1-wGtnv5nwSQRdYrdW5YVbCRLsYWw=
 
 highlight.js@^9.11.0:
   version "9.15.6"
-  resolved "http://registry.npm.taobao.org/highlight.js/download/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
+  resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
   integrity sha1-ctTY13nsBmr5oXyxQ2DD3vCqV8Q=
 
 hmac-drbg@^1.0.0:
@@ -6142,9 +6142,9 @@ math-random@^1.0.1:
   integrity sha1-XdaUPJOFSCZwFtTjTwV1gwgMUUw=
 
 mavon-editor@^2.7.3:
-  version "2.7.3"
-  resolved "http://registry.npm.taobao.org/mavon-editor/download/mavon-editor-2.7.3.tgz#24e72bc36bd7071389d6fe7cea859bf0fe010d91"
-  integrity sha1-JOcrw2vXBxOJ1v586oWb8P4BDZE=
+  version "2.7.4"
+  resolved "https://registry.npm.taobao.org/mavon-editor/download/mavon-editor-2.7.4.tgz#f5877fa93e73cea22472e2b130b88ed39a828c52"
+  integrity sha1-9Yd/qT5zzqIkcuKxMLiO05qCjFI=
   dependencies:
     highlight.js "^9.11.0"
     highlight.js-async-webpack "^1.0.4"
@@ -7707,6 +7707,11 @@ q@^1.1.2:
   version "1.5.1"
   resolved "http://registry.npm.taobao.org/q/download/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
+
+qiniu-js@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.npm.taobao.org/qiniu-js/download/qiniu-js-2.5.4.tgz#9d708bbdb9b5c326a42b59900eacd6d4497c81e4"
+  integrity sha1-nXCLvbm1wyakK1mQDqzW1El8geQ=
 
 qs@6.5.2, qs@~6.5.2:
   version "6.5.2"

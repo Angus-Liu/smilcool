@@ -14,23 +14,22 @@ export default new Router({
       component: Home,
       children: [
         {
-          path: 'main',
-          name: 'main',
-          component: () => import('@/views/main/Main')
-        },{
-          path: 'moment',
-          name: 'moment',
-          component: () => import('@/views/moment/Moment')
-        },
-        {
-          path: 'editor',
-          name: 'editor',
+          path: 'article',
+          name: 'article',
+          component: () => import('@/views/article/Main'),
+        }, {
+          path: 'article/editor',
+          name: 'article-editor',
           component: () => import('@/views/article/Editor')
         }, {
-          path: 'viewer/:id',
+          path: 'article/:id',
           name: 'viewer',
           component: () => import('@/views/article/Viewer'),
           props: true
+        }, {
+          path: 'moment',
+          name: 'moment',
+          component: () => import('@/views/moment/Moment')
         }
       ]
     }

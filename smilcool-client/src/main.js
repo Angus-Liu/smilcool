@@ -8,11 +8,13 @@ import 'iview/dist/styles/iview.css';
 // Semantic UI Vue: https://semantic-ui-vue.github.io
 import SuiVue from 'semantic-ui-vue';
 import 'semantic-ui-css/semantic.min.css';
-// axios
+// axios: https://github.com/axios/axios
 import HttpRequest from '@/utils/axios';
 // mavonEditor: https://github.com/hinesboy/mavonEditor
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
+// Qiniu-JavaScript-SDK : https://developer.qiniu.com/kodo/sdk/1283/javascript
+import * as qiniu from 'qiniu-js'
 
 Vue.config.productionTip = false;
 
@@ -25,6 +27,8 @@ Vue.use(mavonEditor);
 
 // axios
 Vue.prototype.$axios = HttpRequest;
+// qiniu
+Vue.prototype.$qiniu = qiniu;
 
 new Vue({
   router,

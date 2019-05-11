@@ -11,7 +11,7 @@
               <div class="article">
                 <img class="article-cover" :src="article.cover">
                 <div class="article-content">
-                  <router-link :to="'/viewer/' + article.id">
+                  <router-link :to="'/article/' + article.id">
                     <h3 class="article-title">{{article.title}}</h3>
                   </router-link>
                   <p class="article-brief">{{article.brief}}</p>
@@ -77,8 +77,6 @@ export default {
 .container {
   width: 100%;
   /*height: 1000px;*/
-  background: #ccc;
-  padding: 5px;
 }
 
 .article-list {
