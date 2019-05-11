@@ -361,15 +361,15 @@ CREATE TABLE `friend` (
 # 消息表（friend）
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
-  `id`             int(11)    NOT NULL AUTO_INCREMENT COMMENT '朋友关联ID',
-  `send_user_id`   int(11)    NOT NULL COMMENT '发送用户ID',
+  `id`              int(11)    NOT NULL AUTO_INCREMENT COMMENT '朋友关联ID',
+  `send_user_id`    int(11)    NOT NULL COMMENT '发送用户ID',
   `receive_user_id` int(11)    NOT NULL COMMENT '接收用户ID',
-  `type`           int(1)     NOT NULL DEFAULT '0' COMMENT '消息类型：0-连接，1-聊天，2-签收，3-心跳，4-拉取好友',
-  `content`        text       NOT NULL COMMENT '内容',
-  `state`          int(1)     NOT NULL DEFAULT '0' COMMENT '状态：0-未签收，1-已签收',
-  `create_time`    datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time`    datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`        tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  `type`            int(1)     NOT NULL DEFAULT '0' COMMENT '消息类型：0-连接，1-聊天，2-签收，3-心跳，4-拉取好友',
+  `content`         text       NOT NULL COMMENT '内容',
+  `state`           int(1)     NOT NULL DEFAULT '0' COMMENT '状态：0-未签收，1-已签收',
+  `create_time`     datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`     datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`         tinyint(1) NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   KEY `idx_send_user_id` (`send_user_id`),
   KEY `idx_receive_user_id` (`receive_user_id`)

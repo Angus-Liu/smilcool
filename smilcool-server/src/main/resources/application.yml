@@ -38,6 +38,10 @@ spring:
       name: Angus Liu
     base-package: com.smilcool.server.core.controller
 
+  data:
+    # Elasticsearch 设置
+    elasticsearch:
+      cluster-nodes: localhost:9300
 
 # MyBatis-Plus 配置（替代原 MyBatis 配置）
 mybatis-plus:
