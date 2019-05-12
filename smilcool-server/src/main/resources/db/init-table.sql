@@ -250,8 +250,8 @@ CREATE TABLE `file` (
   `title`            varchar(255)  NOT NULL DEFAULT '' COMMENT '标题',
   `name`             varchar(255)  NOT NULL DEFAULT '未知' COMMENT '文件名',
   `size`             varchar(10)   NOT NULL DEFAULT '未知大小' COMMENT '文件大小',
-  `url`              varchar(255)  NOT NULL COMMENT '资料链接',
-  `download_count`        int(11)       NOT NULL DEFAULT '0' COMMENT '下载量',
+  `url`              varchar(255)  NOT NULL COMMENT '文件链接',
+  `download_count`   int(11)       NOT NULL DEFAULT '0' COMMENT '下载量',
   `description`      varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
   `remark`           varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time`      datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -384,3 +384,41 @@ CREATE TABLE `message` (
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='消息表';
+
+# 字典类型表（dic_type）
+DROP TABLE IF EXISTS `dic_type`;
+CREATE TABLE `dic_type` (
+  `id`          int(11)     NOT NULL AUTO_INCREMENT COMMENT '字典类型ID',
+  `name`        varchar(20) NOT NULL COMMENT '字典类型名',
+  `code`        varchar(20) NOT NULL COMMENT '字典类型码',
+  `seq`         int(11)     NOT NULL DEFAULT '0' COMMENT '顺序',
+  `state`       int(1)      NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',
+  `remark`      varchar(255)         DEFAULT NULL COMMENT '备注',
+  `create_time` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`     tinyint(1)  NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_name` (`name`)
+) ENGINE = INNODB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT ='字典类型表';
+
+# 字典项目表（dictionary_item）
+DROP TABLE IF EXISTS `dic_item`;
+CREATE TABLE `dic_item` (
+  `id`            int(11)     NOT NULL AUTO_INCREMENT COMMENT '字典项目ID',
+  `dic_type_code` varchar(20) NOT NULL COMMENT '字典类型码',
+  `name`          varchar(20) NOT NULL COMMENT '字典项目名',
+  `code`          varchar(20) NOT NULL COMMENT '字典项目码',
+  `seq`           int(11)     NOT NULL DEFAULT '0' COMMENT '顺序',
+  `fixed`         tinyint(1)  NOT NULL DEFAULT '0' COMMENT '固定不可修改：0-否，1-是',
+  `state`         int(1)      NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',
+  `remark`        varchar(255)         DEFAULT NULL COMMENT '备注',
+  `create_time`   datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time`   datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`       tinyint(1)  NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  PRIMARY KEY (`id`),
+  KEY `idx_dic_type_code` (`dic_type_code`)
+) ENGINE = INNODB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT ='字典项目表';

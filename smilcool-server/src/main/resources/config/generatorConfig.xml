@@ -68,6 +68,20 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
+        <!--<table tableName="dic_item"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
+        <!--<table tableName="dic_type"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+-->
         <!--<table tableName="file"
                enableCountByExample="false"
                enableUpdateByExample="false"
