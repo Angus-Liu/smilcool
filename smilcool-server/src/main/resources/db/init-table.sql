@@ -240,18 +240,18 @@ CREATE TABLE `tag` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='标签表';
 
-# 资料表（data）
-DROP TABLE IF EXISTS `data`;
-CREATE TABLE `data` (
-  `id`               int(11)       NOT NULL AUTO_INCREMENT COMMENT '资料ID',
+# 文件表（file）
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+  `id`               int(11)       NOT NULL AUTO_INCREMENT COMMENT '文件ID',
   `user_id`          int(11)       NOT NULL COMMENT '发布用户ID',
   `resource_id`      int(11)       NOT NULL COMMENT '资源ID',
   `resource_type_id` int(11)       NOT NULL COMMENT '资源类目ID',
   `title`            varchar(255)  NOT NULL DEFAULT '' COMMENT '标题',
-  `name`             varchar(255)  NOT NULL DEFAULT '未知' COMMENT '资料名',
-  `size`             varchar(10)   NOT NULL DEFAULT '未知大小' COMMENT '资料大小',
+  `name`             varchar(255)  NOT NULL DEFAULT '未知' COMMENT '文件名',
+  `size`             varchar(10)   NOT NULL DEFAULT '未知大小' COMMENT '文件大小',
   `url`              varchar(255)  NOT NULL COMMENT '资料链接',
-  `downloads`        int(11)       NOT NULL DEFAULT '0' COMMENT '下载量',
+  `download_count`        int(11)       NOT NULL DEFAULT '0' COMMENT '下载量',
   `description`      varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
   `remark`           varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time`      datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -263,7 +263,7 @@ CREATE TABLE `data` (
   KEY `idx_resource_type_id` (`resource_type_id`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
-  COMMENT ='资料表';
+  COMMENT ='文件表';
 
 # 失物寻物表（lost_found）
 DROP TABLE IF EXISTS `lost_found`;
@@ -366,7 +366,7 @@ CREATE TABLE `friend` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='好友表';
 
-# 消息表（friend）
+# 消息表（message）
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id`              int(11)    NOT NULL AUTO_INCREMENT COMMENT '朋友关联ID',

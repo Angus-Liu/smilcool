@@ -68,7 +68,7 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
-        <!--<table tableName="data"
+        <!--<table tableName="file"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
