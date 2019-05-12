@@ -3,6 +3,8 @@
 <mapper namespace="com.smilcool.server.core.dao.DataMapper">
   <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Data">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="resource_type_id" jdbcType="INTEGER" property="resourceTypeId" />
     <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -16,8 +18,8 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, resource_id, title, name, size, url, downloads, description, remark, create_time, 
-    update_time, deleted
+    id, user_id, resource_type_id, resource_id, title, name, size, url, downloads, description, 
+    remark, create_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -30,12 +32,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Data">
-    insert into data (id, resource_id, title, 
-      name, size, url, downloads, 
+    insert into data (id, user_id, resource_type_id, 
+      resource_id, title, name, 
+      size, url, downloads, 
       description, remark, create_time, 
       update_time, deleted)
-    values (#{id,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{downloads,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceTypeId,jdbcType=INTEGER}, 
+      #{resourceId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{size,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{downloads,jdbcType=INTEGER}, 
       #{description,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
   </insert>
@@ -44,6 +48,12 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="resourceTypeId != null">
+        resource_type_id,
       </if>
       <if test="resourceId != null">
         resource_id,
@@ -83,6 +93,12 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="resourceTypeId != null">
+        #{resourceTypeId,jdbcType=INTEGER},
+      </if>
       <if test="resourceId != null">
         #{resourceId,jdbcType=INTEGER},
       </if>
@@ -121,6 +137,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Data">
     update data
     <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="resourceTypeId != null">
+        resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+      </if>
       <if test="resourceId != null">
         resource_id = #{resourceId,jdbcType=INTEGER},
       </if>
@@ -159,7 +181,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Data">
     update data
-    set resource_id = #{resourceId,jdbcType=INTEGER},
+    set user_id = #{userId,jdbcType=INTEGER},
+      resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+      resource_id = #{resourceId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       size = #{size,jdbcType=VARCHAR},
