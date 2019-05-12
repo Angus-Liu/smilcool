@@ -398,7 +398,8 @@ CREATE TABLE `dic_type` (
   `update_time` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted`     tinyint(1)  NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_name` (`name`)
+  UNIQUE KEY `uk_name` (`name`),
+  UNIQUE KEY `uk_code` (`code`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='字典类型表';
