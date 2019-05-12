@@ -6,7 +6,6 @@ import com.smilcool.server.common.util.serializer.CommonStateSerializer;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Angus

@@ -2,6 +2,8 @@ package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.File;
 
+import java.util.List;
+
 public interface FileMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface FileMapper {
     int updateByPrimaryKeySelective(File record);
 
     int updateByPrimaryKey(File record);
+
+    List<File> selectAll();
 }
