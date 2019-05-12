@@ -44,7 +44,8 @@
                 #{description,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
                 #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.File">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.File"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into file
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

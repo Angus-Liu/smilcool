@@ -14,7 +14,7 @@ import java.net.UnknownHostException;
  * @author Angus
  * @date 2019/4/26
  */
-@Api(tags = "4.0", description = "测试接口")
+@Api(tags = "4.1", description = "测试接口")
 @Slf4j
 @RestController
 @RequestMapping("/test")
