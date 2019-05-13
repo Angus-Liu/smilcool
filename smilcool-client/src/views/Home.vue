@@ -30,7 +30,7 @@ export default {
   .body-container {
     width: 1440px;
     min-height: calc(100% - 170px);
-    margin: 20px auto;
+    margin: 15px auto;
     padding: 2px;
     background: #ccc;
   }

@@ -42,6 +42,7 @@
             </sui-card-description>
 
             <span slot="right">
+              <!-- TODO 改为 sui label -->
               <Button class="moment-button" type="text" shape="circle" size="large">
                 <sui-icon name="thumbs up outline"/>13
               </Button>
