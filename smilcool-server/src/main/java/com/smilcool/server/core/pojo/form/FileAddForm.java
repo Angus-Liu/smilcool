@@ -3,7 +3,6 @@ package com.smilcool.server.core.pojo.form;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * @author Angus
@@ -11,14 +10,14 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class FileAddForm {
-    @NotNull(message = "发布用户ID不能为空")
-    private Integer userId;
-
-    @NotNull(message = "资源类型ID不能为空")
-    private Integer resourceTypeId;
+    @NotBlank(message = "文件类型不能为空")
+    private String fileCategory;
 
     @NotBlank(message = "标题不能为空")
     private String title;
+
+    @NotBlank(message = "描述不能为空")
+    private String description;
 
     @NotBlank(message = "文件名不能为空")
     private String name;
@@ -28,6 +27,4 @@ public class FileAddForm {
 
     @NotBlank(message = "文件链接不能为空")
     private String url;
-
-    private String description;
 }

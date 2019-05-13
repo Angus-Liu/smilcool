@@ -15,17 +15,13 @@ public class ArticleVO {
 
     private Integer userId;
 
-    // TODO 发布用户信息
-
     private Integer resourceId;
 
-    private Integer resourceTypeId;
+    private String articleCategory;
 
     private String title;
 
     private String brief;
-
-    private String tags;
 
     private String cover;
 
@@ -34,6 +30,8 @@ public class ArticleVO {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+    private String tags;
 
     private String markdownContent;
 

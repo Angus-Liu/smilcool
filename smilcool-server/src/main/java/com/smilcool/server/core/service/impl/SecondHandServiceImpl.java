@@ -1,7 +1,9 @@
 package com.smilcool.server.core.service.impl;
 
+import com.smilcool.server.common.enums.DicTypeEnum;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
+import com.smilcool.server.common.util.MockUtil;
 import com.smilcool.server.core.dao.SecondHandMapper;
 import com.smilcool.server.core.pojo.form.SecondHandAddForm;
 import com.smilcool.server.core.pojo.po.SecondHand;
@@ -28,9 +30,11 @@ public class SecondHandServiceImpl implements SecondHandService {
 
     @Override
     public SecondHandVO addSecondHand(SecondHandAddForm form) {
+        // 获取当前登录用户
+        Integer currentUserId = MockUtil.currentUserId();
         // 添加资源，获取资源ID
-        // TODO: 2019/4/14 校验 resourceTypeId
-        Integer resourceId = resourceService.addResource(form.getUserId(), form.getResourceTypeId());
+        Integer resourceId = resourceService
+                .addResource(currentUserId, DicTypeEnum.SECOND_HAND_CATEGORY.name, form.getSecondHandCategory());
         // 添加二手交易
         SecondHand secondHand = BeanUtil.copyProp(form, SecondHand.class);
         secondHand.setResourceId(resourceId);

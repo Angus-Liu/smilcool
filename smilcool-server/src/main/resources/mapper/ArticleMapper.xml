@@ -5,10 +5,9 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="resource_id" jdbcType="INTEGER" property="resourceId"/>
-        <result column="resource_type_id" jdbcType="INTEGER" property="resourceTypeId"/>
+        <result column="article_category" jdbcType="VARCHAR" property="articleCategory"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="brief" jdbcType="VARCHAR" property="brief"/>
-        <result column="tags" jdbcType="VARCHAR" property="tags"/>
         <result column="cover" jdbcType="VARCHAR" property="cover"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -16,15 +15,16 @@
         <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.Article">
+        <result column="tags" jdbcType="LONGVARCHAR" property="tags"/>
         <result column="markdown_content" jdbcType="LONGVARCHAR" property="markdownContent"/>
         <result column="html_content" jdbcType="LONGVARCHAR" property="htmlContent"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, resource_id, resource_type_id, title, brief, tags, cover, remark, create_time,
+        id, user_id, resource_id, article_category, title, brief, cover, remark, create_time,
     update_time, deleted
     </sql>
     <sql id="Blob_Column_List">
-        markdown_content, html_content
+        tags, markdown_content, html_content
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
@@ -41,18 +41,18 @@
     </delete>
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Article">
         INSERT INTO article (id, user_id, resource_id,
-                             resource_type_id, title, brief,
-                             tags, cover, remark,
-                             create_time, update_time, deleted,
+                             article_category, title, brief,
+                             cover, remark, create_time,
+                             update_time, deleted, tags,
                              markdown_content, html_content)
         VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER},
-                #{resourceTypeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR},
-                #{tags,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
-                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT},
+                #{articleCategory,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR},
+                #{cover,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{tags,jdbcType=LONGVARCHAR},
                 #{markdownContent,jdbcType=LONGVARCHAR}, #{htmlContent,jdbcType=LONGVARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Article"
-            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         insert into article
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -64,17 +64,14 @@
             <if test="resourceId != null">
                 resource_id,
             </if>
-            <if test="resourceTypeId != null">
-                resource_type_id,
+            <if test="articleCategory != null">
+                article_category,
             </if>
             <if test="title != null">
                 title,
             </if>
             <if test="brief != null">
                 brief,
-            </if>
-            <if test="tags != null">
-                tags,
             </if>
             <if test="cover != null">
                 cover,
@@ -90,6 +87,9 @@
             </if>
             <if test="deleted != null">
                 deleted,
+            </if>
+            <if test="tags != null">
+                tags,
             </if>
             <if test="markdownContent != null">
                 markdown_content,
@@ -108,17 +108,14 @@
             <if test="resourceId != null">
                 #{resourceId,jdbcType=INTEGER},
             </if>
-            <if test="resourceTypeId != null">
-                #{resourceTypeId,jdbcType=INTEGER},
+            <if test="articleCategory != null">
+                #{articleCategory,jdbcType=VARCHAR},
             </if>
             <if test="title != null">
                 #{title,jdbcType=VARCHAR},
             </if>
             <if test="brief != null">
                 #{brief,jdbcType=VARCHAR},
-            </if>
-            <if test="tags != null">
-                #{tags,jdbcType=VARCHAR},
             </if>
             <if test="cover != null">
                 #{cover,jdbcType=VARCHAR},
@@ -134,6 +131,9 @@
             </if>
             <if test="deleted != null">
                 #{deleted,jdbcType=BIT},
+            </if>
+            <if test="tags != null">
+                #{tags,jdbcType=LONGVARCHAR},
             </if>
             <if test="markdownContent != null">
                 #{markdownContent,jdbcType=LONGVARCHAR},
@@ -152,17 +152,14 @@
             <if test="resourceId != null">
                 resource_id = #{resourceId,jdbcType=INTEGER},
             </if>
-            <if test="resourceTypeId != null">
-                resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            <if test="articleCategory != null">
+                article_category = #{articleCategory,jdbcType=VARCHAR},
             </if>
             <if test="title != null">
                 title = #{title,jdbcType=VARCHAR},
             </if>
             <if test="brief != null">
                 brief = #{brief,jdbcType=VARCHAR},
-            </if>
-            <if test="tags != null">
-                tags = #{tags,jdbcType=VARCHAR},
             </if>
             <if test="cover != null">
                 cover = #{cover,jdbcType=VARCHAR},
@@ -179,6 +176,9 @@
             <if test="deleted != null">
                 deleted = #{deleted,jdbcType=BIT},
             </if>
+            <if test="tags != null">
+                tags = #{tags,jdbcType=LONGVARCHAR},
+            </if>
             <if test="markdownContent != null">
                 markdown_content = #{markdownContent,jdbcType=LONGVARCHAR},
             </if>
@@ -192,15 +192,15 @@
         UPDATE article
         SET user_id          = #{userId,jdbcType=INTEGER},
             resource_id      = #{resourceId,jdbcType=INTEGER},
-            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            article_category = #{articleCategory,jdbcType=VARCHAR},
             title            = #{title,jdbcType=VARCHAR},
             brief            = #{brief,jdbcType=VARCHAR},
-            tags            = #{tags,jdbcType=VARCHAR},
             cover            = #{cover,jdbcType=VARCHAR},
             remark           = #{remark,jdbcType=VARCHAR},
             create_time      = #{createTime,jdbcType=TIMESTAMP},
             update_time      = #{updateTime,jdbcType=TIMESTAMP},
             deleted          = #{deleted,jdbcType=BIT},
+            tags             = #{tags,jdbcType=LONGVARCHAR},
             markdown_content = #{markdownContent,jdbcType=LONGVARCHAR},
             html_content     = #{htmlContent,jdbcType=LONGVARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
@@ -209,10 +209,9 @@
         UPDATE article
         SET user_id          = #{userId,jdbcType=INTEGER},
             resource_id      = #{resourceId,jdbcType=INTEGER},
-            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            article_category = #{articleCategory,jdbcType=VARCHAR},
             title            = #{title,jdbcType=VARCHAR},
             brief            = #{brief,jdbcType=VARCHAR},
-            tags            = #{tags,jdbcType=VARCHAR},
             cover            = #{cover,jdbcType=VARCHAR},
             remark           = #{remark,jdbcType=VARCHAR},
             create_time      = #{createTime,jdbcType=TIMESTAMP},
@@ -228,5 +227,4 @@
         <include refid="Blob_Column_List"/>
         from article
     </select>
-
 </mapper>

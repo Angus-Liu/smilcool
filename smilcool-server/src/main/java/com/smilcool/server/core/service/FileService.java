@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface FileService {
 
+    File addFile(FileAddForm form);
+
     File getFile(Integer id);
 
     List<File> getFileList();
-
-    File addFile(FileAddForm form);
 }

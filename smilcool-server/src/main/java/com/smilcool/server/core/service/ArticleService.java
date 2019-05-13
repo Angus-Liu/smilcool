@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface ArticleService {
 
+    Article addArticle(ArticleAddForm form);
+
     Article getArticle(Integer id);
 
     List<ArticleVO> getArticleList();
-
-    Article addArticle(ArticleAddForm form);
 
     ArticleInfo getArticleInfo(Integer id);
 }

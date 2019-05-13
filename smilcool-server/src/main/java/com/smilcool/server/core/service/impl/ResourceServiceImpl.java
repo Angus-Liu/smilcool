@@ -3,12 +3,11 @@ package com.smilcool.server.core.service.impl;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.ResourceMapper;
+import com.smilcool.server.core.pojo.form.ResourceAddForm;
 import com.smilcool.server.core.pojo.form.ResourceQueryForm;
 import com.smilcool.server.core.pojo.po.Resource;
 import com.smilcool.server.core.pojo.vo.ResourceVO;
 import com.smilcool.server.core.service.ResourceService;
-import com.smilcool.server.core.service.ResourceTypeService;
-import com.smilcool.server.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,21 +24,18 @@ public class ResourceServiceImpl implements ResourceService {
     @Autowired
     private ResourceMapper resourceMapper;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ResourceTypeService resourceTypeService;
-
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public Integer addResource(Integer userId, Integer resourceTypeId) {
-        // 检查用户是否存在
-        // TODO: 2019/4/12 后期改为取当前登录用户
-        userService.checkExist(userId);
-        // 检查资源类型是否存在
-        resourceTypeService.checkExist(resourceTypeId);
-        Resource resource = new Resource(userId, resourceTypeId);
+    public Integer addResource(ResourceAddForm form) {
+        Resource resource = BeanUtil.copyProp(form, Resource.class);
+        resourceMapper.insertSelective(resource);
+        return resource.getId();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Integer addResource(Integer userId, String resourceDicType, String resourceDicItem) {
+        Resource resource = new Resource(userId, resourceDicType, resourceDicItem);
         resourceMapper.insertSelective(resource);
         return resource.getId();
     }

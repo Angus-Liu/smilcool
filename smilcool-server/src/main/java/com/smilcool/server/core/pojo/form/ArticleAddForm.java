@@ -11,11 +11,8 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class ArticleAddForm {
-    @NotNull(message = "发布用户ID不能为空")
-    private Integer userId;
-
-    @NotNull(message = "资源类型ID不能为空")
-    private Integer resourceTypeId;
+    @NotBlank(message = "文章类别不能为空")
+    private String articleCategory;
 
     @NotBlank(message = "标题不能为空")
     private String title;
@@ -23,11 +20,9 @@ public class ArticleAddForm {
     @NotBlank(message = "简介不能为空")
     private String brief;
 
-    private String tags;
-
     private String cover;
 
-    private String remark;
+    private String tags;
 
     private String markdownContent;
 

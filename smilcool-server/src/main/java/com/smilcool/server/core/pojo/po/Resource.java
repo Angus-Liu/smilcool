@@ -12,7 +12,9 @@ public class Resource {
 
     private Integer userId;
 
-    private Integer resourceTypeId;
+    private String resourceDicType;
+
+    private String resourceDicItem;
 
     private Integer zanCount;
 
@@ -30,8 +32,9 @@ public class Resource {
 
     private Boolean deleted;
 
-    public Resource(Integer userId, Integer resourceTypeId) {
+    public Resource(Integer userId, String resourceDicType, String resourceDicItem) {
         this.userId = userId;
-        this.resourceTypeId = resourceTypeId;
+        this.resourceDicType = resourceDicType;
+        this.resourceDicItem = resourceDicItem;
     }
 }

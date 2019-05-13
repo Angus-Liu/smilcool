@@ -9,9 +9,11 @@ public class File {
 
     private Integer resourceId;
 
-    private Integer resourceTypeId;
+    private String fileCategory;
 
     private String title;
+
+    private String description;
 
     private String name;
 
@@ -20,8 +22,6 @@ public class File {
     private String url;
 
     private Integer downloadCount;
-
-    private String description;
 
     private String remark;
 
@@ -55,12 +55,12 @@ public class File {
         this.resourceId = resourceId;
     }
 
-    public Integer getResourceTypeId() {
-        return resourceTypeId;
+    public String getFileCategory() {
+        return fileCategory;
     }
 
-    public void setResourceTypeId(Integer resourceTypeId) {
-        this.resourceTypeId = resourceTypeId;
+    public void setFileCategory(String fileCategory) {
+        this.fileCategory = fileCategory;
     }
 
     public String getTitle() {
@@ -69,6 +69,14 @@ public class File {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -101,14 +109,6 @@ public class File {
 
     public void setDownloadCount(Integer downloadCount) {
         this.downloadCount = downloadCount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getRemark() {

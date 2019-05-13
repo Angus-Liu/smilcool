@@ -4,19 +4,20 @@
     <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.Resource">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
-        <result column="resource_type_id" jdbcType="INTEGER" property="resourceTypeId"/>
+        <result column="resource_dic_type" jdbcType="VARCHAR" property="resourceDicType"/>
+        <result column="resource_dic_item" jdbcType="VARCHAR" property="resourceDicItem"/>
         <result column="zan_count" jdbcType="INTEGER" property="zanCount"/>
         <result column="pv_count" jdbcType="INTEGER" property="pvCount"/>
+        <result column="comment_count" jdbcType="INTEGER" property="commentCount"/>
         <result column="state" jdbcType="INTEGER" property="state"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="deleted" jdbcType="BIT" property="deleted"/>
-        <result column="comment_count" jdbcType="INTEGER" property="commentCount"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, resource_type_id, zan_count, pv_count, state, remark, create_time, update_time,
-    deleted, comment_count
+        id, user_id, resource_dic_type, resource_dic_item, zan_count, pv_count, comment_count,
+    state, remark, create_time, update_time, deleted
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -30,14 +31,14 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Resource">
-        INSERT INTO resource (id, user_id, resource_type_id,
-                              zan_count, pv_count, state,
-                              remark, create_time, update_time,
-                              deleted, comment_count)
-        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceTypeId,jdbcType=INTEGER},
-                #{zanCount,jdbcType=INTEGER}, #{pvCount,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},
-                #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-                #{deleted,jdbcType=BIT}, #{commentCount,jdbcType=INTEGER})
+        INSERT INTO resource (id, user_id, resource_dic_type,
+                              resource_dic_item, zan_count, pv_count,
+                              comment_count, state, remark,
+                              create_time, update_time, deleted)
+        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceDicType,jdbcType=VARCHAR},
+                #{resourceDicItem,jdbcType=VARCHAR}, #{zanCount,jdbcType=INTEGER}, #{pvCount,jdbcType=INTEGER},
+                #{commentCount,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
     </insert>
     <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Resource"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -49,14 +50,20 @@
             <if test="userId != null">
                 user_id,
             </if>
-            <if test="resourceTypeId != null">
-                resource_type_id,
+            <if test="resourceDicType != null">
+                resource_dic_type,
+            </if>
+            <if test="resourceDicItem != null">
+                resource_dic_item,
             </if>
             <if test="zanCount != null">
                 zan_count,
             </if>
             <if test="pvCount != null">
                 pv_count,
+            </if>
+            <if test="commentCount != null">
+                comment_count,
             </if>
             <if test="state != null">
                 state,
@@ -73,9 +80,6 @@
             <if test="deleted != null">
                 deleted,
             </if>
-            <if test="commentCount != null">
-                comment_count,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -84,14 +88,20 @@
             <if test="userId != null">
                 #{userId,jdbcType=INTEGER},
             </if>
-            <if test="resourceTypeId != null">
-                #{resourceTypeId,jdbcType=INTEGER},
+            <if test="resourceDicType != null">
+                #{resourceDicType,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceDicItem != null">
+                #{resourceDicItem,jdbcType=VARCHAR},
             </if>
             <if test="zanCount != null">
                 #{zanCount,jdbcType=INTEGER},
             </if>
             <if test="pvCount != null">
                 #{pvCount,jdbcType=INTEGER},
+            </if>
+            <if test="commentCount != null">
+                #{commentCount,jdbcType=INTEGER},
             </if>
             <if test="state != null">
                 #{state,jdbcType=INTEGER},
@@ -108,9 +118,6 @@
             <if test="deleted != null">
                 #{deleted,jdbcType=BIT},
             </if>
-            <if test="commentCount != null">
-                #{commentCount,jdbcType=INTEGER},
-            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.Resource">
@@ -119,14 +126,20 @@
             <if test="userId != null">
                 user_id = #{userId,jdbcType=INTEGER},
             </if>
-            <if test="resourceTypeId != null">
-                resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            <if test="resourceDicType != null">
+                resource_dic_type = #{resourceDicType,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceDicItem != null">
+                resource_dic_item = #{resourceDicItem,jdbcType=VARCHAR},
             </if>
             <if test="zanCount != null">
                 zan_count = #{zanCount,jdbcType=INTEGER},
             </if>
             <if test="pvCount != null">
                 pv_count = #{pvCount,jdbcType=INTEGER},
+            </if>
+            <if test="commentCount != null">
+                comment_count = #{commentCount,jdbcType=INTEGER},
             </if>
             <if test="state != null">
                 state = #{state,jdbcType=INTEGER},
@@ -143,44 +156,27 @@
             <if test="deleted != null">
                 deleted = #{deleted,jdbcType=BIT},
             </if>
-            <if test="commentCount != null">
-                comment_count = #{commentCount,jdbcType=INTEGER},
-            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Resource">
         UPDATE resource
-        SET user_id          = #{userId,jdbcType=INTEGER},
-            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
-            zan_count        = #{zanCount,jdbcType=INTEGER},
-            pv_count         = #{pvCount,jdbcType=INTEGER},
-            state            = #{state,jdbcType=INTEGER},
-            remark           = #{remark,jdbcType=VARCHAR},
-            create_time      = #{createTime,jdbcType=TIMESTAMP},
-            update_time      = #{updateTime,jdbcType=TIMESTAMP},
-            deleted          = #{deleted,jdbcType=BIT},
-            comment_count    = #{commentCount,jdbcType=INTEGER}
+        SET user_id           = #{userId,jdbcType=INTEGER},
+            resource_dic_type = #{resourceDicType,jdbcType=VARCHAR},
+            resource_dic_item = #{resourceDicItem,jdbcType=VARCHAR},
+            zan_count         = #{zanCount,jdbcType=INTEGER},
+            pv_count          = #{pvCount,jdbcType=INTEGER},
+            comment_count     = #{commentCount,jdbcType=INTEGER},
+            state             = #{state,jdbcType=INTEGER},
+            remark            = #{remark,jdbcType=VARCHAR},
+            create_time       = #{createTime,jdbcType=TIMESTAMP},
+            update_time       = #{updateTime,jdbcType=TIMESTAMP},
+            deleted           = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Resource">
-        select
-        <include refid="Base_Column_List"/>
-        from resource
-    </select>
+    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Resource"></select>
 
-    <select id="selectByCondition" resultType="com.smilcool.server.core.pojo.po.Resource">
-        select
-        <include refid="Base_Column_List"/>
-        from resource
-        <where>
-            <if test="userId != null">
-                user_id = #{userId}
-            </if>
-            <if test="resourceTypeId != null">
-                AND resource_type_id = #{resourceTypeId}
-            </if>
-        </where>
-    </select>
+    <select id="selectByCondition" resultType="com.smilcool.server.core.pojo.po.Resource"></select>
+
 </mapper>

@@ -24,17 +24,17 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
-    @ApiOperation("资源列表")
-    @GetMapping("/resource")
-    public Result<List<ResourceVO>> getResourceList(ResourceQueryForm form) {
-        List<ResourceVO> resourceList = resourceService.getResourceList(form);
-        return Result.success(resourceList);
-    }
-
     @ApiOperation("资源信息")
     @GetMapping("/resource/{id}")
     public Result<ResourceVO> getResource(@PathVariable Integer id) {
         ResourceVO resource = resourceService.getResource(id);
         return Result.success(resource);
+    }
+
+    @ApiOperation("资源列表")
+    @GetMapping("/resource")
+    public Result<List<ResourceVO>> getResourceList(ResourceQueryForm form) {
+        List<ResourceVO> resourceList = resourceService.getResourceList(form);
+        return Result.success(resourceList);
     }
 }

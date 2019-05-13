@@ -17,7 +17,9 @@ public class ResourceVO {
 
     private Integer userId;
 
-    private Integer resourceTypeId;
+    private String resourceDicType;
+
+    private String resourceDicItem;
 
     private Integer zanCount;
 

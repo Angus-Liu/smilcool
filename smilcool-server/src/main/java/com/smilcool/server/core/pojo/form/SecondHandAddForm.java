@@ -7,11 +7,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class SecondHandAddForm {
-    @NotNull(message = "发布用户ID不能为空")
-    private Integer userId;
-
-    @NotNull(message = "资源类型ID不能为空")
-    private Integer resourceTypeId;
+    @NotNull(message = "二手类别不能为空")
+    private String secondHandCategory;
 
     @NotBlank(message = "标题不能为空")
     private String title;

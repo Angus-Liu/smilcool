@@ -1,5 +1,6 @@
 package com.smilcool.server.core.service;
 
+import com.smilcool.server.core.pojo.form.ResourceAddForm;
 import com.smilcool.server.core.pojo.form.ResourceQueryForm;
 import com.smilcool.server.core.pojo.vo.ResourceVO;
 
@@ -11,7 +12,9 @@ import java.util.List;
  */
 public interface ResourceService {
 
-    Integer addResource(Integer userId, Integer resourceTypeId);
+    Integer addResource(ResourceAddForm form);
+
+    Integer addResource(Integer userId, String resourceDicType, String resourceDicItem);
 
     ResourceVO getResource(Integer id);
 

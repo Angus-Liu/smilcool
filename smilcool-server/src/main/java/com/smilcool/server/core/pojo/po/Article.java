@@ -9,13 +9,11 @@ public class Article {
 
     private Integer resourceId;
 
-    private Integer resourceTypeId;
+    private String articleCategory;
 
     private String title;
 
     private String brief;
-
-    private String tags;
 
     private String cover;
 
@@ -26,6 +24,8 @@ public class Article {
     private Date updateTime;
 
     private Boolean deleted;
+
+    private String tags;
 
     private String markdownContent;
 
@@ -55,12 +55,12 @@ public class Article {
         this.resourceId = resourceId;
     }
 
-    public Integer getResourceTypeId() {
-        return resourceTypeId;
+    public String getArticleCategory() {
+        return articleCategory;
     }
 
-    public void setResourceTypeId(Integer resourceTypeId) {
-        this.resourceTypeId = resourceTypeId;
+    public void setArticleCategory(String articleCategory) {
+        this.articleCategory = articleCategory;
     }
 
     public String getTitle() {
@@ -77,14 +77,6 @@ public class Article {
 
     public void setBrief(String brief) {
         this.brief = brief;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
     }
 
     public String getCover() {
@@ -125,6 +117,14 @@ public class Article {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public String getMarkdownContent() {

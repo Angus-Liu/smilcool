@@ -1,207 +1,205 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smilcool.server.core.dao.FileMapper">
-    <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.File">
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="user_id" jdbcType="INTEGER" property="userId"/>
-        <result column="resource_id" jdbcType="INTEGER" property="resourceId"/>
-        <result column="resource_type_id" jdbcType="INTEGER" property="resourceTypeId"/>
-        <result column="title" jdbcType="VARCHAR" property="title"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="size" jdbcType="VARCHAR" property="size"/>
-        <result column="url" jdbcType="VARCHAR" property="url"/>
-        <result column="download_count" jdbcType="INTEGER" property="downloadCount"/>
-        <result column="description" jdbcType="VARCHAR" property="description"/>
-        <result column="remark" jdbcType="VARCHAR" property="remark"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="deleted" jdbcType="BIT" property="deleted"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-        id, user_id, resource_id, resource_type_id, title, name, size, url, download_count,
-    description, remark, create_time, update_time, deleted
-    </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from file
-        where id = #{id,jdbcType=INTEGER}
-    </select>
+  <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.File">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
+    <result column="file_category" jdbcType="VARCHAR" property="fileCategory" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="size" jdbcType="VARCHAR" property="size" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="download_count" jdbcType="INTEGER" property="downloadCount" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, resource_id, file_category, title, description, name, size, url, download_count, 
+    remark, create_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from file
+    where id = #{id,jdbcType=INTEGER}
+  </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        DELETE
-        FROM file
-        WHERE id = #{id,jdbcType=INTEGER}
-    </delete>
-    <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.File">
-        INSERT INTO file (id, user_id, resource_id,
-                          resource_type_id, title, name,
-                          size, url, download_count,
-                          description, remark, create_time,
-                          update_time, deleted)
-        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER},
-                #{resourceTypeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-                #{size,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{downloadCount,jdbcType=INTEGER},
-                #{description,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
-                #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
-    </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.File"
-            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into file
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="userId != null">
-                user_id,
-            </if>
-            <if test="resourceId != null">
-                resource_id,
-            </if>
-            <if test="resourceTypeId != null">
-                resource_type_id,
-            </if>
-            <if test="title != null">
-                title,
-            </if>
-            <if test="name != null">
-                name,
-            </if>
-            <if test="size != null">
-                size,
-            </if>
-            <if test="url != null">
-                url,
-            </if>
-            <if test="downloadCount != null">
-                download_count,
-            </if>
-            <if test="description != null">
-                description,
-            </if>
-            <if test="remark != null">
-                remark,
-            </if>
-            <if test="createTime != null">
-                create_time,
-            </if>
-            <if test="updateTime != null">
-                update_time,
-            </if>
-            <if test="deleted != null">
-                deleted,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
-            <if test="userId != null">
-                #{userId,jdbcType=INTEGER},
-            </if>
-            <if test="resourceId != null">
-                #{resourceId,jdbcType=INTEGER},
-            </if>
-            <if test="resourceTypeId != null">
-                #{resourceTypeId,jdbcType=INTEGER},
-            </if>
-            <if test="title != null">
-                #{title,jdbcType=VARCHAR},
-            </if>
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="size != null">
-                #{size,jdbcType=VARCHAR},
-            </if>
-            <if test="url != null">
-                #{url,jdbcType=VARCHAR},
-            </if>
-            <if test="downloadCount != null">
-                #{downloadCount,jdbcType=INTEGER},
-            </if>
-            <if test="description != null">
-                #{description,jdbcType=VARCHAR},
-            </if>
-            <if test="remark != null">
-                #{remark,jdbcType=VARCHAR},
-            </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="deleted != null">
-                #{deleted,jdbcType=BIT},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.File">
-        update file
-        <set>
-            <if test="userId != null">
-                user_id = #{userId,jdbcType=INTEGER},
-            </if>
-            <if test="resourceId != null">
-                resource_id = #{resourceId,jdbcType=INTEGER},
-            </if>
-            <if test="resourceTypeId != null">
-                resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
-            </if>
-            <if test="title != null">
-                title = #{title,jdbcType=VARCHAR},
-            </if>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="size != null">
-                size = #{size,jdbcType=VARCHAR},
-            </if>
-            <if test="url != null">
-                url = #{url,jdbcType=VARCHAR},
-            </if>
-            <if test="downloadCount != null">
-                download_count = #{downloadCount,jdbcType=INTEGER},
-            </if>
-            <if test="description != null">
-                description = #{description,jdbcType=VARCHAR},
-            </if>
-            <if test="remark != null">
-                remark = #{remark,jdbcType=VARCHAR},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="deleted != null">
-                deleted = #{deleted,jdbcType=BIT},
-            </if>
-        </set>
-        where id = #{id,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.File">
-        UPDATE file
-        SET user_id          = #{userId,jdbcType=INTEGER},
-            resource_id      = #{resourceId,jdbcType=INTEGER},
-            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
-            title            = #{title,jdbcType=VARCHAR},
-            name             = #{name,jdbcType=VARCHAR},
-            size             = #{size,jdbcType=VARCHAR},
-            url              = #{url,jdbcType=VARCHAR},
-            download_count   = #{downloadCount,jdbcType=INTEGER},
-            description      = #{description,jdbcType=VARCHAR},
-            remark           = #{remark,jdbcType=VARCHAR},
-            create_time      = #{createTime,jdbcType=TIMESTAMP},
-            update_time      = #{updateTime,jdbcType=TIMESTAMP},
-            deleted          = #{deleted,jdbcType=BIT}
-        WHERE id = #{id,jdbcType=INTEGER}
-    </update>
+    delete from file
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.File">
+    insert into file (id, user_id, resource_id, 
+      file_category, title, description, 
+      name, size, url, download_count, 
+      remark, create_time, update_time, 
+      deleted)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, 
+      #{fileCategory,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{downloadCount,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{deleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.File"
+  useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    insert into file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="resourceId != null">
+        resource_id,
+      </if>
+      <if test="fileCategory != null">
+        file_category,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="downloadCount != null">
+        download_count,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="resourceId != null">
+        #{resourceId,jdbcType=INTEGER},
+      </if>
+      <if test="fileCategory != null">
+        #{fileCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadCount != null">
+        #{downloadCount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.File">
+    update file
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="resourceId != null">
+        resource_id = #{resourceId,jdbcType=INTEGER},
+      </if>
+      <if test="fileCategory != null">
+        file_category = #{fileCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadCount != null">
+        download_count = #{downloadCount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.File">
+    update file
+    set user_id = #{userId,jdbcType=INTEGER},
+      resource_id = #{resourceId,jdbcType=INTEGER},
+      file_category = #{fileCategory,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      size = #{size,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      download_count = #{downloadCount,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.File">
-        select
-        <include refid="Base_Column_List"/>
-        from file
-    </select>
+  <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.File">
+
+  </select>
+
 </mapper>

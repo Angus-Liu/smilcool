@@ -1,7 +1,9 @@
 package com.smilcool.server.core.service.impl;
 
+import com.smilcool.server.common.enums.DicTypeEnum;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
+import com.smilcool.server.common.util.MockUtil;
 import com.smilcool.server.core.dao.ArticleMapper;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.po.Article;
@@ -33,6 +35,20 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private CommentService commentService;
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Article addArticle(ArticleAddForm form) {
+        // 获取当前登陆用户
+        Integer currentUserId = MockUtil.currentUserId();
+        // 添加资源，获取资源ID
+        Integer resourceId = resourceService
+                .addResource(currentUserId, DicTypeEnum.ARTICLE_CATEGORY.name, form.getArticleCategory());
+        // 添加文章
+        Article article = BeanUtil.copyProp(form, Article.class);
+        article.setResourceId(resourceId);
+        articleMapper.insertSelective(article);
+        return getArticle(article.getId());
+    }
 
     @Override
     public Article getArticle(Integer id) {
@@ -47,18 +63,6 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleVO> getArticleList() {
         List<Article> articleList = articleMapper.selectAll();
         return BeanUtil.copyProp(articleList, ArticleVO.class);
-    }
-
-    @Transactional
-    @Override
-    public Article addArticle(ArticleAddForm form) {
-        // 添加资源，获取资源ID
-        Integer resourceId = resourceService.addResource(form.getUserId(), form.getResourceTypeId());
-        // 添加文章
-        Article article = BeanUtil.copyProp(form, Article.class);
-        article.setResourceId(resourceId);
-        articleMapper.insertSelective(article);
-        return getArticle(article.getId());
     }
 
     @Override
