@@ -8,6 +8,7 @@ import com.smilcool.server.core.pojo.form.DicItemAddForm;
 import com.smilcool.server.core.pojo.form.DicTypeAddForm;
 import com.smilcool.server.core.pojo.po.DicItem;
 import com.smilcool.server.core.pojo.po.DicType;
+import com.smilcool.server.core.pojo.vo.DicItemVO;
 import com.smilcool.server.core.service.DicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -83,8 +84,8 @@ public class DicServiceImpl implements DicService {
     }
 
     @Override
-    public List<DicItem> getDicItemList(String dicTypeCode) {
+    public List<DicItemVO> getDicItemList(String dicTypeCode) {
         List<DicItem> dicItemList = dicItemMapper.selectByDicTypeCode(dicTypeCode);
-        return dicItemList;
+        return BeanUtil.copyProp(dicItemList, DicItemVO.class);
     }
 }

@@ -5,6 +5,7 @@ import com.smilcool.server.core.pojo.form.DicItemAddForm;
 import com.smilcool.server.core.pojo.form.DicTypeAddForm;
 import com.smilcool.server.core.pojo.po.DicItem;
 import com.smilcool.server.core.pojo.po.DicType;
+import com.smilcool.server.core.pojo.vo.DicItemVO;
 import com.smilcool.server.core.service.DicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/5/12
  */
-@Api(tags = "4.0", description = "字典接口")
+@Api(tags = "2.0", description = "字典接口")
 @RestController
 @RequestMapping("/dic")
 public class DicController {
@@ -48,8 +49,8 @@ public class DicController {
 
     @ApiOperation("字典项目列表")
     @GetMapping({"/item", "/{dicTypeCode}/item"})
-    public Result<List<DicItem>> getDicItemList(@PathVariable(required = false) String dicTypeCode) {
-        List<DicItem> dicItemList = dicService.getDicItemList(dicTypeCode);
+    public Result<List<DicItemVO>> getDicItemList(@PathVariable(required = false) String dicTypeCode) {
+        List<DicItemVO> dicItemList = dicService.getDicItemList(dicTypeCode);
         return Result.success(dicItemList);
     }
 

@@ -12,7 +12,9 @@
           <li>
             <router-link to="/moment">校园动态</router-link>
           </li>
-          <li><a href="#">资料分享</a></li>
+          <li>
+            <router-link to="/file">文件仓库</router-link>
+          </li>
           <li><a href="#">物品小站</a></li>
           <li><a href="#">校内论坛</a></li>
         </ul>

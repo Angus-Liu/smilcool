@@ -37,6 +37,7 @@ public class SecondHandServiceImpl implements SecondHandService {
                 .addResource(currentUserId, DicTypeEnum.SECOND_HAND_CATEGORY.name, form.getSecondHandCategory());
         // 添加二手交易
         SecondHand secondHand = BeanUtil.copyProp(form, SecondHand.class);
+        secondHand.setUserId(currentUserId);
         secondHand.setResourceId(resourceId);
         secondHandMapper.insertSelective(secondHand);
         return getSecondHand(secondHand.getId());

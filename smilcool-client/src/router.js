@@ -30,6 +30,10 @@ export default new Router({
           path: 'moment',
           name: 'moment',
           component: () => import('@/views/moment/Moment')
+        }, {
+          path: 'file',
+          name: 'file',
+          component: () => import('@/views/file/File')
         }
       ]
     }

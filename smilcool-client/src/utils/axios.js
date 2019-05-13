@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Log from './log';
-import { Message } from 'iview';
+import { Notice } from 'iview';
 
 // 自定义日志工具
 const log = new Log('src/utils/axios.js');
@@ -22,42 +22,43 @@ class HttpRequest {
       return Promise.reject(error);
     });
     // 响应拦截
-    instance.interceptors.response.use(res => {
-      const { status, data } = res;
-      // 打印响应参数
-      log.info('Success Response <---');
-      log.info('URL', url);
-      log.info('Status', status);
-      log.info('Data', data);
-      return { status, data };
+    instance.interceptors.response
+      .use(res => {
+        const { status, data } = res;
+        // 打印响应参数
+        log.info('Success Response <---');
+        log.info('URL', url);
+        log.info('Status', status);
+        log.info('Data', data);
+        return { status, data };
 
-    }, error => {
-      const { status, data } = error.response;
-      log.info('Error Response <---');
-      log.info('URL', url);
-      log.info('Status', status);
-      log.info('Data', data);
+      }, error => {
+        const { status, data } = error.response;
+        log.info('Error Response <---');
+        log.info('URL', url);
+        log.info('Status', status);
+        log.info('Data', data);
 
-      switch (status) {
-        case 400:
-          log.info('业务异常');
-          break;
-        case 401:
-          log.info('跳转到登录页面');
-          break;
-        case 403:
-          log.info('权限不足');
-          break;
-        case 500:
-          log.info('服务端异常');
-          break;
-        default:
-      }
+        switch (status) {
+          case 400:
+            log.info('业务异常');
+            break;
+          case 401:
+            log.info('跳转到登录页面');
+            break;
+          case 403:
+            log.info('权限不足');
+            break;
+          case 500:
+            log.info('服务端异常');
+            break;
+          default:
+        }
 
-      Message.error(data.msg);
+        Notice.error({ title: '错误', desc: data.msg });
 
-      return Promise.reject(error);
-    });
+        return Promise.reject(error);
+      });
   }
 
   request(options) {

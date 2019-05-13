@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -22,17 +23,17 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
+    @ApiOperation("文件添加")
+    @PostMapping
+    public Result<File> addFile(@RequestBody @Valid FileAddForm form) {
+        File file = fileService.addFile(form);
+        return Result.success(file);
+    }
+
     @ApiOperation("文件列表")
     @GetMapping
     public Result<List<File>> getFileList() {
         List<File> fileList = fileService.getFileList();
         return Result.success(fileList);
-    }
-
-    @ApiOperation("文件添加")
-    @PostMapping
-    public Result<File> addFile(@RequestBody FileAddForm form) {
-        File file = fileService.addFile(form);
-        return Result.success(file);
     }
 }

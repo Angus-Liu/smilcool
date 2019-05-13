@@ -45,6 +45,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .addResource(currentUserId, DicTypeEnum.ARTICLE_CATEGORY.name, form.getArticleCategory());
         // 添加文章
         Article article = BeanUtil.copyProp(form, Article.class);
+        article.setUserId(currentUserId);
         article.setResourceId(resourceId);
         articleMapper.insertSelective(article);
         return getArticle(article.getId());

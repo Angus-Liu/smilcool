@@ -293,13 +293,13 @@ CREATE TABLE `lost_found` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='失物寻物表';
 
-# 二手物品表（second_hand）
+# 二手交易表（second_hand）
 DROP TABLE IF EXISTS `second_hand`;
 CREATE TABLE `second_hand` (
-  `id`                   int(11)       NOT NULL AUTO_INCREMENT COMMENT '二手物品ID',
+  `id`                   int(11)       NOT NULL AUTO_INCREMENT COMMENT '二手交易ID',
   `user_id`              int(11)       NOT NULL COMMENT '发布用户ID',
   `resource_id`          int(11)       NOT NULL COMMENT '资源ID',
-  `second_hand_category` varchar(20)   NOT NULL COMMENT '二手物品类别，字典类型：second-hand-category',
+  `second_hand_category` varchar(20)   NOT NULL COMMENT '二手交易类别，字典类型：second-hand-category',
   `title`                varchar(255)  NOT NULL DEFAULT '' COMMENT '标题',
   `name`                 varchar(255)  NOT NULL DEFAULT '' COMMENT '物品名称',
   `price`                double(8, 2)  NOT NULL DEFAULT '0.00' COMMENT '物品价格',
@@ -316,7 +316,7 @@ CREATE TABLE `second_hand` (
   KEY `idx_second_hand_category` (`second_hand_category`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
-  COMMENT ='二手物品表';
+  COMMENT ='二手交易表';
 
 # 评论表（comment）
 DROP TABLE IF EXISTS `comment`;

@@ -3,7 +3,6 @@ package com.smilcool.server.core.pojo.form;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * @author Angus
@@ -24,7 +23,9 @@ public class ArticleAddForm {
 
     private String tags;
 
+    @NotBlank(message = "Markdown 内容不能为空")
     private String markdownContent;
 
+    @NotBlank(message = "HTML 内容不能为空")
     private String htmlContent;
 }

@@ -38,6 +38,7 @@ public class FileServiceImpl implements FileService {
                 .addResource(currentUserId, DicTypeEnum.FILE_CATEGORY.name, form.getFileCategory());
         // 添加文件
         File file = BeanUtil.copyProp(form, File.class);
+        file.setUserId(currentUserId);
         file.setResourceId(resourceId);
         fileMapper.insertSelective(file);
         return getFile(file.getId());

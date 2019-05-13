@@ -1,6 +1,7 @@
 package com.smilcool.server.common.util;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -42,15 +43,17 @@ public class BeanUtil {
      */
     public static <T> List<T> copyProp(List<?> sourceList, Class<T> targetType) {
         List<T> targetList = new ArrayList<>();
-        sourceList.forEach(source -> {
-            try {
-                T target = targetType.newInstance();
-                BeanUtils.copyProperties(source, target);
-                targetList.add(target);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+        if (CollectionUtils.isNotEmpty(sourceList)) {
+            sourceList.forEach(source -> {
+                try {
+                    T target = targetType.newInstance();
+                    BeanUtils.copyProperties(source, target);
+                    targetList.add(target);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
         return targetList;
     }
 
