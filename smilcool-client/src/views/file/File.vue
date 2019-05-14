@@ -154,7 +154,9 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  width: 100%;
+  width: 1260px;
+  margin: 10px auto;
+  /*background: #ccc;*/
 
   .cate-card {
     padding: 10px 20px;

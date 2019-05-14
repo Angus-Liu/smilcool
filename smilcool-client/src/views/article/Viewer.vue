@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <article>
       <!-- 正文 -->
       <section>
@@ -168,8 +168,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+.container {
+  width: 1260px;
+  margin: 10px auto;
+  background: #ccc;
+}
+
 article {
-  width: 960px;
+  width: 860px;
 
   section {
     margin: 10px;

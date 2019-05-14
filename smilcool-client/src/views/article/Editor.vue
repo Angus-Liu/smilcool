@@ -121,7 +121,9 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  height: 100%;
+    width: 1260px;
+    margin: 10px auto;
+    background: #ccc;
 
   .article-info-title {
     margin-bottom: 2px;

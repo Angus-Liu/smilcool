@@ -197,13 +197,13 @@ header {
   width: 100%;
   height: 70px;
   background: #fff;
-  box-shadow: 0 1px 3px #eee;
+  box-shadow: 1px 1px 1px #eee;
   z-index: 999;
   margin-bottom: 5px;
 }
 
 .container {
-  width: 1440px;
+  width: 1260px;
   margin: 0 auto;
 
   .logo {
@@ -215,7 +215,7 @@ header {
   nav {
     float: left;
     margin-left: 30px;
-    line-height: 70px;
+    line-height: 65px;
 
     ul {
       list-style-type: none;
@@ -225,6 +225,10 @@ header {
       li {
         display: inline-block;
         margin-right: 20px;
+
+        a {
+          color: #aaa;
+        }
       }
     }
   }
@@ -254,7 +258,7 @@ header {
   }
 
   .router-link-active {
-    color: red;
+    color: #ff8364;
   }
 }
 </style>

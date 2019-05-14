@@ -20,7 +20,7 @@ footer {
 
   .container {
     height: 100%;
-    width: 1440px;
+    width: 1140px;
     margin: 0 auto;
     background: #aaa;
   }

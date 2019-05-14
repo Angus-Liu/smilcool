@@ -1,7 +1,25 @@
 <template>
   <div class="container">
     <Row>
-      <iCol span="10">
+      <iCol class="column" span="8">
+        <!-- 轮播图 -->
+        <Carousel class="carousel" loop>
+          <CarouselItem>
+            <div class="carousel-item">
+              <img class="carousel-img" src="http://img.angus-liu.cn/cover01.jpg" alt="">
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div class="carousel-item">
+              <img class="carousel-img" src="http://img.angus-liu.cn/cover02.jpg" alt="">
+            </div>
+          </CarouselItem>
+          <CarouselItem>
+            <div class="carousel-item">
+              <img class="carousel-img" src="http://img.angus-liu.cn/cover03.jpg" alt="">
+            </div>
+          </CarouselItem>
+        </Carousel>
         <Card title="热点资讯">
           <template #extra>
             <router-link to="">查看更多</router-link>
@@ -25,7 +43,7 @@
           </ul>
         </Card>
       </iCol>
-      <iCol span="7" offset="1">
+      <iCol class="column" span="8">
         <Card title="今日要闻">
           <template #extra>
             <router-link to="">查看更多</router-link>
@@ -75,9 +93,29 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  width: 100%;
-  /*height: 1000px;*/
+  width: 1260px;
+  margin: 10px auto;
+  background: #ccc;
 }
+
+.column {
+  padding: 5px;
+}
+
+.carousel {
+  margin-bottom: 5px;
+
+  .carousel-item {
+    width: 100%;
+    height: 280px;
+    background: #aaa;
+
+    .carousel-img {
+      width: 100%;
+    }
+  }
+}
+
 
 .article-list {
   list-style-type: none;
@@ -100,8 +138,8 @@ export default {
 
   .article-cover {
     float: left;
-    height: 100px;
-    width: 133px;
+    max-height: 100px;
+    max-width: 133px;
     border-radius: 3px;
     margin-right: 5px;
   }

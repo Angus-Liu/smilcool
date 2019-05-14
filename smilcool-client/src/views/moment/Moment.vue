@@ -58,7 +58,6 @@
               icon-position="left"
               transparent
             />
-
           </sui-card-content>
         </sui-card>
       </div>
@@ -120,6 +119,9 @@ export default {
 
 .container {
   display: flex;
+  width: 1260px;
+  margin: 10px auto;
+  background: #ccc;
 }
 
 .dock {

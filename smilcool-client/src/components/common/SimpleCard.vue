@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="simple-card">
     <slot></slot>
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.container {
+.simple-card {
   padding: 10px;
   overflow: hidden;
   border: 1px solid #eee;
