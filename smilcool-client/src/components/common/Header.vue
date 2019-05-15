@@ -42,7 +42,7 @@
         </Badge>
       </div>
       <div class="search">
-        <Input search placeholder="Enter something..."/>
+        <Input search placeholder="搜索校园资讯"/>
       </div>
     </div>
 

@@ -122,11 +122,11 @@ export default {
 <style lang="less" scoped>
 .container {
     width: 1260px;
-    margin: 10px auto;
-    background: #ccc;
+    margin: 20px auto;
+    /*background: #ccc;*/
 
   .article-info-title {
-    margin-bottom: 2px;
+    margin-bottom: 7px;
   }
 
   .editor {

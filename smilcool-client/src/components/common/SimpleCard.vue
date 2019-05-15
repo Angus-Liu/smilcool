@@ -12,9 +12,9 @@ export default {
 
 <style lang="less" scoped>
 .simple-card {
-  padding: 10px;
+  padding: 15px;
   overflow: hidden;
-  border: 1px solid #eee;
   background: #fff;
+  box-shadow: 1px 1px 2px #ddd;
 }
 </style>
