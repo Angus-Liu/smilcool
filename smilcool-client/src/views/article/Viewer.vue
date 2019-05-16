@@ -8,16 +8,14 @@
             <h1 class="article-title">{{articlePage.article.title}}</h1>
             <p class="article-time">{{articlePage.article.createTime}}</p>
             <div class="markdown-body article-content" v-html="articlePage.article.htmlContent"></div>
-            <div class="comment-input">
-              <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
-                     @on-enter="addComment"/>
-            </div>
           </section>
-          <!-- 中文结束 -->
+          <!-- 正文结束 -->
           <!-- 评论 -->
           <section>
             <div class="article-comment">
-              <h3 is="sui-header" dividing>评论列表</h3>
+              <h3 is="sui-header" dividing>文章评论</h3>
+              <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
+                     @on-enter="addComment"/>
               <sui-comment-group>
                 <sui-comment v-for="comment in articlePage.commentList" :key="comment.id">
                   <sui-comment-avatar :src="comment.postUser.avatar"/>
@@ -53,7 +51,6 @@
               </sui-comment-group>
             </div>
           </section>
-          <!-- 评论结束 -->
         </article>
       </iCol>
       <iCol class="column" span="6">
@@ -67,7 +64,7 @@
           </sui-card-content>
           <sui-card-content extra>
             <sui-icon name="user"/>
-            75 Friends
+            文章作者
             <span slot="right">{{articlePage.user.createTime}}</span>
           </sui-card-content>
         </sui-card>
@@ -75,9 +72,7 @@
         <!-- 文章标签信息 -->
         <sui-card>
           <sui-card-content>
-            <a is="sui-label" basic color="blue" v-for="(tag, index) in articlePage.article.tags" :key="index">
-              {{tag}}
-            </a>
+            <Tag type="dot" color="#ff8364" v-for="(tag, index) in articlePage.article.tags" :key="index">{{tag}}</Tag>
           </sui-card-content>
         </sui-card>
         <!-- 文章标签信息结束 -->
@@ -293,6 +288,10 @@ article {
     .article-time {
       text-align: center;
       color: #aaa;
+    }
+
+    .comment-input {
+      margin-bottom: 20px;
     }
 
     .article-comment {

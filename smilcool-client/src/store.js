@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import storage from './utils/storage';
 import Log from './utils/log';
 // vuex 持久化插件 - https://github.com/robinvdvleuten/vuex-persistedstate
-import createPersistedState from "vuex-persistedstate";
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 

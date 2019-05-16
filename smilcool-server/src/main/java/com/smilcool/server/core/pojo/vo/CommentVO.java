@@ -1,6 +1,5 @@
 package com.smilcool.server.core.pojo.vo;
 
-import cn.hutool.system.UserInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -24,14 +23,14 @@ public class CommentVO {
      */
     private Integer userId;
 
-    private UserSimpleInfo postUser;
+    private UserSimpleVO postUser;
 
     /**
      * 回复用户信息
      */
     private Integer replyUserId;
 
-    private UserSimpleInfo replyUser;
+    private UserSimpleVO replyUser;
 
     private String content;
 

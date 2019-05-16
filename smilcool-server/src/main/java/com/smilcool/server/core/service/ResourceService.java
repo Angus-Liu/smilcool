@@ -16,7 +16,7 @@ public interface ResourceService {
 
     Integer addResource(Integer userId, String resourceDicType, String resourceDicItem);
 
-    ResourceVO getResource(Integer id);
+    ResourceVO getResourceVO(Integer id);
 
     List<ResourceVO> getResourceList();
 

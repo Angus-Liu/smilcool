@@ -21,7 +21,7 @@ public class MomentVO {
 
     private String content;
 
-    private String image;
+    private String images;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;

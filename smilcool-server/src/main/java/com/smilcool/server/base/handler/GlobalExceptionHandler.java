@@ -80,8 +80,10 @@ public class GlobalExceptionHandler implements ErrorController {
         log.info("数据校验异常");
         StringBuilder sb = new StringBuilder();
         // 获取所有的数据校验错误信息
-        e.getBindingResult().getFieldErrors().forEach(fieldError ->
-                sb.append(fieldError.getDefaultMessage()).append("；"));
+        e.getBindingResult()
+                .getFieldErrors()
+                .forEach(fieldError ->
+                        sb.append(fieldError.getDefaultMessage()).append("；"));
         return Result.error(sb.toString());
     }
 

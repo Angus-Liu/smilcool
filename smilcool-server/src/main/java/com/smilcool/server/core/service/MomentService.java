@@ -1,7 +1,6 @@
 package com.smilcool.server.core.service;
 
-import com.smilcool.server.core.pojo.po.Moment;
-import com.smilcool.server.core.pojo.vo.MomentInfo;
+import com.smilcool.server.core.pojo.page.MomentPage;
 import com.smilcool.server.core.pojo.vo.MomentVO;
 
 import java.util.List;
@@ -11,7 +10,5 @@ import java.util.List;
  * @date 2019/5/3
  */
 public interface MomentService {
-    List<MomentVO> getMomentList();
-
-    List<MomentInfo> getMomentInfoList();
+    List<MomentPage> getMomentPageList();
 }

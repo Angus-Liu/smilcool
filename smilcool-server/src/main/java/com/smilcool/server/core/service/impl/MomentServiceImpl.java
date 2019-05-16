@@ -2,8 +2,8 @@ package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.MomentMapper;
+import com.smilcool.server.core.pojo.page.MomentPage;
 import com.smilcool.server.core.pojo.po.Moment;
-import com.smilcool.server.core.pojo.vo.MomentInfo;
 import com.smilcool.server.core.pojo.vo.MomentVO;
 import com.smilcool.server.core.service.CommentService;
 import com.smilcool.server.core.service.MomentService;
@@ -35,28 +35,22 @@ public class MomentServiceImpl implements MomentService {
     private ResourceService resourceService;
 
     @Override
-    public List<MomentVO> getMomentList() {
-        List<Moment> selectResultList = momentMapper.selectAll();
-        List<MomentVO> momentList = BeanUtil.copyProp(selectResultList, MomentVO.class);
-        return momentList;
-    }
-
-    @Override
-    public List<MomentInfo> getMomentInfoList() {
+    public List<MomentPage> getMomentPageList() {
         List<Moment> momentList = momentMapper.selectAll();
-        List<MomentInfo> momentInfoList = new ArrayList<>();
+        List<MomentPage> momentPageList = new ArrayList<>();
         momentList.forEach(moment -> {
-            MomentInfo momentInfo = new MomentInfo();
-            // 动态信息
-            momentInfo.setMoment(BeanUtil.copyProp(moment, MomentVO.class));
-            // 发布用户信息
-            momentInfo.setPostUser(userService.getUserSimpleInfo(moment.getUserId()));
-            // 所属资源信息
-            momentInfo.setResource(resourceService.getResource(moment.getResourceId()));
-            // TODO 评论信息不应该包含
-            momentInfo.setCommentList(commentService.getCommentList(moment.getResourceId()));
-            momentInfoList.add(momentInfo);
+            MomentPage momentPage = MomentPage.builder()
+                    // 动态信息
+                    .moment(BeanUtil.copyProp(moment, MomentVO.class))
+                    // 发布用户信息
+                    .user(userService.getUserSimpleVO(moment.getUserId()))
+                    // 所属资源信息
+                    .resource(resourceService.getResourceVO(moment.getResourceId()))
+                    // 评论信息
+                    .commentList(commentService.getCommentVOList(moment.getResourceId()))
+                    .build();
+            momentPageList.add(momentPage);
         });
-        return momentInfoList;
+        return momentPageList;
     }
 }

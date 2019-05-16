@@ -27,7 +27,7 @@ public class ResourceController {
     @ApiOperation("资源信息")
     @GetMapping("/resource/{id}")
     public Result<ResourceVO> getResource(@PathVariable Integer id) {
-        ResourceVO resource = resourceService.getResource(id);
+        ResourceVO resource = resourceService.getResourceVO(id);
         return Result.success(resource);
     }
 

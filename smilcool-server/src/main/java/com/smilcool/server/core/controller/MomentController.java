@@ -1,9 +1,7 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
-import com.smilcool.server.core.pojo.po.Moment;
-import com.smilcool.server.core.pojo.vo.MomentInfo;
-import com.smilcool.server.core.pojo.vo.MomentVO;
+import com.smilcool.server.core.pojo.page.MomentPage;
 import com.smilcool.server.core.service.MomentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,8 +24,8 @@ public class MomentController {
 
     @ApiOperation("动态列表")
     @GetMapping("/moment")
-    public Result<List<MomentInfo>> getMomentList() {
-        List<MomentInfo> momentInfoList = momentService.getMomentInfoList();
+    public Result<List<MomentPage>> getMomentList() {
+        List<MomentPage> momentInfoList = momentService.getMomentPageList();
         return Result.success(momentInfoList);
     }
 

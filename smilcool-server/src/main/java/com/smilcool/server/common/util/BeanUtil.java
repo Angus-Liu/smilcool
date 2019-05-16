@@ -24,13 +24,16 @@ public class BeanUtil {
      * @return 目标类型对象
      */
     public static <T> T copyProp(Object source, Class<T> targetType) {
-        try {
-            T target = targetType.newInstance();
-            BeanUtils.copyProperties(source, target);
-            return target;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (source != null) {
+            try {
+                T target = targetType.newInstance();
+                BeanUtils.copyProperties(source, target);
+                return target;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
+        return null;
     }
 
     /**

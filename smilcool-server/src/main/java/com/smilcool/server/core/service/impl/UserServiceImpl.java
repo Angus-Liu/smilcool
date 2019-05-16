@@ -8,8 +8,9 @@ import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.po.User;
-import com.smilcool.server.core.pojo.vo.UserSimpleInfo;
-import com.smilcool.server.core.pojo.vo.UserDetailInfo;
+import com.smilcool.server.core.pojo.vo.UserSimpleVO;
+import com.smilcool.server.core.pojo.vo.UserDetailVO;
+import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.RolePermissionService;
 import com.smilcool.server.core.service.UserRoleService;
 import com.smilcool.server.core.service.UserService;
@@ -67,15 +68,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserVO getUserVO(Integer id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        return BeanUtil.copyProp(user, UserVO.class);
+    }
+
+    @Override
     public User getUser(String username, String password) {
         return userMapper.selectByUsernameAndPassword(username, password);
     }
 
     @Override
-    public UserSimpleInfo getUserSimpleInfo(Integer id) {
+    public UserSimpleVO getUserSimpleVO(Integer id) {
         // TODO BeanUtil 逐渐应减少使用
         User user = userMapper.selectByPrimaryKey(id);
-        return BeanUtil.copyProp(user, UserSimpleInfo.class);
+        return BeanUtil.copyProp(user, UserSimpleVO.class);
     }
 
     /**
@@ -85,7 +92,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public UserDetailInfo getUserTotalInfo(Integer id) {
+    public UserDetailVO getUserTotalInfo(Integer id) {
         // 获取用户基础信息
         User user = userMapper.selectByPrimaryKey(id);
         if (user == null) {
@@ -97,14 +104,14 @@ public class UserServiceImpl implements UserService {
         // 获取用户权限信息
         Set<String> permissionNames = rolePermissionService.getPermissionNames(user.getId());
         // 整合用户信息
-        UserDetailInfo userDetailInfo = BeanUtil.copyProp(user, UserDetailInfo.class);
+        UserDetailVO userDetailInfo = BeanUtil.copyProp(user, UserDetailVO.class);
         userDetailInfo.setRoles(roleNames);
         userDetailInfo.setPermissions(permissionNames);
         return userDetailInfo;
     }
 
     @Override
-    public UserDetailInfo login(UserLoginForm form) {
+    public UserDetailVO login(UserLoginForm form) {
         // Shiro 身份认证
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(form.getUsername(), form.getPassword());
@@ -122,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDetailInfo register(UserRegisterForm form) {
+    public UserDetailVO register(UserRegisterForm form) {
         User selected = userMapper.selectByUsername(form.getUsername());
         if (selected != null) {
             throw new SmilcoolException("用户名已存在");
@@ -142,8 +149,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDetailInfo> getUsers() {
-        List<UserDetailInfo> userList = BeanUtil.copyProp(userMapper.selectAll(), UserDetailInfo.class);
+    public List<UserDetailVO> getUsers() {
+        List<UserDetailVO> userList = BeanUtil.copyProp(userMapper.selectAll(), UserDetailVO.class);
         userList.forEach(user -> {
             // 获取用户角色信息（角色描述）
             Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());
@@ -153,9 +160,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDetailInfo> getUsers(Page page, UserQueryForm form) {
+    public Page<UserDetailVO> getUsers(Page page, UserQueryForm form) {
         User condition = BeanUtil.copyProp(form, User.class);
-        Page<UserDetailInfo> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserDetailInfo.class);
+        Page<UserDetailVO> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserDetailVO.class);
         userPage.getRecords().forEach(user -> {
             // 获取用户角色信息（角色描述）
             Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());

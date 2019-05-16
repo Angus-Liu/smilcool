@@ -13,7 +13,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 /**
- * Spring Cache 和 Redis 配置
+ * Spring Cache 和 Redis 配置：
+ * <p>
+ * TODO: 2019/4/24 缓存
+ * TODO: 2019/4/24 限流
  *
  * @author Angus
  * @date 2019/4/24
@@ -21,8 +24,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 @EnableCaching
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
-    // TODO: 2019/4/24 缓存
-    // TODO: 2019/4/24 限流
 
     /**
      * 定义 StringRedisTemplate ，指定序列化和反序列化的处理类

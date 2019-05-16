@@ -5,8 +5,9 @@ import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.po.User;
-import com.smilcool.server.core.pojo.vo.UserDetailInfo;
-import com.smilcool.server.core.pojo.vo.UserSimpleInfo;
+import com.smilcool.server.core.pojo.vo.UserDetailVO;
+import com.smilcool.server.core.pojo.vo.UserSimpleVO;
+import com.smilcool.server.core.pojo.vo.UserVO;
 
 import java.util.List;
 import java.util.Set;
@@ -22,6 +23,8 @@ public interface UserService {
 
     User getUser(Integer id);
 
+    UserVO getUserVO(Integer id);
+
     /**
      * 通过用户名和密码获取用户
      *
@@ -31,9 +34,9 @@ public interface UserService {
      */
     User getUser(String username, String password);
 
-    UserSimpleInfo getUserSimpleInfo(Integer id);
+    UserSimpleVO getUserSimpleVO(Integer id);
 
-    UserDetailInfo getUserTotalInfo(Integer id);
+    UserDetailVO getUserTotalInfo(Integer id);
 
 
     /**
@@ -42,7 +45,7 @@ public interface UserService {
      * @param userLoginForm 用户登录表单
      * @return 用户信息
      */
-    UserDetailInfo login(UserLoginForm userLoginForm);
+    UserDetailVO login(UserLoginForm userLoginForm);
 
     /**
      * 用户注销
@@ -55,11 +58,11 @@ public interface UserService {
      * @param form 用户注册表单的那
      * @return 用户信息
      */
-    UserDetailInfo register(UserRegisterForm form);
+    UserDetailVO register(UserRegisterForm form);
 
-    List<UserDetailInfo> getUsers();
+    List<UserDetailVO> getUsers();
 
-    Page<UserDetailInfo> getUsers(Page page, UserQueryForm form);
+    Page<UserDetailVO> getUsers(Page page, UserQueryForm form);
 
     Set<String> getRoles(Integer id);
 

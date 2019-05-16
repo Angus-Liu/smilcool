@@ -5,7 +5,7 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="resource_id" jdbcType="INTEGER" property="resourceId"/>
-        <result column="resource_type_id" jdbcType="INTEGER" property="resourceTypeId"/>
+        <result column="moment_category" jdbcType="VARCHAR" property="momentCategory"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -13,14 +13,14 @@
         <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.Moment">
-        <result column="image" jdbcType="LONGVARCHAR" property="image"/>
+        <result column="images" jdbcType="LONGVARCHAR" property="images"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, resource_id, resource_type_id, content, remark, create_time, update_time,
+        id, user_id, resource_id, moment_category, content, remark, create_time, update_time,
     deleted
     </sql>
     <sql id="Blob_Column_List">
-        image
+        images
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
@@ -37,13 +37,13 @@
     </delete>
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Moment">
         INSERT INTO moment (id, user_id, resource_id,
-                            resource_type_id, content, remark,
+                            moment_category, content, remark,
                             create_time, update_time, deleted,
-                            image)
+                            images)
         VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER},
-                #{resourceTypeId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+                #{momentCategory,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
                 #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT},
-                #{image,jdbcType=LONGVARCHAR})
+                #{images,jdbcType=LONGVARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Moment">
         insert into moment
@@ -57,8 +57,8 @@
             <if test="resourceId != null">
                 resource_id,
             </if>
-            <if test="resourceTypeId != null">
-                resource_type_id,
+            <if test="momentCategory != null">
+                moment_category,
             </if>
             <if test="content != null">
                 content,
@@ -75,8 +75,8 @@
             <if test="deleted != null">
                 deleted,
             </if>
-            <if test="image != null">
-                image,
+            <if test="images != null">
+                images,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -89,8 +89,8 @@
             <if test="resourceId != null">
                 #{resourceId,jdbcType=INTEGER},
             </if>
-            <if test="resourceTypeId != null">
-                #{resourceTypeId,jdbcType=INTEGER},
+            <if test="momentCategory != null">
+                #{momentCategory,jdbcType=VARCHAR},
             </if>
             <if test="content != null">
                 #{content,jdbcType=VARCHAR},
@@ -107,8 +107,8 @@
             <if test="deleted != null">
                 #{deleted,jdbcType=BIT},
             </if>
-            <if test="image != null">
-                #{image,jdbcType=LONGVARCHAR},
+            <if test="images != null">
+                #{images,jdbcType=LONGVARCHAR},
             </if>
         </trim>
     </insert>
@@ -121,8 +121,8 @@
             <if test="resourceId != null">
                 resource_id = #{resourceId,jdbcType=INTEGER},
             </if>
-            <if test="resourceTypeId != null">
-                resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            <if test="momentCategory != null">
+                moment_category = #{momentCategory,jdbcType=VARCHAR},
             </if>
             <if test="content != null">
                 content = #{content,jdbcType=VARCHAR},
@@ -139,44 +139,43 @@
             <if test="deleted != null">
                 deleted = #{deleted,jdbcType=BIT},
             </if>
-            <if test="image != null">
-                image = #{image,jdbcType=LONGVARCHAR},
+            <if test="images != null">
+                images = #{images,jdbcType=LONGVARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.Moment">
         UPDATE moment
-        SET user_id          = #{userId,jdbcType=INTEGER},
-            resource_id      = #{resourceId,jdbcType=INTEGER},
-            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
-            content          = #{content,jdbcType=VARCHAR},
-            remark           = #{remark,jdbcType=VARCHAR},
-            create_time      = #{createTime,jdbcType=TIMESTAMP},
-            update_time      = #{updateTime,jdbcType=TIMESTAMP},
-            deleted          = #{deleted,jdbcType=BIT},
-            image            = #{image,jdbcType=LONGVARCHAR}
+        SET user_id         = #{userId,jdbcType=INTEGER},
+            resource_id     = #{resourceId,jdbcType=INTEGER},
+            moment_category = #{momentCategory,jdbcType=VARCHAR},
+            content         = #{content,jdbcType=VARCHAR},
+            remark          = #{remark,jdbcType=VARCHAR},
+            create_time     = #{createTime,jdbcType=TIMESTAMP},
+            update_time     = #{updateTime,jdbcType=TIMESTAMP},
+            deleted         = #{deleted,jdbcType=BIT},
+            images          = #{images,jdbcType=LONGVARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Moment">
         UPDATE moment
-        SET user_id          = #{userId,jdbcType=INTEGER},
-            resource_id      = #{resourceId,jdbcType=INTEGER},
-            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
-            content          = #{content,jdbcType=VARCHAR},
-            remark           = #{remark,jdbcType=VARCHAR},
-            create_time      = #{createTime,jdbcType=TIMESTAMP},
-            update_time      = #{updateTime,jdbcType=TIMESTAMP},
-            deleted          = #{deleted,jdbcType=BIT}
+        SET user_id         = #{userId,jdbcType=INTEGER},
+            resource_id     = #{resourceId,jdbcType=INTEGER},
+            moment_category = #{momentCategory,jdbcType=VARCHAR},
+            content         = #{content,jdbcType=VARCHAR},
+            remark          = #{remark,jdbcType=VARCHAR},
+            create_time     = #{createTime,jdbcType=TIMESTAMP},
+            update_time     = #{updateTime,jdbcType=TIMESTAMP},
+            deleted         = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
     <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Moment">
-        SELECT
+        select
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
-        FROM moment
+        from moment
     </select>
-
 </mapper>

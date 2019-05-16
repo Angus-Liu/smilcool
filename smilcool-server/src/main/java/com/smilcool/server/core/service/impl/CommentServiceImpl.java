@@ -52,27 +52,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentVO> getCommentList() {
+    public List<CommentVO> getCommentVOList() {
         List<Comment> comments = commentMapper.selectAll();
         return BeanUtil.copyProp(comments, CommentVO.class);
     }
 
     @Override
-    public List<CommentVO> getCommentList(Integer resourceId) {
+    public List<CommentVO> getCommentVOList(Integer resourceId) {
         // 父评论按时间逆序排（后评论的在前面）
         List<Comment> comments = commentMapper.selectByResourceId(resourceId);
         List<CommentVO> commentList = BeanUtil.copyProp(comments, CommentVO.class);
 
         commentList.forEach(comment -> {
             // 获取发布用户信息
-            comment.setPostUser(userService.getUserSimpleInfo(comment.getUserId()));
+            comment.setPostUser(userService.getUserSimpleVO(comment.getUserId()));
             // 获取子评论信息，子评论按时间顺序排（后评论的在后面）
             List<Comment> results = commentMapper.selectByParentId(comment.getId());
             List<CommentVO> children = BeanUtil.copyProp(results, CommentVO.class);
             // 获取子评论发布用户和回复用户信息
             children.forEach(child -> {
-                child.setPostUser(userService.getUserSimpleInfo(child.getUserId()));
-                child.setReplyUser(userService.getUserSimpleInfo(child.getReplyUserId()));
+                child.setPostUser(userService.getUserSimpleVO(child.getUserId()));
+                child.setReplyUser(userService.getUserSimpleVO(child.getReplyUserId()));
             });
             comment.setChildren(children);
         });

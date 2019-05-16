@@ -11,7 +11,7 @@ import java.util.Set;
  * @date 2019/4/29
  */
 @Data
-public class UserDetailInfo {
+public class UserDetailVO {
     private Integer id;
 
     private String username;

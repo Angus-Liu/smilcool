@@ -9,7 +9,7 @@ public class Moment {
 
     private Integer resourceId;
 
-    private Integer resourceTypeId;
+    private String momentCategory;
 
     private String content;
 
@@ -21,7 +21,7 @@ public class Moment {
 
     private Boolean deleted;
 
-    private String image;
+    private String images;
 
     public Integer getId() {
         return id;
@@ -47,12 +47,12 @@ public class Moment {
         this.resourceId = resourceId;
     }
 
-    public Integer getResourceTypeId() {
-        return resourceTypeId;
+    public String getMomentCategory() {
+        return momentCategory;
     }
 
-    public void setResourceTypeId(Integer resourceTypeId) {
-        this.resourceTypeId = resourceTypeId;
+    public void setMomentCategory(String momentCategory) {
+        this.momentCategory = momentCategory;
     }
 
     public String getContent() {
@@ -95,11 +95,11 @@ public class Moment {
         this.deleted = deleted;
     }
 
-    public String getImage() {
-        return image;
+    public String getImages() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(String images) {
+        this.images = images;
     }
 }

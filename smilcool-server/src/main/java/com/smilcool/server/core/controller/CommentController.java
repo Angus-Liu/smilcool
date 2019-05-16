@@ -34,14 +34,14 @@ public class CommentController {
     @ApiOperation("评论列表")
     @GetMapping("/comment")
     public Result<List<CommentVO>> getCommentList() {
-        List<CommentVO> commentList = commentService.getCommentList();
+        List<CommentVO> commentList = commentService.getCommentVOList();
         return Result.success(commentList);
     }
 
     @ApiOperation("评论列表")
     @GetMapping("/{resourceId}/comment")
     public Result<List<CommentVO>> getCommentList(@PathVariable Integer resourceId) {
-        List<CommentVO> commentList = commentService.getCommentList(resourceId);
+        List<CommentVO> commentList = commentService.getCommentVOList(resourceId);
         return Result.success(commentList);
     }
 }

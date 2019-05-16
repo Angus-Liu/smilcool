@@ -128,13 +128,13 @@
             <h3>系统通告</h3>
           </div>
           <div>
-            <b>Q：怎么发帖？</b>
+            <b>Q：Smilcool是什么？</b>
             <p>
               进入你想发帖的版面，页面底部就能快捷发帖。 输入标题、正文，点击发布就能成功发帖！
               如果你想体验插入图片、上传附件等功能，可以点击发帖框右上角的链接切换到完整模式。
               注意，发帖前千万先阅读版规，不符合规定的帖子会被版务删除，你在版面的发帖权限也有可能被封禁哦。
             </p>
-            <b>Q：精华区是什么？</b>
+            <b>Q：如何发表文章？</b>
             <p>
               每个版面都有一个精华区，精华区内分门别类保存着版面讨论精华及相关文件，由版务进行整理维护。
               不同版面的精华区作用也各不相同，想了解更多的话，就选择感兴趣的版面，进精华区看看吧。
@@ -160,10 +160,7 @@
             <h3>热门标签</h3>
           </div>
           <div class="article-tags">
-            <Tag type="dot" color="primary">标签一</Tag>
-            <Tag type="dot" color="success">标签二</Tag>
-            <Tag type="dot" color="error">标签三</Tag>
-            <Tag type="dot" color="warning">标签四</Tag>
+            <Tag type="dot" :color="item.color" v-for="(item,index) in articleTags" :key="index">{{item.name}}</Tag>
           </div>
         </simple-card><!-- 热门标签结束 -->
         <SimpleCard class="card-container">
@@ -236,6 +233,25 @@ export default {
       }, {
         name: '系统通知',
         img: 'http://img.angus-liu.cn/avatar/avatar06.png'
+      }],
+      articleTags: [{
+        name: '中北奖章',
+        color: 'primary'
+      }, {
+        name: 'Android实验室',
+        color: '#27bb5b'
+      }, {
+        name: '考试信息',
+        color: 'warning'
+      }, {
+        name: '求职经历分享',
+        color: 'error'
+      }, {
+        name: '中北大学',
+        color: 'success'
+      }, {
+        name: '大数据学院',
+        color: '#db415f'
       }]
     };
   },

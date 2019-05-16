@@ -41,7 +41,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public ResourceVO getResource(Integer id) {
+    public ResourceVO getResourceVO(Integer id) {
         Resource resource = resourceMapper.selectByPrimaryKey(id);
         if (resource == null) {
             throw new SmilcoolException("资源不不存在");
