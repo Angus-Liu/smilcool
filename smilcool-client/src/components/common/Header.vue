@@ -15,7 +15,12 @@
           <li>
             <router-link to="/file">文件仓库</router-link>
           </li>
-          <li><a href="#">物品小站</a></li>
+          <li>
+            <router-link to="/second-hand">二手交易</router-link>
+          </li>
+          <li>
+            <router-link to="/lost-found">失物寻物</router-link>
+          </li>
           <li><a href="#">校内论坛</a></li>
         </ul>
       </nav>

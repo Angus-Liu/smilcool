@@ -1,40 +1,46 @@
 <template>
   <div class="container">
-    <row>
-      <iCol span="7">
-        <sui-card class="moment-editor">
-          <sui-card-content>
-            <Input v-model="moment" type="textarea" :rows="4" placeholder="又遇到什么好事啦？快发表一条动态吧 : )"/>
-            <div class="editor-toolbar">
-              <sui-button class="toolbar-submit" basic primary>发布</sui-button>
-            </div>
-          </sui-card-content>
-        </sui-card>
-      </iCol>
-      <iCol span="10">
-        <sui-card class="moment-editor">
-          <sui-card-content>
-            <Input v-model="moment" type="textarea" :rows="4" placeholder="又遇到什么好事啦？快发表一条动态吧 : )"/>
-            <div class="editor-toolbar">
-              <sui-button class="toolbar-submit" basic primary>发布</sui-button>
-            </div>
-          </sui-card-content>
-        </sui-card>
-      </iCol>
-      <iCol span="7">
-        <sui-card class="moment-editor">
-          <sui-card-content>
-            <sui-image src="http://img.angus-liu.cn/avatar/avatar06.png?imageView2/1/w/50/h/50/q/75"
-                       class="right floated"/>
-            <sui-card-header>Elliot Fu</sui-card-header>
-            <sui-card-meta>Friends of Veronika</sui-card-meta>
-            <sui-card-description>
-              Elliot requested permission to view your contact details
-            </sui-card-description>
-          </sui-card-content>
-        </sui-card>
-      </iCol>
-    </row>
+    <!--<row>-->
+    <!--  <iCol span="7">-->
+    <!--    <sui-card class="moment-editor">-->
+    <!--      <sui-card-content>-->
+    <!--        <Input v-model="moment" type="textarea" :rows="4" placeholder="又遇到什么好事啦？快发表一条动态吧 : )"/>-->
+    <!--        <div class="editor-toolbar">-->
+    <!--          <sui-button class="toolbar-submit" basic primary>发布</sui-button>-->
+    <!--        </div>-->
+    <!--      </sui-card-content>-->
+    <!--    </sui-card>-->
+    <!--  </iCol>-->
+    <!--  <iCol span="10">-->
+    <!--    <sui-card class="moment-editor">-->
+    <!--      <sui-card-content>-->
+    <!--        <Input v-model="moment" type="textarea" :rows="4" placeholder="又遇到什么好事啦？快发表一条动态吧 : )"/>-->
+    <!--        <div class="editor-toolbar">-->
+    <!--          <sui-button class="toolbar-submit" basic primary>发布</sui-button>-->
+    <!--        </div>-->
+    <!--      </sui-card-content>-->
+    <!--    </sui-card>-->
+    <!--  </iCol>-->
+    <!--  <iCol span="7">-->
+    <!--    <sui-card class="moment-editor">-->
+    <!--      <sui-card-content>-->
+    <!--        <sui-image src="http://img.angus-liu.cn/avatar/avatar06.png?imageView2/1/w/50/h/50/q/75"-->
+    <!--                   class="right floated"/>-->
+    <!--        <sui-card-header>Elliot Fu</sui-card-header>-->
+    <!--        <sui-card-meta>Friends of Veronika</sui-card-meta>-->
+    <!--        <sui-card-description>-->
+    <!--          Elliot requested permission to view your contact details-->
+    <!--        </sui-card-description>-->
+    <!--      </sui-card-content>-->
+    <!--    </sui-card>-->
+    <!--  </iCol>-->
+    <!--</row>-->
+    <sui-message info dismissable>
+      <sui-message-header>如何发表动态？</sui-message-header>
+      <p>
+        成功登录 Smilcool 系统后，在头像下拉菜单中可以找到 “发表动态” 选项，点击即可发表动态啦。快来发布你的校园动态吧 😆
+      </p>
+    </sui-message>
     <sui-menu pointing>
       <a is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item"
          @click="select(item)"/>
@@ -45,7 +51,7 @@
       </sui-menu-menu>
     </sui-menu>
     <div class="moment-list">
-      <sui-card class="moment-item" v-for="momentPage in momentPageList" :key="moment.id">
+      <sui-card class="moment-item" v-for="momentPage in momentPageList" :key="momentPage.moment.id">
         <sui-card-content class="moment-item-wrapper">
           <sui-card-header class="moment-header">
             <sui-image class="moment-avatar" :src="momentPage.user.avatar" circular/>
@@ -63,8 +69,12 @@
           </sui-card-description>
 
           <span slot="right">
-            <a is="sui-label" basic>👍 23</a>
-            <a is="sui-label" basic @click="momentPage.show = !momentPage.show">💬 23</a>
+            <a is="sui-label" basic>
+              👍 {{momentPage.resource.zanCount}}
+            </a>
+            <a is="sui-label" basic @click="momentPage.show = !momentPage.show">
+              💬 {{momentPage.resource.commentCount}}
+            </a>
             </span>
         </sui-card-content>
         <sui-card-content extra>
@@ -147,11 +157,9 @@ export default {
     getMomentList() {
       this.$axios.get('/api/moment')
         .then(res => {
-          // TODO 2019/5/8 数据结构改变，需要重构
           let result = res.data;
           this.momentPageList = result.data;
           this.momentPageList.forEach(momentPage => {
-            momentPage.show = false;
             if (momentPage.moment.images !== null && momentPage.moment.images.length !== 0) {
               momentPage.moment.images = JSON.parse(momentPage.moment.images);
             }
@@ -169,7 +177,7 @@ export default {
 
 .container {
   width: 1140px;
-  margin: 10px auto;
+  margin: 20px auto;
   padding: 5px;
   /*background: #ccc;*/
 }
@@ -188,7 +196,7 @@ export default {
 }
 
 .moment-list {
-  margin: 15px auto;
+  margin: 15px auto 25px;
   column-count: 3;
 
   .moment-item {
@@ -212,7 +220,11 @@ export default {
       margin-top: 15px;
     }
 
-    .moment-time, .moment-content {
+    .moment-time{
+      margin-top: -10px;
+      margin-left: 55px;
+    }
+    .moment-content {
       margin-left: 55px;
     }
 

@@ -34,6 +34,14 @@ export default new Router({
           path: 'file',
           name: 'file',
           component: () => import('@/views/file/File')
+        }, {
+          path: 'second-hand',
+          name: 'second-hand',
+          component: () => import('@/views/second-hand/SecondHand')
+        }, {
+          path: 'lost-found',
+          name: 'lost-found',
+          component: () => import('@/views/lost-found/LostFound')
         }
       ]
     }

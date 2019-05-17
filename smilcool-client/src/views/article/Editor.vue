@@ -42,11 +42,8 @@
       </template>
     </Modal>
     <!-- 编辑器 -->
-    <mavon-editor class="editor"
-                  v-model="articleAddForm.markdownContent"
-                  @change="contentChange"
-                  :boxShadow="false"
-                  style="z-index: 100"/>
+    <mavon-editor class="editor" v-model="articleAddForm.markdownContent"
+                  @change="contentChange" :boxShadow="false" style="z-index: 100"/>
   </div>
 </template>
 

@@ -64,9 +64,12 @@
         </simple-card>
       </iCol>
       <iCol span="7" offset="1">
-        <simple-card class="user-card">
-          个人信息
-        </simple-card>
+        <div class="ui placeholder segment">
+          <div class="ui icon header">
+            <i class="pdf file outline icon"/> 分享学习资料，让更多人获益。
+          </div>
+          <div class="ui primary button">上传文件</div>
+        </div>
       </iCol>
     </Row>
   </div>
