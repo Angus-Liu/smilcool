@@ -21,5 +21,5 @@ public interface RoleMapper {
 
     Role selectByName(String name);
 
-    List<Role> selectAll();
+    List<Role> select();
 }

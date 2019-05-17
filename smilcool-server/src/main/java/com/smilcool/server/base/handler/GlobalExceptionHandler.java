@@ -62,7 +62,7 @@ public class GlobalExceptionHandler implements ErrorController {
                 msg = method + " Not Supported";
                 break;
             default:
-                msg = "Oops！服务器无法处理你的请求 :(";
+                msg = "OOPS！服务器无法处理你的请求 :(";
                 break;
         }
         return Result.error(status, msg);
@@ -149,6 +149,6 @@ public class GlobalExceptionHandler implements ErrorController {
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception e) {
         log.error("系统异常", e);
-        return Result.error(500, "Oops！服务器无法处理你的请求 :(");
+        return Result.error(500, "OOPS！服务器无法处理你的请求 :(");
     }
 }

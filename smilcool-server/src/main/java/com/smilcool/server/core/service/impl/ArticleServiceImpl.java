@@ -73,13 +73,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleVO> getArticleList() {
-        List<Article> articleList = articleMapper.selectAll();
+        List<Article> articleList = articleMapper.select();
         return BeanUtil.copyProp(articleList, ArticleVO.class);
     }
 
     @Override
     public List<ArticleBO> getArticleBOList() {
-        List<Article> articleList = articleMapper.selectAll();
+        List<Article> articleList = articleMapper.select();
         List<ArticleBO> articleBOList = new ArrayList<>();
         articleList.forEach(article -> {
             ArticleBO articleBO = BeanUtil.copyProp(article, ArticleBO.class);

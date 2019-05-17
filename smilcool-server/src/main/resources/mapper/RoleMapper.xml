@@ -135,7 +135,7 @@
         where name = #{name}
     </select>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Role">
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.Role">
         select
         <include refid="Base_Column_List"/>
         from role

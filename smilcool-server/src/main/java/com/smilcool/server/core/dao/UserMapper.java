@@ -26,7 +26,7 @@ public interface UserMapper extends BaseMapper {
 
     User selectByEmail(String email);
 
-    List<User> selectAll();
+    List<User> select();
 
     List<Integer> selectUserIdListAll();
 

@@ -170,7 +170,7 @@
         ORDER BY create_time ASC
     </select>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Comment">
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.Comment">
         select
         <include refid="Base_Column_List"/>
         from comment

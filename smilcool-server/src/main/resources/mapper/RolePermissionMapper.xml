@@ -125,7 +125,7 @@
         and permission_id = #{permissionId}
     </select>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.RolePermission">
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.RolePermission">
         select
         <include refid="Base_Column_List"/>
         from role_permission

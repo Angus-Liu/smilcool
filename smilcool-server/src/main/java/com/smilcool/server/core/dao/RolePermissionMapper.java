@@ -23,7 +23,7 @@ public interface RolePermissionMapper {
     RolePermission selectByRoleIdAndPermissionId(@Param("roleId") Integer roleId,
                                                  @Param("permissionId") Integer permissionId);
 
-    List<RolePermission> selectAll();
+    List<RolePermission> select();
 
     List<Permission> selectPermissionListByRoleId(Integer roleId);
 

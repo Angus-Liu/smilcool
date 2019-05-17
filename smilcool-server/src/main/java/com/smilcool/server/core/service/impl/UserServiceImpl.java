@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDetailVO> getUsers() {
-        List<UserDetailVO> userList = BeanUtil.copyProp(userMapper.selectAll(), UserDetailVO.class);
+        List<UserDetailVO> userList = BeanUtil.copyProp(userMapper.select(), UserDetailVO.class);
         userList.forEach(user -> {
             // 获取用户角色信息（角色描述）
             Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());

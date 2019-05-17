@@ -175,7 +175,7 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Resource"></select>
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.Resource"></select>
 
     <select id="selectByCondition" resultType="com.smilcool.server.core.pojo.po.Resource"></select>
 

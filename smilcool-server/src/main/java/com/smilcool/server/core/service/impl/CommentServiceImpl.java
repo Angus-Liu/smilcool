@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentVO> getCommentVOList() {
-        List<Comment> comments = commentMapper.selectAll();
+        List<Comment> comments = commentMapper.select();
         return BeanUtil.copyProp(comments, CommentVO.class);
     }
 

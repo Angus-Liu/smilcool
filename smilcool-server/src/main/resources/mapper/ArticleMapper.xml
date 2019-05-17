@@ -220,7 +220,7 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Article">
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.Article">
         select
         <include refid="Base_Column_List"/>
         ,

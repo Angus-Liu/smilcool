@@ -17,5 +17,5 @@ public interface FileMapper {
 
     int updateByPrimaryKey(File record);
 
-    List<File> selectAll();
+    List<File> select();
 }

@@ -20,7 +20,7 @@ public interface UserRoleMapper {
 
     int updateByPrimaryKey(UserRole record);
 
-    List<UserRole> selectAll();
+    List<UserRole> select();
 
     UserRole selectByUserIdAndRoleId(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 

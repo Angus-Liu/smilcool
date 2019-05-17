@@ -1,212 +1,233 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smilcool.server.core.dao.LostFoundMapper">
-  <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.LostFound">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="resource_id" jdbcType="INTEGER" property="resourceId" />
-    <result column="resource_type_id" jdbcType="INTEGER" property="resourceTypeId" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="time" jdbcType="TIMESTAMP" property="time" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="image" jdbcType="VARCHAR" property="image" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="deleted" jdbcType="BIT" property="deleted" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, user_id, resource_id, resource_type_id, type, title, name, time, address, image, 
-    description, remark, create_time, update_time, deleted
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from lost_found
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from lost_found
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.LostFound">
-    insert into lost_found (id, user_id, resource_id, 
-      resource_type_id, type, title, 
-      name, time, address, 
-      image, description, remark, 
-      create_time, update_time, deleted
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER}, 
-      #{resourceTypeId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, 
-      #{image,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.LostFound">
-    insert into lost_found
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="resourceId != null">
-        resource_id,
-      </if>
-      <if test="resourceTypeId != null">
-        resource_type_id,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="time != null">
-        time,
-      </if>
-      <if test="address != null">
-        address,
-      </if>
-      <if test="image != null">
-        image,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="deleted != null">
-        deleted,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="resourceId != null">
-        #{resourceId,jdbcType=INTEGER},
-      </if>
-      <if test="resourceTypeId != null">
-        #{resourceTypeId,jdbcType=INTEGER},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null">
-        #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleted != null">
-        #{deleted,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.LostFound">
-    update lost_found
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="resourceId != null">
-        resource_id = #{resourceId,jdbcType=INTEGER},
-      </if>
-      <if test="resourceTypeId != null">
-        resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null">
-        time = #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null">
-        image = #{image,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleted != null">
-        deleted = #{deleted,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.LostFound">
-    update lost_found
-    set user_id = #{userId,jdbcType=INTEGER},
-      resource_id = #{resourceId,jdbcType=INTEGER},
-      resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
-      title = #{title,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      address = #{address,jdbcType=VARCHAR},
-      image = #{image,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      deleted = #{deleted,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.smilcool.server.core.pojo.po.LostFound">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="resource_id" jdbcType="INTEGER" property="resourceId"/>
+        <result column="lost_found_category" jdbcType="VARCHAR" property="lostFoundCategory"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.LostFound">
+        <result column="images" jdbcType="LONGVARCHAR" property="images"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, resource_id, lost_found_category, title, description, item_name, time,
+    address, remark, create_time, update_time, deleted
+    </sql>
+    <sql id="Blob_Column_List">
+        images
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from lost_found
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE
+        FROM lost_found
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.LostFound">
+        INSERT INTO lost_found (id, user_id, resource_id,
+                                lost_found_category, title, description,
+                                item_name, time, address,
+                                remark, create_time, update_time,
+                                deleted, images)
+        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER},
+                #{lostFoundCategory,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+                #{itemName,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR},
+                #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+                #{deleted,jdbcType=BIT}, #{images,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.LostFound"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into lost_found
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="resourceId != null">
+                resource_id,
+            </if>
+            <if test="lostFoundCategory != null">
+                lost_found_category,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="itemName != null">
+                item_name,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+            <if test="images != null">
+                images,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceId != null">
+                #{resourceId,jdbcType=INTEGER},
+            </if>
+            <if test="lostFoundCategory != null">
+                #{lostFoundCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=BIT},
+            </if>
+            <if test="images != null">
+                #{images,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.LostFound">
+        update lost_found
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceId != null">
+                resource_id = #{resourceId,jdbcType=INTEGER},
+            </if>
+            <if test="lostFoundCategory != null">
+                lost_found_category = #{lostFoundCategory,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="itemName != null">
+                item_name = #{itemName,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted,jdbcType=BIT},
+            </if>
+            <if test="images != null">
+                images = #{images,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.LostFound">
+        UPDATE lost_found
+        SET user_id             = #{userId,jdbcType=INTEGER},
+            resource_id         = #{resourceId,jdbcType=INTEGER},
+            lost_found_category = #{lostFoundCategory,jdbcType=VARCHAR},
+            title               = #{title,jdbcType=VARCHAR},
+            description         = #{description,jdbcType=VARCHAR},
+            item_name           = #{itemName,jdbcType=VARCHAR},
+            time                = #{time,jdbcType=TIMESTAMP},
+            address             = #{address,jdbcType=VARCHAR},
+            remark              = #{remark,jdbcType=VARCHAR},
+            create_time         = #{createTime,jdbcType=TIMESTAMP},
+            update_time         = #{updateTime,jdbcType=TIMESTAMP},
+            deleted             = #{deleted,jdbcType=BIT},
+            images              = #{images,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.LostFound">
+        UPDATE lost_found
+        SET user_id             = #{userId,jdbcType=INTEGER},
+            resource_id         = #{resourceId,jdbcType=INTEGER},
+            lost_found_category = #{lostFoundCategory,jdbcType=VARCHAR},
+            title               = #{title,jdbcType=VARCHAR},
+            description         = #{description,jdbcType=VARCHAR},
+            item_name           = #{itemName,jdbcType=VARCHAR},
+            time                = #{time,jdbcType=TIMESTAMP},
+            address             = #{address,jdbcType=VARCHAR},
+            remark              = #{remark,jdbcType=VARCHAR},
+            create_time         = #{createTime,jdbcType=TIMESTAMP},
+            update_time         = #{updateTime,jdbcType=TIMESTAMP},
+            deleted             = #{deleted,jdbcType=BIT}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.LostFound">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from lost_found
+    </select>
+
 </mapper>

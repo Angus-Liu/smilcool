@@ -17,5 +17,5 @@ public interface SecondHandMapper {
 
     int updateByPrimaryKey(SecondHand record);
 
-    List<SecondHand> selectAll();
+    List<SecondHand> select();
 }

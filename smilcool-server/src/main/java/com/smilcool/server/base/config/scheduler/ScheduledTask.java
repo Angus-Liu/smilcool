@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 @EnableScheduling
 public class ScheduledTask {
 
-    @Scheduled(cron = "*/1 * * * * *")
+//    @Scheduled(cron = "*/1 * * * * *")
     public void reportCurrentByCron() {
         System.out.println("Scheduling Tasks Examples By Cron: The time is now " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }

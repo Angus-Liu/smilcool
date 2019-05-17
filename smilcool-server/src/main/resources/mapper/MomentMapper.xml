@@ -45,7 +45,8 @@
                 #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT},
                 #{images,jdbcType=LONGVARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Moment">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Moment"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into moment
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -171,7 +172,7 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.Moment">
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.Moment">
         select
         <include refid="Base_Column_List"/>
         ,

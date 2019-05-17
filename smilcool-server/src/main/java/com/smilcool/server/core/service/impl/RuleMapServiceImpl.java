@@ -24,7 +24,7 @@ public class RuleMapServiceImpl implements RuleMapService {
 
     @Override
     public List<RuleMap> getRuleMapList() {
-        return ruleMapMapper.selectAll();
+        return ruleMapMapper.select();
     }
 
     @Override

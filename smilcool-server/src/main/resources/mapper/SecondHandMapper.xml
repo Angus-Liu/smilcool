@@ -199,7 +199,7 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.SecondHand">
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.SecondHand">
         select
         <include refid="Base_Column_List"/>
         from second_hand

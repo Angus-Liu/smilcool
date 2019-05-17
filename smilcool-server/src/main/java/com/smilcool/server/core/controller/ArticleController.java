@@ -57,7 +57,7 @@ public class ArticleController {
         return Result.success(articleInfo);
     }
 
-    @ApiOperation("文章信息")
+    @ApiOperation("文章页面")
     @GetMapping("/{id}/page")
     public Result<ArticlePage> getArticlePage(@PathVariable Integer id) {
         ArticlePage articlePage = articleService.getArticlePage(id);

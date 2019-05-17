@@ -60,7 +60,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public List<UserRoleVO> list() {
-        List<UserRole> userRoleList = userRoleMapper.selectAll();
+        List<UserRole> userRoleList = userRoleMapper.select();
         return BeanUtil.copyProp(userRoleList, UserRoleVO.class);
     }
 

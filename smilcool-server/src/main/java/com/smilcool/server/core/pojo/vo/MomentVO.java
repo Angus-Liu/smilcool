@@ -17,12 +17,12 @@ public class MomentVO {
 
     private Integer resourceId;
 
-    private Integer resourceTypeId;
+    private String momentCategory;
 
     private String content;
 
-    private String images;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+
+    private String images;
 }

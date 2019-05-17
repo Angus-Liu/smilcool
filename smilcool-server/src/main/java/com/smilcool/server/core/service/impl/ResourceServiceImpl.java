@@ -35,6 +35,7 @@ public class ResourceServiceImpl implements ResourceService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer addResource(Integer userId, String resourceDicType, String resourceDicItem) {
+        // TODO 2019/5/17 检查字典项目是否存在
         Resource resource = new Resource(userId, resourceDicType, resourceDicItem);
         resourceMapper.insertSelective(resource);
         return resource.getId();
@@ -51,7 +52,7 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<ResourceVO> getResourceList() {
-        List<Resource> resourceList = resourceMapper.selectAll();
+        List<Resource> resourceList = resourceMapper.select();
         return BeanUtil.copyProp(resourceList, ResourceVO.class);
     }
 

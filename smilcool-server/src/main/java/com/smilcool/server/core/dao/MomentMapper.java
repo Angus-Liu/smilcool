@@ -19,5 +19,5 @@ public interface MomentMapper {
 
     int updateByPrimaryKey(Moment record);
 
-    List<Moment> selectAll();
+    List<Moment> select();
 }

@@ -2,6 +2,8 @@ package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.LostFound;
 
+import java.util.List;
+
 public interface LostFoundMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -13,5 +15,9 @@ public interface LostFoundMapper {
 
     int updateByPrimaryKeySelective(LostFound record);
 
+    int updateByPrimaryKeyWithBLOBs(LostFound record);
+
     int updateByPrimaryKey(LostFound record);
+
+    List<LostFound> select();
 }

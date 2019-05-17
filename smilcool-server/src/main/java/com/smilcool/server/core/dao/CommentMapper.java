@@ -22,5 +22,5 @@ public interface CommentMapper {
 
     List<Comment> selectByParentId(Integer parentId);
 
-    List<Comment> selectAll();
+    List<Comment> select();
 }

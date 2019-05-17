@@ -71,7 +71,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<RoleVO> list() {
-        List<Role> roleList = roleMapper.selectAll();
+        List<Role> roleList = roleMapper.select();
         return BeanUtil.copyProp(roleList, RoleVO.class);
     }
 

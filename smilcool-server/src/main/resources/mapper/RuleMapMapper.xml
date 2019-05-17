@@ -232,7 +232,7 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.RuleMap">
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.RuleMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM rule_map

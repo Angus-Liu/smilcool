@@ -55,7 +55,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<File> getFileList() {
-        List<File> fileList = fileMapper.selectAll();
+        List<File> fileList = fileMapper.select();
         return fileList;
     }
 }

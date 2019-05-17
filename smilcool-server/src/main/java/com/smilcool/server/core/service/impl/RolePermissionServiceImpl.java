@@ -60,7 +60,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
     @Override
     public List<RolePermissionVO> list() {
-        List<RolePermission> rolePermissionList = rolePermissionMapper.selectAll();
+        List<RolePermission> rolePermissionList = rolePermissionMapper.select();
         return BeanUtil.copyProp(rolePermissionList, RolePermissionVO.class);
     }
 

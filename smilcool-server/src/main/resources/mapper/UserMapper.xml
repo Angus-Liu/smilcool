@@ -280,7 +280,7 @@
         WHERE email = #{email}
     </select>
 
-    <select id="selectAll" resultType="com.smilcool.server.core.pojo.po.User">
+    <select id="select" resultType="com.smilcool.server.core.pojo.po.User">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user

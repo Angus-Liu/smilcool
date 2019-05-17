@@ -52,7 +52,7 @@ public class DicServiceImpl implements DicService {
 
     @Override
     public List<DicType> getDicTypeList() {
-        List<DicType> dicTypeList = dicTypeMapper.selectAll();
+        List<DicType> dicTypeList = dicTypeMapper.select();
         return dicTypeList;
     }
 

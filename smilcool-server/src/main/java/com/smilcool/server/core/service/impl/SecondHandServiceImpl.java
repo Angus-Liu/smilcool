@@ -55,7 +55,7 @@ public class SecondHandServiceImpl implements SecondHandService {
 
     @Override
     public List<SecondHandVO> getSecondHandList() {
-        List<SecondHand> secondHandList = secondHandMapper.selectAll();
+        List<SecondHand> secondHandList = secondHandMapper.select();
         return BeanUtil.copyProp(secondHandList, SecondHandVO.class);
     }
 }

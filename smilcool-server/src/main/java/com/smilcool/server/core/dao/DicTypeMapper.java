@@ -18,7 +18,7 @@ public interface DicTypeMapper {
 
     int updateByPrimaryKey(DicType record);
 
-    List<DicType> selectAll();
+    List<DicType> select();
 
     DicType selectByCode(String code);
 
