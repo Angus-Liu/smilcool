@@ -2,6 +2,7 @@ package com.smilcool.server.core.controller;
 
 import com.smilcool.server.common.dto.Result;
 import com.smilcool.server.core.pojo.form.FileAddForm;
+import com.smilcool.server.core.pojo.page.FilePage;
 import com.smilcool.server.core.pojo.po.File;
 import com.smilcool.server.core.service.FileService;
 import io.swagger.annotations.Api;
@@ -35,5 +36,12 @@ public class FileController {
     public Result<List<File>> getFileList() {
         List<File> fileList = fileService.getFileList();
         return Result.success(fileList);
+    }
+
+    @ApiOperation("文件列表页面")
+    @GetMapping("/page")
+    public Result<List<FilePage>> getFilePageList() {
+        List<FilePage> filePageList = fileService.getFilePageList();
+        return Result.success(filePageList);
     }
 }

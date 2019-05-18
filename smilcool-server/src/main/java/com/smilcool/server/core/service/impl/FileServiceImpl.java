@@ -6,13 +6,18 @@ import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.common.util.MockUtil;
 import com.smilcool.server.core.dao.FileMapper;
 import com.smilcool.server.core.pojo.form.FileAddForm;
+import com.smilcool.server.core.pojo.page.FilePage;
 import com.smilcool.server.core.pojo.po.File;
+import com.smilcool.server.core.pojo.vo.FileVO;
+import com.smilcool.server.core.service.CommentService;
 import com.smilcool.server.core.service.FileService;
 import com.smilcool.server.core.service.ResourceService;
+import com.smilcool.server.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +32,12 @@ public class FileServiceImpl implements FileService {
 
     @Autowired
     private ResourceService resourceService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -57,5 +68,25 @@ public class FileServiceImpl implements FileService {
     public List<File> getFileList() {
         List<File> fileList = fileMapper.select();
         return fileList;
+    }
+
+    @Override
+    public List<FilePage> getFilePageList() {
+        List<File> fileList = fileMapper.select();
+        List<FilePage> filePageList = new ArrayList<>();
+        fileList.forEach(file -> {
+            FilePage filePage = FilePage.builder()
+                    // 文件信息
+                    .file(BeanUtil.copyProp(file, FileVO.class))
+                    // 发布用户信息
+                    .user(userService.getUserVO(file.getUserId()))
+                    // 所属资源信息
+                    .resource(resourceService.getResourceVO(file.getResourceId()))
+                    // 评论信息
+                    .commentList(commentService.getCommentVOList(file.getResourceId()))
+                    .build();
+            filePageList.add(filePage);
+        });
+        return filePageList;
     }
 }
