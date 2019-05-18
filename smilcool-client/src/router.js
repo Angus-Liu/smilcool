@@ -42,6 +42,10 @@ export default new Router({
           path: 'lost-found',
           name: 'lost-found',
           component: () => import('@/views/lost-found/LostFound')
+        }, {
+          path: 'forum',
+          name: 'forum',
+          component: () => import('@/views/forum/Forum')
         }
       ]
     }

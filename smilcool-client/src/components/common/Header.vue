@@ -21,7 +21,9 @@
           <li>
             <router-link to="/lost-found">失物寻物</router-link>
           </li>
-          <li><a href="#">校内论坛</a></li>
+          <li>
+            <router-link to="/forum">校内论坛</router-link>
+          </li>
         </ul>
       </nav>
       <div class="avatar">
@@ -46,8 +48,15 @@
           <Icon type="ios-notifications-outline" size="26"></Icon>
         </Badge>
       </div>
-      <div class="search">
-        <Input search placeholder="搜索校园资讯"/>
+      <!-- 搜索框 -->
+      <div class="ui search search-container">
+        <div class="ui icon input">
+          <input class="prompt" type="text" placeholder="搜索校园资讯">
+          <i class="search icon"></i>
+        </div>
+        <div class="results">
+          这里会显示推荐结果
+        </div>
       </div>
     </div>
 
@@ -251,11 +260,10 @@ header {
     margin-right: 30px;
   }
 
-  .search {
-    width: 300px;
+  .search-container {
     float: right;
-    margin-top: 20px;
-    margin-right: 30px;
+    margin-top: 18px;
+    margin-right: 25px;
   }
 
   .ivu-form-item:last-child {

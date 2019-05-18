@@ -45,6 +45,11 @@
             </sui-feed>
           </sui-card-content>
         </sui-card>
+        <sui-message>
+          <p style="text-align: center">
+            <a href="#">加载更多</a>
+          </p>
+        </sui-message>
       </iCol>
       <iCol class="column" span="8">
         <sui-card>
@@ -79,8 +84,8 @@ export default {
   name: 'LostFound',
   data() {
     return {
-      active: '失物招领',
-      items: ['失物招领', '寻物启事'],
+      active: '查看所有',
+      items: ['查看所有', '失物招领', '寻物启事'],
       lostFoundPageList: [{
         'lostFound': {
           'id': 1,

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    SecondHand
+
   </div>
 </template>
 

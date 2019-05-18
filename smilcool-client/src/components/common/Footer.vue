@@ -15,13 +15,15 @@ export default {
 <style lang="less" scoped>
 footer {
   height: 100px;
-  background: #ccc;
   margin-top: 5px;
+  background: #bbb;
 
   .container {
     height: 100%;
     width: 1140px;
     margin: 0 auto;
+    padding-top: 10px;
+    text-align: center;
     background: #aaa;
   }
 }
