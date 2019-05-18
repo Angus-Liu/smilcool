@@ -46,6 +46,10 @@ export default new Router({
           path: 'forum',
           name: 'forum',
           component: () => import('@/views/forum/Forum')
+        }, {
+          path: 'message',
+          name: 'message',
+          component: () => import('@/views/message/Message')
         }
       ]
     }

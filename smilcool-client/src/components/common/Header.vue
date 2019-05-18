@@ -1,9 +1,12 @@
 <template>
   <header>
     <div class="container">
+      <!-- LOGO -->
       <router-link to="/">
         <img class="logo" src="../../assets/logo.png">
       </router-link>
+      <!-- LOGO END -->
+      <!-- 菜单 -->
       <nav>
         <ul>
           <li>
@@ -26,6 +29,8 @@
           </li>
         </ul>
       </nav>
+      <!-- 菜单 END -->
+      <!-- 头像 -->
       <div class="avatar">
         <Dropdown @on-click="handleClick" v-if="user">
           <sui-image class="avatar-img" circular :src="user.avatar"/>
@@ -43,11 +48,16 @@
         <sui-image class="avatar-img" v-else circular @click.native="loginRegisterModel.show = true"
                    :src="require('../../assets/anonymous-avatar.png')"/>
       </div>
+      <!-- 头像 END -->
+      <!-- 消息通知 -->
       <div class="notification">
-        <Badge dot>
-          <Icon type="ios-notifications-outline" size="26"></Icon>
-        </Badge>
+        <router-link to="/message">
+          <Badge dot>
+            <Icon type="ios-notifications-outline" size="26"></Icon>
+          </Badge>
+        </router-link>
       </div>
+      <!-- 消息通知 END -->
       <!-- 搜索框 -->
       <div class="ui search search-container">
         <div class="ui icon input">
@@ -104,6 +114,7 @@
           </div>
         </sui-form-field>
       </sui-form>
+      <!-- 注册表单结束 -->
     </Modal>
   </header>
 </template>
