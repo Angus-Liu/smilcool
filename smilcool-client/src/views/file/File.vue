@@ -25,6 +25,7 @@
             </dl>
           </sui-card-content>
         </sui-card>
+        <!-- 文件菜单栏 END -->
         <!-- 文件列表 -->
         <sui-card class="fluid">
           <sui-message attached="top">文件列表</sui-message>
@@ -47,9 +48,16 @@
               </sui-item>
             </sui-item-group>
           </sui-card-content>
+          <sui-button-group attached="bottom" basic>
+            <sui-button content="上一页" icon="left chevron" label-position="left"/>
+            <sui-button-or/>
+            <sui-button content="下一页" icon="right chevron" label-position="right"/>
+          </sui-button-group>
         </sui-card>
+        <!-- 文件列表 END -->
       </iCol>
       <iCol class="column" span="7">
+        <!-- 消息提示 -->
         <sui-message dismissable>
           <sui-message-header>
             <i class="handshake outline icon"/> 分享学习资料，让更多人获益。
@@ -61,6 +69,7 @@
           </p>
           <sui-button fluid basic color="teal" icon="upload" content="上传文件"/>
         </sui-message>
+        <!-- 消息提示 END -->
       </iCol>
     </Row>
   </div>

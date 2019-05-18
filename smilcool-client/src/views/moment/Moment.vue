@@ -63,7 +63,7 @@
     </div>
     <!-- 动态列表 END -->
     <!-- 加载更多 -->
-    <sui-button class="fluid" basic content="加载更多"/>
+    <sui-button class="fluid" color="grey" basic content="加载更多"/>
     <!-- 加载更多 END -->
     <!-- 发布动态模态框 -->
     <Modal v-model="momentModal.show" title="发布动态" :mask-closable="false" width="600" footer-hide>

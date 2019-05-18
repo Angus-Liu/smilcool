@@ -2,6 +2,7 @@
   <div class="container">
     <Row>
       <iCol class="column" span="16">
+        <!-- 失物寻物菜单 -->
         <sui-menu>
           <a is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item"
              @click="select(item)"/>
@@ -11,6 +12,8 @@
             </sui-menu-item>
           </sui-menu-menu>
         </sui-menu>
+        <!-- 失物寻物菜单 END -->
+        <!-- 失物寻物列表 -->
         <sui-card v-for="(lostFoundPage, index) in lostFoundPageList" :key="index">
           <sui-card-content>
             <sui-feed>
@@ -45,21 +48,22 @@
             </sui-feed>
           </sui-card-content>
         </sui-card>
+        <!-- 失物寻物列表 END -->
         <!-- 加载更多 -->
         <sui-button class="fluid" basic content="加载更多"/>
         <!-- 加载更多 END -->
       </iCol>
       <iCol class="column" span="8">
+        <!-- 寻物启事 -->
         <sui-card>
           <sui-message attached="top" icon="eye" negative>
             <sui-message-header>寻物启事小贴士</sui-message-header>
-            <p>什么，你东西丢啦？不要怕，快来发布一条寻物启事吧，很快就会有好心人联系你啦。对啦，一定要核实信息，准确后再发布哦 😃</p>
+            <p>什么，有东西丢啦？不要怕，快来发布一条寻物启事吧，很快就会有好心人联系你啦。对啦，一定要核实信息，准确后再发布哦 😃</p>
           </sui-message>
-          <sui-button attached="bottom">
-            <sui-icon name="add"/>
-            发布寻物启事
-          </sui-button>
+          <sui-button attached="bottom" icon="add" content="发布寻物启事"/>
         </sui-card>
+        <!-- 寻物启事 END -->
+        <!-- 失物招领 -->
         <sui-card>
           <sui-message attached="top" icon="bullhorn" positive>
             <sui-message-content>
@@ -67,11 +71,9 @@
               <p>捡到哪位同学不小信掉落的物品啦？快发布一条失物招领吧，失主一定会非常非常感激你呢 😘</p>
             </sui-message-content>
           </sui-message>
-          <sui-button attached="bottom">
-            <sui-icon name="add"/>
-            发布失物招领
-          </sui-button>
+          <sui-button attached="bottom" icon="add" content="发布失物招领"/>
         </sui-card>
+        <!-- 失物招领 END -->
       </iCol>
     </Row>
   </div>
