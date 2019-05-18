@@ -87,14 +87,9 @@
 </template>
 
 <script>
-import SimpleCard from '@/components/common/SimpleCard'
-
 export default {
   name: 'Viewer',
   props: ['id'],
-  components: {
-    SimpleCard
-  },
   data() {
     return {
       articlePage: {
