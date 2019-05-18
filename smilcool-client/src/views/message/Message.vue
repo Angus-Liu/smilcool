@@ -116,11 +116,11 @@ export default {
           }
 
           .item:hover {
-            background: #fafafa;
+            background: #fbfbfb;
           }
 
           .item.active {
-            background: #fafafa;
+            background: #fbfbfb;
           }
         }
       }
