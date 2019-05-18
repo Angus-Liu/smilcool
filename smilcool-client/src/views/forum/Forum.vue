@@ -3,7 +3,7 @@
     <!-- 论坛提示 -->
     <Row>
       <iCol class="column">
-        <sui-message>
+        <sui-message dismissable>
           <div style="width: 480px; margin:0px auto; overflow: hidden;">
             <img src="//twemoji.b0.upaiyun.com/2/svg/1f381.svg" style="width: 55px; float: left">
             <div style="line-height: 180%; text-align: center;">

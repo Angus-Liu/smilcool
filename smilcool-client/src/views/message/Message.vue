@@ -115,12 +115,9 @@ export default {
             }
           }
 
-          .item:hover {
-            background: #fbfbfb;
-          }
-
+          .item:hover,
           .item.active {
-            background: #fbfbfb;
+            background: #f9f9f9;
           }
         }
       }

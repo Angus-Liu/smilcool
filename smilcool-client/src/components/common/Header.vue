@@ -3,7 +3,7 @@
     <div class="container">
       <!-- LOGO -->
       <router-link to="/">
-        <img class="logo" src="../../assets/logo.png">
+        <img class="logo" src="../../assets/logo-3.png">
       </router-link>
       <!-- LOGO END -->
       <!-- 菜单 -->
