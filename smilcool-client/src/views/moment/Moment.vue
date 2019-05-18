@@ -151,10 +151,8 @@ export default {
   column-count: 3;
 
   .moment-item {
-    box-sizing: border-box;
+    break-inside: avoid;
     padding: 7px;
-    height: 100%;
-    overflow: auto;
 
     .moment-item-wrapper {
       padding: 20px 20px 5px 20px;
@@ -165,15 +163,15 @@ export default {
       }
     }
 
-
     .moment-image-group {
       margin-top: 15px;
     }
 
-    .moment-time{
+    .moment-time {
       margin-top: -10px;
       margin-left: 55px;
     }
+
     .moment-content {
       margin-left: 55px;
     }
