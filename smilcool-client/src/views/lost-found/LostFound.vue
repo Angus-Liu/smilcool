@@ -45,11 +45,9 @@
             </sui-feed>
           </sui-card-content>
         </sui-card>
-        <sui-message>
-          <p style="text-align: center">
-            <a href="#">加载更多</a>
-          </p>
-        </sui-message>
+        <!-- 加载更多 -->
+        <sui-button class="fluid" basic content="加载更多"/>
+        <!-- 加载更多 END -->
       </iCol>
       <iCol class="column" span="8">
         <sui-card>

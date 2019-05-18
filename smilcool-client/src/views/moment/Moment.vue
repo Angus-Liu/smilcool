@@ -1,11 +1,14 @@
 <template>
   <div class="container">
+    <!-- 消息提示 -->
     <sui-message info dismissable>
       <sui-message-header>如何发表动态？</sui-message-header>
       <p>
         成功登录 Smilcool 系统后，在头像下拉菜单中可以找到 “发表动态” 选项，点击即可发表动态啦。快来发布你的校园动态吧 😆
       </p>
     </sui-message>
+    <!-- 消息提示 END -->
+    <!-- 动态菜单栏 -->
     <sui-menu pointing>
       <a is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item"
          @click="select(item)"/>
@@ -13,8 +16,11 @@
         <sui-menu-item>
           <sui-input transparent icon="search" placeholder="搜索动态"/>
         </sui-menu-item>
+        <sui-button basic attached="right" icon="paper plane outline" content="发布动态" @click="momentModal.show = true"/>
       </sui-menu-menu>
     </sui-menu>
+    <!-- 动态菜单栏 END -->
+    <!-- 动态列表 -->
     <div class="moment-list">
       <sui-card class="fluid moment-item" v-for="momentPage in momentPageList" :key="momentPage.moment.id">
         <sui-card-content class="moment-item-wrapper">
@@ -55,11 +61,62 @@
         </sui-card-content>
       </sui-card>
     </div>
-    <sui-message>
-      <p style="text-align: center">
-        <a href="#">加载更多</a>
-      </p>
-    </sui-message>
+    <!-- 动态列表 END -->
+    <!-- 加载更多 -->
+    <sui-button class="fluid" basic content="加载更多"/>
+    <!-- 加载更多 END -->
+    <!-- 发布动态模态框 -->
+    <Modal v-model="momentModal.show" title="发布动态" :mask-closable="false" width="600" footer-hide>
+      <Form :model="momentModal.form" :label-width="50">
+        <FormItem label="类别">
+          <Select v-model="momentModal.form.momentCategory" size="large">
+            <Option value="beijing">New York</Option>
+            <Option value="shanghai">London</Option>
+            <Option value="shenzhen">Sydney</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="内容">
+          <Input v-model="momentModal.form.content" type="textarea" size="large" :autosize="{minRows: 5,maxRows: 10}"
+                 placeholder="输入你发现的趣事吧~"></Input>
+        </FormItem>
+        <FormItem label="图片">
+          <div class="demo-upload-list" v-for="item in uploadList">
+            <template v-if="item.status === 'finished'">
+              <img :src="item.url">
+              <div class="demo-upload-list-cover">
+                <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+              </div>
+            </template>
+            <template v-else>
+              <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+            </template>
+          </div>
+          <Upload
+            ref="upload"
+            :show-upload-list="false"
+            :default-file-list="defaultList"
+            :on-success="handleSuccess"
+            :format="['jpg','jpeg','png']"
+            :max-size="2048"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :before-upload="handleBeforeUpload"
+            multiple
+            type="drag"
+            action="//jsonplaceholder.typicode.com/posts/"
+            style="display: inline-block;width:58px;">
+            <div style="width: 58px;height:58px;line-height: 58px;">
+              <Icon type="ios-camera" size="20"></Icon>
+            </div>
+          </Upload>
+          <Modal title="View Image" v-model="visible">
+            <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
+          </Modal>
+        </FormItem>
+      </Form>
+    </Modal>
+    <!-- 发布动态模态框 END -->
   </div>
 </template>
 
@@ -110,6 +167,28 @@ export default {
           'commentList': []
         }
       ],
+      momentModal: {
+        show: false,
+        form: {
+          momentCategory: '',
+          content: '',
+          images: []
+        }
+      },
+      // 上传图片
+      defaultList: [
+        {
+          'name': 'a42bdcc1178e62b4694c830f028db5c0',
+          'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
+        },
+        {
+          'name': 'bc7521e033abdd1e92222d733590f104',
+          'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
+        }
+      ],
+      imgName: '',
+      visible: false,
+      uploadList: []
     }
   },
   methods: {
@@ -130,10 +209,46 @@ export default {
             }
           })
         });
+    },
+    // 上传图片
+    handleView (name) {
+      this.imgName = name;
+      this.visible = true;
+    },
+    handleRemove (file) {
+      const fileList = this.$refs.upload.fileList;
+      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    },
+    handleSuccess (res, file) {
+      file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
+      file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+    },
+    handleFormatError (file) {
+      this.$Notice.warning({
+        title: 'The file format is incorrect',
+        desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+      });
+    },
+    handleMaxSize (file) {
+      this.$Notice.warning({
+        title: 'Exceeding file size limit',
+        desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+      });
+    },
+    handleBeforeUpload () {
+      const check = this.uploadList.length < 5;
+      if (!check) {
+        this.$Notice.warning({
+          title: 'Up to five pictures can be uploaded.'
+        });
+      }
+      return check;
     }
   },
   mounted() {
     this.getMomentList();
+    // 上传图片
+    this.uploadList = this.$refs.upload.fileList;
   }
 }
 </script>
@@ -180,5 +295,43 @@ export default {
       margin-left: 5px;
     }
   }
+}
+
+/*上传图片*/
+.demo-upload-list{
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 1px 1px rgba(0,0,0,.2);
+  margin-right: 4px;
+}
+.demo-upload-list img{
+  width: 100%;
+  height: 100%;
+}
+.demo-upload-list-cover{
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,.6);
+}
+.demo-upload-list:hover .demo-upload-list-cover{
+  display: block;
+}
+.demo-upload-list-cover i{
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 2px;
 }
 </style>

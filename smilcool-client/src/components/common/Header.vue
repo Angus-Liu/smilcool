@@ -69,7 +69,6 @@
         </div>
       </div>
     </div>
-
     <!-- 登录注册模态框 -->
     <Modal v-model="loginRegisterModel.show" :title="loginRegisterModel.title" :mask-closable="false" width="320"
            footer-hide>
@@ -82,7 +81,7 @@
           <sui-input type="password" placeholder="请输入密码" v-model="loginForm.password"/>
         </sui-form-field>
         <sui-form-field>
-          <sui-button style="width: 100%" basic primary @click.prevent="login">登录</sui-button>
+          <sui-button fluid basic primary @click.prevent="login">登录</sui-button>
         </sui-form-field>
         <sui-form-field>
           <div>
@@ -116,6 +115,7 @@
       </sui-form>
       <!-- 注册表单结束 -->
     </Modal>
+    <!-- 登录注册模态框 END -->
   </header>
 </template>
 
