@@ -1,40 +1,5 @@
 <template>
   <div class="container">
-    <!--<row>-->
-    <!--  <iCol span="7">-->
-    <!--    <sui-card class="moment-editor">-->
-    <!--      <sui-card-content>-->
-    <!--        <Input v-model="moment" type="textarea" :rows="4" placeholder="又遇到什么好事啦？快发表一条动态吧 : )"/>-->
-    <!--        <div class="editor-toolbar">-->
-    <!--          <sui-button class="toolbar-submit" basic primary>发布</sui-button>-->
-    <!--        </div>-->
-    <!--      </sui-card-content>-->
-    <!--    </sui-card>-->
-    <!--  </iCol>-->
-    <!--  <iCol span="10">-->
-    <!--    <sui-card class="moment-editor">-->
-    <!--      <sui-card-content>-->
-    <!--        <Input v-model="moment" type="textarea" :rows="4" placeholder="又遇到什么好事啦？快发表一条动态吧 : )"/>-->
-    <!--        <div class="editor-toolbar">-->
-    <!--          <sui-button class="toolbar-submit" basic primary>发布</sui-button>-->
-    <!--        </div>-->
-    <!--      </sui-card-content>-->
-    <!--    </sui-card>-->
-    <!--  </iCol>-->
-    <!--  <iCol span="7">-->
-    <!--    <sui-card class="moment-editor">-->
-    <!--      <sui-card-content>-->
-    <!--        <sui-image src="http://img.angus-liu.cn/avatar/avatar06.png?imageView2/1/w/50/h/50/q/75"-->
-    <!--                   class="right floated"/>-->
-    <!--        <sui-card-header>Elliot Fu</sui-card-header>-->
-    <!--        <sui-card-meta>Friends of Veronika</sui-card-meta>-->
-    <!--        <sui-card-description>-->
-    <!--          Elliot requested permission to view your contact details-->
-    <!--        </sui-card-description>-->
-    <!--      </sui-card-content>-->
-    <!--    </sui-card>-->
-    <!--  </iCol>-->
-    <!--</row>-->
     <sui-message info dismissable>
       <sui-message-header>如何发表动态？</sui-message-header>
       <p>
@@ -51,7 +16,7 @@
       </sui-menu-menu>
     </sui-menu>
     <div class="moment-list">
-      <sui-card class="moment-item" v-for="momentPage in momentPageList" :key="momentPage.moment.id">
+      <sui-card class="fluid moment-item" v-for="momentPage in momentPageList" :key="momentPage.moment.id">
         <sui-card-content class="moment-item-wrapper">
           <sui-card-header class="moment-header">
             <sui-image class="moment-avatar" :src="momentPage.user.avatar" circular/>
@@ -179,20 +144,6 @@ export default {
   width: 1140px;
   margin: 20px auto;
   padding: 5px;
-  /*background: #ccc;*/
-}
-
-.moment-editor {
-  width: 100%;
-
-  .editor-toolbar {
-    margin-top: 10px;
-    overflow: hidden;
-
-    .toolbar-submit {
-      float: right;
-    }
-  }
 }
 
 .moment-list {
@@ -202,7 +153,6 @@ export default {
   .moment-item {
     box-sizing: border-box;
     padding: 7px;
-    width: 380px;
     height: 100%;
     overflow: auto;
 

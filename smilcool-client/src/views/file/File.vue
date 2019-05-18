@@ -27,6 +27,7 @@
         </sui-card>
         <!-- 文件列表 -->
         <sui-card class="fluid">
+          <sui-message attached="top">文件列表</sui-message>
           <sui-card-content>
             <sui-item-group>
               <sui-item v-for="filePage in filePageList" :key="filePage.file.id">
@@ -58,7 +59,7 @@
             如果手里有比较好的学习资料，希望你能分享出来，让大家从中受益。
             与此同时，你也将会在这个平台上找到你所需要的学习资料。“分享”帮助你我探索更广阔的世界 🧐
           </p>
-          <sui-button fluid basic color="teal" icon="user" content="上传文件"/>
+          <sui-button fluid basic color="teal" icon="upload" content="上传文件"/>
         </sui-message>
       </iCol>
     </Row>
