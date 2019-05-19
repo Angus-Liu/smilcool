@@ -10,7 +10,18 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UploadInfoVO {
-    private String fileName;
-    private String fileSize;
+    /**
+     * 文件名
+     */
+    private String name;
+
+    /**
+     * 文件大小
+     */
+    private String size;
+
+    /**
+     * 文件 URL
+     */
     private String url;
 }
