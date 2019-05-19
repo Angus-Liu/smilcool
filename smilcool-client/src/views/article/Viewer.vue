@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Row>
-      <iCol class="column" span="18">
+      <iCol span="18">
         <article>
           <!-- 正文 -->
           <section>
@@ -53,9 +53,9 @@
           </section>
         </article>
       </iCol>
-      <iCol class="column" span="6">
+      <iCol span="6">
         <!-- 发布用户信息 -->
-        <sui-card class="card">
+        <sui-card class="fluid">
           <sui-image style="width: 100%;" :src="articlePage.user.avatar"/>
           <sui-card-content>
             <sui-card-header>{{articlePage.user.nickname}}</sui-card-header>
@@ -70,13 +70,13 @@
         </sui-card>
         <!-- 发布用户信息结束 -->
         <!-- 文章标签信息 -->
-        <sui-card>
+        <sui-card class="fluid">
           <sui-card-content>
             <Tag type="dot" color="#ff8364" v-for="(tag, index) in articlePage.article.tags" :key="index">{{tag}}</Tag>
           </sui-card-content>
         </sui-card>
         <!-- 文章标签信息结束 -->
-        <sui-card>
+        <sui-card class="fluid">
           <sui-card-content>
             相关文章
           </sui-card-content>
@@ -261,8 +261,13 @@ export default {
   padding: 5px;
   /*background: #eee;*/
 
-  .column {
-    padding: 5px;
+  .ivu-col {
+    padding: 7px;
+
+    .markdown-body img {
+      display: block;
+      margin: 0 auto;
+    }
   }
 }
 
@@ -292,9 +297,5 @@ article {
     .article-comment {
     }
   }
-}
-
-.card {
-  width: 100%;
 }
 </style>

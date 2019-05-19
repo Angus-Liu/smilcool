@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Row>
-      <iCol class="column" span="14">
+      <iCol span="14">
         <!-- 轮播图 -->
         <Carousel class="carousel-container" loop autoplay :autoplay-speed="5000" radius-dot>
           <CarouselItem v-for="(item, index) in carouselList" :key="index">
@@ -10,7 +10,8 @@
             </div>
           </CarouselItem>
         </Carousel>
-        <!-- 轮播图结束 -->
+        <!-- 轮播图 END -->
+        <!-- 文章选项卡 -->
         <div>
           <sui-tab :menu="{ secondary: true }">
             <sui-tab-pane class="tab-pane" title="推荐" :attached="false">
@@ -72,8 +73,9 @@
             </sui-tab-pane>
           </sui-tab>
         </div>
+        <!-- 文章选项卡 END -->
       </iCol>
-      <iCol class="column" span="10">
+      <iCol span="10">
         <!-- 系统通告 -->
         <sui-message warning dismissable>
           <sui-message-header>Q：Smilcool是什么？</sui-message-header>
@@ -88,7 +90,7 @@
             不同版面的精华区作用也各不相同，想了解更多的话，就选择感兴趣的版面，进精华区看看吧。
           </p>
         </sui-message>
-        <!-- 系统通告结束 -->
+        <!-- 系统通告 END -->
         <!-- 文章类别 -->
         <sui-card class="fluid">
           <sui-card-content>
@@ -103,7 +105,7 @@
             </div>
           </sui-card-content>
         </sui-card>
-        <!-- 文章类别结束 -->
+        <!-- 文章类别 END-->
         <!-- 热门标签 -->
         <sui-card class="fluid">
           <sui-card-content>
@@ -115,7 +117,7 @@
             </div>
           </sui-card-content>
         </sui-card>
-        <!-- 热门标签结束 -->
+        <!-- 热门标签 END -->
         <!-- 最新评论 -->
         <sui-card class="fluid">
           <sui-card-content>
@@ -135,7 +137,7 @@
             </div>
           </sui-card-content>
         </sui-card>
-        <!-- 最新评论结束 -->
+        <!-- 最新评论 END -->
       </iCol>
     </Row>
   </div>
@@ -229,12 +231,8 @@ export default {
   /*background: #ccc;*/
 
 
-  .column {
-    padding: 5px;
-
-    .card {
-      margin-bottom: 5px;
-    }
+  .ivu-col {
+    padding: 7px;
   }
 
   .carousel-container {

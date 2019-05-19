@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Row>
-      <iCol class="column" span="16">
+      <iCol span="16">
         <!-- 失物寻物菜单 -->
         <sui-menu>
           <a is="sui-menu-item" v-for="item in items" :active="item === active" :key="item" :content="item"
@@ -51,7 +51,7 @@
         <sui-button class="fluid" basic content="加载更多"/>
         <!-- 加载更多 END -->
       </iCol>
-      <iCol class="column" span="8">
+      <iCol span="8">
         <!-- 寻物启事 -->
         <sui-card>
           <sui-message attached="top" icon="eye" negative>
@@ -168,7 +168,7 @@ export default {
   /*background: #aaa;*/
   padding: 5px;
 
-  .column {
+  .ivu-col {
     padding: 7px;
   }
 

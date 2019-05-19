@@ -292,7 +292,7 @@ export default {
   /*background: #ccc;*/
 
   .ivu-col {
-    padding: 5px;
+    padding: 7px;
   }
 
   .file-category {
