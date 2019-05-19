@@ -32,17 +32,18 @@
       <!-- 菜单 END -->
       <!-- 头像 -->
       <div class="avatar">
-        <Dropdown @on-click="handleClick" v-if="user">
+        <Dropdown v-if="user">
           <sui-image class="avatar-img" circular :src="user.avatar"/>
           <DropdownMenu class="avatar-menu-list" slot="list">
-            <DropdownItem name="homepage">我的主页</DropdownItem>
-            <router-link to="/article/editor">
-              <DropdownItem name="collect">发表文章</DropdownItem>
+            <router-link to="/user">
+              <DropdownItem>我的主页</DropdownItem>
             </router-link>
-            <DropdownItem name="collect">发布动态</DropdownItem>
-            <DropdownItem name="collect">收藏列表</DropdownItem>
-            <DropdownItem name="account">账号管理</DropdownItem>
-            <DropdownItem divided name="logout">退出登录</DropdownItem>
+            <router-link to="/article/editor">
+              <DropdownItem>发表文章</DropdownItem>
+            </router-link>
+            <DropdownItem>收藏列表</DropdownItem>
+            <DropdownItem>账号管理</DropdownItem>
+            <DropdownItem divided @click.native="$store.commit('userLogout')">退出登录</DropdownItem>
           </DropdownMenu>
         </Dropdown>
         <sui-image class="avatar-img" v-else circular @click.native="loginRegisterModel.show = true"
@@ -150,16 +151,6 @@ export default {
     }
   },
   methods: {
-    handleClick(dropdownItemName) {
-      switch (dropdownItemName) {
-        case 'logout':
-          // 退出
-          this.$store.commit('userLogout');
-          break;
-        default:
-          console.log('执行其他操作');
-      }
-    },
     showLoginForm() {
       this.loginRegisterModel.title = '登录';
       this.loginRegisterModel.isLogin = true;
@@ -228,7 +219,7 @@ header {
 }
 
 .container {
-  width: 1260px;
+  width: 1200px;
   margin: 0 auto;
 
   .logo {

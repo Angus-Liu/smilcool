@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 上传图片列表 -->
-    <div class="upload-list" v-for="item in $refs.upload.fileList">
+    <div class="upload-list" v-for="item in fileList">
       <!-- 上传成功 -->
       <template v-if="item.status === 'finished'">
         <img :src="item.url">
@@ -45,6 +45,8 @@ export default {
   name: 'ImageUploader',
   data() {
     return {
+      // 已上传文件
+      fileList: [],
       // 上传地址
       localStorage: '/api/local-storage/upload',
       // 上传时额外附带参数
@@ -97,6 +99,10 @@ export default {
       let images = uploadList.map(item => item.url);
       this.$emit('images-change', images);
     }
+  },
+  mounted() {
+    // 保留上传文件列表的引用
+    this.fileList = this.$refs.upload.fileList;
   }
 }
 </script>

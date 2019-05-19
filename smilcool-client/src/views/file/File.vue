@@ -1,32 +1,27 @@
 <template>
   <div class="container">
     <Row>
-      <iCol class="column" span="17">
+      <iCol span="17">
+        <!-- 文件操作菜单 -->
+        <sui-menu>
+          <a is="sui-menu-item" v-for="item in items" :active="item === active" :key="item" :content="item"
+             @click="select(item)"/>
+          <sui-menu-item position="right">
+            <sui-input transparent icon="search" placeholder="搜索"/>
+          </sui-menu-item>
+        </sui-menu>
+        <!-- 文件操作菜单 END -->
         <!-- 文件菜单栏 -->
-        <sui-card class="fluid">
-          <sui-card-content>
-            <dl class="cate-list">
-              <dt>文件类别：</dt>
-              <dd>
-                <ul>
-                  <li v-for="(item, index) in fileCategory" :key="index">
-                    <a href="#">{{item.name}}</a>
-                  </li>
-                </ul>
-              </dd>
-            </dl>
-            <dl class="file-search">
-              <dt>文件搜索：</dt>
-              <dd>
-                <Input v-model="key">
-                  <Button slot="append" icon="ios-search"></Button>
-                </Input>
-              </dd>
-            </dl>
-          </sui-card-content>
-        </sui-card>
-        <!-- 文件菜单栏 END -->
-        <!-- 文件列表 -->
+        <div class="file-category">
+          <Tag type="dot" v-if="name === '所有'" color="#32C2BC" @click.native="name ='所有'">所有</Tag>
+          <Tag type="dot" v-else @click.native="name ='所有'">所有</Tag>
+          <template v-for="(item, index) in fileCategory">
+            <Tag type="dot" v-if="item.name === name" color="#32C2BC" @click.native="name = item.name">
+              {{item.name}}
+            </Tag>
+            <Tag type="dot" v-else @click.native="name = item.name">{{item.name}}</Tag>
+          </template>
+        </div>
         <sui-card class="fluid">
           <sui-message attached="top">文件列表</sui-message>
           <sui-card-content>
@@ -54,9 +49,9 @@
             <sui-button content="下一页" icon="right chevron" label-position="right"/>
           </sui-button-group>
         </sui-card>
-        <!-- 文件列表 END -->
+        <!-- 文件菜单栏 END -->
       </iCol>
-      <iCol class="column" span="7">
+      <iCol span="7">
         <!-- 消息提示 -->
         <sui-message dismissable>
           <sui-message-header>
@@ -67,11 +62,48 @@
             如果手里有比较好的学习资料，希望你能分享出来，让大家从中受益。
             与此同时，你也将会在这个平台上找到你所需要的学习资料。“分享”帮助你我探索更广阔的世界 🧐
           </p>
-          <sui-button fluid basic color="teal" icon="upload" content="上传文件"/>
+          <sui-button fluid basic color="teal" icon="upload" content="上传文件" @click="fileAddModal.show = true"/>
         </sui-message>
         <!-- 消息提示 END -->
       </iCol>
     </Row>
+    <!-- 文件上传模态框 -->
+    <Modal v-model="fileAddModal.show" title="上传文件" :mask-closable="false" width="600">
+      <Form :model="fileAddModal.form" :label-width="50">
+        <FormItem label="类别">
+          <Select v-model="fileAddModal.form.fileCategory" size="large">
+            <Option v-for="item in fileCategory" :key="item.name" :value="item.name" :label="item.name"/>
+          </Select>
+        </FormItem>
+        <FormItem label="标题">
+          <Input v-model="fileAddModal.form.title" size="large" placeholder="醒目的标题才能吸引人"/>
+        </FormItem>
+        <FormItem label="描述">
+          <Input v-model="fileAddModal.form.description" type="textarea" size="large"
+                 :autosize="{minRows: 5,maxRows: 10}" placeholder="简短的描述有助于他人了解资料的用途"/>
+        </FormItem>
+        <FormItem label="文件" style="margin-bottom: 0">
+          <Upload
+            ref="upload"
+            type="drag"
+            :action="localStorage"
+            :data="{type: 'file'}"
+            :before-upload="handleBeforeUpload"
+            :on-success="handleSuccess"
+            :on-error="handleError">
+            <div style="padding: 20px 0">
+              <Icon type="ios-cloud-upload" size="52" style="color: #32C2BC"/>
+              <p>点击或拖拽文件进行上传</p>
+            </div>
+          </Upload>
+        </FormItem>
+      </Form>
+      <template #footer>
+        <Button type="text" @click="fileAddModal.show = false">取消</Button>
+        <Button @click="addFile">确定分享</Button>
+      </template>
+    </Modal>
+    <!-- 文件上传模态框 END -->
   </div>
 </template>
 
@@ -81,13 +113,14 @@ export default {
   name: 'File',
   data() {
     return {
-      key: '',
-      fileCategory: [
-        {
-          name: '全部',
-          code: 'all'
-        }
-      ],
+      active: '最新',
+      items: ['最新', '最热'],
+      localStorage: '/api/local-storage/upload',
+      name: '所有',
+      fileCategory: [{
+        name: '测试',
+        code: 'test'
+      }],
       filePageList: [
         {
           'file': {
@@ -138,10 +171,43 @@ export default {
           },
           'commentList': []
         }
-      ]
+      ],
+      fileAddModal: {
+        show: false,
+        form: {
+          fileCategory: '',
+          title: '',
+          description: '',
+          name: '',
+          size: '',
+          url: ''
+        }
+      }
     }
   },
   methods: {
+    select(name) {
+      this.active = name;
+    },
+    // 初始化
+    init() {
+      this.fileAddModal = {
+        show: false,
+        form: {
+          fileCategory: '',
+          title: '',
+          description: '',
+          name: '',
+          size: '',
+          url: ''
+        }
+      };
+      // 清空已上传文件
+      this.$refs.upload.clearFiles();
+      // 获取文件页面
+      this.getFilePageList();
+    },
+    // 获取文件类别
     getFileCategory() {
       this.$axios.get('/api/dic/file-category/item')
         .then(res => {
@@ -149,6 +215,7 @@ export default {
           this.fileCategory = result.data;
         });
     },
+    // 获取文件页面
     getFilePageList() {
       this.$axios.get('/api/file/page')
         .then(res => {
@@ -175,6 +242,37 @@ export default {
         default:
           return 'file alternate outline';
       }
+    },
+    // 文件上传前的回调
+    handleBeforeUpload() {
+      // 限制上传文件数量
+      if (this.$refs.upload.fileList.length > 0) {
+        this.$Notice.warning({ title: 'Warning', desc: '一次只能上传一份资料，若要更换，请删除已上传文件' });
+        return false;
+      }
+      return true;
+    },
+    // 文件上传成功时的回调
+    handleSuccess(res, file, fileList) {
+      let uploadInfo = res.data;
+      this.fileAddModal.form.name = uploadInfo.name;
+      this.fileAddModal.form.size = uploadInfo.size;
+      this.fileAddModal.form.url = uploadInfo.url;
+    },
+    // 文件上传失败时的回调
+    handleError(err, res, file) {
+      this.$Notice.error({ title: 'Oops', desc: file.name + ' 上传失败' });
+    },
+    // 文件添加
+    addFile() {
+      this.$axios.post('/api/file', this.fileAddModal.form)
+        .then(res => {
+          let result = res.data;
+          if (result.success) {
+            this.$Notice.success({ title: 'Bingo', desc: '分享成功' });
+            this.init();
+          }
+        })
     }
   },
   mounted() {
@@ -190,6 +288,17 @@ export default {
   margin: 10px auto;
   padding: 5px;
   /*background: #ccc;*/
+
+  .ivu-col {
+    padding: 5px;
+  }
+
+  .file-category {
+    .ivu-tag {
+      border: 1px solid rgba(34, 36, 38, .15);
+      box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
+    }
+  }
 
   .card {
     .items {
@@ -212,50 +321,16 @@ export default {
         border-bottom: none;
       }
     }
-
-
   }
 
-  .column {
-    padding: 5px;
-  }
+  ul {
+    list-style: none;
 
-  dl {
-    margin-top: 15px;
-    padding-bottom: 5px;
-    border-bottom: 1px dashed #e6e6e6;
-    overflow: auto;
-
-    dt {
-      float: left;
-      width: 80px;
-      color: #999;
-
+    li {
+      display: inline-block;
+      margin-right: 15px;
+      color: #546a7e;
     }
-
-    dd {
-      float: left;
-      width: calc(100% - 80px);
-
-      ul {
-        list-style: none;
-
-        li {
-          display: inline-block;
-          margin-right: 15px;
-          margin-bottom: 10px;
-          color: #546a7e;
-        }
-      }
-    }
-  }
-
-  dl:last-child {
-    border-bottom: none;
-  }
-
-  dl.file-search {
-    line-height: 32px;
   }
 }
 </style>

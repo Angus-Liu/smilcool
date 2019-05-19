@@ -4,13 +4,11 @@
       <iCol class="column" span="16">
         <!-- 失物寻物菜单 -->
         <sui-menu>
-          <a is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item"
+          <a is="sui-menu-item" v-for="item in items" :active="item === active" :key="item" :content="item"
              @click="select(item)"/>
-          <sui-menu-menu position="right">
-            <sui-menu-item>
-              <sui-input transparent icon="search" placeholder="搜索"/>
-            </sui-menu-item>
-          </sui-menu-menu>
+          <sui-menu-item position="right">
+            <sui-input transparent icon="search" placeholder="搜索"/>
+          </sui-menu-item>
         </sui-menu>
         <!-- 失物寻物菜单 END -->
         <!-- 失物寻物列表 -->
@@ -141,9 +139,6 @@ export default {
     }
   },
   methods: {
-    isActive(name) {
-      return this.active === name;
-    },
     select(name) {
       this.active = name;
     },

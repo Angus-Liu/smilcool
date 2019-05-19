@@ -9,7 +9,7 @@
       </Input>
     </div>
     <!-- 文章信息模态框 -->
-    <Modal v-model="articleInfoModal.show" title="文章信息" :mask-closable="false">
+    <Modal v-model="articleInfoModal.show" title="文章信息" :mask-closable="false" :width="600">
       <Row>
         <iCol span="8">
           <sui-image :src="articleAddForm.cover" size="medium" rounded/>
@@ -19,12 +19,13 @@
         </iCol>
         <iCol span="16">
           <div class="article-info-row">
-            <Select v-model="articleAddForm.articleCategory" placeholder="请选择文章类别">
-              <Option v-for="item in articleCategory" :value="item.name" :key="item.code">{{ item.name }}</Option>
+            <Select v-model="articleAddForm.articleCategory" placeholder="请选择文章类别" size="large">
+              <Option v-for="item in articleCategory" :key="item.name" :value="item.name" :label="item.name"/>
             </Select>
           </div>
           <div class="article-info-row">
-            <Input type="textarea" v-model="articleAddForm.brief" placeholder="请输入文章简介"/>
+            <Input type="textarea" v-model="articleAddForm.brief" size="large" :autosize="{minRows: 5,maxRows: 10}"
+                   placeholder="请输入文章简介"/>
           </div>
           <div class="article-info-row">
             <Input class="article-info-tag" prefix="ios-bookmark-outline" v-model="tag" placeholder="添加标签"
@@ -118,9 +119,9 @@ export default {
 
 <style lang="less" scoped>
 .container {
-    width: 1260px;
-    margin: 20px auto;
-    /*background: #ccc;*/
+  width: 1260px;
+  margin: 20px auto;
+  /*background: #ccc;*/
 
   .article-info-title {
     margin-bottom: 7px;

@@ -50,6 +50,10 @@ export default new Router({
           path: 'message',
           name: 'message',
           component: () => import('@/views/message/Message')
+        }, {
+          path: 'user',
+          name: 'user',
+          component: () => import('@/views/user/User')
         }
       ]
     }

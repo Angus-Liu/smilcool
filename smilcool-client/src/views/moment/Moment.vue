@@ -13,10 +13,8 @@
       <a is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item"
          @click="select(item)"/>
       <sui-menu-menu position="right">
-        <sui-menu-item>
-          <sui-input transparent icon="search" placeholder="搜索动态"/>
-        </sui-menu-item>
-        <sui-button basic attached="right" icon="paper plane outline" content="发布动态" @click="momentModal.show = true"/>
+        <sui-button basic attached="right" icon="paper plane outline" content="发布动态"
+                    @click="momentAddModal.show = true"/>
       </sui-menu-menu>
     </sui-menu>
     <!-- 动态菜单栏 END -->
@@ -34,7 +32,8 @@
           </sui-card-meta>
           <sui-card-description class="moment-content">
             <p>{{momentPage.moment.content}}</p>
-            <sui-image-group class="moment-image-group" v-if="momentPage.moment.images" size="tiny">
+            <sui-image-group class="moment-image-group"
+                             v-if="momentPage.moment.images && momentPage.moment.images.length > 0" size="tiny">
               <sui-image v-for="(image, index) in momentPage.moment.images" :src="image" :key="index"/>
             </sui-image-group>
           </sui-card-description>
@@ -66,25 +65,29 @@
     <sui-button class="fluid" color="grey" basic content="加载更多"/>
     <!-- 加载更多 END -->
     <!-- 发布动态模态框 -->
-    <Modal v-model="momentModal.show" title="发布动态" :mask-closable="false" width="600" footer-hide>
-      <Form :model="momentModal.form" :label-width="50">
+    <Modal v-model="momentAddModal.show" title="发布动态" :mask-closable="false" width="600">
+      <Form :model="momentAddModal.form" :label-width="50">
         <FormItem label="类别">
-          <Select v-model="momentModal.form.momentCategory" size="large">
-            <Option value="beijing">New York</Option>
-            <Option value="shanghai">London</Option>
-            <Option value="shenzhen">Sydney</Option>
+          <Select v-model="momentAddModal.form.momentCategory" size="large">
+            <Option value="校园动态">校园动态</Option>
           </Select>
         </FormItem>
         <FormItem label="内容">
-          <Input v-model="momentModal.form.content" type="textarea" size="large" :autosize="{minRows: 5,maxRows: 10}"
+          <Input v-model="momentAddModal.form.content" type="textarea" size="large" :autosize="{minRows: 5,maxRows: 10}"
                  placeholder="输入你发现的趣事吧~"></Input>
         </FormItem>
-        <FormItem label="图片">
-          <ImageUploader @images-change="images => momentModal.form.images = images"/>
+        <FormItem label="图片" style="margin-bottom: 0">
+          <ImageUploader v-if="momentAddModal.show" @images-change="images => momentAddModal.form.images = images"/>
         </FormItem>
       </Form>
+      <template #footer>
+        <Button type="text" @click="momentAddModal.show = false">取消</Button>
+        <Button @click="addMoment">确定发布</Button>
+      </template>
     </Modal>
     <!-- 发布动态模态框 END -->
+    <a href="/local-storage/file/73af07d894a1643f4737678d6b20c3d2.png" download="tupian.png">Download file</a>
+
   </div>
 </template>
 
@@ -139,10 +142,10 @@ export default {
           'commentList': []
         }
       ],
-      momentModal: {
+      momentAddModal: {
         show: false,
         form: {
-          momentCategory: '',
+          momentCategory: '校园动态',
           content: '',
           images: []
         }
@@ -150,12 +153,26 @@ export default {
     }
   },
   methods: {
+    // 初始化
+    init() {
+      this.momentAddModal = {
+        show: false,
+        form: {
+          momentCategory: '校园动态',
+          content: '',
+          images: []
+        }
+      };
+      // 获取动态
+      this.getMomentList();
+    },
     isActive(name) {
       return this.active === name;
     },
     select(name) {
       this.active = name;
     },
+    // 获取动态页
     getMomentList() {
       this.$axios.get('/api/moment')
         .then(res => {
@@ -167,6 +184,18 @@ export default {
             }
           })
         });
+    },
+    // 动态添加
+    addMoment() {
+      this.momentAddModal.form.images = JSON.stringify(this.momentAddModal.form.images);
+      this.$axios.post('/api/moment', this.momentAddModal.form)
+        .then(res => {
+          let result = res.data;
+          if (result.success) {
+            this.$Notice.success({ title: 'Bingo', desc: '发布成功' });
+            this.init();
+          }
+        })
     }
   },
   mounted() {
@@ -181,40 +210,40 @@ export default {
   width: 1140px;
   margin: 20px auto;
   padding: 5px;
-}
 
-.moment-list {
-  margin: 15px auto 25px;
-  column-count: 3;
+  .moment-list {
+    margin: 15px auto 25px;
+    column-count: 3;
 
-  .moment-item {
-    break-inside: avoid;
-    padding: 7px;
+    .moment-item {
+      break-inside: avoid;
+      padding: 7px;
 
-    .moment-item-wrapper {
-      padding: 20px 20px 5px 20px;
+      .moment-item-wrapper {
+        padding: 20px 20px 5px 20px;
 
-      .moment-avatar {
-        height: 50px;
-        width: 50px;
+        .moment-avatar {
+          height: 50px;
+          width: 50px;
+        }
       }
-    }
 
-    .moment-image-group {
-      margin-top: 15px;
-    }
+      .moment-image-group {
+        margin-top: 15px;
+      }
 
-    .moment-time {
-      margin-top: -10px;
-      margin-left: 55px;
-    }
+      .moment-time {
+        margin-top: -10px;
+        margin-left: 55px;
+      }
 
-    .moment-content {
-      margin-left: 55px;
-    }
+      .moment-content {
+        margin-left: 55px;
+      }
 
-    .moment-button {
-      margin-left: 5px;
+      .moment-button {
+        margin-left: 5px;
+      }
     }
   }
 }
