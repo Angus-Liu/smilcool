@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 上传图片列表 -->
-    <div class="upload-list" v-for="item in uploadList">
+    <div class="upload-list" v-for="item in $refs.upload.fileList">
       <!-- 上传成功 -->
       <template v-if="item.status === 'finished'">
         <img :src="item.url">
@@ -23,13 +23,13 @@
             :action="localStorage"
             :data="data"
             :show-upload-list="false"
-            :on-success="handleSuccess"
-            :on-error="handleError"
             :format="['jpg','jpeg','png']"
             :on-format-error="handleFormatError"
+            :on-success="handleSuccess"
+            :on-error="handleError"
             multiple
             type="drag">
-      <Icon style="width: 58px;height:58px;line-height: 58px;" type="ios-camera" size="20"></Icon>
+      <Icon type="ios-camera" size="20"></Icon>
     </Upload>
     <!-- 图片上传 END -->
     <!-- 图片预览 Modal -->
@@ -45,8 +45,6 @@ export default {
   name: 'ImageUploader',
   data() {
     return {
-      // 已上传图片
-      uploadList: [],
       // 上传地址
       localStorage: '/api/local-storage/upload',
       // 上传时额外附带参数
@@ -99,21 +97,20 @@ export default {
       let images = uploadList.map(item => item.url);
       this.$emit('images-change', images);
     }
-  },
-  mounted() {
-    // 保留已上传文件列表的引用
-    this.uploadList = this.$refs.upload.fileList;
   }
 }
 </script>
 
-<style scoped>
-
-/*上传图片*/
-
+<style lang="less" scoped>
 .upload {
   display: inline-block;
   width: 58px;
+
+  i {
+    width: 58px;
+    height: 58px;
+    line-height: 58px;
+  }
 }
 
 .upload-list {
@@ -129,31 +126,31 @@ export default {
   position: relative;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
   margin-right: 4px;
-}
 
-.upload-list img {
-  width: 100%;
-  height: 100%;
-}
+  img {
+    width: 100%;
+    height: 100%;
+  }
 
-.upload-list-cover {
-  display: none;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, .6);
+  .upload-list-cover {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .6);
+
+    i {
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      margin: 0 2px;
+    }
+  }
 }
 
 .upload-list:hover .upload-list-cover {
   display: block;
-}
-
-.upload-list-cover i {
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  margin: 0 2px;
 }
 </style>
