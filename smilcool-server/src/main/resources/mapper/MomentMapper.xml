@@ -173,10 +173,11 @@
     </update>
 
     <select id="select" resultType="com.smilcool.server.core.pojo.po.Moment">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
-        from moment
+        FROM moment
+        ORDER BY create_time DESC
     </select>
 </mapper>

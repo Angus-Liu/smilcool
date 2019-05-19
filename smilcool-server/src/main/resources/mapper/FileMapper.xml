@@ -201,9 +201,9 @@
     </update>
 
     <select id="select" resultType="com.smilcool.server.core.pojo.po.File">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from file
+        FROM file
+        ORDER BY create_time DESC
     </select>
-
 </mapper>
