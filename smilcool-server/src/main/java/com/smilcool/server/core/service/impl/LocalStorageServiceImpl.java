@@ -1,14 +1,13 @@
 package com.smilcool.server.core.service.impl;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.core.pojo.vo.UploadInfoVO;
 import com.smilcool.server.core.service.LocalStorageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 /**
  * @author Angus
@@ -26,28 +25,36 @@ public class LocalStorageServiceImpl implements LocalStorageService {
 
     @Override
     public UploadInfoVO upload(String type, MultipartFile file) {
-        String fileName = file.getOriginalFilename();
-        String fileSize = getFileSize(file.getSize());
-        // TODO 2019/5/19 file 需要进行 Hash
-        String subUrl = "/" + type + "/" + fileName;
-        // 文件虚拟路径（配合 WebMvcConfig 相关配置，进行静态资源映射）
-        String url = "/local-storage" + subUrl;
-        // 文件本地存储真实路径
-        String path = localStorage + subUrl;
-        // 写入文件
         try {
+            // 原文件名
+            String fileName = file.getOriginalFilename();
+            // 文件大小
+            String fileSize = getFileSize(file.getSize());
+            // 文件后缀
+            String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
+            // 文件 MD5 值（作为文件名，防文件重名产生覆盖，以及去重）
+            String md5 = DigestUtil.md5Hex(file.getBytes());
+            // 文件相对存储路径
+            String subUrl = "/" + type + "/" + md5 + fileSuffix;
+            // 文件虚拟路径（配合 WebMvcConfig 相关配置，进行静态资源映射）
+            String url = "/local-storage" + subUrl;
+            // 文件本地存储路径
+            String path = localStorage + subUrl;
+            // 写入文件
             FileUtil.writeBytes(file.getBytes(), path);
-        } catch (IOException e) {
+            return new UploadInfoVO(fileName, fileSize, url);
+        } catch (Exception e) {
             e.printStackTrace();
             throw new SmilcoolException("文件上传失败");
         }
-        return UploadInfoVO.builder()
-                .fileName(fileName)
-                .fileSize(fileSize)
-                .url(url)
-                .build();
     }
 
+    /**
+     * 获取格式化后的文件大小
+     *
+     * @param size 文件大小，字节
+     * @return
+     */
     private String getFileSize(long size) {
         if (size < KB) {
             return size + "B";

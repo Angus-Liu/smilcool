@@ -1,6 +1,6 @@
 package com.smilcool.server.core.pojo.vo;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -8,7 +8,7 @@ import lombok.Data;
  * @date 2019/5/19
  */
 @Data
-@Builder
+@AllArgsConstructor
 public class UploadInfoVO {
     private String fileName;
     private String fileSize;
