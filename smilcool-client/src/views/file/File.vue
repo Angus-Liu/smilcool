@@ -11,7 +11,7 @@
           </sui-menu-item>
         </sui-menu>
         <!-- 文件操作菜单 END -->
-        <!-- 文件菜单栏 -->
+        <!-- 文件类别 -->
         <div class="file-category">
           <Tag type="dot" v-if="name === '所有'" color="#32C2BC" @click.native="name ='所有'">所有</Tag>
           <Tag type="dot" v-else @click.native="name ='所有'">所有</Tag>
@@ -22,6 +22,8 @@
             <Tag type="dot" v-else @click.native="name = item.name">{{item.name}}</Tag>
           </template>
         </div>
+        <!-- 文件类别 END -->
+        <!-- 文件列表 -->
         <sui-card class="fluid">
           <sui-message attached="top">文件列表</sui-message>
           <sui-card-content>
@@ -49,7 +51,7 @@
             <sui-button content="下一页" icon="right chevron" label-position="right"/>
           </sui-button-group>
         </sui-card>
-        <!-- 文件菜单栏 END -->
+        <!-- 文件列表 END -->
       </iCol>
       <iCol span="7">
         <!-- 消息提示 -->
