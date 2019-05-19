@@ -1,7 +1,7 @@
 package com.smilcool.server.core.controller.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.smilcool.server.common.dto.Result;
+import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;

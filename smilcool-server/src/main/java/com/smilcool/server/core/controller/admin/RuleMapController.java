@@ -1,6 +1,6 @@
 package com.smilcool.server.core.controller.admin;
 
-import com.smilcool.server.common.dto.Result;
+import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.RuleMapAddForm;
 import com.smilcool.server.core.pojo.form.RuleMapUpdateForm;
 import com.smilcool.server.core.pojo.po.RuleMap;

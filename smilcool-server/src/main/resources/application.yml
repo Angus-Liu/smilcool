@@ -8,11 +8,11 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/smilcool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
-  #  servlet:
-  #    # 文件上传下载配置
-  #    multipart:
-  #      max-file-size: 500MB
-  #      max-request-size: 500MB
+  # 文件上传下载配置
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
 
   # Redis 配置
   redis:
@@ -58,6 +58,9 @@ logging:
     com.smilcool.server.core.dao: debug
     com.smilcool.server.core.controller: debug
 
-# netty 配置
-netty:
-  port: 8088
+# Smilcool 自定义配置
+smilcool:
+  # netty 监听端口
+  netty-port: 8088
+  # 本地存储位置
+  local-storage: D:/Smilcool/

@@ -25,7 +25,7 @@ public class WebSocketServer {
     private ServerBootstrap serverBootstrap;
     private ChannelFuture channelFuture;
 
-    @Value("${netty.port}")
+    @Value("${smilcool.netty-port}")
     private Integer port;
 
 

@@ -1,6 +1,6 @@
 package com.smilcool.server.core.controller;
 
-import com.smilcool.server.common.dto.Result;
+import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.bo.ArticleBO;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.page.ArticlePage;

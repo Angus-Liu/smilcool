@@ -1,6 +1,6 @@
 package com.smilcool.server.core.controller.admin;
 
-import com.smilcool.server.common.dto.Result;
+import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.RoleAddForm;
 import com.smilcool.server.core.pojo.form.RoleUpdateForm;
 import com.smilcool.server.core.pojo.vo.PermissionVO;

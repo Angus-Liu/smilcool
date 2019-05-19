@@ -1,6 +1,6 @@
 package com.smilcool.server.base.config.shiro.filter;
 
-import com.smilcool.server.common.dto.Result;
+import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.common.util.HttpServletResponseUtil;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;

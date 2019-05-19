@@ -1,6 +1,6 @@
 package com.smilcool.server.base.handler;
 
-import com.smilcool.server.common.dto.Result;
+import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.common.exception.SmilcoolException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.ShiroException;
