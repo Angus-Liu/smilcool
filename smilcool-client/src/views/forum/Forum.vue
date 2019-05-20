@@ -19,44 +19,44 @@
     <!-- 论坛版块 -->
     <Row>
       <iCol class="column" span="6">
-        <sui-card class="fluid topic">
+        <a is="sui-card" class="fluid topic">
           <sui-card-content>
             <sui-icon name="wifi teal"/>
           </sui-card-content>
           <sui-card-content extra>
             <p>校园热点</p>
           </sui-card-content>
-        </sui-card>
+        </a>
       </iCol>
       <iCol class="column" span="6">
-        <sui-card class="fluid topic">
+        <a is="sui-card" class="fluid topic">
           <sui-card-content>
             <sui-icon name="comments outline olive"/>
           </sui-card-content>
           <sui-card-content extra>
             <p>话题讨论</p>
           </sui-card-content>
-        </sui-card>
+        </a>
       </iCol>
       <iCol class="column" span="6">
-        <sui-card class="fluid topic">
+        <a is="sui-card" class="fluid topic">
           <sui-card-content>
             <sui-icon name="lightbulb outline yellow"/>
           </sui-card-content>
           <sui-card-content extra>
             <p>经历分享</p>
           </sui-card-content>
-        </sui-card>
+        </a>
       </iCol>
       <iCol class="column" span="6">
-        <sui-card class="fluid topic">
+        <a is="sui-card" class="fluid topic">
           <sui-card-content>
             <sui-icon name="flag outline orange"/>
           </sui-card-content>
           <sui-card-content extra>
             <p>精华文章</p>
           </sui-card-content>
-        </sui-card>
+        </a>
       </iCol>
     </Row>
 

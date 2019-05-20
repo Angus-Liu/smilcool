@@ -36,14 +36,29 @@
           <sui-image class="avatar-img" circular :src="user.avatar"/>
           <DropdownMenu class="avatar-menu-list" slot="list">
             <router-link to="/user">
-              <DropdownItem>我的主页</DropdownItem>
+              <DropdownItem>
+                <sui-icon name="user circle"/>
+                我的主页
+              </DropdownItem>
             </router-link>
             <router-link to="/article/editor">
-              <DropdownItem>发表文章</DropdownItem>
+              <DropdownItem>
+                <sui-icon name="pencil alternate"/>
+                发表文章
+              </DropdownItem>
             </router-link>
-            <DropdownItem>收藏列表</DropdownItem>
-            <DropdownItem>账号管理</DropdownItem>
-            <DropdownItem divided @click.native="$store.commit('userLogout')">退出登录</DropdownItem>
+            <DropdownItem>
+              <sui-icon name="star"/>
+              收藏列表
+            </DropdownItem>
+            <DropdownItem>
+              <sui-icon name="key"/>
+              账号管理
+            </DropdownItem>
+            <DropdownItem divided @click.native="$store.commit('userLogout')">
+              <sui-icon name="power off"/>
+              退出登录
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
         <sui-image class="avatar-img" v-else circular @click.native="loginRegisterModel.show = true"
@@ -69,6 +84,7 @@
           这里会显示推荐结果
         </div>
       </div>
+      <!-- 搜索框 END -->
     </div>
     <!-- 登录注册模态框 -->
     <Modal v-model="loginRegisterModel.show" :title="loginRegisterModel.title" :mask-closable="false" width="320"
@@ -213,7 +229,8 @@ header {
   width: 100%;
   height: 70px;
   background: #fff;
-  box-shadow: 1px 1px 1px #eee;
+  /*box-shadow: 1px 1px 1px #eee;*/
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, .1);
   z-index: 999;
   margin-bottom: 5px;
 }

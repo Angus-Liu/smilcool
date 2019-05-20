@@ -263,11 +263,6 @@ export default {
 
   .ivu-col {
     padding: 7px;
-
-    .markdown-body img {
-      display: block;
-      margin: 0 auto;
-    }
   }
 }
 

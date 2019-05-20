@@ -19,6 +19,7 @@ html, body {
 
 #app {
   .size;
-  background: #EFF3F5;
+  /*background: #EFF3F5;*/
+  background: #f1f1f1;
 }
 </style>

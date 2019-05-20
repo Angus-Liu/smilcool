@@ -77,7 +77,7 @@
       </iCol>
       <iCol span="10">
         <!-- 系统通告 -->
-        <sui-message warning dismissable>
+        <sui-message positive dismissable>
           <sui-message-header>Q：Smilcool是什么？</sui-message-header>
           <p style="text-align:justify">
             进入你想发帖的版面，页面底部就能快捷发帖。 输入标题、正文，点击发布就能成功发帖！

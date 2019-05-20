@@ -57,7 +57,7 @@
       </iCol>
       <iCol span="7">
         <!-- 消息提示 -->
-        <sui-message dismissable>
+        <sui-message>
           <sui-message-header>
             <i class="handshake outline icon"/> 分享学习资料，让更多人获益。
           </sui-message-header>

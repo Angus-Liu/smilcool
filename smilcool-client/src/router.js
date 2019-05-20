@@ -16,7 +16,7 @@ export default new Router({
         {
           path: 'article',
           name: 'article',
-          component: () => import('@/views/article/Main'),
+          component: () => import('@/views/article/Article'),
         }, {
           path: 'article/editor',
           name: 'article-editor',
