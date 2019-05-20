@@ -65,29 +65,27 @@
     <sui-button class="fluid" color="grey" basic content="加载更多"/>
     <!-- 加载更多 END -->
     <!-- 发布动态模态框 -->
-    <Modal v-model="momentAddModal.show" title="发布动态" :mask-closable="false" width="600">
+    <Modal v-model="momentAddModal.show" title="发布动态" :closable="false" :mask-closable="false" width="600">
       <Form :model="momentAddModal.form" :label-width="50">
-        <FormItem label="类别">
+        <FormItem label="类别" required>
           <Select v-model="momentAddModal.form.momentCategory" size="large">
             <Option value="校园动态">校园动态</Option>
           </Select>
         </FormItem>
-        <FormItem label="内容">
+        <FormItem label="内容" required>
           <Input v-model="momentAddModal.form.content" type="textarea" size="large" :autosize="{minRows: 5,maxRows: 10}"
-                 placeholder="输入你发现的趣事吧~"></Input>
+                 placeholder="输入你发现的趣事吧~"/>
         </FormItem>
         <FormItem label="图片" style="margin-bottom: 0">
           <ImageUploader v-if="momentAddModal.show" @images-change="images => momentAddModal.form.images = images"/>
         </FormItem>
       </Form>
       <template #footer>
-        <Button type="text" @click="momentAddModal.show = false">取消</Button>
+        <Button type="text" @click="resetMomentAddModal">取消</Button>
         <Button @click="addMoment">确定发布</Button>
       </template>
     </Modal>
     <!-- 发布动态模态框 END -->
-    <a href="/local-storage/file/73af07d894a1643f4737678d6b20c3d2.png" download="tupian.png">Download file</a>
-
   </div>
 </template>
 
@@ -153,8 +151,8 @@ export default {
     }
   },
   methods: {
-    // 初始化
-    init() {
+    // 重置动态添加模态框
+    resetMomentAddModal() {
       this.momentAddModal = {
         show: false,
         form: {
@@ -163,8 +161,6 @@ export default {
           images: []
         }
       };
-      // 获取动态
-      this.getMomentList();
     },
     isActive(name) {
       return this.active === name;
@@ -187,13 +183,15 @@ export default {
     },
     // 动态添加
     addMoment() {
-      this.momentAddModal.form.images = JSON.stringify(this.momentAddModal.form.images);
-      this.$axios.post('/api/moment', this.momentAddModal.form)
+      let momentAddForm = this.momentAddModal.form;
+      momentAddForm.images = JSON.stringify(momentAddForm.images);
+      this.$axios.post('/api/moment', momentAddForm)
         .then(res => {
           let result = res.data;
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '发布成功' });
-            this.init();
+            this.resetMomentAddModal();
+            this.getMomentList();
           }
         })
     }

@@ -6,9 +6,19 @@
       </sui-message>
       <sui-card-content>
         <Row>
-          <iCol class="column" span="7">
+          <iCol span="7">
             <div class="friend-list">
               <sui-item-group>
+                <sui-item :class="{active: id === -1}" @click.native="id = -1">
+                  <sui-image circular src="http://img.angus-liu.cn/avatar/avatar06.png"/>
+                  <sui-item-content>
+                    <sui-item-description>
+                      系统通知
+                      <Badge v-if="i % 2 === 0" :count="3"/>
+                    </sui-item-description>
+                    <sui-item-meta>这是一条消息</sui-item-meta>
+                  </sui-item-content>
+                </sui-item>
                 <sui-item v-for="i in 5" :class="{active: id === i}" @click.native="id = i">
                   <sui-image circular src="http://img.angus-liu.cn/avatar/avatar06.png"/>
                   <sui-item-content>
@@ -22,7 +32,7 @@
               </sui-item-group>
             </div>
           </iCol>
-          <iCol class="column" span="17">
+          <iCol span="17">
             <div class="message-list">
               <div class="message-friend">
                 <p>和 Angus 聊天中...</p>
@@ -95,61 +105,61 @@ export default {
   .card {
     height: 720px;
 
-    .column {
+    .ivu-col {
       padding: 5px;
+    }
 
-      .friend-list {
-        height: 625px;
-        overflow: auto;
+    .friend-list {
+      height: 625px;
+      overflow: auto;
 
-        .items {
-          .item {
-            cursor: pointer;
-            margin-bottom: 5px;
-            padding: 2px;
-            border-radius: 30px;
+      .items {
+        .item {
+          cursor: pointer;
+          margin-bottom: 5px;
+          padding: 2px;
+          border-radius: 30px;
 
-            .image {
-              width: 60px;
-              height: 60px;
-            }
+          .image {
+            width: 60px;
+            height: 60px;
           }
+        }
 
-          .item:hover,
-          .item.active {
-            background: #f9f9f9;
-          }
+        .item:hover,
+        .item.active {
+          background: #eeeeee;
+        }
+      }
+    }
+
+    .message-list {
+      height: 625px;
+
+      .message-friend {
+        height: 20px;
+        padding: 0 10px;
+
+        p {
+          position: relative;
+          top: -5px;
+          color: #666;
         }
       }
 
-      .message-list {
-        height: 625px;
+      .message-show {
+        height: 470px;
+        margin-bottom: 15px;
+        padding: 10px;
+        overflow: auto;
+      }
 
-        .message-friend {
-          height: 20px;
-          padding: 0 10px;
+      .message-input {
+        height: 110px;
 
-          p {
-            position: relative;
-            top: -5px;
-            color: #666;
-          }
-        }
-
-        .message-show {
-          height: 470px;
-          margin-bottom: 15px;
-          padding: 10px;
-          overflow: auto;
-        }
-
-        .message-input {
-          height: 110px;
-
-          textarea {
-            resize: none;
-            height: 100%;
-          }
+        textarea {
+          resize: none;
+          height: 100%;
         }
       }
     }

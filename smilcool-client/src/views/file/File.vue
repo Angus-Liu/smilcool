@@ -33,7 +33,9 @@
                 <sui-item-content>
                   <sui-item-header>{{filePage.file.title}}</sui-item-header>
                   <sui-item-meta>
-                    <span>{{filePage.file.name}}</span>
+                    <a :href="filePage.file.url" :download="filePage.file.name">
+                      💾 {{filePage.file.name}}
+                    </a>
                   </sui-item-meta>
                   <sui-item-description>
                     <p>{{filePage.file.description}}</p>
@@ -72,19 +74,19 @@
     <!-- 文件上传模态框 -->
     <Modal v-model="fileAddModal.show" title="上传文件" :mask-closable="false" width="600">
       <Form :model="fileAddModal.form" :label-width="50">
-        <FormItem label="类别">
+        <FormItem label="类别" required>
           <Select v-model="fileAddModal.form.fileCategory" size="large">
             <Option v-for="item in fileCategory" :key="item.name" :value="item.name" :label="item.name"/>
           </Select>
         </FormItem>
-        <FormItem label="标题">
-          <Input v-model="fileAddModal.form.title" size="large" placeholder="醒目的标题才能吸引人"/>
+        <FormItem label="标题" required>
+          <Input v-model="fileAddModal.form.title" size="large" placeholder="醒目的标题能吸引更多人下载"/>
         </FormItem>
-        <FormItem label="描述">
+        <FormItem label="描述" required>
           <Input v-model="fileAddModal.form.description" type="textarea" size="large"
                  :autosize="{minRows: 5,maxRows: 10}" placeholder="简短的描述有助于他人了解资料的用途"/>
         </FormItem>
-        <FormItem label="文件" style="margin-bottom: 0">
+        <FormItem label="文件" required style="margin-bottom: 0">
           <Upload
             ref="upload"
             type="drag"
@@ -101,7 +103,7 @@
         </FormItem>
       </Form>
       <template #footer>
-        <Button type="text" @click="fileAddModal.show = false">取消</Button>
+        <Button type="text" @click="resetFileAddModal">取消</Button>
         <Button @click="addFile">确定分享</Button>
       </template>
     </Modal>
@@ -191,8 +193,8 @@ export default {
     select(name) {
       this.active = name;
     },
-    // 初始化
-    init() {
+    // 初始化文件添加模态框
+    resetFileAddModal() {
       this.fileAddModal = {
         show: false,
         form: {
@@ -206,8 +208,6 @@ export default {
       };
       // 清空已上传文件
       this.$refs.upload.clearFiles();
-      // 获取文件页面
-      this.getFilePageList();
     },
     // 获取文件类别
     getFileCategory() {
@@ -272,7 +272,8 @@ export default {
           let result = res.data;
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '分享成功' });
-            this.init();
+            this.resetFileAddModal();
+            this.getFilePageList();
           }
         })
     }

@@ -52,16 +52,16 @@
         <!-- 加载更多 END -->
       </iCol>
       <iCol span="8">
-        <!-- 寻物启事 -->
+        <!-- 寻物启事提示 -->
         <sui-card>
           <sui-message attached="top" icon="eye" negative>
             <sui-message-header>寻物启事小贴士</sui-message-header>
             <p>什么，有东西丢啦？不要怕，快来发布一条寻物启事吧，很快就会有好心人联系你啦。对啦，一定要核实信息，准确后再发布哦 😃</p>
           </sui-message>
-          <sui-button attached="bottom" icon="add" content="发布寻物启事"/>
+          <sui-button attached="bottom" icon="add" content="发布寻物启事" @click="showLostFoundModal('found')"/>
         </sui-card>
-        <!-- 寻物启事 END -->
-        <!-- 失物招领 -->
+        <!-- 寻物启事提示 END -->
+        <!-- 失物招领提示 -->
         <sui-card>
           <sui-message attached="top" icon="bullhorn" positive>
             <sui-message-content>
@@ -69,21 +69,75 @@
               <p>捡到哪位同学不小信掉落的物品啦？快发布一条失物招领吧，失主一定会非常非常感激你呢 😘</p>
             </sui-message-content>
           </sui-message>
-          <sui-button attached="bottom" icon="add" content="发布失物招领"/>
+          <sui-button attached="bottom" icon="add" content="发布失物招领" @click="showLostFoundModal('lost')"/>
         </sui-card>
-        <!-- 失物招领 END -->
+        <!-- 失物招领提示 END -->
       </iCol>
     </Row>
+    <!-- 失物寻物模态框 -->
+    <Modal v-model="lostFoundAddModal.show" :title="lostFoundAddModal.title"
+           :closable="false" :mask-closable="false" width="600">
+      <Form :model="lostFoundAddModal.form" :label-width="50">
+        <FormItem label="标题" required>
+          <Input v-model="lostFoundAddModal.form.title" size="large" placeholder="清晰的标题能让更多人注意到"/>
+        </FormItem>
+        <FormItem label="物品" required>
+          <Input v-model="lostFoundAddModal.form.itemName" size="large" placeholder="请填写物品名"/>
+        </FormItem>
+        <FormItem label="时间" required>
+          <DatePicker v-model="lostFoundAddModal.form.time" type="datetime" size="large"
+                      :placeholder="lostFoundAddModal.placeholder.time" style="width: 100%"/>
+        </FormItem>
+        <FormItem label="地点" required>
+          <Input v-model="lostFoundAddModal.form.address" size="large"
+                 :placeholder="lostFoundAddModal.placeholder.address"/>
+        </FormItem>
+        <FormItem label="描述" required>
+          <Input v-model="lostFoundAddModal.form.description" type="textarea" size="large"
+                 :autosize="{minRows: 5,maxRows: 10}" placeholder="输入物品描述，有助于他人获取信息"/>
+        </FormItem>
+        <FormItem label="图片" style="margin-bottom: 0">
+          <ImageUploader v-if="lostFoundAddModal.show"
+                         @images-change="images => lostFoundAddModal.form.images = images"/>
+        </FormItem>
+      </Form>
+      <template #footer>
+        <Button type="text" @click="lostFoundAddModal.show = false">取消</Button>
+        <Button @click="addLostFoundAddModal">确定发布</Button>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script>
+import ImageUploader from '@/components/common/ImageUploader'
+
 export default {
   name: 'LostFound',
+  components: {
+    ImageUploader
+  },
   data() {
     return {
       active: '查看所有',
       items: ['查看所有', '失物招领', '寻物启事'],
+      lostFoundAddModal: {
+        show: false,
+        title: '发布寻物启事',
+        placeholder: {
+          time: '请选择丢失时间',
+          address: '请填写丢失地点'
+        },
+        form: {
+          lostFoundCategory: '寻物启事',
+          title: '',
+          itemName: '',
+          time: null,
+          address: '',
+          description: '',
+          images: null,
+        }
+      },
       lostFoundPageList: [{
         'lostFound': {
           'id': 1,
@@ -139,6 +193,45 @@ export default {
     }
   },
   methods: {
+    showLostFoundModal(type) {
+      if (type === 'found') {
+        this.lostFoundAddModal = {
+          show: true,
+          title: '发布寻物启事',
+          placeholder: {
+            time: '请选择丢失时间',
+            address: '请填写丢失地点'
+          },
+          form: {
+            lostFoundCategory: '寻物启事',
+            title: '',
+            itemName: '',
+            time: null,
+            address: '',
+            description: '',
+            images: null,
+          }
+        }
+      } else {
+        this.lostFoundAddModal = {
+          show: true,
+          title: '发布失物招领',
+          placeholder: {
+            time: '请选择拾取时间',
+            address: '请填写拾取地点'
+          },
+          form: {
+            lostFoundCategory: '失物招领',
+            title: '',
+            itemName: '',
+            time: null,
+            address: '',
+            description: '',
+            images: null,
+          }
+        }
+      }
+    },
     select(name) {
       this.active = name;
     },
@@ -152,6 +245,19 @@ export default {
               lostFoundPage.lostFound.images = JSON.parse(lostFoundPage.lostFound.images);
             }
           })
+        })
+    },
+    addLostFoundAddModal() {
+      let lostFoundAddForm = this.lostFoundAddModal.form;
+      lostFoundAddForm.images = JSON.stringify(lostFoundAddForm.images);
+      this.$axios.post('/api/lost-found', lostFoundAddForm)
+        .then(res => {
+          let result = res.data;
+          if (result.success) {
+            this.$Notice.success({ title: 'Bingo', desc: '发布成功' });
+            this.lostFoundAddModal.show = false;
+            this.getLostFoundPageList();
+          }
         })
     }
   },
