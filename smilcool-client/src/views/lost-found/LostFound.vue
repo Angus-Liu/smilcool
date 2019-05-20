@@ -19,8 +19,7 @@
                 <sui-feed-label :image="lostFoundPage.user.avatar"/>
                 <sui-feed-content>
                   <sui-feed-summary>
-                    <sui-label class="category-label" basic
-                               :color="lostFoundPage.lostFound.lostFoundCategory === '寻物启事'? 'red':'green'">
+                    <sui-label basic :color="lostFoundPage.lostFound.lostFoundCategory === '寻物启事'? 'red':'green'">
                       {{lostFoundPage.lostFound.lostFoundCategory}}
                     </sui-label>
                     <a href="#">{{lostFoundPage.lostFound.title}}</a>
@@ -30,7 +29,7 @@
                   </sui-feed-summary>
                   <sui-feed-extra text>{{lostFoundPage.lostFound.description}}</sui-feed-extra>
                   <sui-feed-extra images
-                                  v-if="lostFoundPage.lostFound.images && lostFoundPage.lostFound.images.length !== 0">
+                                  v-if="lostFoundPage.lostFound.images && lostFoundPage.lostFound.images.length > 0">
                     <img v-for="img in lostFoundPage.lostFound.images" :src="img">
                   </sui-feed-extra>
                   <sui-feed-meta>
@@ -85,8 +84,9 @@
           <Input v-model="lostFoundAddModal.form.itemName" size="large" placeholder="请填写物品名"/>
         </FormItem>
         <FormItem label="时间" required>
-          <DatePicker v-model="lostFoundAddModal.form.time" type="datetime" size="large"
-                      :placeholder="lostFoundAddModal.placeholder.time" style="width: 100%"/>
+          <DatePicker :value="lostFoundAddModal.form.time" @on-change="time => lostFoundAddModal.form.time = time"
+                      type="datetime" size="large" :placeholder="lostFoundAddModal.placeholder.time"
+                      style="width: 100%"/>
         </FormItem>
         <FormItem label="地点" required>
           <Input v-model="lostFoundAddModal.form.address" size="large"
@@ -106,6 +106,7 @@
         <Button @click="addLostFoundAddModal">确定发布</Button>
       </template>
     </Modal>
+    <!-- 失物寻物模态框 END -->
   </div>
 </template>
 
