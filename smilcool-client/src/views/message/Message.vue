@@ -246,6 +246,12 @@ export default {
           width: 60px;
           height: 60px;
         }
+
+        .meta {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
 
       .item:hover,

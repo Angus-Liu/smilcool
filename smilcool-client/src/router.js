@@ -54,6 +54,10 @@ export default new Router({
           path: 'user',
           name: 'user',
           component: () => import('@/views/user/User')
+        }, {
+          path: 'search',
+          name: 'search',
+          component: () => import('@/views/search/Search')
         }
       ]
     }

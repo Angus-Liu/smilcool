@@ -6,78 +6,48 @@
         <Carousel class="carousel-container" loop autoplay :autoplay-speed="5000" radius-dot>
           <CarouselItem v-for="(item, index) in carouselList" :key="index">
             <div class="carousel-item">
-              <img class="carousel-img" :src="item">
+              <a href="http://cst.nuc.edu.cn/" target="_blank">
+                <img class="carousel-img" :src="item">
+              </a>
             </div>
           </CarouselItem>
         </Carousel>
         <!-- 轮播图 END -->
-        <!-- 文章选项卡 -->
-        <div>
-          <sui-tab :menu="{ secondary: true }">
-            <sui-tab-pane class="tab-pane" title="推荐" :attached="false">
-              <div class="card-header">
-                <h3>猜你喜欢</h3>
-              </div>
-              <div class="card-body">
-                <ul class="content-list">
-                  <li class="content-item" v-for="article in articleList" :key="article.id">
+        <!-- 文章选项菜单 -->
+        <sui-menu secondary>
+          <sui-menu-item active link name="推荐">推荐</sui-menu-item>
+          <sui-menu-item link name="最新">最新</sui-menu-item>
+          <sui-menu-item link name="最热">最热</sui-menu-item>
+        </sui-menu>
+        <!-- 文章选项菜单 END -->
+        <!-- 文章列表 -->
+        <sui-card class="fluid">
+          <sui-message attached="top">
+            <sui-message-header>
+              <sui-icon name="list alternate" color="blue"/>
+              文章列表
+            </sui-message-header>
+          </sui-message>
+          <sui-card-content>
+            <ul class="article-list">
+              <li class="article-item" v-for="article in articleList" :key="article.id">
                 <span class="article-category">
-                  <a is="sui-label" tag>{{article.articleCategory}}</a>
+                  <sui-label tag>{{article.articleCategory}}</sui-label>
                 </span>
-                    <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
-                    <span class="article-time">{{article.createTime}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-footer">
-                <a href="#">查看更多</a>
-              </div>
-            </sui-tab-pane>
-            <sui-tab-pane class="tab-pane" title="最新" :attached="false">
-              <div class="card-header">
-                <h3>最新发布</h3>
-              </div>
-              <div class="card-body">
-                <ul class="content-list">
-                  <li class="content-item" v-for="article in articleList" :key="article.id">
-                <span class="article-category">
-                  <a is="sui-label" tag>{{article.articleCategory}}</a>
-                </span>
-                    <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
-                    <span class="article-time">{{article.createTime}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-footer">
-                <a href="#">查看更多</a>
-              </div>
-            </sui-tab-pane>
-            <sui-tab-pane class="tab-pane" title="最热" :attached="false">
-              <div class="card-header">
-                <h3>热门文章</h3>
-              </div>
-              <div class="card-body">
-                <ul class="content-list">
-                  <li class="content-item" v-for="article in articleList" :key="article.id">
-                <span class="article-category">
-                  <a is="sui-label" tag>{{article.articleCategory}}</a>
-                </span>
-                    <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
-                    <span class="article-time">{{article.createTime}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-footer">
-                <a href="#">查看更多</a>
-              </div>
-            </sui-tab-pane>
-          </sui-tab>
-        </div>
-        <!-- 文章选项卡 END -->
+                <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
+                <span class="article-time">{{article.createTime}}</span>
+              </li>
+            </ul>
+          </sui-card-content>
+          <sui-card-content extra>
+            <a slot="right" href="#">查看更多</a>
+          </sui-card-content>
+        </sui-card>
+        <!-- 文章列表 -->
       </iCol>
       <iCol span="10">
         <!-- 系统通告 -->
-        <sui-message positive dismissable>
+        <sui-message negative dismissable>
           <sui-message-header>Q：Smilcool是什么？</sui-message-header>
           <p style="text-align:justify">
             进入你想发帖的版面，页面底部就能快捷发帖。 输入标题、正文，点击发布就能成功发帖！
@@ -93,10 +63,13 @@
         <!-- 系统通告 END -->
         <!-- 文章类别 -->
         <sui-card class="fluid">
+          <sui-message attached="top">
+            <sui-message-header>
+              <sui-icon name="bookmark" color="teal"/>
+              文章类别
+            </sui-message-header>
+          </sui-message>
           <sui-card-content>
-            <div class="card-header">
-              <h3>文章类别</h3>
-            </div>
             <div class="article-category">
               <a is="sui-label" basic image v-for="(item, index) in articleCategory" :key="index"
                  style="margin:5px 10px 5px 0">
@@ -108,10 +81,13 @@
         <!-- 文章类别 END-->
         <!-- 热门标签 -->
         <sui-card class="fluid">
+          <sui-message attached="top">
+            <sui-message-header>
+              <sui-icon name="tags" color="orange"/>
+              热门标签
+            </sui-message-header>
+          </sui-message>
           <sui-card-content>
-            <div class="card-header">
-              <h3>热门标签</h3>
-            </div>
             <div class="article-tags">
               <Tag type="dot" :color="item.color" v-for="(item,index) in articleTags" :key="index">{{item.name}}</Tag>
             </div>
@@ -120,21 +96,22 @@
         <!-- 热门标签 END -->
         <!-- 最新评论 -->
         <sui-card class="fluid">
+          <sui-message attached="top">
+            <sui-message-header>
+              <sui-icon name="comments" color="green"/>
+              最新评论
+            </sui-message-header>
+          </sui-message>
           <sui-card-content>
-            <div class="card-header">
-              <h3>最新评论</h3>
-            </div>
-            <div class="card-body">
-              <ul class="content-list">
-                <li class="content-item" v-for="article in articleList" :key="article.id">
-                  <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
-                  <span class="article-time">{{article.createTime}}</span>
-                </li>
-              </ul>
-            </div>
-            <div class="card-footer">
-              <a href="#">查看更多</a>
-            </div>
+            <ul class="article-list">
+              <li class="article-item" v-for="article in articleList" :key="article.id">
+                <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
+                <span class="article-time">{{article.createTime}}</span>
+              </li>
+            </ul>
+          </sui-card-content>
+          <sui-card-content extra>
+            <a slot="right" href="#">查看更多</a>
           </sui-card-content>
         </sui-card>
         <!-- 最新评论 END -->
@@ -151,41 +128,46 @@ export default {
       carouselList: [
         'http://cst.nuc.edu.cn/__local/6/B5/CA/0C7872A9A43129FBF22FFD81FD6_A7D26F04_11FD7.jpg',
         'http://cst.nuc.edu.cn/__local/4/BD/0A/EC16F73EAA614E63429BACDBE1D_5AC56599_AEDFD.png',
-        'http://cst.nuc.edu.cn/__local/2/36/5A/EAA656684EBA55E5462A8B8D583_C411B084_1A136.jpg'
+        'http://cst.nuc.edu.cn/__local/2/36/5A/EAA656684EBA55E5462A8B8D583_C411B084_1A136.jpg',
+        'http://cst.nuc.edu.cn/__local/9/57/7B/1A89800BB01F84F9FAD9E8D979A_02F9A36A_11E41.jpg'
       ],
       articleList: [{
         'id': 1,
+        'userId': 7,
+        'resourceId': 4,
         'articleCategory': '校园文章',
-        'title': '柴锐博士做客大数据学院“博士下午茶”活动',
-        'createTime': '2019-05-13'
-      }, {
-        'id': 2,
-        'articleCategory': '校园文章',
-        'title': '第五期精英论坛之就业英雄2成功举办',
-        'createTime': '2019-05-13'
-      }, {
-        'id': 3,
-        'articleCategory': '校园文章',
-        'title': '大数据学院举行首届第二次博士论坛',
-        'createTime': '2019-05-13'
+        'title': '测试文章',
+        'createTime': '2019-05-13',
+        'user': {
+          'id': 7,
+          'username': '007',
+          'nickname': '漫步金星',
+          'avatar': 'http://img.angus-liu.cn/avatar/avatar04.jpg'
+        },
+        'resource': {
+          'id': 4,
+          'zanCount': 0,
+          'pvCount': 0,
+          'commentCount': 2
+        }
       }],
       articleCategory: [{
-        name: '校园新闻',
+        name: '系统通知',
         img: 'http://img.angus-liu.cn/avatar/avatar01.jpg'
       }, {
-        name: '学院新闻',
+        name: '校园新闻',
         img: 'http://img.angus-liu.cn/avatar/avatar02.jpg'
       }, {
-        name: '社团文章',
+        name: '学院新闻',
         img: 'http://img.angus-liu.cn/avatar/avatar03.jpg'
       }, {
-        name: '只是论坛',
+        name: '社团动态',
         img: 'http://img.angus-liu.cn/avatar/avatar04.jpg'
       }, {
         name: '个人博客',
         img: 'http://img.angus-liu.cn/avatar/avatar05.jpg'
       }, {
-        name: '系统通知',
+        name: '校务通知',
         img: 'http://img.angus-liu.cn/avatar/avatar06.png'
       }],
       articleTags: [{
@@ -241,12 +223,10 @@ export default {
     .carousel-item {
       width: 100%;
       height: 400px;
-      background: #aaa;
-
 
       .carousel-img {
-        width: 100%;
         min-height: 400px;
+        width: 100%;
       }
     }
   }
@@ -258,49 +238,47 @@ export default {
 
   .tab-pane, .card {
 
-    .card-header {
+    .pane-header {
       padding-bottom: 10px;
       margin-bottom: 10px;
       border-bottom: 1px dashed #ccc;
       color: #404040;
     }
 
-    .card-body {
+
+    .article-list {
       margin: 10px 0 5px 0;
+      list-style: none;
 
-      .content-list {
-        list-style: none;
+      .article-item {
+        display: block;
+        margin: 5px 0;
+        line-height: 2.5em;
+        overflow: auto;
 
-        .content-item {
-          display: block;
-          margin: 5px 0;
-          line-height: 2.5em;
-          overflow: auto;
+        .article-category {
+          float: left;
+          width: 100px;
+          margin-right: 10px;
+        }
 
-          .article-category {
-            float: left;
-            width: 100px;
-            margin-right: 10px;
-          }
+        .article-title {
+          display: inline-block;
+          max-width: 400px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 1.1em;
+          color: #5c5c5c;
+        }
 
-          .article-title {
-            display: inline-block;
-            max-width: 400px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 1.1em;
-            color: #5c5c5c;
-          }
+        .article-title:hover {
+          color: #ff8364;
+        }
 
-          .article-title:hover {
-            color: #ff8364;
-          }
-
-          .article-time {
-            color: #aaa;
-            float: right;
-          }
+        .article-time {
+          color: #aaa;
+          float: right;
         }
       }
     }
