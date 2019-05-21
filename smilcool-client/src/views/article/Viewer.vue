@@ -257,9 +257,8 @@ export default {
 
 .container {
   width: 1140px;
-  margin: 10px auto;
+  margin: 0 auto;
   padding: 5px;
-  /*background: #eee;*/
 
   .ivu-col {
     padding: 7px;
