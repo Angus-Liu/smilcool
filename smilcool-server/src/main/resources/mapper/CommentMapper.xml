@@ -141,38 +141,77 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.Comment">
         UPDATE comment
-            SET parent_id = #{parentId,jdbcType=INTEGER},
-            user_id = #{userId,jdbcType=INTEGER},
-            resource_id = #{resourceId,jdbcType=INTEGER},
+        SET parent_id     = #{parentId,jdbcType=INTEGER},
+            user_id       = #{userId,jdbcType=INTEGER},
+            resource_id   = #{resourceId,jdbcType=INTEGER},
             reply_user_id = #{replyUserId,jdbcType=INTEGER},
-            content = #{content,jdbcType=VARCHAR},
-            remark = #{remark,jdbcType=VARCHAR},
-            create_time = #{createTime,jdbcType=TIMESTAMP},
-            update_time = #{updateTime,jdbcType=TIMESTAMP},
-            deleted = #{deleted,jdbcType=BIT}
-            WHERE id = #{id,jdbcType=INTEGER}
+            content       = #{content,jdbcType=VARCHAR},
+            remark        = #{remark,jdbcType=VARCHAR},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP},
+            deleted       = #{deleted,jdbcType=BIT}
+        WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="selectByResourceId" resultType="com.smilcool.server.core.pojo.po.Comment">
-        select
-        <include refid="Base_Column_List"/>
-        from comment
-        WHERE resource_id = #{resourceId}
-        AND parent_id is NULL
-        ORDER BY create_time DESC
+
+    <resultMap id="ResultMapWithPostUserAndReplyUser" extends="BaseResultMap"
+               type="com.smilcool.server.core.pojo.vo.CommentVO">
+        <!-- 发布用户信息 -->
+        <association property="postUser" javaType="com.smilcool.server.core.pojo.vo.UserVO">
+            <id column="p_user_id" jdbcType="INTEGER" property="id"/>
+            <result column="p_username" jdbcType="VARCHAR" property="username"/>
+            <result column="p_nickname" jdbcType="VARCHAR" property="nickname"/>
+            <result column="p_avatar" jdbcType="VARCHAR" property="avatar"/>
+        </association>
+        <!-- 回复用户信息 -->
+        <association property="replyUser" javaType="com.smilcool.server.core.pojo.vo.UserVO">
+            <id column="r_user_id" jdbcType="INTEGER" property="id"/>
+            <result column="r_username" jdbcType="VARCHAR" property="username"/>
+            <result column="r_nickname" jdbcType="VARCHAR" property="nickname"/>
+            <result column="r_avatar" jdbcType="VARCHAR" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <sql id="Comment_Column_List">
+        c.id,
+        c.content,
+        c.create_time
+    </sql>
+
+    <sql id="Post_User_Column_List">
+        p.id as p_user_id,
+        p.username as p_username,
+        p.nickname as p_nickname,
+        p.avatar as p_avatar
+    </sql>
+
+    <sql id="Reply_User_Column_List">
+        r.id as r_user_id,
+        r.username as r_username,
+        r.nickname as r_nickname,
+        r.avatar as r_avatar
+    </sql>
+
+    <select id="selectParentCommentVOByResourceId" resultMap="ResultMapWithPostUserAndReplyUser">
+        SELECT
+        <include refid="Comment_Column_List"/>,
+        <include refid="Post_User_Column_List"/>
+        FROM comment c
+        LEFT JOIN user p ON c.user_id = p.id
+        WHERE c.resource_id = #{resourceId}
+        AND c.parent_id is NULL
+        ORDER BY c.create_time DESC
     </select>
 
-    <select id="selectByParentId" resultType="com.smilcool.server.core.pojo.po.Comment">
+    <select id="selectChildCommentVOByParentId" resultMap="ResultMapWithPostUserAndReplyUser">
         select
-        <include refid="Base_Column_List"/>
-        from comment
-        WHERE parent_id = #{parentId}
-        ORDER BY create_time ASC
-    </select>
-
-    <select id="select" resultType="com.smilcool.server.core.pojo.po.Comment">
-        select
-        <include refid="Base_Column_List"/>
-        from comment
+        <include refid="Comment_Column_List"/>,
+        <include refid="Post_User_Column_List"/>,
+        <include refid="Reply_User_Column_List"/>
+        FROM comment c
+        LEFT JOIN user p ON c.user_id = p.id
+        LEFT JOIN user r ON c.reply_user_id = r.id
+        WHERE c.parent_id = #{parentId}
+        ORDER BY c.create_time ASC
     </select>
 </mapper>

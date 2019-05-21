@@ -19,27 +19,21 @@ import java.util.List;
  */
 @Api(tags = "3.1", description = "评论接口")
 @RestController
+@RequestMapping("/comment")
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
 
     @ApiOperation("评论添加")
-    @PostMapping("/comment")
+    @PostMapping
     public Result<Comment> addComment(@RequestBody @Valid CommentAddForm form) {
         Comment comment = commentService.addComment(form);
         return Result.success(comment);
     }
 
     @ApiOperation("评论列表")
-    @GetMapping("/comment")
-    public Result<List<CommentVO>> getCommentList() {
-        List<CommentVO> commentList = commentService.getCommentVOList();
-        return Result.success(commentList);
-    }
-
-    @ApiOperation("评论列表")
-    @GetMapping("/{resourceId}/comment")
+    @GetMapping("/{resourceId}")
     public Result<List<CommentVO>> getCommentList(@PathVariable Integer resourceId) {
         List<CommentVO> commentList = commentService.getCommentVOList(resourceId);
         return Result.success(commentList);

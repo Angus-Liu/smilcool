@@ -1,10 +1,7 @@
 package com.smilcool.server.core.service;
 
-import com.smilcool.server.core.pojo.bo.ArticleBO;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
-import com.smilcool.server.core.pojo.page.ArticlePage;
 import com.smilcool.server.core.pojo.po.Article;
-import com.smilcool.server.core.pojo.vo.ArticleInfo;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 
 import java.util.List;
@@ -21,11 +18,5 @@ public interface ArticleService {
 
     ArticleVO getArticleVO(Integer id);
 
-    List<ArticleVO> getArticleList();
-
-    List<ArticleBO> getArticleBOList();
-
-    ArticleInfo getArticleInfo(Integer id);
-
-    ArticlePage getArticlePage(Integer id);
+    List<ArticleVO> getArticleVOList();
 }

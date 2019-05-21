@@ -1,11 +1,8 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.core.pojo.dto.Result;
-import com.smilcool.server.core.pojo.bo.ArticleBO;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
-import com.smilcool.server.core.pojo.page.ArticlePage;
 import com.smilcool.server.core.pojo.po.Article;
-import com.smilcool.server.core.pojo.vo.ArticleInfo;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
 import io.swagger.annotations.Api;
@@ -38,30 +35,15 @@ public class ArticleController {
 
     @ApiOperation("文章列表")
     @GetMapping
-    public Result<List<ArticleVO>> getArticleList() {
-        List<ArticleVO> articleList = articleService.getArticleList();
+    public Result<List<ArticleVO>> getArticleVOList() {
+        List<ArticleVO> articleList = articleService.getArticleVOList();
         return Result.success(articleList);
     }
 
-    @ApiOperation("文章列表")
-    @GetMapping("/bo")
-    public Result<List<ArticleBO>> getArticleBOList() {
-        List<ArticleBO> articleList = articleService.getArticleBOList();
-        return Result.success(articleList);
-    }
-
-    @ApiOperation("文章信息")
+    @ApiOperation("文章")
     @GetMapping("/{id}")
-    public Result<ArticleInfo> getArticleInfo(@PathVariable Integer id) {
-        ArticleInfo articleInfo = articleService.getArticleInfo(id);
-        return Result.success(articleInfo);
+    public Result<ArticleVO> getArticleVO(@PathVariable Integer id) {
+        ArticleVO articleVO = articleService.getArticleVO(id);
+        return Result.success(articleVO);
     }
-
-    @ApiOperation("文章页面")
-    @GetMapping("/{id}/page")
-    public Result<ArticlePage> getArticlePage(@PathVariable Integer id) {
-        ArticlePage articlePage = articleService.getArticlePage(id);
-        return Result.success(articlePage);
-    }
-
 }

@@ -74,7 +74,7 @@ public class MomentServiceImpl implements MomentService {
                     // 动态信息
                     .moment(BeanUtil.copyProp(moment, MomentVO.class))
                     // 发布用户信息
-                    .user(userService.getUserSimpleVO(moment.getUserId()))
+                    .user(userService.getUserVO(moment.getUserId()))
                     // 所属资源信息
                     .resource(resourceService.getResourceVO(moment.getResourceId()))
                     // 评论信息

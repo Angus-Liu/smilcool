@@ -1,6 +1,7 @@
 package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleVO;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface ArticleMapper {
 
     int updateByPrimaryKey(Article record);
 
-    List<Article> select();
+    List<ArticleVO> selectArticleVO();
+
+    ArticleVO selectArticleVOByPrimaryKey(Integer id);
 }

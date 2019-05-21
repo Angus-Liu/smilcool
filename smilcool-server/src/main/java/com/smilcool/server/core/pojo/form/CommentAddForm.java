@@ -13,9 +13,6 @@ import javax.validation.constraints.NotNull;
 public class CommentAddForm {
     private Integer parentId;
 
-    @NotNull(message = "发布用户ID不能为空")
-    private Integer userId;
-
     @NotNull(message = "资源ID不能为空")
     private Integer resourceId;
 

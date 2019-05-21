@@ -6,7 +6,6 @@ import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.vo.UserDetailVO;
-import com.smilcool.server.core.pojo.vo.UserSimpleVO;
 import com.smilcool.server.core.pojo.vo.UserVO;
 
 import java.util.List;
@@ -33,8 +32,6 @@ public interface UserService {
      * @return
      */
     User getUser(String username, String password);
-
-    UserSimpleVO getUserSimpleVO(Integer id);
 
     UserDetailVO getUserTotalInfo(Integer id);
 

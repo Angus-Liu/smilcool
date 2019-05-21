@@ -8,7 +8,6 @@ import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.po.User;
-import com.smilcool.server.core.pojo.vo.UserSimpleVO;
 import com.smilcool.server.core.pojo.vo.UserDetailVO;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.RolePermissionService;
@@ -76,13 +75,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String username, String password) {
         return userMapper.selectByUsernameAndPassword(username, password);
-    }
-
-    @Override
-    public UserSimpleVO getUserSimpleVO(Integer id) {
-        // TODO BeanUtil 逐渐应减少使用
-        User user = userMapper.selectByPrimaryKey(id);
-        return BeanUtil.copyProp(user, UserSimpleVO.class);
     }
 
     /**

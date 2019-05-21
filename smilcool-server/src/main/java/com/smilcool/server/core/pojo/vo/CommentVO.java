@@ -12,30 +12,26 @@ import java.util.List;
  */
 @Data
 public class CommentVO {
+    private Integer id;
+
     private Integer resourceId;
 
     private Integer parentId;
-
-    private Integer id;
-
-    /**
-     * 发布用户信息
-     */
-    private Integer userId;
-
-    private UserSimpleVO postUser;
-
-    /**
-     * 回复用户信息
-     */
-    private Integer replyUserId;
-
-    private UserSimpleVO replyUser;
 
     private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+
+    /**
+     * 发布用户信息
+     */
+    private UserVO postUser;
+
+    /**
+     * 回复用户信息
+     */
+    private UserVO replyUser;
 
     /**
      * 子评论

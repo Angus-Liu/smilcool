@@ -36,4 +36,14 @@ public class ArticleVO {
     private String markdownContent;
 
     private String htmlContent;
+
+    /**
+     * 文章作者
+     */
+    private UserVO user;
+
+    /**
+     * 文章关联资源信息
+     */
+    private ResourceVO resource;
 }

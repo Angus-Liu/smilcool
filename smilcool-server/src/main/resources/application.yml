@@ -24,9 +24,9 @@ spring:
     type: redis
 
   # Jackson 配置
-  #  jackson:
-  #    # null 值不进行序列化
-  #    default-property-inclusion: non_null
+  jackson:
+    # null 值不进行序列化
+    default-property-inclusion: non_null
 
   # Swagger 配置
   swagger:
@@ -49,6 +49,7 @@ mybatis-plus:
   configuration:
     # 下划线风格映射到驼峰命名（便于数据库字段映射到 java 对象属性）
     map-underscore-to-camel-case: true
+  type-aliases-package: com.smilcool.server.core.pojo.*
 
 # Log 配置
 logging:
