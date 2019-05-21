@@ -91,4 +91,15 @@
             deleted        = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <sql id="User_Base_Column_List">
+        u.id, u.username, u.nickname, u.avatar
+    </sql>
+    <select id="selectWithUserByUserId" resultType="com.smilcool.server.core.pojo.po.User">
+        SELECT
+        <include refid="User_Base_Column_List"/>
+        FROM friend f
+          LEFT JOIN user u ON f.friend_user_id = u.id
+        WHERE f.user_id = #{currentUserId}
+    </select>
 </mapper>

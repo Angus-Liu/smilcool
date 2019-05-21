@@ -24,6 +24,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 允许直接访问存储在 local storage 中的资源
         registry.addResourceHandler("/local-storage/**")
                 .addResourceLocations("file:" + localStorage);
     }

@@ -1,6 +1,9 @@
 package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Friend;
+import com.smilcool.server.core.pojo.po.User;
+
+import java.util.List;
 
 public interface FriendMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface FriendMapper {
     int updateByPrimaryKeySelective(Friend record);
 
     int updateByPrimaryKey(Friend record);
+
+    List<User> selectWithUserByUserId(Integer currentUserId);
 }

@@ -54,7 +54,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             // 连接
             case CONNECT: {
                 // 建立连接时，将 channel 与 userId 进行进行关联
-                // TODO 2019/5/8 应该是获取当前登录用户 id，不是直接获取
                 Integer userId = receiveMessage.getSendUserId();
                 userIdChannelMap.put(userId, channel);
                 log.debug("CONNECT 消息: userId = {}, channel = {}", userId, channel.id().asShortText());
@@ -65,7 +64,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             // 聊天
             case CHAT: {
                 // 把聊天记录保存到数据库，并标记消息的签收状态为未签收
-                // TODO 2019/5/8 发送用户应该是获取当前登录用户 id，不是直接获取
                 log.debug("CHAT 消息: sendUserId = {}, receiveUserId = {}", receiveMessage.getSendUserId(), receiveMessage.getReceiveUserId());
                 Message sendMessage = messageService.addMessage(receiveMessage);
                 // 发送消息
@@ -125,6 +123,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
                         // 用户在线
                         // 注意，文本消息一定要是 TextWebSocketFrame 类型
                         receiveChannel.writeAndFlush(new TextWebSocketFrame(JSONUtil.toJsonStr(sendMessage)));
+                        log.info("发送消息: receiveUserId - {}, receiveChannel - {}, message - {}",
+                                receiveUserId, receiveChannel, sendMessage);
                     } else {
                         // 用户离线，移除关联
                         userIdChannelMap.remove(receiveUserId);
