@@ -42,7 +42,7 @@
             <a slot="right" href="#">查看更多</a>
           </sui-card-content>
         </sui-card>
-        <!-- 文章列表 -->
+        <!-- 文章列表 END -->
       </iCol>
       <iCol span="10">
         <!-- 系统通告 -->

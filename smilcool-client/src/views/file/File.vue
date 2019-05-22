@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" ref="container">
     <Row>
       <iCol span="17">
         <!-- 文件操作菜单 -->
@@ -24,33 +24,44 @@
         </div>
         <!-- 文件类别 END -->
         <!-- 文件列表 -->
-        <sui-card class="fluid">
+        <sui-card class="fluid file-card">
           <sui-message attached="top">文件列表</sui-message>
           <sui-card-content>
             <sui-item-group>
-              <sui-item v-for="filePage in filePageList" :key="filePage.file.id">
-                <sui-icon :name="getFileIcon(filePage.file.name)"/>
+              <sui-item v-for="file in filePage.records" :key="file.id">
+                <sui-icon :name="getFileIcon(file.name)"/>
                 <sui-item-content>
-                  <sui-item-header>{{filePage.file.title}}</sui-item-header>
+                  <a is="sui-item-header">{{file.title}}</a>
                   <sui-item-meta>
-                    <a :href="filePage.file.url" :download="filePage.file.name">
-                      💾 {{filePage.file.name}}
-                    </a>
+                    <span class="file-user-nickname">
+                    <router-link to="">{{file.user.nickname}}</router-link>
+                    </span>
+                    <span class="file-create-time"><Time :time="file.createTime"/></span>
+                    <a :href="file.url" :download="file.name" @click="downloadFile(file)">📄 {{file.name}}</a>
                   </sui-item-meta>
                   <sui-item-description>
-                    <p>{{filePage.file.description}}</p>
+                    <p>{{file.description}}</p>
                   </sui-item-description>
                   <sui-item-extra>
-                    大小：{{filePage.file.size}}
+                    <span class="file-size">大小：{{file.size}}</span>
+                    <span class="file-download-count">下载：{{file.downloadCount}}</span>
+                    <span class="file-resource-zan-count" @click="addZan(file.resource)">
+                      👍 {{file.resource.zanCount}}
+                    </span>
+                    <span class="file-resource-comment-count" @click="getCommentList(file.resource)">
+                      💬 {{file.resource.commentCount}}
+                    </span>
                   </sui-item-extra>
                 </sui-item-content>
               </sui-item>
             </sui-item-group>
           </sui-card-content>
           <sui-button-group attached="bottom" basic>
-            <sui-button content="上一页" icon="left chevron" label-position="left"/>
+            <sui-button content="上一页" icon="left chevron" label-position="left" @click="previousPage"
+                        :disabled="this.page.current <= 1"/>
             <sui-button-or/>
-            <sui-button content="下一页" icon="right chevron" label-position="right"/>
+            <sui-button content="下一页" icon="right chevron" label-position="right" @click="nextPage"
+                        :disabled="this.page.current >= this.filePage.pages"/>
           </sui-button-group>
         </sui-card>
         <!-- 文件列表 END -->
@@ -108,6 +119,47 @@
       </template>
     </Modal>
     <!-- 文件上传模态框 END -->
+    <!-- 评论模态框 -->
+    <Modal v-model="commentAddModal.show" title="发表评论" width="600" footer-hide>
+      <Input ref="commentInput" v-model="commentAddModal.form.value" type="textarea" :rows="3" placeholder="添加评论"
+             @on-enter="addComment"/>
+      <sui-comment-group class="comment-group">
+        <sui-comment v-for="comment in commentList" :key="comment.id">
+          <sui-comment-avatar :src="comment.postUser.avatar"/>
+          <sui-comment-content>
+            <a is="sui-comment-author">{{comment.postUser.nickname}}</a>
+            <sui-comment-metadata>
+              <Time :time="comment.createTime"/>
+            </sui-comment-metadata>
+            <sui-comment-text>{{comment.content}}</sui-comment-text>
+            <sui-comment-actions>
+              <sui-comment-action @click="replyComment(comment.id, comment.postUser)">回复</sui-comment-action>
+            </sui-comment-actions>
+          </sui-comment-content>
+          <!-- 子评论 -->
+          <sui-comment-group v-if="comment.children.length > 0">
+            <sui-comment v-for="child in comment.children" :key="child.id">
+              <sui-comment-avatar :src="child.postUser.avatar"/>
+              <sui-comment-content>
+                <a is="sui-comment-author">{{child.postUser.nickname}}</a>
+                <sui-comment-metadata>
+                  <Time :time="child.createTime"/>
+                </sui-comment-metadata>
+                <sui-comment-text>
+                  <a :href="child.replyUser.id">@{{child.replyUser.nickname}}</a>
+                  {{child.content}}
+                </sui-comment-text>
+                <sui-comment-actions>
+                  <sui-comment-action @click="replyComment(comment.id, child.postUser)">回复</sui-comment-action>
+                </sui-comment-actions>
+              </sui-comment-content>
+            </sui-comment>
+          </sui-comment-group>
+          <!-- 子评论 END -->
+        </sui-comment>
+      </sui-comment-group>
+    </Modal>
+    <!-- 评论模态框 END -->
   </div>
 </template>
 
@@ -127,9 +179,13 @@ export default {
         name: '测试',
         code: 'test'
       }],
-      filePageList: [
-        {
-          'file': {
+      page: {
+        desc: 'create_time',
+        current: 1
+      },
+      filePage: {
+        'records': [
+          {
             'id': 1,
             'userId': 1,
             'resourceId': 2,
@@ -140,44 +196,27 @@ export default {
             'size': '200MB',
             'url': 'http://bkt.angus-liu.cn/中北大学计算机类.ppt',
             'downloadCount': 0,
-            'createTime': '2019-05-13T09:18:13.000+0000'
-          },
-          'user': {
-            'id': 1,
-            'username': 'admin',
-            'nickname': '管理员',
-            'avatar': 'http://img.angus-liu.cn/avatar/avatar07.png',
-            'sex': '保密',
-            'birthday': '1970-01-01',
-            'sign': '一句话介绍自己',
-            'intro': '这个人很神秘，什么也没写',
-            'grade': '未填写',
-            'college': '未填写',
-            'major': '未填写',
-            'phone': null,
-            'email': 'admin@admin.com',
-            'state': 1,
-            'remark': '超级管理员账户，由系统内定，请勿修改',
-            'createTime': '2019-03-28',
-            'updateTime': '2019-05-17'
-          },
-          'resource': {
-            'id': 2,
-            'userId': 1,
-            'resourceDicType': '文件类别',
-            'resourceDicItem': '计算机类',
-            'zanCount': 0,
-            'pvCount': 0,
-            'commentCount': 0,
-            'state': '正常',
-            'remark': null,
             'createTime': '2019-05-13 09:18:13',
-            'updateTime': '2019-05-13 09:18:13',
-            'deleted': false
-          },
-          'commentList': []
-        }
-      ],
+            'user': {
+              'id': 1,
+              'username': 'admin',
+              'nickname': '管理员',
+              'avatar': 'http://img.angus-liu.cn/avatar/avatar07.png',
+              'sign': '一句话介绍自己'
+            },
+            'resource': {
+              'id': 2,
+              'zanCount': 0,
+              'pvCount': 0,
+              'commentCount': 0
+            }
+          }],
+        'total': 10,
+        'size': 10,
+        'current': 1,
+        'searchCount': true,
+        'pages': 1
+      },
       fileAddModal: {
         show: false,
         form: {
@@ -188,12 +227,65 @@ export default {
           size: '',
           url: ''
         }
-      }
+      },
+      commentList: [{
+        id: -1,
+        content: '测试评论',
+        createTime: '2019-05-21 20:15:39',
+        postUser: {
+          id: -1,
+          username: 'admin',
+          nickname: '管理员',
+          avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+        },
+        children: [
+          {
+            id: -2,
+            content: '测试回复',
+            createTime: '2019-05-21 20:15:46',
+            postUser: {
+              id: 1,
+              username: 'admin',
+              nickname: '管理员',
+              avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+            },
+            replyUser: {
+              id: 1,
+              username: 'admin',
+              nickname: '管理员',
+              avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+            }
+          }
+        ]
+      }],
+      commentAddModal: {
+        show: false,
+        form: {
+          parentId: null,
+          resourceId: null,
+          replyUserId: null,
+          value: '',
+          content: ''
+        }
+      },
+      currentResource: {}
     }
   },
   methods: {
     select(item) {
       this.menu.active = item;
+      if (item === '最新') {
+        this.page = {
+          desc: 'create_time',
+          current: 1
+        }
+      } else {
+        this.page = {
+          desc: 'download_count, comment_count, zan_count',
+          current: 1
+        }
+      }
+      this.getFilePage(this.page);
     },
     // 初始化文件添加模态框
     resetFileAddModal() {
@@ -220,17 +312,16 @@ export default {
         });
     },
     // 获取文件页面
-    getFilePageList() {
-      this.$axios.get('/api/file/page')
+    getFilePage(param) {
+      this.$axios.get('/api/file/page', param)
         .then(res => {
           let result = res.data;
-          this.filePageList = result.data;
+          this.filePage = result.data;
         })
     },
     // 根据文件名获取文件图标样式
     getFileIcon(filename) {
-      let index = filename.lastIndexOf('.');
-      let suffix = filename.substr(index + 1);
+      let suffix = filename.substr(filename.lastIndexOf('.') + 1);
       switch (suffix) {
         case 'ppt':
         case 'pptx':
@@ -275,14 +366,86 @@ export default {
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '分享成功' });
             this.resetFileAddModal();
-            this.getFilePageList();
+            this.getFilePage();
           }
         })
+    },
+    // 文件下载
+    downloadFile(file) {
+      this.$axios.put(`/api/file/${file.id}/download-count`)
+        .then(res => file.downloadCount++);
+    },
+    // 点赞
+    addZan(resource) {
+      this.$axios.post('/api/zan', { resourceId: resource.id })
+        .then(res => resource.zanCount++);
+    },
+    // 获取评论
+    getCommentList(resource) {
+      this.currentResource = resource;
+      this.$axios.get(`/api/comment/${resource.id}`)
+        .then(res => {
+          let result = res.data;
+          this.commentList = result.data;
+          // 展示评论
+          this.commentAddModal.show = true;
+        });
+    },
+    // 初始化评论
+    initComment() {
+      this.commentAddModal.form = {
+        resourceId: null,
+        parentId: null,
+        replyUserId: null,
+        value: '',
+        content: ''
+      }
+    },
+    // 添加评论
+    addComment() {
+      // 设置资源 ID
+      this.commentAddModal.form.resourceId = this.currentResource.id;
+      // 判断是评论还是回复
+      if (this.commentAddModal.form.value.startsWith('@')
+        && this.commentAddModal.form.replyUserId !== null) {
+        // 回复时去掉评论内容中的回复用户名
+        let index = this.commentAddModal.form.value.indexOf(' ');
+        this.commentAddModal.form.content = this.commentAddModal.form.value.substr(index + 1);
+      } else {
+        this.commentAddModal.form.parentId = null;
+        this.commentAddModal.form.replyUserId = null;
+        this.commentAddModal.form.content = this.commentAddModal.form.value;
+      }
+      this.$axios.post('/api/comment', this.commentAddModal.form)
+        .then(res => {
+          this.initComment();
+          this.currentResource.commentCount++;
+          this.getCommentList(this.currentResource);
+        });
+    },
+    // 回复评论
+    replyComment(parentId, replyUser) {
+      this.commentAddModal.form.parentId = parentId;
+      this.commentAddModal.form.replyUserId = replyUser.id;
+      this.commentAddModal.form.value = `@${replyUser.nickname} `;
+      this.$refs.commentInput.focus();
+    },
+    // 上一页
+    previousPage() {
+      this.page.current--;
+      this.getFilePage(this.page);
+      this.$refs.container.scrollIntoView();
+    },
+    // 下一页
+    nextPage() {
+      this.page.current++;
+      this.getFilePage(this.page);
+      this.$refs.container.scrollIntoView();
     }
   },
   mounted() {
     this.getFileCategory();
-    this.getFilePageList();
+    this.getFilePage(this.page);
   }
 }
 </script>
@@ -337,5 +500,33 @@ export default {
       color: #546a7e;
     }
   }
+
+  .file-card {
+    .file-user-nickname,
+    .file-create-time,
+    .file-size,
+    .file-download-count,
+    .file-resource-zan-count,
+    .file-resource-comment-count {
+      display: inline-block;
+      width: 150px;
+    }
+
+    .file-resource-zan-count,
+    .file-resource-comment-count {
+      width: 60px;
+      cursor: pointer;
+    }
+
+    .file-resource-zan-count:hover,
+    .file-resource-comment-count:hover {
+      color: #000;
+    }
+  }
+}
+
+.comment-group {
+  max-height: 600px;
+  overflow: auto;
 }
 </style>

@@ -10,8 +10,8 @@
     <!-- 消息提示 END -->
     <!-- 动态菜单栏 -->
     <sui-menu pointing>
-      <a is="sui-menu-item" v-for="item in menu.items" :key="item" :content="item"
-         :active="item === menu.active" @click="select(item)"/>
+      <a is="sui-menu-item" v-for="item in menu.items" :key="item" :content="item" :active="item === menu.active"
+         @click="select(item)"/>
       <sui-menu-menu position="right">
         <sui-button basic attached="right" icon="paper plane outline" content="发布动态"
                     @click="momentAddModal.show = true"/>
@@ -32,20 +32,15 @@
           </sui-card-meta>
           <sui-card-description class="moment-content">
             <p>{{moment.content}}</p>
-            <sui-image-group class="moment-image-group"
-                             v-if="moment.images && moment.images.length > 0" size="tiny">
+            <sui-image-group class="moment-image-group" v-if="moment.images && moment.images.length > 0" size="tiny">
               <sui-image v-for="(image, index) in moment.images" :key="index" :src="image"/>
             </sui-image-group>
           </sui-card-description>
         </sui-card-content>
         <sui-card-content extra>
           <template #right>
-            <a is="sui-label" basic @click="addZan(moment.resource)">
-              👍 {{moment.resource.zanCount}}
-            </a>
-            <a is="sui-label" basic @click="getCommentList(moment.resource)">
-              💬 {{moment.resource.commentCount}}
-            </a>
+            <a is="sui-label" basic @click="addZan(moment.resource)">👍 {{moment.resource.zanCount}}</a>
+            <a is="sui-label" basic @click="getCommentList(moment.resource)">💬 {{moment.resource.commentCount}}</a>
           </template>
         </sui-card-content>
       </sui-card>
@@ -78,7 +73,7 @@
     <!-- 发布动态模态框 END -->
     <!-- 评论模态框 -->
     <Modal v-model="commentAddModal.show" title="发表评论" width="600" footer-hide>
-      <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
+      <Input ref="commentInput" v-model="commentAddModal.form.value" type="textarea" :rows="3" placeholder="添加评论"
              @on-enter="addComment"/>
       <sui-comment-group class="comment-group">
         <sui-comment v-for="comment in commentList" :key="comment.id">
@@ -217,13 +212,6 @@ export default {
           content: ''
         }
       },
-      comment: {
-        parentId: null,
-        resourceId: null,
-        replyUserId: null,
-        value: '',
-        content: ''
-      }
     }
   },
   methods: {
@@ -293,8 +281,8 @@ export default {
         });
     },
     // 初始化评论
-    initDataComment() {
-      this.comment = {
+    initComment() {
+      this.commentAddModal.form = {
         resourceId: null,
         parentId: null,
         replyUserId: null,
@@ -305,31 +293,32 @@ export default {
     // 添加评论
     addComment() {
       // 设置资源 ID
-      this.comment.resourceId = this.currentResource.id;
+      this.commentAddModal.form.resourceId = this.currentResource.id;
       // 判断是评论还是回复
-      if (this.comment.value.startsWith('@') && this.comment.replyUserId !== null) {
+      if (this.commentAddModal.form.value.startsWith('@')
+        && this.commentAddModal.form.replyUserId !== null) {
         // 回复时去掉评论内容中的回复用户名
-        let index = this.comment.value.indexOf(' ');
-        this.comment.content = this.comment.value.substr(index + 1);
+        let index = this.commentAddModal.form.value.indexOf(' ');
+        this.commentAddModal.form.content = this.commentAddModal.form.value.substr(index + 1);
       } else {
-        this.comment.parentId = null;
-        this.comment.replyUserId = null;
-        this.comment.content = this.comment.value;
+        this.commentAddModal.form.parentId = null;
+        this.commentAddModal.form.replyUserId = null;
+        this.commentAddModal.form.content = this.commentAddModal.form.value;
       }
-      this.$axios.post('/api/comment', this.comment)
+      this.$axios.post('/api/comment', this.commentAddModal.form)
         .then(res => {
-          this.initDataComment();
+          this.initComment();
           this.currentResource.commentCount++;
           this.getCommentList(this.currentResource);
         });
     },
     // 回复评论
     replyComment(parentId, replyUser) {
-      this.comment.parentId = parentId;
-      this.comment.replyUserId = replyUser.id;
-      this.comment.value = `@${replyUser.nickname} `;
+      this.commentAddModal.form.parentId = parentId;
+      this.commentAddModal.form.replyUserId = replyUser.id;
+      this.commentAddModal.form.value = `@${replyUser.nickname} `;
       this.$refs.commentInput.focus();
-    }
+    },
   },
   mounted() {
     this.getMomentPage(this.page);

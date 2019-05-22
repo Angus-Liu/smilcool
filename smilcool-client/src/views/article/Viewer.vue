@@ -82,6 +82,7 @@
         <!-- 发布用户信息结束 -->
         <!-- 文章标签信息 -->
         <sui-card class="fluid">
+          <sui-message attached="top" :content="article.articleCategory"/>
           <sui-card-content>
             <Tag type="dot" color="#ff8364" v-for="(tag, index) in article.tags" :key="index">{{tag}}</Tag>
           </sui-card-content>
@@ -189,7 +190,7 @@ export default {
         });
     },
     // 初始化评论
-    initDataComment() {
+    initComment() {
       this.comment = {
         resourceId: null,
         parentId: null,
@@ -213,7 +214,7 @@ export default {
       }
       this.$axios.post('/api/comment', this.comment)
         .then(res => {
-          this.initDataComment();
+          this.initComment();
           this.getCommentList();
         });
     },
