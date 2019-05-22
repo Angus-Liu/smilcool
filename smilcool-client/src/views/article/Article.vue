@@ -228,14 +228,13 @@ export default {
       this.menu.active = item;
       if (item === '推荐' || item === '最新') {
         this.page.desc = 'create_time';
-        this.getArticleList(this.page)
       } else {
-        this.page.desc = 'comment_count, zan_count';
-        this.getArticleList(this.page)
+        this.page.desc = 'comment_count,zan_count';
       }
+      this.getArticlePage(this.page)
     },
-    // 获取文章列表
-    getArticleList(param) {
+    // 获取文章分页
+    getArticlePage(param) {
       this.$axios.get('/api/article/page', param)
         .then(res => {
           let result = res.data;
@@ -252,7 +251,7 @@ export default {
     }
   },
   mounted() {
-    this.getArticleList(this.page);
+    this.getArticlePage(this.page);
     this.getArticleLatestComment();
   }
 };

@@ -20,30 +20,30 @@
     <!-- 动态菜单栏 END -->
     <!-- 动态列表 -->
     <div class="moment-list">
-      <sui-card class="fluid moment-item" v-for="momentPage in momentPageList" :key="momentPage.moment.id">
+      <sui-card class="fluid moment-item" v-for="moment in momentPage.records" :key="moment.id">
         <sui-card-content class="moment-item-wrapper">
           <sui-card-header class="moment-header">
-            <sui-image class="moment-avatar" :src="momentPage.user.avatar" circular/>
-            <span style="margin-left:5px; font-size: 16px">{{momentPage.user.nickname}}</span>
+            <sui-image class="moment-avatar" :src="moment.user.avatar" circular/>
+            <span style="margin-left:5px; font-size: 16px">{{moment.user.nickname}}</span>
             <sui-button class="right floated" size="mini" basic positive>关注</sui-button>
           </sui-card-header>
           <sui-card-meta class="moment-time">
-            <Time :time="momentPage.moment.createTime"/>
+            <Time :time="moment.createTime"/>
           </sui-card-meta>
           <sui-card-description class="moment-content">
-            <p>{{momentPage.moment.content}}</p>
+            <p>{{moment.content}}</p>
             <sui-image-group class="moment-image-group"
-                             v-if="momentPage.moment.images && momentPage.moment.images.length > 0" size="tiny">
-              <sui-image v-for="(image, index) in momentPage.moment.images" :src="image" :key="index"/>
+                             v-if="moment.images && moment.images.length > 0" size="tiny">
+              <sui-image v-for="(image, index) in moment.images" :key="index" :src="image"/>
             </sui-image-group>
           </sui-card-description>
 
           <span slot="right">
             <a is="sui-label" basic>
-              👍 {{momentPage.resource.zanCount}}
+              👍 {{moment.resource.zanCount}}
             </a>
-            <a is="sui-label" basic @click="momentPage.show = !momentPage.show">
-              💬 {{momentPage.resource.commentCount}}
+            <a is="sui-label" basic @click="moment.show = !moment.show">
+              💬 {{moment.resource.commentCount}}
             </a>
             </span>
         </sui-card-content>
@@ -54,9 +54,6 @@
             icon-position="left"
             transparent
           />
-        </sui-card-content>
-        <sui-card-content extra v-show="momentPage.show">
-          评论列表
         </sui-card-content>
       </sui-card>
     </div>
@@ -99,50 +96,44 @@ export default {
   },
   data() {
     return {
-
       menu: {
         active: '最新',
         items: ['最新', '最热', '关注']
       },
-      moment: '',
-      momentPageList: [
-        {
-          'moment': {
-            'id': 1,
-            'userId': 1,
-            'resourceId': 2,
-            'resourceTypeId': null,
-            'content': '校园动态测试',
-            'images': [
-              'http://img.angus-liu.cn/avatar/avatar01.jpg',
-              'http://img.angus-liu.cn/avatar/avatar02.jpg',
-              'http://img.angus-liu.cn/avatar/avatar03.jpg'
-            ],
-            'createTime': '2019-05-15 16:23:50'
-          },
+      page: {
+        desc: 'create_time',
+        size: 20,
+        current: 1
+      },
+      momentPage: {
+        'records': [{
+          'id': 1,
+          'userId': 1,
+          'resourceId': 2,
+          'momentCategory': '校园动态',
+          'content': '校园动态测试',
+          'createTime': '2019-05-15 16:23:50',
+          'images': ['http://img.angus-liu.cn/avatar/avatar01.jpg', 'http://img.angus-liu.cn/avatar/avatar03.jpg'],
           'user': {
             'id': 1,
             'username': 'admin',
             'nickname': '管理员',
-            'avatar': 'http://img.angus-liu.cn/avatar/avatar07.png'
+            'avatar': 'http://img.angus-liu.cn/avatar/avatar07.png',
+            'sign': '一句话介绍自己'
           },
           'resource': {
             'id': 2,
-            'userId': 1,
-            'resourceDicType': '文件类别',
-            'resourceDicItem': '计算机类',
             'zanCount': 0,
             'pvCount': 0,
-            'commentCount': 0,
-            'state': '正常',
-            'remark': null,
-            'createTime': '2019-05-13 09:18:13',
-            'updateTime': '2019-05-13 09:18:13',
-            'deleted': false
-          },
-          'commentList': []
-        }
-      ],
+            'commentCount': 0
+          }
+        }],
+        'total': 18,
+        'size': 10,
+        'current': 1,
+        'searchCount': true,
+        'pages': 2
+      },
       momentAddModal: {
         show: false,
         form: {
@@ -165,18 +156,26 @@ export default {
         }
       };
     },
+    // 切换菜单
     select(item) {
       this.menu.active = item;
+      if (item === '最新') {
+        this.page.desc = 'create_time';
+      } else {
+        this.page.desc = 'comment_count,zan_count';
+      }
+      // 重新获取数据
+      this.getMomentPage(this.page)
     },
-    // 获取动态页
-    getMomentList() {
-      this.$axios.get('/api/moment')
+    // 获取动态分页
+    getMomentPage(param) {
+      this.$axios.get('/api/moment/page', param)
         .then(res => {
           let result = res.data;
-          this.momentPageList = result.data;
-          this.momentPageList.forEach(momentPage => {
-            if (momentPage.moment.images !== null && momentPage.moment.images.length !== 0) {
-              momentPage.moment.images = JSON.parse(momentPage.moment.images);
+          this.momentPage = result.data;
+          this.momentPage.records.forEach(moment => {
+            if (moment.images && moment.images.length > 0) {
+              moment.images = JSON.parse(moment.images);
             }
           })
         });
@@ -191,19 +190,18 @@ export default {
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '发布成功' });
             this.resetMomentAddModal();
-            this.getMomentList();
+            this.getMomentPage();
           }
         })
     }
   },
   mounted() {
-    this.getMomentList();
+    this.getMomentPage(this.page);
   }
 }
 </script>
 
 <style lang="less" scoped>
-
 .container {
   width: 1140px;
   margin: 20px auto;

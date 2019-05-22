@@ -244,7 +244,7 @@ export default {
           let result = res.data;
           this.lostFoundPageList = result.data;
           this.lostFoundPageList.forEach(lostFoundPage => {
-            if (lostFoundPage.lostFound.images !== null && lostFoundPage.lostFound.images.length !== 0) {
+            if (lostFoundPage.lostFound.images && lostFoundPage.lostFound.images.length > 0) {
               lostFoundPage.lostFound.images = JSON.parse(lostFoundPage.lostFound.images);
             }
           })

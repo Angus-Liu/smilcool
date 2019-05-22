@@ -4,8 +4,8 @@
       <iCol span="17">
         <!-- 文件操作菜单 -->
         <sui-menu>
-          <a is="sui-menu-item" v-for="item in items" :active="item === active" :key="item" :content="item"
-             @click="select(item)"/>
+          <a is="sui-menu-item" v-for="item in menu.items" :key="item" :content="item"
+             :active="item === menu.active" @click="select(item)"/>
           <sui-menu-item position="right">
             <sui-input transparent icon="search" placeholder="搜索"/>
           </sui-menu-item>
@@ -117,8 +117,10 @@ export default {
   name: 'File',
   data() {
     return {
-      activeMenuItem: '最新',
-      menuItems: ['最新', '最热'],
+      menu: {
+        active: '最新',
+        items: ['最新', '最热']
+      },
       localStorage: '/api/local-storage/upload',
       name: '所有',
       fileCategory: [{
@@ -190,8 +192,8 @@ export default {
     }
   },
   methods: {
-    select(name) {
-      this.active = name;
+    select(item) {
+      this.menu.active = item;
     },
     // 初始化文件添加模态框
     resetFileAddModal() {
