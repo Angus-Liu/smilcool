@@ -10,8 +10,8 @@
     <!-- 消息提示 END -->
     <!-- 动态菜单栏 -->
     <sui-menu pointing>
-      <a is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item"
-         @click="select(item)"/>
+      <a is="sui-menu-item" v-for="item in menu.items" :key="item" :content="item"
+         :active="item === menu.active" @click="select(item)"/>
       <sui-menu-menu position="right">
         <sui-button basic attached="right" icon="paper plane outline" content="发布动态"
                     @click="momentAddModal.show = true"/>
@@ -99,8 +99,11 @@ export default {
   },
   data() {
     return {
-      activeMenuItem: '最新',
-      menuItems: ['最新', '最热', '关注'],
+
+      menu: {
+        active: '最新',
+        items: ['最新', '最热', '关注']
+      },
       moment: '',
       momentPageList: [
         {
@@ -162,11 +165,8 @@ export default {
         }
       };
     },
-    isActive(name) {
-      return this.activeMenuItem === name;
-    },
-    select(name) {
-      this.active = name;
+    select(item) {
+      this.menu.active = item;
     },
     // 获取动态页
     getMomentList() {

@@ -102,12 +102,22 @@
             </sui-message-header>
           </sui-message>
           <sui-card-content>
-            <ul class="article-list">
-              <li class="article-item" v-for="article in articlePage.records" :key="article.id">
-                <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
-                <span class="article-time">{{article.createTime}}</span>
-              </li>
-            </ul>
+            <sui-feed class="latest-comment-feed">
+              <sui-feed-event v-for="(item,index) in articleLatestComment" :key="index">
+                <sui-feed-label :image="item.userAvatar"/>
+                <sui-feed-content>
+                  <sui-feed-summary>
+                    <sui-feed-user>{{item.userNickname}}</sui-feed-user>
+                    评论
+                    <router-link :to="'/article/' + item.articleId">{{item.articleTitle}}</router-link>
+                  </sui-feed-summary>
+                  <sui-feed-extra text :content="item.commentContent"/>
+                  <sui-feed-meta>
+                    <Time :time="item.commentCreateTime"/>
+                  </sui-feed-meta>
+                </sui-feed-content>
+              </sui-feed-event>
+            </sui-feed>
           </sui-card-content>
         </sui-card>
         <!-- 最新评论 END -->
@@ -131,6 +141,10 @@ export default {
         'http://cst.nuc.edu.cn/__local/2/36/5A/EAA656684EBA55E5462A8B8D583_C411B084_1A136.jpg',
         'http://cst.nuc.edu.cn/__local/9/57/7B/1A89800BB01F84F9FAD9E8D979A_02F9A36A_11E41.jpg'
       ],
+      page: {
+        desc: 'create_time',
+        size: 20
+      },
       articlePage: {
         'records': [{
           'id': 2,
@@ -159,6 +173,16 @@ export default {
         'searchCount': true,
         'pages': 1
       },
+      articleLatestComment: [{
+        'articleId': '-1',
+        'articleTitle': '测试文章',
+        'userId': 1,
+        'userNickname': '管理员',
+        'userAvatar': 'http://img.angus-liu.cn/avatar/avatar07.png',
+        'commentId': '-1',
+        'commentContent': '测试回复',
+        'commentCreateTime': '2019-05-22 09:57:25'
+      }],
       articleCategory: [{
         name: '系统通知',
         img: 'http://img.angus-liu.cn/avatar/avatar01.jpg'
@@ -203,21 +227,33 @@ export default {
     select(item) {
       this.menu.active = item;
       if (item === '推荐' || item === '最新') {
-        this.getArticleList({ desc: 'create_time' })
+        this.page.desc = 'create_time';
+        this.getArticleList(this.page)
       } else {
-        this.getArticleList({ desc: 'comment_count, zan_count' })
+        this.page.desc = 'comment_count, zan_count';
+        this.getArticleList(this.page)
       }
     },
+    // 获取文章列表
     getArticleList(param) {
       this.$axios.get('/api/article/page', param)
         .then(res => {
           let result = res.data;
           this.articlePage = result.data;
         });
+    },
+    // 获取最新评论
+    getArticleLatestComment() {
+      this.$axios.get('/api/article/latest-comment')
+        .then(res => {
+          let result = res.data;
+          this.articleLatestComment = result.data;
+        })
     }
   },
   mounted() {
-    this.getArticleList({ desc: 'create_time' });
+    this.getArticleList(this.page);
+    this.getArticleLatestComment();
   }
 };
 </script>
@@ -247,20 +283,7 @@ export default {
     }
   }
 
-  .tab-pane {
-    overflow: hidden;
-    padding: 20px;
-  }
-
-  .tab-pane, .card {
-
-    .pane-header {
-      padding-bottom: 10px;
-      margin-bottom: 10px;
-      border-bottom: 1px dashed #ccc;
-      color: #404040;
-    }
-
+  .card {
 
     .article-list {
       margin: 10px 0 5px 0;
@@ -297,10 +320,6 @@ export default {
           float: right;
         }
       }
-    }
-
-    .card-footer {
-      float: right;
     }
   }
 }

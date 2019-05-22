@@ -128,7 +128,7 @@ export default {
   }
 
   .editor {
-    min-height: 750px;
+    height: 750px;
   }
 }
 
