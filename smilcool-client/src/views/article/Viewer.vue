@@ -4,57 +4,64 @@
       <iCol span="18">
         <article>
           <!-- 正文 -->
-          <section>
-            <h1 class="article-title">{{article.title}}</h1>
-            <p class="article-time">{{article.createTime}}</p>
-            <div class="markdown-body article-content" v-html="article.htmlContent"></div>
-          </section>
+          <sui-card class="fluid article-card">
+            <sui-card-content>
+              <h1 class="article-title">{{article.title}}</h1>
+              <p class="article-time">{{article.createTime}}</p>
+              <div class="markdown-body article-content" v-html="article.htmlContent"></div>
+            </sui-card-content>
+          </sui-card>
           <!-- 正文 END -->
           <!-- 评论列表 -->
-          <section>
-            <div class="article-comment">
-              <h3 is="sui-header" dividing>文章评论</h3>
-              <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
-                     @on-enter="addComment"/>
-              <!-- 父评论 -->
-              <sui-comment-group>
-                <sui-comment v-for="comment in commentList" :key="comment.id">
-                  <sui-comment-avatar :src="comment.postUser.avatar"/>
-                  <sui-comment-content>
-                    <a is="sui-comment-author">{{comment.postUser.nickname}}</a>
-                    <sui-comment-metadata>
-                      <Time :time="comment.createTime"/>
-                    </sui-comment-metadata>
-                    <sui-comment-text>{{comment.content}}</sui-comment-text>
-                    <sui-comment-actions>
-                      <sui-comment-action @click="replyComment(comment.id, comment.postUser)">回复</sui-comment-action>
-                    </sui-comment-actions>
-                  </sui-comment-content>
-                  <!-- 子评论 -->
-                  <sui-comment-group v-if="comment.children.length > 0">
-                    <sui-comment v-for="child in comment.children" :key="child.id">
-                      <sui-comment-avatar :src="child.postUser.avatar"/>
-                      <sui-comment-content>
-                        <a is="sui-comment-author">{{child.postUser.nickname}}</a>
-                        <sui-comment-metadata>
-                          <Time :time="child.createTime"/>
-                        </sui-comment-metadata>
-                        <sui-comment-text>
-                          <a :href="child.replyUser.id">@{{child.replyUser.nickname}}</a>
-                          {{child.content}}
-                        </sui-comment-text>
-                        <sui-comment-actions>
-                          <sui-comment-action @click="replyComment(comment.id, child.postUser)">回复</sui-comment-action>
-                        </sui-comment-actions>
-                      </sui-comment-content>
-                    </sui-comment>
-                  </sui-comment-group>
-                  <!-- 子评论 END -->
-                </sui-comment>
-              </sui-comment-group>
-              <!-- 父评论 END -->
-            </div>
-          </section>
+          <sui-card class="fluid comment-card">
+            <sui-message attached="top">
+              文章评论
+            </sui-message>
+            <sui-card-content>
+              <div class="article-comment">
+                <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
+                       @on-enter="addComment"/>
+                <!-- 父评论 -->
+                <sui-comment-group>
+                  <sui-comment v-for="comment in commentList" :key="comment.id">
+                    <sui-comment-avatar :src="comment.postUser.avatar"/>
+                    <sui-comment-content>
+                      <a is="sui-comment-author">{{comment.postUser.nickname}}</a>
+                      <sui-comment-metadata>
+                        <Time :time="comment.createTime"/>
+                      </sui-comment-metadata>
+                      <sui-comment-text>{{comment.content}}</sui-comment-text>
+                      <sui-comment-actions>
+                        <sui-comment-action @click="replyComment(comment.id, comment.postUser)">回复</sui-comment-action>
+                      </sui-comment-actions>
+                    </sui-comment-content>
+                    <!-- 子评论 -->
+                    <sui-comment-group v-if="comment.children.length > 0">
+                      <sui-comment v-for="child in comment.children" :key="child.id">
+                        <sui-comment-avatar :src="child.postUser.avatar"/>
+                        <sui-comment-content>
+                          <a is="sui-comment-author">{{child.postUser.nickname}}</a>
+                          <sui-comment-metadata>
+                            <Time :time="child.createTime"/>
+                          </sui-comment-metadata>
+                          <sui-comment-text>
+                            <a :href="child.replyUser.id">@{{child.replyUser.nickname}}</a>
+                            {{child.content}}
+                          </sui-comment-text>
+                          <sui-comment-actions>
+                            <sui-comment-action @click="replyComment(comment.id, child.postUser)">回复
+                            </sui-comment-action>
+                          </sui-comment-actions>
+                        </sui-comment-content>
+                      </sui-comment>
+                    </sui-comment-group>
+                    <!-- 子评论 END -->
+                  </sui-comment>
+                </sui-comment-group>
+                <!-- 父评论 END -->
+              </div>
+            </sui-card-content>
+          </sui-card>
           <!-- 评论列表 END -->
         </article>
       </iCol>
@@ -236,31 +243,30 @@ export default {
   }
 }
 
-article {
-  section {
-    margin-bottom: 10px;
-    padding: 2em;
-    background: #fefefe;
-    border-radius: 2px;
+.article-card {
+  margin-bottom: 10px;
+  padding: 2em;
 
 
-    .article-title {
-      text-align: center;
-      padding-bottom: 10px;
-      border-bottom: 1px dashed #eee;
-    }
+  .article-title {
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #eee;
+  }
 
-    .article-time {
-      text-align: center;
-      color: #aaa;
-    }
+  .article-time {
+    text-align: center;
+    color: #aaa;
+  }
 
-    .comment-input {
-      margin-bottom: 20px;
-    }
+  .comment-input {
+    margin-bottom: 20px;
+  }
+}
 
-    .article-comment {
-    }
+.comment-card {
+  .article-comment {
+    margin: 1em;
   }
 }
 </style>

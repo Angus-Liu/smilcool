@@ -282,43 +282,49 @@ export default {
     }
   }
 
-  .card {
+  .article-list {
+    margin: 10px 0 5px 0;
+    list-style: none;
 
-    .article-list {
-      margin: 10px 0 5px 0;
-      list-style: none;
+    .article-item {
+      display: block;
+      margin: 5px 0;
+      line-height: 2.5em;
+      overflow: auto;
 
-      .article-item {
-        display: block;
-        margin: 5px 0;
-        line-height: 2.5em;
-        overflow: auto;
-
-        .article-category {
-          float: left;
-          width: 100px;
-          margin-right: 10px;
-        }
-
-        .article-title {
-          display: inline-block;
-          max-width: 400px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          font-size: 1.1em;
-          color: #5c5c5c;
-        }
-
-        .article-title:hover {
-          color: #ff8364;
-        }
-
-        .article-time {
-          color: #aaa;
-          float: right;
-        }
+      .article-category {
+        float: left;
+        width: 100px;
+        margin-right: 10px;
       }
+
+      .article-title {
+        display: inline-block;
+        max-width: 400px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1.1em;
+        color: #5c5c5c;
+      }
+
+      .article-title:hover {
+        color: #ff8364;
+      }
+
+      .article-time {
+        color: #aaa;
+        float: right;
+      }
+    }
+  }
+
+  .latest-comment-feed {
+    .summary {
+      max-width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
