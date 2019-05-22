@@ -37,23 +37,16 @@
               <sui-image v-for="(image, index) in moment.images" :key="index" :src="image"/>
             </sui-image-group>
           </sui-card-description>
-
-          <span slot="right">
-            <a is="sui-label" basic>
-              👍 {{moment.resource.zanCount}}
-            </a>
-            <a is="sui-label" basic @click="moment.show = !moment.show">
-              💬 {{moment.resource.commentCount}}
-            </a>
-            </span>
         </sui-card-content>
         <sui-card-content extra>
-          <sui-input
-            placeholder="添加评论"
-            icon="paper plane outline"
-            icon-position="left"
-            transparent
-          />
+          <template #right>
+            <a is="sui-label" basic @click="addZan(moment.resource)">
+              👍 {{moment.resource.zanCount}}
+            </a>
+            <a is="sui-label" basic @click="getCommentList(moment.resource)">
+              💬 {{moment.resource.commentCount}}
+            </a>
+          </template>
         </sui-card-content>
       </sui-card>
     </div>
@@ -83,6 +76,47 @@
       </template>
     </Modal>
     <!-- 发布动态模态框 END -->
+    <!-- 评论模态框 -->
+    <Modal v-model="commentAddModal.show" title="发表评论" width="600" footer-hide>
+      <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
+             @on-enter="addComment"/>
+      <sui-comment-group class="comment-group">
+        <sui-comment v-for="comment in commentList" :key="comment.id">
+          <sui-comment-avatar :src="comment.postUser.avatar"/>
+          <sui-comment-content>
+            <a is="sui-comment-author">{{comment.postUser.nickname}}</a>
+            <sui-comment-metadata>
+              <Time :time="comment.createTime"/>
+            </sui-comment-metadata>
+            <sui-comment-text>{{comment.content}}</sui-comment-text>
+            <sui-comment-actions>
+              <sui-comment-action @click="replyComment(comment.id, comment.postUser)">回复</sui-comment-action>
+            </sui-comment-actions>
+          </sui-comment-content>
+          <!-- 子评论 -->
+          <sui-comment-group v-if="comment.children.length > 0">
+            <sui-comment v-for="child in comment.children" :key="child.id">
+              <sui-comment-avatar :src="child.postUser.avatar"/>
+              <sui-comment-content>
+                <a is="sui-comment-author">{{child.postUser.nickname}}</a>
+                <sui-comment-metadata>
+                  <Time :time="child.createTime"/>
+                </sui-comment-metadata>
+                <sui-comment-text>
+                  <a :href="child.replyUser.id">@{{child.replyUser.nickname}}</a>
+                  {{child.content}}
+                </sui-comment-text>
+                <sui-comment-actions>
+                  <sui-comment-action @click="replyComment(comment.id, child.postUser)">回复</sui-comment-action>
+                </sui-comment-actions>
+              </sui-comment-content>
+            </sui-comment>
+          </sui-comment-group>
+          <!-- 子评论 END -->
+        </sui-comment>
+      </sui-comment-group>
+    </Modal>
+    <!-- 评论模态框 END -->
   </div>
 </template>
 
@@ -141,6 +175,54 @@ export default {
           content: '',
           images: []
         }
+      },
+      currentResource: {},
+      commentList: [{
+        id: -1,
+        content: '测试评论',
+        createTime: '2019-05-21 20:15:39',
+        postUser: {
+          id: -1,
+          username: 'admin',
+          nickname: '管理员',
+          avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+        },
+        children: [
+          {
+            id: -2,
+            content: '测试回复',
+            createTime: '2019-05-21 20:15:46',
+            postUser: {
+              id: 1,
+              username: 'admin',
+              nickname: '管理员',
+              avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+            },
+            replyUser: {
+              id: 1,
+              username: 'admin',
+              nickname: '管理员',
+              avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+            }
+          }
+        ]
+      }],
+      commentAddModal: {
+        show: false,
+        form: {
+          parentId: null,
+          resourceId: null,
+          replyUserId: null,
+          value: '',
+          content: ''
+        }
+      },
+      comment: {
+        parentId: null,
+        resourceId: null,
+        replyUserId: null,
+        value: '',
+        content: ''
       }
     }
   },
@@ -193,6 +275,60 @@ export default {
             this.getMomentPage();
           }
         })
+    },
+    // 点赞
+    addZan(resource) {
+      this.$axios.post('/api/zan', { resourceId: resource.id })
+        .then(res => resource.zanCount++);
+    },
+    // 获取评论
+    getCommentList(resource) {
+      this.currentResource = resource;
+      this.$axios.get(`/api/comment/${resource.id}`)
+        .then(res => {
+          let result = res.data;
+          this.commentList = result.data;
+          // 展示评论
+          this.commentAddModal.show = true;
+        });
+    },
+    // 初始化评论
+    initDataComment() {
+      this.comment = {
+        resourceId: null,
+        parentId: null,
+        replyUserId: null,
+        value: '',
+        content: ''
+      }
+    },
+    // 添加评论
+    addComment() {
+      // 设置资源 ID
+      this.comment.resourceId = this.currentResource.id;
+      // 判断是评论还是回复
+      if (this.comment.value.startsWith('@') && this.comment.replyUserId !== null) {
+        // 回复时去掉评论内容中的回复用户名
+        let index = this.comment.value.indexOf(' ');
+        this.comment.content = this.comment.value.substr(index + 1);
+      } else {
+        this.comment.parentId = null;
+        this.comment.replyUserId = null;
+        this.comment.content = this.comment.value;
+      }
+      this.$axios.post('/api/comment', this.comment)
+        .then(res => {
+          this.initDataComment();
+          this.currentResource.commentCount++;
+          this.getCommentList(this.currentResource);
+        });
+    },
+    // 回复评论
+    replyComment(parentId, replyUser) {
+      this.comment.parentId = parentId;
+      this.comment.replyUserId = replyUser.id;
+      this.comment.value = `@${replyUser.nickname} `;
+      this.$refs.commentInput.focus();
     }
   },
   mounted() {
@@ -242,5 +378,10 @@ export default {
       }
     }
   }
+}
+
+.comment-group {
+  max-height: 600px;
+  overflow: auto;
 }
 </style>
