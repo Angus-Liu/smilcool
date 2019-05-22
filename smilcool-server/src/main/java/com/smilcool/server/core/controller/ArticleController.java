@@ -5,6 +5,7 @@ import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleLatestCommentVO;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
 import io.swagger.annotations.Api;
@@ -54,5 +55,12 @@ public class ArticleController {
     public Result<ArticleVO> getArticleVO(@PathVariable Integer id) {
         ArticleVO articleVO = articleService.getArticleVO(id);
         return Result.success(articleVO);
+    }
+
+    @ApiOperation("获取最新评论")
+    @GetMapping("/latest-comment")
+    public Result<List<ArticleLatestCommentVO>> listArticleLatestCommentVO() {
+        List<ArticleLatestCommentVO> latestCommentList = articleService.listArticleLatestCommentVO();
+        return Result.success(latestCommentList);
     }
 }

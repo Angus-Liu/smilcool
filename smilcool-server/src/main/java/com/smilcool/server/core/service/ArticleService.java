@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleLatestCommentVO;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface ArticleService {
     List<ArticleVO> listArticleVO();
 
     Page<ArticleVO> pageArticleVO(Page page, ArticleQueryForm form);
+
+    List<ArticleLatestCommentVO> listArticleLatestCommentVO();
 }

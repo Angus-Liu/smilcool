@@ -9,6 +9,7 @@ import com.smilcool.server.core.dao.ArticleMapper;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
 import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
+import com.smilcool.server.core.pojo.vo.ArticleLatestCommentVO;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
 import com.smilcool.server.core.service.ResourceService;
@@ -77,5 +78,10 @@ public class ArticleServiceImpl implements ArticleService {
     public Page<ArticleVO> pageArticleVO(Page page, ArticleQueryForm form) {
         Article condition = BeanUtil.copyProp(form, Article.class);
         return articleMapper.selectArticleVOByCondition(page, condition);
+    }
+
+    @Override
+    public List<ArticleLatestCommentVO> listArticleLatestCommentVO() {
+        return articleMapper.selectArticleLatestCommentVO();
     }
 }

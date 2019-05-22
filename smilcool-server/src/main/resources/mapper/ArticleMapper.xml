@@ -280,4 +280,20 @@
         LEFT JOIN user ON article.user_id = user.id
         LEFT JOIN resource ON article.resource_id = resource.id
     </select>
+
+    <select id="selectArticleLatestCommentVO" resultType="com.smilcool.server.core.pojo.vo.ArticleLatestCommentVO">
+        SELECT a.id          AS articleId,
+               a.title       AS articleTitle,
+               u.id          AS userId,
+               u.nickname    AS userNickname,
+               u.avatar      AS userAvatar,
+               c.id          AS commentId,
+               c.content     AS commentContent,
+               c.create_time AS commentCreateTime
+        FROM article a
+                 LEFT JOIN comment c ON a.resource_id = c.resource_id
+                 LEFT JOIN user u ON c.user_id = u.id
+        ORDER BY c.create_time DESC
+        LIMIT 0, 10
+    </select>
 </mapper>
