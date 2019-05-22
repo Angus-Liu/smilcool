@@ -270,4 +270,14 @@
         LEFT JOIN resource ON article.resource_id = resource.id
         WHERE article.id = #{id}
     </select>
+
+    <select id="selectArticleVOByCondition" resultMap="ResultMapWithUserAndResource">
+        SELECT
+        <include refid="Article_Column_List"/>,
+        <include refid="User_Column_List"/>,
+        <include refid="Resource_Column_List"/>
+        FROM article
+        LEFT JOIN user ON article.user_id = user.id
+        LEFT JOIN resource ON article.resource_id = resource.id
+    </select>
 </mapper>

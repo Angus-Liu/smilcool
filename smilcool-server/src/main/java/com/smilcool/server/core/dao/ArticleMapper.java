@@ -1,7 +1,10 @@
 package com.smilcool.server.core.dao;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,4 +26,6 @@ public interface ArticleMapper {
     List<ArticleVO> selectArticleVO();
 
     ArticleVO selectArticleVOByPrimaryKey(Integer id);
+
+    Page<ArticleVO> selectArticleVOByCondition(Page page, @Param("article") Article condition);
 }

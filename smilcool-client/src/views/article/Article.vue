@@ -15,9 +15,8 @@
         <!-- 轮播图 END -->
         <!-- 文章选项菜单 -->
         <sui-menu secondary>
-          <sui-menu-item active link name="推荐">推荐</sui-menu-item>
-          <sui-menu-item link name="最新">最新</sui-menu-item>
-          <sui-menu-item link name="最热">最热</sui-menu-item>
+          <sui-menu-item link v-for="item in menu.items" :key="item" :content="item"
+                         :active="item === menu.active" @click="select(item)"/>
         </sui-menu>
         <!-- 文章选项菜单 END -->
         <!-- 文章列表 -->
@@ -30,7 +29,7 @@
           </sui-message>
           <sui-card-content>
             <ul class="article-list">
-              <li class="article-item" v-for="article in articleList" :key="article.id">
+              <li class="article-item" v-for="article in articlePage.records" :key="article.id">
                 <span class="article-category">
                   <sui-label tag>{{article.articleCategory}}</sui-label>
                 </span>
@@ -104,14 +103,11 @@
           </sui-message>
           <sui-card-content>
             <ul class="article-list">
-              <li class="article-item" v-for="article in articleList" :key="article.id">
+              <li class="article-item" v-for="article in articlePage.records" :key="article.id">
                 <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
                 <span class="article-time">{{article.createTime}}</span>
               </li>
             </ul>
-          </sui-card-content>
-          <sui-card-content extra>
-            <a slot="right" href="#">查看更多</a>
           </sui-card-content>
         </sui-card>
         <!-- 最新评论 END -->
@@ -125,32 +121,44 @@ export default {
   name: 'Main',
   data() {
     return {
+      menu: {
+        active: '推荐',
+        items: ['推荐', '最新', '最热']
+      },
       carouselList: [
         'http://cst.nuc.edu.cn/__local/6/B5/CA/0C7872A9A43129FBF22FFD81FD6_A7D26F04_11FD7.jpg',
         'http://cst.nuc.edu.cn/__local/4/BD/0A/EC16F73EAA614E63429BACDBE1D_5AC56599_AEDFD.png',
         'http://cst.nuc.edu.cn/__local/2/36/5A/EAA656684EBA55E5462A8B8D583_C411B084_1A136.jpg',
         'http://cst.nuc.edu.cn/__local/9/57/7B/1A89800BB01F84F9FAD9E8D979A_02F9A36A_11E41.jpg'
       ],
-      articleList: [{
-        'id': 1,
-        'userId': 7,
-        'resourceId': 4,
-        'articleCategory': '校园文章',
-        'title': '测试文章',
-        'createTime': '2019-05-13',
-        'user': {
-          'id': 7,
-          'username': '007',
-          'nickname': '漫步金星',
-          'avatar': 'http://img.angus-liu.cn/avatar/avatar04.jpg'
-        },
-        'resource': {
-          'id': 4,
-          'zanCount': 0,
-          'pvCount': 0,
-          'commentCount': 2
-        }
-      }],
+      articlePage: {
+        'records': [{
+          'id': 2,
+          'userId': 6,
+          'resourceId': 5,
+          'articleCategory': '校园文章',
+          'title': '雷锋斌副校长指导大数据学院 “改革创新 奋发有为”大讨论专题组织生活会',
+          'createTime': '2019-05-13',
+          'user': {
+            'id': 6,
+            'username': '1713862733',
+            'nickname': '双击666',
+            'avatar': 'http://img.angus-liu.cn/avatar/avatar03.jpg',
+            'sign': '一句话介绍自己'
+          },
+          'resource': {
+            'id': 5,
+            'zanCount': 0,
+            'pvCount': 0,
+            'commentCount': 0
+          }
+        }],
+        'total': 7,
+        'size': 10,
+        'current': 1,
+        'searchCount': true,
+        'pages': 1
+      },
       articleCategory: [{
         name: '系统通知',
         img: 'http://img.angus-liu.cn/avatar/avatar01.jpg'
@@ -192,16 +200,24 @@ export default {
     };
   },
   methods: {
-    getArticleList() {
-      this.$axios.get('/api/article')
+    select(item) {
+      this.menu.active = item;
+      if (item === '推荐' || item === '最新') {
+        this.getArticleList({ desc: 'create_time' })
+      } else {
+        this.getArticleList({ desc: 'comment_count, zan_count' })
+      }
+    },
+    getArticleList(param) {
+      this.$axios.get('/api/article/page', param)
         .then(res => {
           let result = res.data;
-          this.articleList = result.data;
+          this.articlePage = result.data;
         });
     }
   },
   mounted() {
-    this.getArticleList();
+    this.getArticleList({ desc: 'create_time' });
   }
 };
 </script>

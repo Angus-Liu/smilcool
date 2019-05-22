@@ -1,7 +1,9 @@
 package com.smilcool.server.core.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
+import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
@@ -36,8 +38,15 @@ public class ArticleController {
     @ApiOperation("文章列表")
     @GetMapping
     public Result<List<ArticleVO>> getArticleVOList() {
-        List<ArticleVO> articleList = articleService.getArticleVOList();
+        List<ArticleVO> articleList = articleService.listArticleVO();
         return Result.success(articleList);
+    }
+
+    @ApiOperation("文章分页")
+    @GetMapping("/page")
+    public Result<Page<ArticleVO>> pageArticleVO(Page page, ArticleQueryForm form) {
+        Page<ArticleVO> articlePage = articleService.pageArticleVO(page, form);
+        return Result.success(articlePage);
     }
 
     @ApiOperation("文章")

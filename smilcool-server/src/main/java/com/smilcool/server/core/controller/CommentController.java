@@ -35,7 +35,7 @@ public class CommentController {
     @ApiOperation("评论列表")
     @GetMapping("/{resourceId}")
     public Result<List<CommentVO>> getCommentList(@PathVariable Integer resourceId) {
-        List<CommentVO> commentList = commentService.getCommentVOList(resourceId);
+        List<CommentVO> commentList = commentService.listCommentVO(resourceId);
         return Result.success(commentList);
     }
 }

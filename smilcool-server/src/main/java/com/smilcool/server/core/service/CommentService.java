@@ -15,5 +15,5 @@ public interface CommentService {
 
     Comment getComment(Integer id);
 
-    List<CommentVO> getCommentVOList(Integer resourceId);
+    List<CommentVO> listCommentVO(Integer resourceId);
 }

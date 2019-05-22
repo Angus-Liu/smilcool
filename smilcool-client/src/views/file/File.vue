@@ -117,8 +117,8 @@ export default {
   name: 'File',
   data() {
     return {
-      active: '最新',
-      items: ['最新', '最热'],
+      activeMenuItem: '最新',
+      menuItems: ['最新', '最热'],
       localStorage: '/api/local-storage/upload',
       name: '所有',
       fileCategory: [{

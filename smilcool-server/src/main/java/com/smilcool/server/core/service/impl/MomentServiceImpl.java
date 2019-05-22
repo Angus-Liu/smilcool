@@ -1,6 +1,5 @@
 package com.smilcool.server.core.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.enums.DicTypeEnum;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
@@ -78,7 +77,7 @@ public class MomentServiceImpl implements MomentService {
                     // 所属资源信息
                     .resource(resourceService.getResourceVO(moment.getResourceId()))
                     // 评论信息
-                    .commentList(commentService.getCommentVOList(moment.getResourceId()))
+                    .commentList(commentService.listCommentVO(moment.getResourceId()))
                     .build();
             momentPageList.add(momentPage);
         });

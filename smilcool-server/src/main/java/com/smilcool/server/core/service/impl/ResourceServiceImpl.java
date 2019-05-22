@@ -64,7 +64,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public void increaseResourceCommentCount(Integer id) {
+    public void addCommentCount(Integer id) {
         // TODO 解决并发下丢失修改问题
         resourceMapper.updateCommentCountByIdAndCount(id, 1);
     }

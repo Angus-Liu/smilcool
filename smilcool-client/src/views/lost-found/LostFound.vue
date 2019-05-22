@@ -4,8 +4,8 @@
       <iCol span="16">
         <!-- 失物寻物菜单 -->
         <sui-menu>
-          <a is="sui-menu-item" v-for="item in items" :active="item === active" :key="item" :content="item"
-             @click="select(item)"/>
+          <sui-menu-item link v-for="item in menu.items" :key="item" :content="item"
+                         :active="item === menu.active" @click="select(item)"/>
           <sui-menu-item position="right">
             <sui-input transparent icon="search" placeholder="搜索"/>
           </sui-menu-item>
@@ -120,8 +120,10 @@ export default {
   },
   data() {
     return {
-      active: '查看所有',
-      items: ['查看所有', '失物招领', '寻物启事'],
+      menu: {
+        active: '查看所有',
+        items: ['查看所有', '失物招领', '寻物启事'],
+      },
       lostFoundAddModal: {
         show: false,
         title: '发布寻物启事',
@@ -233,8 +235,8 @@ export default {
         }
       }
     },
-    select(name) {
-      this.active = name;
+    select(item) {
+      this.menu.active = item;
     },
     getLostFoundPageList() {
       this.$axios.get('/api/lost-found/page')

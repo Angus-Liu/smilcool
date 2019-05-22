@@ -1,15 +1,18 @@
 package com.smilcool.server.core.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.enums.DicTypeEnum;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.common.util.MockUtil;
 import com.smilcool.server.core.dao.ArticleMapper;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
+import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
 import com.smilcool.server.core.service.ResourceService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,7 @@ import java.util.List;
  * @author Angus
  * @date 2019/4/12
  */
+@Slf4j
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
@@ -64,8 +68,14 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleVO> getArticleVOList() {
+    public List<ArticleVO> listArticleVO() {
         List<ArticleVO> articleList = articleMapper.selectArticleVO();
         return articleList;
+    }
+
+    @Override
+    public Page<ArticleVO> pageArticleVO(Page page, ArticleQueryForm form) {
+        Article condition = BeanUtil.copyProp(form, Article.class);
+        return articleMapper.selectArticleVOByCondition(page, condition);
     }
 }

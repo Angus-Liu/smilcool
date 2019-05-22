@@ -32,16 +32,16 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private ResourceService resourceService;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Comment addComment(CommentAddForm form) {
-        // 当前登录用户
-        Integer currentUserId = MockUtil.currentUserId();
         Comment comment = BeanUtil.copyProp(form, Comment.class);
-        comment.setUserId(currentUserId);
+        // 当前登录用户
+        comment.setUserId(userService.getCurrentUserId());
+        // 添加评论
         commentMapper.insertSelective(comment);
-        // 指定资源的评论数 +1
-        resourceService.increaseResourceCommentCount(form.getResourceId());
+        // 更新指定资源的评论数 +1
+        resourceService.addCommentCount(form.getResourceId());
         return getComment(comment.getId());
     }
 
@@ -55,10 +55,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentVO> getCommentVOList(Integer resourceId) {
-        // 父评论按时间逆序排（后评论的在前面）
+    public List<CommentVO> listCommentVO(Integer resourceId) {
+        // 获取父评论，按时间逆序排
         List<CommentVO> parentCommentList = commentMapper.selectParentCommentVOByResourceId(resourceId);
-        // 获取子评论信息，子评论按时间顺序排（后评论的在后面）
+        // 获取子评论，按时间顺序排
         parentCommentList.forEach(parentComment -> {
             List<CommentVO> childCommentList = commentMapper.selectChildCommentVOByParentId(parentComment.getId());
             parentComment.setChildren(childCommentList);

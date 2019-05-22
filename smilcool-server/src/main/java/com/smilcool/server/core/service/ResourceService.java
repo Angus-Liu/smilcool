@@ -22,5 +22,5 @@ public interface ResourceService {
 
     List<ResourceVO> getResourceList(ResourceQueryForm form);
 
-    void increaseResourceCommentCount(Integer id);
+    void addCommentCount(Integer id);
 }

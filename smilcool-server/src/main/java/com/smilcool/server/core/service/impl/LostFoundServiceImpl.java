@@ -81,7 +81,7 @@ public class LostFoundServiceImpl implements LostFoundService {
                     // 所属资源信息
                     .resource(resourceService.getResourceVO(lostFound.getResourceId()))
                     // 评论信息
-                    .commentList(commentService.getCommentVOList(lostFound.getResourceId()))
+                    .commentList(commentService.listCommentVO(lostFound.getResourceId()))
                     .build();
             lostFoundPageList.add(lostFoundPage);
         });

@@ -5,5 +5,5 @@ package com.smilcool.server.core.pojo.form;
  * @date 2019/5/21
  */
 public class ArticleQueryForm {
-    private Boolean sortByTime;
+
 }

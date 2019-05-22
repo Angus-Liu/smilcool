@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * MyBatis 配置：
  * ① 扫描 Mapper
  * ② 开启事务
- * ③ 开启分页
+ * ③ 开启分页、自定义排序规则
  *
  * @author Angus
  * @date 2019/3/20
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class MyBatisConfig {
 
     /**
-     * MyBatis Plus 提供的分页插件
+     * MyBatis Plus 提供的分页、自定义排序规则插件
      */
     @Bean
     public PaginationInterceptor paginationInterceptor() {

@@ -1,6 +1,8 @@
 package com.smilcool.server.core.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.ArticleAddForm;
+import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
 
@@ -18,5 +20,7 @@ public interface ArticleService {
 
     ArticleVO getArticleVO(Integer id);
 
-    List<ArticleVO> getArticleVOList();
+    List<ArticleVO> listArticleVO();
+
+    Page<ArticleVO> pageArticleVO(Page page, ArticleQueryForm form);
 }

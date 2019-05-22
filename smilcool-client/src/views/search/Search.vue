@@ -23,13 +23,13 @@ export default {
   name: 'Search',
   data() {
     return {
-      items: ['文章资讯', '文件仓库', '二手交易', '失物寻物'],
-      active: '文章资讯',
+      menuItems: ['文章资讯', '文件仓库', '二手交易', '失物寻物'],
+      activeMenuItem: '文章资讯',
     };
   },
   methods: {
     isActive(name) {
-      return this.active === name;
+      return this.activeMenuItem === name;
     },
     select(name) {
       this.active = name;

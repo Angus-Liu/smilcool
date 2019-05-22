@@ -13,6 +13,7 @@ import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.RolePermissionService;
 import com.smilcool.server.core.service.UserRoleService;
 import com.smilcool.server.core.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.UnauthenticatedException;
@@ -28,6 +29,7 @@ import java.util.Set;
  * @author Angus
  * @date 2019/3/20
  */
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -40,6 +42,19 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RolePermissionService rolePermissionService;
 
+
+    @Override
+    public Integer getCurrentUserId() {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser.isAuthenticated()) {
+            Integer userId = (Integer) currentUser.getPrincipal();
+            log.info("已登录，userId: {}", userId);
+            return userId;
+        }
+        Integer mockUserId = 1;
+        log.info("未登录，mock user id: {}", mockUserId);
+        return mockUserId;
+    }
 
     @Override
     public User getCurrentUser() {

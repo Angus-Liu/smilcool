@@ -99,8 +99,8 @@ export default {
   },
   data() {
     return {
-      active: '最新',
-      items: ['最新', '最热', '关注'],
+      activeMenuItem: '最新',
+      menuItems: ['最新', '最热', '关注'],
       moment: '',
       momentPageList: [
         {
@@ -163,7 +163,7 @@ export default {
       };
     },
     isActive(name) {
-      return this.active === name;
+      return this.activeMenuItem === name;
     },
     select(name) {
       this.active = name;

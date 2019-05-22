@@ -83,7 +83,7 @@ public class FileServiceImpl implements FileService {
                     // 所属资源信息
                     .resource(resourceService.getResourceVO(file.getResourceId()))
                     // 评论信息
-                    .commentList(commentService.getCommentVOList(file.getResourceId()))
+                    .commentList(commentService.listCommentVO(file.getResourceId()))
                     .build();
             filePageList.add(filePage);
         });
