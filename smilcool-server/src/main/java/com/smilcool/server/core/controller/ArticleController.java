@@ -43,7 +43,7 @@ public class ArticleController {
         return Result.success(articlePage);
     }
 
-    @ApiOperation("文章")
+    @ApiOperation("文章详情")
     @GetMapping("/{id}")
     public Result<ArticleVO> getArticleVO(@PathVariable Integer id) {
         ArticleVO articleVO = articleService.getArticleVO(id);

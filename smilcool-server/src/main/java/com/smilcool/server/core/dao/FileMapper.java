@@ -1,8 +1,10 @@
 package com.smilcool.server.core.dao;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.po.File;
-
-import java.util.List;
+import com.smilcool.server.core.pojo.vo.FileVO;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface FileMapper {
     int deleteByPrimaryKey(Integer id);
@@ -17,5 +19,10 @@ public interface FileMapper {
 
     int updateByPrimaryKey(File record);
 
-    List<File> select();
+    /* 以下是自定义方法 */
+
+    Page<FileVO> selectFileVOByCondition(Page page, @Param("file") File condition);
+
+    @Update("UPDATE file SET download_count = download_count + #{count} WHERE id = #{id}")
+    void updateDownloadCountByPrimaryKey(@Param("id") Integer id, @Param("count") Integer count);
 }

@@ -28,9 +28,6 @@ public class ArticleVO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date updateTime;
-
     private String tags;
 
     private String markdownContent;
@@ -38,7 +35,7 @@ public class ArticleVO {
     private String htmlContent;
 
     /**
-     * 文章作者
+     * 发布用户信息
      */
     private UserVO user;
 

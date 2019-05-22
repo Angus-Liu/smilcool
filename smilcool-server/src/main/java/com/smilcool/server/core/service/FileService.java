@@ -1,8 +1,11 @@
 package com.smilcool.server.core.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.FileAddForm;
+import com.smilcool.server.core.pojo.form.FileQueryForm;
 import com.smilcool.server.core.pojo.page.FilePage;
 import com.smilcool.server.core.pojo.po.File;
+import com.smilcool.server.core.pojo.vo.FileVO;
 
 import java.util.List;
 
@@ -12,11 +15,11 @@ import java.util.List;
  */
 public interface FileService {
 
-    File addFile(FileAddForm form);
-
     File getFile(Integer id);
 
-    List<File> getFileList();
+    File addFile(FileAddForm form);
 
-    List<FilePage> getFilePageList();
+    Page<FileVO> pageFileVO(Page page, FileQueryForm form);
+
+    void addDownloadCount(Integer id);
 }

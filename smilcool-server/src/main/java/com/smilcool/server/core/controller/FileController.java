@@ -1,9 +1,11 @@
 package com.smilcool.server.core.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.FileAddForm;
-import com.smilcool.server.core.pojo.page.FilePage;
+import com.smilcool.server.core.pojo.form.FileQueryForm;
 import com.smilcool.server.core.pojo.po.File;
+import com.smilcool.server.core.pojo.vo.FileVO;
 import com.smilcool.server.core.service.FileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author Angus
@@ -31,17 +32,17 @@ public class FileController {
         return Result.success(file);
     }
 
-    @ApiOperation("文件列表")
-    @GetMapping
-    public Result<List<File>> getFileList() {
-        List<File> fileList = fileService.getFileList();
-        return Result.success(fileList);
+    @ApiOperation("文件分页")
+    @GetMapping("/page")
+    public Result<Page<FileVO>> getFilePageList(Page page, FileQueryForm form) {
+        Page<FileVO> filePage = fileService.pageFileVO(page, form);
+        return Result.success(filePage);
     }
 
-    @ApiOperation("文件列表页面")
-    @GetMapping("/page")
-    public Result<List<FilePage>> getFilePageList() {
-        List<FilePage> filePageList = fileService.getFilePageList();
-        return Result.success(filePageList);
+    @ApiOperation("文件下载量更新")
+    @PutMapping("/{id}/download-count")
+    public Result addDownloadCount(@PathVariable("id") Integer id) {
+        fileService.addDownloadCount(id);
+        return Result.success();
     }
 }
