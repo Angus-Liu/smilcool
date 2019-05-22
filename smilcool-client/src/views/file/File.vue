@@ -272,6 +272,7 @@ export default {
     }
   },
   methods: {
+    // 菜单切换
     select(item) {
       this.menu.active = item;
       if (item === '最新') {
@@ -454,8 +455,6 @@ export default {
 .container {
   width: 1200px;
   margin: 10px auto;
-  padding: 5px;
-  /*background: #ccc;*/
 
   .ivu-col {
     padding: 7px;
