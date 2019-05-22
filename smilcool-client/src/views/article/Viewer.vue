@@ -152,7 +152,13 @@ export default {
           }
         ]
       }],
-      comment: {}
+      comment: {
+        parentId: null,
+        resourceId: null,
+        replyUserId: null,
+        value: '',
+        content: ''
+      }
     };
   },
   methods: {

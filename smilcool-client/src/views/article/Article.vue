@@ -103,7 +103,7 @@
           </sui-message>
           <sui-card-content>
             <sui-feed class="latest-comment-feed">
-              <sui-feed-event v-for="(item,index) in articleLatestComment" :key="index">
+              <sui-feed-event v-for="item in articleLatestComment" :key="item.commentId">
                 <sui-feed-label :image="item.userAvatar"/>
                 <sui-feed-content>
                   <sui-feed-summary>
