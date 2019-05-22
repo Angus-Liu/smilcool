@@ -1,10 +1,9 @@
 package com.smilcool.server.core.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.MomentAddForm;
-import com.smilcool.server.core.pojo.page.MomentPage;
 import com.smilcool.server.core.pojo.po.Moment;
-
-import java.util.List;
+import com.smilcool.server.core.pojo.vo.MomentVO;
 
 /**
  * @author Angus
@@ -15,5 +14,5 @@ public interface MomentService {
 
     Moment getMoment(Integer id);
 
-    List<MomentPage> getMomentPageList();
+    Page<MomentVO> pageMomentVO(Page page);
 }

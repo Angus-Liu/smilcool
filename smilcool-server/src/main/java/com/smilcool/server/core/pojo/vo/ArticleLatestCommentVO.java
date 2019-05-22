@@ -1,6 +1,9 @@
 package com.smilcool.server.core.pojo.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * 文章最新评论
@@ -48,5 +51,6 @@ public class ArticleLatestCommentVO {
     /**
      * 评论时间
      */
-    private String commentCreateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date commentCreateTime;
 }

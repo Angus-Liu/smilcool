@@ -220,9 +220,11 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
+    <!-- 以下是自定义内容 -->
+
     <resultMap extends="ResultMapWithBLOBs" id="ResultMapWithUserAndResource"
                type="com.smilcool.server.core.pojo.vo.ArticleVO">
-        <!-- 作者信息 -->
+        <!-- 发布用户信息 -->
         <association property="user" javaType="com.smilcool.server.core.pojo.vo.UserVO">
             <id column="user_id" jdbcType="INTEGER" property="id"/>
             <result column="username" jdbcType="VARCHAR" property="username"/>
@@ -248,16 +250,6 @@
     <sql id="Resource_Column_List">
         resource.id as resource_id, zan_count, pv_count, comment_count
     </sql>
-
-    <select id="selectArticleVO" resultMap="ResultMapWithUserAndResource">
-        SELECT
-        <include refid="Article_Column_List"/>,
-        <include refid="User_Column_List"/>,
-        <include refid="Resource_Column_List"/>
-        FROM article
-        LEFT JOIN user ON article.user_id = user.id
-        LEFT JOIN resource ON article.resource_id = resource.id
-    </select>
 
     <select id="selectArticleVOByPrimaryKey" resultMap="ResultMapWithUserAndResource">
         SELECT

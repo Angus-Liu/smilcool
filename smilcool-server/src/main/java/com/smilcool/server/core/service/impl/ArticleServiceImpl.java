@@ -69,12 +69,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleVO> listArticleVO() {
-        List<ArticleVO> articleList = articleMapper.selectArticleVO();
-        return articleList;
-    }
-
-    @Override
     public Page<ArticleVO> pageArticleVO(Page page, ArticleQueryForm form) {
         Article condition = BeanUtil.copyProp(form, Article.class);
         return articleMapper.selectArticleVOByCondition(page, condition);

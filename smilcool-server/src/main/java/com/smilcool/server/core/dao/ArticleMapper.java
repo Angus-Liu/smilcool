@@ -23,7 +23,7 @@ public interface ArticleMapper {
 
     int updateByPrimaryKey(Article record);
 
-    List<ArticleVO> selectArticleVO();
+    /* 以下是自定义内容 */
 
     ArticleVO selectArticleVOByPrimaryKey(Integer id);
 

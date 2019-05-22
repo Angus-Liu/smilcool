@@ -1,5 +1,6 @@
 package com.smilcool.server.core.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.enums.DicTypeEnum;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
@@ -65,22 +66,7 @@ public class MomentServiceImpl implements MomentService {
     }
 
     @Override
-    public List<MomentPage> getMomentPageList() {
-        List<Moment> momentList = momentMapper.select();
-        List<MomentPage> momentPageList = new ArrayList<>();
-        momentList.forEach(moment -> {
-            MomentPage momentPage = MomentPage.builder()
-                    // 动态信息
-                    .moment(BeanUtil.copyProp(moment, MomentVO.class))
-                    // 发布用户信息
-                    .user(userService.getUserVO(moment.getUserId()))
-                    // 所属资源信息
-                    .resource(resourceService.getResourceVO(moment.getResourceId()))
-                    // 评论信息
-                    .commentList(commentService.listCommentVO(moment.getResourceId()))
-                    .build();
-            momentPageList.add(momentPage);
-        });
-        return momentPageList;
+    public Page<MomentVO> pageMomentVO(Page page) {
+        return momentMapper.selectMomentVO(page);
     }
 }

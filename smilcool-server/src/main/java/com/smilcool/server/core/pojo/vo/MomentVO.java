@@ -25,4 +25,14 @@ public class MomentVO {
     private Date createTime;
 
     private String images;
+
+    /**
+     * 发布用户
+     */
+    private UserVO user;
+
+    /**
+     * 资源信息
+     */
+    private ResourceVO resource;
 }

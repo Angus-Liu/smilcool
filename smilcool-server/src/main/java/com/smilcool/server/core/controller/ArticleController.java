@@ -36,13 +36,6 @@ public class ArticleController {
         return Result.success(article);
     }
 
-    @ApiOperation("文章列表")
-    @GetMapping
-    public Result<List<ArticleVO>> getArticleVOList() {
-        List<ArticleVO> articleList = articleService.listArticleVO();
-        return Result.success(articleList);
-    }
-
     @ApiOperation("文章分页")
     @GetMapping("/page")
     public Result<Page<ArticleVO>> pageArticleVO(Page page, ArticleQueryForm form) {

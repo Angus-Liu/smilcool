@@ -21,8 +21,6 @@ public interface ArticleService {
 
     ArticleVO getArticleVO(Integer id);
 
-    List<ArticleVO> listArticleVO();
-
     Page<ArticleVO> pageArticleVO(Page page, ArticleQueryForm form);
 
     List<ArticleLatestCommentVO> listArticleLatestCommentVO();

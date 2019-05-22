@@ -172,12 +172,44 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="select" resultType="com.smilcool.server.core.pojo.po.Moment">
+    <!-- 以下是自定义内容 -->
+
+    <resultMap extends="ResultMapWithBLOBs" id="ResultMapWithUserAndResource"
+               type="com.smilcool.server.core.pojo.vo.MomentVO">
+        <!-- 发布用户信息 -->
+        <association property="user" javaType="com.smilcool.server.core.pojo.vo.UserVO">
+            <id column="user_id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+            <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+            <result column="sign" jdbcType="VARCHAR" property="sign"/>
+        </association>
+        <!-- 资源信息 -->
+        <association property="resource" javaType="com.smilcool.server.core.pojo.vo.ResourceVO">
+            <id column="resource_id" jdbcType="INTEGER" property="id"/>
+            <result column="zan_count" jdbcType="INTEGER" property="zanCount"/>
+            <result column="pv_count" jdbcType="INTEGER" property="pvCount"/>
+            <result column="comment_count" jdbcType="INTEGER" property="commentCount"/>
+        </association>
+    </resultMap>
+
+    <sql id="Moment_Column_List">
+        moment.id, moment_category, content, images, moment.create_time
+    </sql>
+    <sql id="User_Column_List">
+        user.id as user_id, username, nickname, avatar, sign
+    </sql>
+    <sql id="Resource_Column_List">
+        resource.id as resource_id, zan_count, pv_count, comment_count
+    </sql>
+
+    <select id="selectMomentVO" resultMap="ResultMapWithUserAndResource">
         SELECT
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
+        <include refid="Moment_Column_List"/>,
+        <include refid="User_Column_List"/>,
+        <include refid="Resource_Column_List"/>
         FROM moment
-        ORDER BY create_time DESC
+        LEFT JOIN user ON moment.user_id = user.id
+        LEFT JOIN resource ON moment.resource_id = resource.id
     </select>
 </mapper>

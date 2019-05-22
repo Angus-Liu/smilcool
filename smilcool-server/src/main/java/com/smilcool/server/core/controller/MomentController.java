@@ -1,9 +1,11 @@
 package com.smilcool.server.core.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.MomentAddForm;
 import com.smilcool.server.core.pojo.page.MomentPage;
 import com.smilcool.server.core.pojo.po.Moment;
+import com.smilcool.server.core.pojo.vo.MomentVO;
 import com.smilcool.server.core.service.MomentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,11 +34,10 @@ public class MomentController {
         return Result.success(moment);
     }
 
-    @ApiOperation("动态页面")
-    @GetMapping
-    public Result<List<MomentPage>> getMomentList() {
-        List<MomentPage> momentInfoList = momentService.getMomentPageList();
-        return Result.success(momentInfoList);
+    @ApiOperation("动态分页")
+    @GetMapping("/page")
+    public Result<Page<MomentVO>> pageMomentVO(Page page) {
+        Page<MomentVO> momentPage = momentService.pageMomentVO(page);
+        return Result.success(momentPage);
     }
-
 }
