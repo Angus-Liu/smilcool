@@ -51,12 +51,6 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public List<ResourceVO> getResourceList() {
-        List<Resource> resourceList = resourceMapper.select();
-        return BeanUtil.copyProp(resourceList, ResourceVO.class);
-    }
-
-    @Override
     public List<ResourceVO> getResourceList(ResourceQueryForm form) {
         Resource condition = BeanUtil.copyProp(form, Resource.class);
         List<Resource> resourceList = resourceMapper.selectByCondition(condition);
@@ -65,7 +59,12 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public void addCommentCount(Integer id) {
-        // TODO 解决并发下丢失修改问题
-        resourceMapper.updateCommentCountByIdAndCount(id, 1);
+        // TODO 2019/5/22 解决并发下丢失修改问题
+        resourceMapper.updateCommentCountByPrimayKey(id, 1);
+    }
+
+    @Override
+    public void addZanCount(Integer id) {
+        resourceMapper.updateZanCountByPrimaryKey(id, 1);
     }
 }

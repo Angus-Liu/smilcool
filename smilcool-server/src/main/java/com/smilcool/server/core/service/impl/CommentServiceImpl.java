@@ -2,7 +2,6 @@ package com.smilcool.server.core.service.impl;
 
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
-import com.smilcool.server.common.util.MockUtil;
 import com.smilcool.server.core.dao.CommentMapper;
 import com.smilcool.server.core.pojo.form.CommentAddForm;
 import com.smilcool.server.core.pojo.po.Comment;
@@ -32,19 +31,6 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private ResourceService resourceService;
 
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public Comment addComment(CommentAddForm form) {
-        Comment comment = BeanUtil.copyProp(form, Comment.class);
-        // 当前登录用户
-        comment.setUserId(userService.getCurrentUserId());
-        // 添加评论
-        commentMapper.insertSelective(comment);
-        // 更新指定资源的评论数 +1
-        resourceService.addCommentCount(form.getResourceId());
-        return getComment(comment.getId());
-    }
-
     @Override
     public Comment getComment(Integer id) {
         Comment comment = commentMapper.selectByPrimaryKey(id);
@@ -52,6 +38,19 @@ public class CommentServiceImpl implements CommentService {
             throw new SmilcoolException("评论不存在");
         }
         return comment;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Comment addComment(CommentAddForm form) {
+        Comment comment = BeanUtil.copyProp(form, Comment.class);
+        // 当前登录用户
+        comment.setUserId(userService.currentUserId());
+        // 添加评论
+        commentMapper.insertSelective(comment);
+        // 更新指定资源的评论数 +1
+        resourceService.addCommentCount(form.getResourceId());
+        return getComment(comment.getId());
     }
 
     @Override

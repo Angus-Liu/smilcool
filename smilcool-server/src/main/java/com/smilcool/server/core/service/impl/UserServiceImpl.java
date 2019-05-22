@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Integer getCurrentUserId() {
+    public Integer currentUserId() {
         Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isAuthenticated()) {
             Integer userId = (Integer) currentUser.getPrincipal();

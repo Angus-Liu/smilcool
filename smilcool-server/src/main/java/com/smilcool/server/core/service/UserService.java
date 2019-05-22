@@ -16,7 +16,7 @@ import java.util.Set;
  * @date 2019/3/20
  */
 public interface UserService {
-    Integer getCurrentUserId();
+    Integer currentUserId();
 
     User getCurrentUser();
 

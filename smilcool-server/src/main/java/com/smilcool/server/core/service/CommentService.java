@@ -11,9 +11,9 @@ import java.util.List;
  * @date 2019/4/23
  */
 public interface CommentService {
-    Comment addComment(CommentAddForm form);
-
     Comment getComment(Integer id);
+
+    Comment addComment(CommentAddForm form);
 
     List<CommentVO> listCommentVO(Integer resourceId);
 }

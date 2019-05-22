@@ -19,10 +19,13 @@ public interface ResourceMapper {
 
     int updateByPrimaryKey(Resource record);
 
-    List<Resource> select();
+    /* 以下是自定义方法 */
 
     List<Resource> selectByCondition(Resource condition);
 
     @Update("UPDATE resource SET comment_count = comment_count + #{count} WHERE id = #{id}")
-    int updateCommentCountByIdAndCount(@Param("id") Integer id, @Param("count") Integer count);
+    int updateCommentCountByPrimayKey(@Param("id") Integer id, @Param("count") Integer count);
+
+    @Update("UPDATE resource SET zan_count = zan_count + #{count} WHERE id = #{id}")
+    void updateZanCountByPrimaryKey(@Param("id") Integer id, @Param("count") Integer count);
 }

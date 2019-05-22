@@ -3,7 +3,6 @@ package com.smilcool.server.core.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.MomentAddForm;
-import com.smilcool.server.core.pojo.page.MomentPage;
 import com.smilcool.server.core.pojo.po.Moment;
 import com.smilcool.server.core.pojo.vo.MomentVO;
 import com.smilcool.server.core.service.MomentService;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author Angus
