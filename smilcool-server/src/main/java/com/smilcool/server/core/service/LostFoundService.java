@@ -1,10 +1,10 @@
 package com.smilcool.server.core.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.LostFoundAddForm;
-import com.smilcool.server.core.pojo.page.LostFoundPage;
+import com.smilcool.server.core.pojo.form.LostFoundQueryForm;
 import com.smilcool.server.core.pojo.po.LostFound;
-
-import java.util.List;
+import com.smilcool.server.core.pojo.vo.LostFoundVO;
 
 /**
  * @author Angus
@@ -12,11 +12,9 @@ import java.util.List;
  */
 public interface LostFoundService {
 
-    LostFound addLostFound(LostFoundAddForm form);
-
     LostFound getLostFound(Integer id);
 
-    List<LostFound> getLostFoundList();
+    LostFound addLostFound(LostFoundAddForm form);
 
-    List<LostFoundPage> getLostFoundPageList();
+    Page<LostFoundVO> pageLostFoundVO(Page page, LostFoundQueryForm form);
 }

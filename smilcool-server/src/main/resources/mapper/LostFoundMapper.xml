@@ -222,12 +222,50 @@
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="select" resultType="com.smilcool.server.core.pojo.po.LostFound">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from lost_found
+    <!-- 以下是自定义内容 -->
+
+    <resultMap id="ResultMapWithUserAndResource" extends="ResultMapWithBLOBs"
+               type="com.smilcool.server.core.pojo.vo.LostFoundVO">
+        <!-- 发布用户信息 -->
+        <association property="user" javaType="com.smilcool.server.core.pojo.vo.UserVO">
+            <id column="user_id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+            <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+            <result column="sign" jdbcType="VARCHAR" property="sign"/>
+        </association>
+        <!-- 资源信息 -->
+        <association property="resource" javaType="com.smilcool.server.core.pojo.vo.ResourceVO">
+            <id column="resource_id" jdbcType="INTEGER" property="id"/>
+            <result column="zan_count" jdbcType="INTEGER" property="zanCount"/>
+            <result column="pv_count" jdbcType="INTEGER" property="pvCount"/>
+            <result column="comment_count" jdbcType="INTEGER" property="commentCount"/>
+        </association>
+    </resultMap>
+
+    <sql id="Lost_Found_Column_List">
+        lost_found.id, lost_found_category, title, description, item_name, time, address, images, lost_found.create_time
+    </sql>
+    <sql id="User_Column_List">
+        user.id as user_id, username, nickname, avatar, sign
+    </sql>
+    <sql id="Resource_Column_List">
+        resource.id as resource_id, zan_count, pv_count, comment_count
+    </sql>
+
+    <select id="selectLostFoundVOByCondition" resultMap="ResultMapWithUserAndResource">
+        SELECT
+        <include refid="Lost_Found_Column_List"/>,
+        <include refid="User_Column_List"/>,
+        <include refid="Resource_Column_List"/>
+        FROM lost_found
+        LEFT JOIN user ON lost_found.user_id = user.id
+        LEFT JOIN resource ON lost_found.resource_id = resource.id
+        <where>
+            <if test="lostFound.lostFoundCategory != null">
+                lost_found.lost_found_category = #{lostFound.lostFoundCategory}
+            </if>
+        </where>
     </select>
 
 </mapper>

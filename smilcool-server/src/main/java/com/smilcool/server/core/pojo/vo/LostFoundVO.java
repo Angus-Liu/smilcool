@@ -25,6 +25,7 @@ public class LostFoundVO {
 
     private String itemName;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     private String address;
@@ -33,4 +34,14 @@ public class LostFoundVO {
     private Date createTime;
 
     private String images;
+
+    /**
+     * 发布用户信息
+     */
+    private UserVO user;
+
+    /**
+     * 二手交易关联资源信息
+     */
+    private ResourceVO resource;
 }

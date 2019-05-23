@@ -1,8 +1,9 @@
 package com.smilcool.server.core.dao;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.po.LostFound;
-
-import java.util.List;
+import com.smilcool.server.core.pojo.vo.LostFoundVO;
+import org.apache.ibatis.annotations.Param;
 
 public interface LostFoundMapper {
     int deleteByPrimaryKey(Integer id);
@@ -19,5 +20,7 @@ public interface LostFoundMapper {
 
     int updateByPrimaryKey(LostFound record);
 
-    List<LostFound> select();
+    /* 以下是自定义内容 */
+
+    Page<LostFoundVO> selectLostFoundVOByCondition(Page page, @Param("lostFound") LostFound lostFound);
 }

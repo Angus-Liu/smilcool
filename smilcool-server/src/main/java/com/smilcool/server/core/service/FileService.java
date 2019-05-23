@@ -3,11 +3,8 @@ package com.smilcool.server.core.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.FileAddForm;
 import com.smilcool.server.core.pojo.form.FileQueryForm;
-import com.smilcool.server.core.pojo.page.FilePage;
 import com.smilcool.server.core.pojo.po.File;
 import com.smilcool.server.core.pojo.vo.FileVO;
-
-import java.util.List;
 
 /**
  * @author Angus

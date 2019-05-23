@@ -1,9 +1,11 @@
 package com.smilcool.server.core.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.LostFoundAddForm;
-import com.smilcool.server.core.pojo.page.LostFoundPage;
+import com.smilcool.server.core.pojo.form.LostFoundQueryForm;
 import com.smilcool.server.core.pojo.po.LostFound;
+import com.smilcool.server.core.pojo.vo.LostFoundVO;
 import com.smilcool.server.core.service.LostFoundService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author Angus
@@ -32,17 +33,10 @@ public class LostFoundController {
         return Result.success(lostFound);
     }
 
-    @ApiOperation("失物寻物列表")
-    @GetMapping
-    public Result<List<LostFound>> getLostFoundList() {
-        List<LostFound> lostFoundList = lostFoundService.getLostFoundList();
-        return Result.success(lostFoundList);
-    }
-
-    @ApiOperation("失物寻物页面")
+    @ApiOperation("失物寻物分页")
     @GetMapping("/page")
-    public Result<List<LostFoundPage>> getLostFoundPageList() {
-        List<LostFoundPage> lostFoundPageList = lostFoundService.getLostFoundPageList();
-        return Result.success(lostFoundPageList);
+    public Result<Page<LostFoundVO>> pageLostFoundVO(Page page, LostFoundQueryForm form) {
+        Page<LostFoundVO> lostFoundPage = lostFoundService.pageLostFoundVO(page, form);
+        return Result.success(lostFoundPage);
     }
 }
