@@ -25,7 +25,7 @@ public class LostFoundVO {
 
     private String itemName;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy年MM月dd日  HH:mm")
     private Date time;
 
     private String address;
