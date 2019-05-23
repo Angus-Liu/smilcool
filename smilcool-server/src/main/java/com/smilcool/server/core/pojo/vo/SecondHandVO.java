@@ -13,7 +13,7 @@ public class SecondHandVO {
 
     private Integer resourceId;
 
-    private Integer resourceTypeId;
+    private String secondHandCategory;
 
     private String title;
 
@@ -23,13 +23,20 @@ public class SecondHandVO {
 
     private String address;
 
-    private String image;
-
     private String description;
+
+    private String images;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+    /**
+     * 发布用户信息
+     */
+    private UserVO user;
+
+    /**
+     * 关联资源信息
+     */
+    private ResourceVO resource;
 }

@@ -1,6 +1,9 @@
 package com.smilcool.server.core.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.SecondHandAddForm;
+import com.smilcool.server.core.pojo.form.SecondHandQueryForm;
+import com.smilcool.server.core.pojo.po.SecondHand;
 import com.smilcool.server.core.pojo.vo.SecondHandVO;
 
 import java.util.List;
@@ -10,9 +13,10 @@ import java.util.List;
  * @date 2019/4/14
  */
 public interface SecondHandService {
-    SecondHandVO addSecondHand(SecondHandAddForm form);
 
-    SecondHandVO getSecondHand(Integer id);
+    SecondHand getSecondHand(Integer id);
 
-    List<SecondHandVO> getSecondHandList();
+    SecondHand addSecondHand(SecondHandAddForm form);
+
+    Page<SecondHandVO> pageSecondHandVO(Page page, SecondHandQueryForm form);
 }

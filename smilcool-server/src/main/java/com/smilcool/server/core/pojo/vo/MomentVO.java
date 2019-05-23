@@ -27,12 +27,12 @@ public class MomentVO {
     private String images;
 
     /**
-     * 发布用户
+     * 发布用户信息
      */
     private UserVO user;
 
     /**
-     * 资源信息
+     * 关联资源信息
      */
     private ResourceVO resource;
 }

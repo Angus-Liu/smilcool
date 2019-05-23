@@ -40,7 +40,7 @@ public class FileVO {
     private UserVO user;
 
     /**
-     * 文件关联资源信息
+     * 关联资源信息
      */
     private ResourceVO resource;
 }

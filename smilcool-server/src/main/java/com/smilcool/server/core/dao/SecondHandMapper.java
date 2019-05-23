@@ -1,8 +1,10 @@
 package com.smilcool.server.core.dao;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smilcool.server.core.pojo.form.SecondHandQueryForm;
 import com.smilcool.server.core.pojo.po.SecondHand;
-
-import java.util.List;
+import com.smilcool.server.core.pojo.vo.SecondHandVO;
+import org.apache.ibatis.annotations.Param;
 
 public interface SecondHandMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,7 +17,11 @@ public interface SecondHandMapper {
 
     int updateByPrimaryKeySelective(SecondHand record);
 
+    int updateByPrimaryKeyWithBLOBs(SecondHand record);
+
     int updateByPrimaryKey(SecondHand record);
 
-    List<SecondHand> select();
+    /* 以下是自定义内容 */
+
+    Page<SecondHandVO> selectSecondHandVOByCondition(Page page, @Param("secondHand") SecondHand secondHand);
 }

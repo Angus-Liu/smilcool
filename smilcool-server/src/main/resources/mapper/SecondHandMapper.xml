@@ -5,25 +5,32 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="resource_id" jdbcType="INTEGER" property="resourceId"/>
-        <result column="resource_type_id" jdbcType="INTEGER" property="resourceTypeId"/>
+        <result column="second_hand_category" jdbcType="VARCHAR" property="secondHandCategory"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="price" jdbcType="DOUBLE" property="price"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
-        <result column="image" jdbcType="VARCHAR" property="image"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.smilcool.server.core.pojo.po.SecondHand">
+        <result column="images" jdbcType="LONGVARCHAR" property="images"/>
+    </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, resource_id, resource_type_id, title, name, price, address, image, description,
+        id, user_id, resource_id, second_hand_category, title, name, price, address, description,
     remark, create_time, update_time, deleted
     </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <sql id="Blob_Column_List">
+        images
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
         from second_hand
         where id = #{id,jdbcType=INTEGER}
     </select>
@@ -34,15 +41,15 @@
     </delete>
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.SecondHand">
         INSERT INTO second_hand (id, user_id, resource_id,
-                                 resource_type_id, title, name,
-                                 price, address, image,
-                                 description, remark, create_time,
-                                 update_time, deleted)
+                                 second_hand_category, title, name,
+                                 price, address, description,
+                                 remark, create_time, update_time,
+                                 deleted, images)
         VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{resourceId,jdbcType=INTEGER},
-                #{resourceTypeId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-                #{price,jdbcType=DOUBLE}, #{address,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR},
-                #{description,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
-                #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+                #{secondHandCategory,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+                #{price,jdbcType=DOUBLE}, #{address,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+                #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+                #{deleted,jdbcType=BIT}, #{images,jdbcType=LONGVARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.SecondHand"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -57,8 +64,8 @@
             <if test="resourceId != null">
                 resource_id,
             </if>
-            <if test="resourceTypeId != null">
-                resource_type_id,
+            <if test="secondHandCategory != null">
+                second_hand_category,
             </if>
             <if test="title != null">
                 title,
@@ -71,9 +78,6 @@
             </if>
             <if test="address != null">
                 address,
-            </if>
-            <if test="image != null">
-                image,
             </if>
             <if test="description != null">
                 description,
@@ -90,6 +94,9 @@
             <if test="deleted != null">
                 deleted,
             </if>
+            <if test="images != null">
+                images,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -101,8 +108,8 @@
             <if test="resourceId != null">
                 #{resourceId,jdbcType=INTEGER},
             </if>
-            <if test="resourceTypeId != null">
-                #{resourceTypeId,jdbcType=INTEGER},
+            <if test="secondHandCategory != null">
+                #{secondHandCategory,jdbcType=VARCHAR},
             </if>
             <if test="title != null">
                 #{title,jdbcType=VARCHAR},
@@ -115,9 +122,6 @@
             </if>
             <if test="address != null">
                 #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="image != null">
-                #{image,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
@@ -134,6 +138,9 @@
             <if test="deleted != null">
                 #{deleted,jdbcType=BIT},
             </if>
+            <if test="images != null">
+                #{images,jdbcType=LONGVARCHAR},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.smilcool.server.core.pojo.po.SecondHand">
@@ -145,8 +152,8 @@
             <if test="resourceId != null">
                 resource_id = #{resourceId,jdbcType=INTEGER},
             </if>
-            <if test="resourceTypeId != null">
-                resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
+            <if test="secondHandCategory != null">
+                second_hand_category = #{secondHandCategory,jdbcType=VARCHAR},
             </if>
             <if test="title != null">
                 title = #{title,jdbcType=VARCHAR},
@@ -159,9 +166,6 @@
             </if>
             <if test="address != null">
                 address = #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="image != null">
-                image = #{image,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
@@ -178,31 +182,86 @@
             <if test="deleted != null">
                 deleted = #{deleted,jdbcType=BIT},
             </if>
+            <if test="images != null">
+                images = #{images,jdbcType=LONGVARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.smilcool.server.core.pojo.po.SecondHand">
+        UPDATE second_hand
+        SET user_id              = #{userId,jdbcType=INTEGER},
+            resource_id          = #{resourceId,jdbcType=INTEGER},
+            second_hand_category = #{secondHandCategory,jdbcType=VARCHAR},
+            title                = #{title,jdbcType=VARCHAR},
+            name                 = #{name,jdbcType=VARCHAR},
+            price                = #{price,jdbcType=DOUBLE},
+            address              = #{address,jdbcType=VARCHAR},
+            description          = #{description,jdbcType=VARCHAR},
+            remark               = #{remark,jdbcType=VARCHAR},
+            create_time          = #{createTime,jdbcType=TIMESTAMP},
+            update_time          = #{updateTime,jdbcType=TIMESTAMP},
+            deleted              = #{deleted,jdbcType=BIT},
+            images               = #{images,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
     <update id="updateByPrimaryKey" parameterType="com.smilcool.server.core.pojo.po.SecondHand">
         UPDATE second_hand
-        SET user_id          = #{userId,jdbcType=INTEGER},
-            resource_id      = #{resourceId,jdbcType=INTEGER},
-            resource_type_id = #{resourceTypeId,jdbcType=INTEGER},
-            title            = #{title,jdbcType=VARCHAR},
-            name             = #{name,jdbcType=VARCHAR},
-            price            = #{price,jdbcType=DOUBLE},
-            address          = #{address,jdbcType=VARCHAR},
-            image            = #{image,jdbcType=VARCHAR},
-            description      = #{description,jdbcType=VARCHAR},
-            remark           = #{remark,jdbcType=VARCHAR},
-            create_time      = #{createTime,jdbcType=TIMESTAMP},
-            update_time      = #{updateTime,jdbcType=TIMESTAMP},
-            deleted          = #{deleted,jdbcType=BIT}
+        SET user_id              = #{userId,jdbcType=INTEGER},
+            resource_id          = #{resourceId,jdbcType=INTEGER},
+            second_hand_category = #{secondHandCategory,jdbcType=VARCHAR},
+            title                = #{title,jdbcType=VARCHAR},
+            name                 = #{name,jdbcType=VARCHAR},
+            price                = #{price,jdbcType=DOUBLE},
+            address              = #{address,jdbcType=VARCHAR},
+            description          = #{description,jdbcType=VARCHAR},
+            remark               = #{remark,jdbcType=VARCHAR},
+            create_time          = #{createTime,jdbcType=TIMESTAMP},
+            update_time          = #{updateTime,jdbcType=TIMESTAMP},
+            deleted              = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="select" resultType="com.smilcool.server.core.pojo.po.SecondHand">
-        select
-        <include refid="Base_Column_List"/>
-        from second_hand
+    <!-- 以下是自定义内容 -->
+
+    <resultMap extends="ResultMapWithBLOBs" id="ResultMapWithUserAndResource"
+               type="com.smilcool.server.core.pojo.vo.SecondHandVO">
+        <!-- 发布用户信息 -->
+        <association property="user" javaType="com.smilcool.server.core.pojo.vo.UserVO">
+            <id column="user_id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+            <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+            <result column="sign" jdbcType="VARCHAR" property="sign"/>
+            <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        </association>
+        <!-- 资源信息 -->
+        <association property="resource" javaType="com.smilcool.server.core.pojo.vo.ResourceVO">
+            <id column="resource_id" jdbcType="INTEGER" property="id"/>
+            <result column="zan_count" jdbcType="INTEGER" property="zanCount"/>
+            <result column="pv_count" jdbcType="INTEGER" property="pvCount"/>
+            <result column="comment_count" jdbcType="INTEGER" property="commentCount"/>
+        </association>
+    </resultMap>
+
+    <sql id="Second_Hand_Column_List">
+        second_hand.id, second_hand_category, title, name, price, address, description, images, second_hand.create_time
+    </sql>
+    <sql id="User_Column_List">
+        user.id as user_id, username, nickname, avatar, sign
+    </sql>
+    <sql id="Resource_Column_List">
+        resource.id as resource_id, zan_count, pv_count, comment_count
+    </sql>
+
+    <select id="selectSecondHandVOByCondition" resultMap="ResultMapWithUserAndResource">
+        SELECT
+        <include refid="Second_Hand_Column_List"/>,
+        <include refid="User_Column_List"/>,
+        <include refid="Resource_Column_List"/>
+        FROM second_hand
+        LEFT JOIN user ON second_hand.user_id = user.id
+        LEFT JOIN resource ON second_hand.resource_id = resource.id
     </select>
 
 </mapper>

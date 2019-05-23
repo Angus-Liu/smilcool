@@ -41,7 +41,7 @@ public class LostFoundVO {
     private UserVO user;
 
     /**
-     * 二手交易关联资源信息
+     * 关联资源信息
      */
     private ResourceVO resource;
 }

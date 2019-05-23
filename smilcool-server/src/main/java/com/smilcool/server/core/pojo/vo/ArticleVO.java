@@ -40,7 +40,7 @@ public class ArticleVO {
     private UserVO user;
 
     /**
-     * 文章关联资源信息
+     * 关联资源信息
      */
     private ResourceVO resource;
 }
