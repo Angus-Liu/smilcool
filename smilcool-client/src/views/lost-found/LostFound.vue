@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Row>
-      <iCol span="16">
+      <iCol class="column" span="16">
         <!-- 失物寻物菜单 -->
         <sui-menu>
           <sui-menu-item link v-for="item in menu.items" :key="item" :content="item"
@@ -12,30 +12,42 @@
         </sui-menu>
         <!-- 失物寻物菜单 END -->
         <!-- 失物寻物列表 -->
-        <sui-card class="fluid" v-for="lostFound in lostFoundPage.records" :key="lostFound.id">
+        <sui-card class="fluid lost-found-card" v-for="lostFound in lostFoundPage.records" :key="lostFound.id">
           <sui-card-content>
             <sui-feed>
               <sui-feed-event>
-                <sui-feed-label :image="lostFound.user.avatar"/>
                 <sui-feed-content>
                   <sui-feed-summary>
-                    <sui-label basic :color="lostFound.lostFoundCategory === '寻物启事'? 'red':'green'">
+                    <sui-label class="lost-found-category" basic
+                               :color="lostFound.lostFoundCategory === '寻物启事'? 'red':'green'">
                       {{lostFound.lostFoundCategory}}
                     </sui-label>
-                    <a href="#">{{lostFound.title}}</a>
+                    <span>{{lostFound.title}}</span>
                     <sui-feed-date>
                       <Time :time="lostFound.createTime"/>
                     </sui-feed-date>
                   </sui-feed-summary>
-                  <sui-feed-extra text>{{lostFound.description}}</sui-feed-extra>
-                  <sui-feed-extra images v-if="lostFound.images && lostFound.images.length > 0">
+                  <sui-feed-extra class="lost-found-extra" text>
+                    <Row>
+                      <iCol span="7">👜 {{lostFound.itemName}}</iCol>
+                      <iCol span="8">🕓 {{lostFound.time}}</iCol>
+                      <iCol span="8" offset="1">📍 {{lostFound.address}}</iCol>
+                    </Row>
+                    <div class="lost-found-description">{{lostFound.description}}</div>
+                  </sui-feed-extra>
+                  <sui-feed-extra class="lost-found-images" images
+                                  v-if="lostFound.images && lostFound.images.length > 0">
                     <img v-for="img in lostFound.images" :src="img">
                   </sui-feed-extra>
                   <sui-feed-meta>
-                    <sui-feed-like>
+                    <router-link to="/">
+                      <sui-image :src="lostFound.user.avatar" size="medium" avatar/>
+                      <span style="position: relative; top: 2px">{{lostFound.user.nickname}}</span>
+                    </router-link>
+                    <sui-feed-like @click="addZan(lostFound.resource)">
                       👍 {{lostFound.resource.zanCount}}
                     </sui-feed-like>
-                    <sui-feed-like>
+                    <sui-feed-like @click="getCommentList(lostFound.resource)">
                       💬 {{lostFound.resource.commentCount}}
                     </sui-feed-like>
                   </sui-feed-meta>
@@ -49,7 +61,7 @@
         <sui-button class="fluid" basic content="加载更多"/>
         <!-- 加载更多 END -->
       </iCol>
-      <iCol span="8">
+      <iCol class="column" span="8">
         <!-- 寻物启事提示 -->
         <sui-card class="fluid">
           <sui-message attached="top" icon="eye" negative>
@@ -106,6 +118,47 @@
       </template>
     </Modal>
     <!-- 失物寻物添加模态框 END -->
+    <!-- 评论模态框 -->
+    <Modal v-model="commentAddModal.show" title="发表评论" width="600" footer-hide>
+      <Input ref="commentInput" v-model="commentAddModal.form.value" type="textarea" :rows="3" placeholder="添加评论"
+             @on-enter="addComment"/>
+      <sui-comment-group class="comment-group">
+        <sui-comment v-for="comment in commentList" :key="comment.id">
+          <sui-comment-avatar :src="comment.postUser.avatar"/>
+          <sui-comment-content>
+            <a is="sui-comment-author">{{comment.postUser.nickname}}</a>
+            <sui-comment-metadata>
+              <Time :time="comment.createTime"/>
+            </sui-comment-metadata>
+            <sui-comment-text>{{comment.content}}</sui-comment-text>
+            <sui-comment-actions>
+              <sui-comment-action @click="replyComment(comment.id, comment.postUser)">回复</sui-comment-action>
+            </sui-comment-actions>
+          </sui-comment-content>
+          <!-- 子评论 -->
+          <sui-comment-group v-if="comment.children.length > 0">
+            <sui-comment v-for="child in comment.children" :key="child.id">
+              <sui-comment-avatar :src="child.postUser.avatar"/>
+              <sui-comment-content>
+                <a is="sui-comment-author">{{child.postUser.nickname}}</a>
+                <sui-comment-metadata>
+                  <Time :time="child.createTime"/>
+                </sui-comment-metadata>
+                <sui-comment-text>
+                  <a :href="child.replyUser.id">@{{child.replyUser.nickname}}</a>
+                  {{child.content}}
+                </sui-comment-text>
+                <sui-comment-actions>
+                  <sui-comment-action @click="replyComment(comment.id, child.postUser)">回复</sui-comment-action>
+                </sui-comment-actions>
+              </sui-comment-content>
+            </sui-comment>
+          </sui-comment-group>
+          <!-- 子评论 END -->
+        </sui-comment>
+      </sui-comment-group>
+    </Modal>
+    <!-- 评论模态框 END -->
   </div>
 </template>
 
@@ -182,6 +235,47 @@ export default {
           images: null,
         }
       },
+      commentList: [{
+        id: -1,
+        content: '测试评论',
+        createTime: '2019-05-21 20:15:39',
+        postUser: {
+          id: -1,
+          username: 'admin',
+          nickname: '管理员',
+          avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+        },
+        children: [
+          {
+            id: -2,
+            content: '测试回复',
+            createTime: '2019-05-21 20:15:46',
+            postUser: {
+              id: 1,
+              username: 'admin',
+              nickname: '管理员',
+              avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+            },
+            replyUser: {
+              id: 1,
+              username: 'admin',
+              nickname: '管理员',
+              avatar: 'http://img.angus-liu.cn/avatar/avatar07.png'
+            }
+          }
+        ]
+      }],
+      commentAddModal: {
+        show: false,
+        form: {
+          parentId: null,
+          resourceId: null,
+          replyUserId: null,
+          value: '',
+          content: ''
+        }
+      },
+      currentResource: {}
     }
   },
   methods: {
@@ -268,6 +362,61 @@ export default {
             this.getLostFoundPage();
           }
         })
+    },
+    // 点赞
+    addZan(resource) {
+      this.$axios.post('/api/zan', { resourceId: resource.id })
+        .then(res => resource.zanCount++);
+    },
+    // 获取评论
+    getCommentList(resource) {
+      this.currentResource = resource;
+      this.$axios.get(`/api/comment/${resource.id}`)
+        .then(res => {
+          let result = res.data;
+          this.commentList = result.data;
+          // 展示评论
+          this.commentAddModal.show = true;
+        });
+    },
+    // 初始化评论
+    initComment() {
+      this.commentAddModal.form = {
+        resourceId: null,
+        parentId: null,
+        replyUserId: null,
+        value: '',
+        content: ''
+      }
+    },
+    // 添加评论
+    addComment() {
+      // 设置资源 ID
+      this.commentAddModal.form.resourceId = this.currentResource.id;
+      // 判断是评论还是回复
+      if (this.commentAddModal.form.value.startsWith('@')
+        && this.commentAddModal.form.replyUserId !== null) {
+        // 回复时去掉评论内容中的回复用户名
+        let index = this.commentAddModal.form.value.indexOf(' ');
+        this.commentAddModal.form.content = this.commentAddModal.form.value.substr(index + 1);
+      } else {
+        this.commentAddModal.form.parentId = null;
+        this.commentAddModal.form.replyUserId = null;
+        this.commentAddModal.form.content = this.commentAddModal.form.value;
+      }
+      this.$axios.post('/api/comment', this.commentAddModal.form)
+        .then(res => {
+          this.initComment();
+          this.currentResource.commentCount++;
+          this.getCommentList(this.currentResource);
+        });
+    },
+    // 回复评论
+    replyComment(parentId, replyUser) {
+      this.commentAddModal.form.parentId = parentId;
+      this.commentAddModal.form.replyUserId = replyUser.id;
+      this.commentAddModal.form.value = `@${replyUser.nickname} `;
+      this.$refs.commentInput.focus();
     }
   },
   mounted() {
@@ -282,14 +431,25 @@ export default {
   margin: 0 auto;
   padding: 5px;
 
-  .ivu-col {
+  .column {
     padding: 7px;
   }
 
-  .tab-container {
-    background: #fff;
-    width: 100%;
-    padding: 1rem;
+
+  .lost-found-card {
+    .lost-found-category {
+      margin-right: 5px;
+    }
+
+    .lost-found-extra {
+      width: 100%;
+
+      .lost-found-description {
+        margin: 10px 0;
+        color: #444;
+      }
+    }
   }
+
 }
 </style>
