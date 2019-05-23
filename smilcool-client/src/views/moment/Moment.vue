@@ -62,7 +62,7 @@
                  placeholder="输入你发现的趣事吧~"/>
         </FormItem>
         <FormItem label="图片" style="margin-bottom: 0">
-          <ImageUploader v-if="momentAddModal.show" @images-change="images => momentAddModal.form.images = images"/>
+          <ImageUploader ref="imageUploader" @images-change="images => momentAddModal.form.images = images"/>
         </FormItem>
       </Form>
       <template #footer>
@@ -217,6 +217,7 @@ export default {
   methods: {
     // 重置动态添加模态框
     resetMomentAddModal() {
+      this.$refs.imageUploader.clearImages();
       this.momentAddModal = {
         show: false,
         form: {
