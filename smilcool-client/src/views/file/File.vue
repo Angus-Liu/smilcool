@@ -370,7 +370,7 @@ export default {
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '分享成功' });
             this.resetFileAddModal();
-            this.getFilePage();
+            this.getFilePage(this.page);
           }
         })
     },

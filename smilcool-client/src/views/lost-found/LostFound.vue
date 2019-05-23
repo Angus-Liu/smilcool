@@ -30,8 +30,8 @@
                   <sui-feed-extra class="lost-found-extra" text>
                     <Row>
                       <iCol span="7">👜 {{lostFound.itemName}}</iCol>
-                      <iCol span="8">🕓 {{lostFound.time}}</iCol>
-                      <iCol span="8" offset="1">📍 {{lostFound.address}}</iCol>
+                      <iCol span="9">🕓 {{lostFound.time}}</iCol>
+                      <iCol span="5" offset="3">📍 {{lostFound.address}}</iCol>
                     </Row>
                     <div class="lost-found-description">{{lostFound.description}}</div>
                   </sui-feed-extra>
@@ -108,8 +108,7 @@
                  :autosize="{minRows: 5,maxRows: 10}" placeholder="输入物品描述，有助于他人获取信息"/>
         </FormItem>
         <FormItem label="图片" style="margin-bottom: 0">
-          <ImageUploader v-if="lostFoundAddModal.show"
-                         @images-change="images => lostFoundAddModal.form.images = images"/>
+          <ImageUploader ref="imageUploader" @images-change="images => lostFoundAddModal.form.images = images"/>
         </FormItem>
       </Form>
       <template #footer>
@@ -359,9 +358,10 @@ export default {
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '发布成功' });
             this.lostFoundAddModal.show = false;
-            this.getLostFoundPage();
+            this.$refs.imageUploader.clearImages();
+            this.getLostFoundPage(this.param);
           }
-        })
+        });
     },
     // 点赞
     addZan(resource) {
@@ -435,7 +435,6 @@ export default {
     padding: 7px;
   }
 
-
   .lost-found-card {
     .lost-found-category {
       margin-right: 5px;
@@ -450,6 +449,5 @@ export default {
       }
     }
   }
-
 }
 </style>

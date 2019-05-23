@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class SecondHandAddForm {
-    @NotNull(message = "二手类别不能为空")
+    @NotBlank(message = "二手交易类别不能为空")
     private String secondHandCategory;
 
     @NotBlank(message = "标题不能为空")

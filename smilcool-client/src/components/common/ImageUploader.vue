@@ -101,7 +101,6 @@ export default {
     },
     // 用于清楚图片列表
     clearImages() {
-      console.log('图片被清除');
       this.$refs.upload.clearFiles();
       this.fileList = [];
     }
