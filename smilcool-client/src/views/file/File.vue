@@ -31,7 +31,10 @@
               <sui-item v-for="file in filePage.records" :key="file.id">
                 <sui-icon :name="getFileIcon(file.name)"/>
                 <sui-item-content>
-                  <a is="sui-item-header">{{file.title}}</a>
+                  <sui-item-header>
+                    {{file.title}}
+                    <sui-label basic color="teal">{{file.fileCategory}}</sui-label>
+                  </sui-item-header>
                   <sui-item-meta>
                     <span class="file-user-nickname">
                       <router-link to="">{{file.user.nickname}}</router-link>
@@ -475,6 +478,10 @@ export default {
         margin: 20px 0;
         padding-bottom: 10px;
         border-bottom: 1px dashed #ddd;
+
+        .header {
+          line-height: 30px;
+        }
 
         i {
           font-size: 5em;
