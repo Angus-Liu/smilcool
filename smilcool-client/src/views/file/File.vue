@@ -34,7 +34,7 @@
                   <a is="sui-item-header">{{file.title}}</a>
                   <sui-item-meta>
                     <span class="file-user-nickname">
-                    <router-link to="">{{file.user.nickname}}</router-link>
+                      <router-link to="">{{file.user.nickname}}</router-link>
                     </span>
                     <span class="file-create-time"><Time :time="file.createTime"/></span>
                     <a :href="file.url" :download="file.name" @click="downloadFile(file)">📄 {{file.name}}</a>

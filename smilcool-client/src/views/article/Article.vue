@@ -141,7 +141,8 @@ export default {
         'http://cst.nuc.edu.cn/__local/2/36/5A/EAA656684EBA55E5462A8B8D583_C411B084_1A136.jpg',
         'http://cst.nuc.edu.cn/__local/9/57/7B/1A89800BB01F84F9FAD9E8D979A_02F9A36A_11E41.jpg'
       ],
-      page: {
+      param: {
+        /* page & order 参数 */
         desc: 'create_time',
         size: 20
       },
@@ -227,11 +228,11 @@ export default {
     select(item) {
       this.menu.active = item;
       if (item === '推荐' || item === '最新') {
-        this.page.desc = 'create_time';
+        this.param.desc = 'create_time';
       } else {
-        this.page.desc = 'comment_count,zan_count';
+        this.param.desc = 'comment_count,zan_count';
       }
-      this.getArticlePage(this.page)
+      this.getArticlePage(this.param)
     },
     // 获取文章分页
     getArticlePage(param) {
@@ -251,7 +252,7 @@ export default {
     }
   },
   mounted() {
-    this.getArticlePage(this.page);
+    this.getArticlePage(this.param);
     this.getArticleLatestComment();
   }
 };

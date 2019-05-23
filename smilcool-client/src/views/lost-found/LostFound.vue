@@ -12,32 +12,31 @@
         </sui-menu>
         <!-- 失物寻物菜单 END -->
         <!-- 失物寻物列表 -->
-        <sui-card v-for="(lostFoundPage, index) in lostFoundPageList" :key="index">
+        <sui-card class="fluid" v-for="lostFound in lostFoundPage.records" :key="lostFound.id">
           <sui-card-content>
             <sui-feed>
               <sui-feed-event>
-                <sui-feed-label :image="lostFoundPage.user.avatar"/>
+                <sui-feed-label :image="lostFound.user.avatar"/>
                 <sui-feed-content>
                   <sui-feed-summary>
-                    <sui-label basic :color="lostFoundPage.lostFound.lostFoundCategory === '寻物启事'? 'red':'green'">
-                      {{lostFoundPage.lostFound.lostFoundCategory}}
+                    <sui-label basic :color="lostFound.lostFoundCategory === '寻物启事'? 'red':'green'">
+                      {{lostFound.lostFoundCategory}}
                     </sui-label>
-                    <a href="#">{{lostFoundPage.lostFound.title}}</a>
+                    <a href="#">{{lostFound.title}}</a>
                     <sui-feed-date>
-                      <Time :time="lostFoundPage.lostFound.createTime"/>
+                      <Time :time="lostFound.createTime"/>
                     </sui-feed-date>
                   </sui-feed-summary>
-                  <sui-feed-extra text>{{lostFoundPage.lostFound.description}}</sui-feed-extra>
-                  <sui-feed-extra images
-                                  v-if="lostFoundPage.lostFound.images && lostFoundPage.lostFound.images.length > 0">
-                    <img v-for="img in lostFoundPage.lostFound.images" :src="img">
+                  <sui-feed-extra text>{{lostFound.description}}</sui-feed-extra>
+                  <sui-feed-extra images v-if="lostFound.images && lostFound.images.length > 0">
+                    <img v-for="img in lostFound.images" :src="img">
                   </sui-feed-extra>
                   <sui-feed-meta>
                     <sui-feed-like>
-                      👍 {{lostFoundPage.resource.zanCount}}
+                      👍 {{lostFound.resource.zanCount}}
                     </sui-feed-like>
                     <sui-feed-like>
-                      💬 {{lostFoundPage.resource.commentCount}}
+                      💬 {{lostFound.resource.commentCount}}
                     </sui-feed-like>
                   </sui-feed-meta>
                 </sui-feed-content>
@@ -52,28 +51,28 @@
       </iCol>
       <iCol span="8">
         <!-- 寻物启事提示 -->
-        <sui-card>
+        <sui-card class="fluid">
           <sui-message attached="top" icon="eye" negative>
             <sui-message-header>寻物启事小贴士</sui-message-header>
             <p>什么，有东西丢啦？不要怕，快来发布一条寻物启事吧，很快就会有好心人联系你啦。对啦，一定要核实信息，准确后再发布哦 😃</p>
           </sui-message>
-          <sui-button attached="bottom" icon="add" content="发布寻物启事" @click="showLostFoundModal('found')"/>
+          <sui-button attached="bottom" icon="add" content="发布寻物启事" @click="showLostFoundModal('寻物启事')"/>
         </sui-card>
         <!-- 寻物启事提示 END -->
         <!-- 失物招领提示 -->
-        <sui-card>
+        <sui-card class="fluid">
           <sui-message attached="top" icon="bullhorn" positive>
             <sui-message-content>
               <sui-message-header>失物招领小贴士</sui-message-header>
               <p>捡到哪位同学不小信掉落的物品啦？快发布一条失物招领吧，失主一定会非常非常感激你呢 😘</p>
             </sui-message-content>
           </sui-message>
-          <sui-button attached="bottom" icon="add" content="发布失物招领" @click="showLostFoundModal('lost')"/>
+          <sui-button attached="bottom" icon="add" content="发布失物招领" @click="showLostFoundModal('失物招领')"/>
         </sui-card>
         <!-- 失物招领提示 END -->
       </iCol>
     </Row>
-    <!-- 失物寻物模态框 -->
+    <!-- 失物寻物添加模态框 -->
     <Modal v-model="lostFoundAddModal.show" :title="lostFoundAddModal.title"
            :closable="false" :mask-closable="false" width="600">
       <Form :model="lostFoundAddModal.form" :label-width="50">
@@ -103,10 +102,10 @@
       </Form>
       <template #footer>
         <Button type="text" @click="lostFoundAddModal.show = false">取消</Button>
-        <Button @click="addLostFoundAddModal">确定发布</Button>
+        <Button @click="addLostFound">确定发布</Button>
       </template>
     </Modal>
-    <!-- 失物寻物模态框 END -->
+    <!-- 失物寻物添加模态框 END -->
   </div>
 </template>
 
@@ -123,6 +122,48 @@ export default {
       menu: {
         active: '查看所有',
         items: ['查看所有', '失物招领', '寻物启事'],
+      },
+      param: {
+        /* query 参数 */
+        lostFoundCategory: null,
+        /* page & order 参数 */
+        desc: 'create_time',
+        current: 1
+      },
+      lostFoundPage: {
+        'records': [
+          {
+            'id': 1,
+            'userId': 1,
+            'resourceId': 16,
+            'lostFoundCategory': '寻物启事',
+            'title': '四食堂丢失一个钱包',
+            'description': '如图，钱包是黑色的，里面有少量现金和一张工行的卡',
+            'itemName': '钱包',
+            'time': '2019-05-17 12:10:01',
+            'address': '四食堂',
+            'createTime': '2019-05-17 15:39:45',
+            'images': ['https://img12.360buyimg.com/n7/jfs/t22831/61/2367409622/289066/5d9c3f/5b7d10feNe776b305.jpg'],
+            'user': {
+              'id': 1,
+              'username': 'admin',
+              'nickname': '管理员',
+              'avatar': 'http://img.angus-liu.cn/avatar/avatar07.png',
+              'sign': '一句话介绍自己'
+            },
+            'resource': {
+              'id': 16,
+              'zanCount': 0,
+              'pvCount': 0,
+              'commentCount': 0
+            }
+          }
+        ],
+        'total': 5,
+        'size': 1,
+        'current': 1,
+        'searchCount': true,
+        'pages': 5
       },
       lostFoundAddModal: {
         show: false,
@@ -141,63 +182,42 @@ export default {
           images: null,
         }
       },
-      lostFoundPageList: [{
-        'lostFound': {
-          'id': 1,
-          'userId': 1,
-          'resourceId': 16,
-          'lostFoundCategory': '寻物启事',
-          'title': '四食堂丢失一个钱包',
-          'description': '如图，钱包是黑色的，里面有少量现金和一张工行的卡',
-          'itemName': '钱包',
-          'time': '2019-05-17T12:10:01.000+0000',
-          'address': '四食堂',
-          'createTime': '2019-05-17 15:39:45',
-          'images': [
-            'https://img12.360buyimg.com/n7/jfs/t22831/61/2367409622/289066/5d9c3f/5b7d10feNe776b305.jpg',
-            'https://img12.360buyimg.com/n7/jfs/t22831/61/2367409622/289066/5d9c3f/5b7d10feNe776b305.jpg'
-          ]
-        },
-        'user': {
-          'id': 1,
-          'username': 'admin',
-          'nickname': '管理员',
-          'avatar': 'http://img.angus-liu.cn/avatar/avatar07.png',
-          'sex': '保密',
-          'birthday': '1970-01-01',
-          'sign': '一句话介绍自己',
-          'intro': '这个人很神秘，什么也没写',
-          'grade': '未填写',
-          'college': '未填写',
-          'major': '未填写',
-          'phone': null,
-          'email': 'admin@admin.com',
-          'state': 1,
-          'remark': '超级管理员账户，由系统内定，请勿修改',
-          'createTime': '2019-03-28',
-          'updateTime': '2019-05-17'
-        },
-        'resource': {
-          'id': 16,
-          'userId': 1,
-          'resourceDicType': '失物寻物类别',
-          'resourceDicItem': '寻物启事',
-          'zanCount': 0,
-          'pvCount': 0,
-          'commentCount': 0,
-          'state': '正常',
-          'remark': null,
-          'createTime': '2019-05-17 15:39:45',
-          'updateTime': '2019-05-17 15:39:45',
-          'deleted': false
-        },
-        'commentList': []
-      }]
     }
   },
   methods: {
+    // 切换菜单
+    select(item) {
+      this.menu.active = item;
+      switch (item) {
+        case '查看所有':
+          this.param.lostFoundCategory = null;
+          break;
+        case '失物招领':
+          this.param.lostFoundCategory = '失物招领';
+          break;
+        case '寻物启事':
+          this.param.lostFoundCategory = '寻物启事';
+          break;
+      }
+      this.param.current = 1;
+      this.getLostFoundPage(this.param);
+    },
+    // 获取失物寻物分页
+    getLostFoundPage(param) {
+      this.$axios.get('/api/lost-found/page', param)
+        .then(res => {
+          let result = res.data;
+          this.lostFoundPage = result.data;
+          this.lostFoundPage.records.forEach(lostFound => {
+            if (lostFound.images && lostFound.images.length > 0) {
+              lostFound.images = JSON.parse(lostFound.images);
+            }
+          })
+        })
+    },
+    // 配置失物寻物添加模态框
     showLostFoundModal(type) {
-      if (type === 'found') {
+      if (type === '寻物启事') {
         this.lostFoundAddModal = {
           show: true,
           title: '发布寻物启事',
@@ -235,22 +255,8 @@ export default {
         }
       }
     },
-    select(item) {
-      this.menu.active = item;
-    },
-    getLostFoundPageList() {
-      this.$axios.get('/api/lost-found/page')
-        .then(res => {
-          let result = res.data;
-          this.lostFoundPageList = result.data;
-          this.lostFoundPageList.forEach(lostFoundPage => {
-            if (lostFoundPage.lostFound.images && lostFoundPage.lostFound.images.length > 0) {
-              lostFoundPage.lostFound.images = JSON.parse(lostFoundPage.lostFound.images);
-            }
-          })
-        })
-    },
-    addLostFoundAddModal() {
+    // 添加失物寻物
+    addLostFound() {
       let lostFoundAddForm = this.lostFoundAddModal.form;
       lostFoundAddForm.images = JSON.stringify(lostFoundAddForm.images);
       this.$axios.post('/api/lost-found', lostFoundAddForm)
@@ -259,13 +265,13 @@ export default {
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '发布成功' });
             this.lostFoundAddModal.show = false;
-            this.getLostFoundPageList();
+            this.getLostFoundPage();
           }
         })
     }
   },
   mounted() {
-    this.getLostFoundPageList();
+    this.getLostFoundPage(this.param);
   }
 }
 </script>
@@ -274,7 +280,6 @@ export default {
 .container {
   width: 1140px;
   margin: 0 auto;
-  /*background: #aaa;*/
   padding: 5px;
 
   .ivu-col {
@@ -285,14 +290,6 @@ export default {
     background: #fff;
     width: 100%;
     padding: 1rem;
-  }
-
-  .card {
-    width: 100%;
-
-    .category-label {
-      margin-right: 10px;
-    }
   }
 }
 </style>
