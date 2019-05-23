@@ -98,6 +98,12 @@ export default {
     updateImages(uploadList) {
       let images = uploadList.map(item => item.url);
       this.$emit('images-change', images);
+    },
+    // 用于清楚图片列表
+    clearImages() {
+      console.log('图片被清除');
+      this.$refs.upload.clearFiles();
+      this.fileList = [];
     }
   },
   mounted() {
