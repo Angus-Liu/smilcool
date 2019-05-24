@@ -24,8 +24,8 @@ export default new Router({
         }, {
           path: 'article/:id',
           name: 'viewer',
-          component: () => import('@/views/article/Viewer'),
-          props: true
+          props: true,
+          component: () => import('@/views/article/Viewer')
         }, {
           path: 'moment',
           name: 'moment',
@@ -51,8 +51,9 @@ export default new Router({
           name: 'message',
           component: () => import('@/views/message/Message')
         }, {
-          path: 'user',
+          path: 'user/:id',
           name: 'user',
+          props: true,
           component: () => import('@/views/user/User')
         }, {
           path: 'search',

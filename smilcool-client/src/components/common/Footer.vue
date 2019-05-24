@@ -67,6 +67,10 @@ footer {
           padding-right: 0;
           border-right: none;
         }
+
+        a:hover {
+          color: #ff8364;
+        }
       }
 
       .icp {

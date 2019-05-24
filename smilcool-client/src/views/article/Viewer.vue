@@ -78,7 +78,11 @@
         <sui-card class="fluid">
           <sui-image style="width: 100%;" :src="article.user.avatar"/>
           <sui-card-content>
-            <sui-card-header>{{article.user.nickname}}</sui-card-header>
+            <sui-card-header>
+              <router-link :to="'/user/' + article.user.id">
+                {{article.user.nickname}}
+              </router-link>
+            </sui-card-header>
             <sui-card-meta>{{article.user.username}}</sui-card-meta>
             <sui-card-description>{{article.user.sign}}</sui-card-description>
           </sui-card-content>

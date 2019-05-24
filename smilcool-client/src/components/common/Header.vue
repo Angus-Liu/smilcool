@@ -35,7 +35,7 @@
         <Dropdown v-if="user">
           <sui-image class="avatar-img" circular :src="user.avatar"/>
           <DropdownMenu class="avatar-menu-list" slot="list">
-            <router-link to="/user">
+            <router-link :to=" '/user/' + $store.state.user.id ">
               <DropdownItem>
                 <sui-icon name="user circle"/>
                 我的主页
