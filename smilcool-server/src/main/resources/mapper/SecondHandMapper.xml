@@ -266,6 +266,9 @@
             <if test="secondHand.userId != null">
                 second_hand.user_id = #{secondHand.userId}
             </if>
+            <if test="secondHand.secondHandCategory != null">
+                AND second_hand.second_hand_category = #{secondHand.secondHandCategory}
+            </if>
         </where>
     </select>
 
