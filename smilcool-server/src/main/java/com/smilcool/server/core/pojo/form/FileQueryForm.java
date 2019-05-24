@@ -9,4 +9,5 @@ import lombok.Data;
 @Data
 public class FileQueryForm {
     Integer userId;
+    String fileCategory;
 }

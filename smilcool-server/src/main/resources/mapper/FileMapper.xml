@@ -243,6 +243,9 @@
             <if test="file.userId != null">
                 file.user_id = #{file.userId}
             </if>
+            <if test="file.fileCategory != null">
+                AND file.file_category = #{file.fileCategory}
+            </if>
         </where>
     </select>
 </mapper>

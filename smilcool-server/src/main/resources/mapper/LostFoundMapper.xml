@@ -262,10 +262,12 @@
         LEFT JOIN user ON lost_found.user_id = user.id
         LEFT JOIN resource ON lost_found.resource_id = resource.id
         <where>
+            <if test="lostFound.userId != null">
+                AND lost_found.user_id = #{lostFound.userId}
+            </if>
             <if test="lostFound.lostFoundCategory != null">
-                lost_found.lost_found_category = #{lostFound.lostFoundCategory}
+                AND lost_found.lost_found_category = #{lostFound.lostFoundCategory}
             </if>
         </where>
     </select>
-
 </mapper>

@@ -8,5 +8,6 @@ import lombok.Data;
  */
 @Data
 public class LostFoundQueryForm {
+    private Integer userId;
     private String lostFoundCategory;
 }
