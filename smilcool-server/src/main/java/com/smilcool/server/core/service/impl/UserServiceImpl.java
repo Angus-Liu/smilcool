@@ -8,7 +8,6 @@ import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.po.User;
-import com.smilcool.server.core.pojo.vo.UserDetailVO;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.RolePermissionService;
 import com.smilcool.server.core.service.UserRoleService;
@@ -99,7 +98,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public UserDetailVO getUserTotalInfo(Integer id) {
+    public UserVO getUserTotalInfo(Integer id) {
         // 获取用户基础信息
         User user = userMapper.selectByPrimaryKey(id);
         if (user == null) {
@@ -111,14 +110,14 @@ public class UserServiceImpl implements UserService {
         // 获取用户权限信息
         Set<String> permissionNames = rolePermissionService.getPermissionNames(user.getId());
         // 整合用户信息
-        UserDetailVO userDetailInfo = BeanUtil.copyProp(user, UserDetailVO.class);
-        userDetailInfo.setRoles(roleNames);
-        userDetailInfo.setPermissions(permissionNames);
-        return userDetailInfo;
+        UserVO userVO = BeanUtil.copyProp(user, UserVO.class);
+        userVO.setRoles(roleNames);
+        userVO.setPermissions(permissionNames);
+        return userVO;
     }
 
     @Override
-    public UserDetailVO login(UserLoginForm form) {
+    public UserVO login(UserLoginForm form) {
         // Shiro 身份认证
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(form.getUsername(), form.getPassword());
@@ -136,7 +135,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDetailVO register(UserRegisterForm form) {
+    public UserVO register(UserRegisterForm form) {
         User selected = userMapper.selectByUsername(form.getUsername());
         if (selected != null) {
             throw new SmilcoolException("用户名已存在");
@@ -156,8 +155,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDetailVO> getUsers() {
-        List<UserDetailVO> userList = BeanUtil.copyProp(userMapper.select(), UserDetailVO.class);
+    public List<UserVO> getUsers() {
+        List<UserVO> userList = BeanUtil.copyProp(userMapper.select(), UserVO.class);
         userList.forEach(user -> {
             // 获取用户角色信息（角色描述）
             Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());
@@ -167,9 +166,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDetailVO> getUsers(Page page, UserQueryForm form) {
+    public Page<UserVO> getUsers(Page page, UserQueryForm form) {
         User condition = BeanUtil.copyProp(form, User.class);
-        Page<UserDetailVO> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserDetailVO.class);
+        Page<UserVO> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserVO.class);
         userPage.getRecords().forEach(user -> {
             // 获取用户角色信息（角色描述）
             Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());

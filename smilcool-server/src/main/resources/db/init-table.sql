@@ -13,7 +13,7 @@ CREATE TABLE `user` (
   `grade`       varchar(10)   NOT NULL DEFAULT '未填写' COMMENT '年级',
   `college`     varchar(50)   NOT NULL DEFAULT '未填写' COMMENT '学院',
   `major`       varchar(50)   NOT NULL DEFAULT '未填写' COMMENT '专业',
-  `phone`       varchar(20)            DEFAULT NULL COMMENT '手机',
+  `phone`       varchar(20)   NOT NULL DEFAULT '未填写' COMMENT '手机',
   `email`       varchar(50)   NOT NULL COMMENT '邮箱',
   `state`       int(1)        NOT NULL DEFAULT '0' COMMENT '状态：0-未激活，1-正常，2-停用',
   `remark`      varchar(255)           DEFAULT NULL COMMENT '备注',
@@ -22,7 +22,6 @@ CREATE TABLE `user` (
   `deleted`     tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_username` (`username`),
-  UNIQUE KEY `uk_phone` (`phone`),
   UNIQUE KEY `uk_email` (`email`)
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
@@ -140,26 +139,6 @@ CREATE TABLE `rule_map` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='权限控制策略表';
 
-# 资源类型表（resource_type）
-DROP TABLE IF EXISTS `resource_type`;
-CREATE TABLE `resource_type` (
-  `id`          int(11)       NOT NULL AUTO_INCREMENT COMMENT '资源类目ID',
-  `parent_id`   int(11)                DEFAULT NULL COMMENT '父级ID',
-  `name`        varchar(20)   NOT NULL COMMENT '资源类目名',
-  `tag`         varchar(255)  NOT NULL COMMENT '资源类目标签',
-  `description` varchar(1000) NOT NULL DEFAULT '' COMMENT '描述',
-  `seq`         int(11)       NOT NULL DEFAULT '0' COMMENT '顺序',
-  `state`       int(1)        NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',
-  `remark`      varchar(255)           DEFAULT NULL COMMENT '备注',
-  `create_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`     tinyint(1)    NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
-  PRIMARY KEY (`id`),
-  KEY `idx_parent_id` (`parent_id`)
-) ENGINE = INNODB
-  DEFAULT CHARSET = utf8mb4
-  COMMENT ='资源类型表';
-
 # 资源表（resource）
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE `resource` (
@@ -228,21 +207,6 @@ CREATE TABLE `article` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='文章表';
 
-# 标签表（tag）
-DROP TABLE IF EXISTS `tag`;
-CREATE TABLE `tag` (
-  `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '文章ID',
-  `name`        varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `count`       int(4)       NOT NULL DEFAULT '0' COMMENT '计数',
-  `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
-  `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
-  PRIMARY KEY (`id`)
-) ENGINE = INNODB
-  DEFAULT CHARSET = utf8mb4
-  COMMENT ='标签表';
-
 # 文件表（file）
 DROP TABLE IF EXISTS `file`;
 CREATE TABLE `file` (
@@ -280,7 +244,7 @@ CREATE TABLE `lost_found` (
   `item_name`           varchar(255)  NOT NULL DEFAULT '' COMMENT '物品名称',
   `time`                datetime      NOT NULL COMMENT '拾取/丢失时间',
   `address`             varchar(255)  NOT NULL COMMENT '拾取/丢失地点',
-  `images`               json                   DEFAULT NULL COMMENT '图片',
+  `images`              json                   DEFAULT NULL COMMENT '图片',
   `remark`              varchar(255)           DEFAULT NULL COMMENT '备注',
   `create_time`         datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time`         datetime      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

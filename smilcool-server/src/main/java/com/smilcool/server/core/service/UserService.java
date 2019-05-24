@@ -5,7 +5,6 @@ import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
 import com.smilcool.server.core.pojo.po.User;
-import com.smilcool.server.core.pojo.vo.UserDetailVO;
 import com.smilcool.server.core.pojo.vo.UserVO;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public interface UserService {
      */
     User getUser(String username, String password);
 
-    UserDetailVO getUserTotalInfo(Integer id);
+    UserVO getUserTotalInfo(Integer id);
 
 
     /**
@@ -44,7 +43,7 @@ public interface UserService {
      * @param userLoginForm 用户登录表单
      * @return 用户信息
      */
-    UserDetailVO login(UserLoginForm userLoginForm);
+    UserVO login(UserLoginForm userLoginForm);
 
     /**
      * 用户注销
@@ -57,11 +56,11 @@ public interface UserService {
      * @param form 用户注册表单的那
      * @return 用户信息
      */
-    UserDetailVO register(UserRegisterForm form);
+    UserVO register(UserRegisterForm form);
 
-    List<UserDetailVO> getUsers();
+    List<UserVO> getUsers();
 
-    Page<UserDetailVO> getUsers(Page page, UserQueryForm form);
+    Page<UserVO> getUsers(Page page, UserQueryForm form);
 
     Set<String> getRoles(Integer id);
 
