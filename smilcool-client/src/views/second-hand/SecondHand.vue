@@ -13,11 +13,14 @@
     <Row class="second-hand-menu">
       <iCol class="second-hand-category" span="15">
         <div>
-          <a is="sui-label" v-if="active === '所有'" color="orange" @click="active='所有'">所有</a>
-          <a is="sui-label" v-else @click="active='所有'">所有</a>
+          <a is="sui-label" v-if="activeSecondHandCategory === '所有'" color="orange" @click="selectCategory('所有')">
+            所有
+          </a>
+          <a is="sui-label" v-else @click="selectCategory('所有')">所有</a>
           <template v-for="item in secondHandCategory">
-            <a is="sui-label" v-if="active === item.name" color="orange" @click="active = item.name">{{item.name}}</a>
-            <a is="sui-label" v-else @click="active = item.name">{{item.name}}</a>
+            <a is="sui-label" v-if="activeSecondHandCategory === item.name" color="orange"
+               @click="selectCategory(item.name)">{{item.name}}</a>
+            <a is="sui-label" v-else @click="selectCategory(item.name)">{{item.name}}</a>
           </template>
         </div>
       </iCol>
@@ -145,7 +148,7 @@ export default {
   },
   data() {
     return {
-      active: '所有',
+      activeSecondHandCategory: '所有',
       secondHandCategory: [{
         'name': '测试',
         'code': '-1'
@@ -163,8 +166,9 @@ export default {
         }
       },
       param: {
-        /* query 参数 */
-        /* page & order 参数 */
+        // query 参数
+        secondHandCategory: null,
+        // page & order 参数
         desc: 'create_time',
         current: 1
       },
@@ -247,6 +251,17 @@ export default {
     }
   },
   methods: {
+    // 类别切换
+    selectCategory(secondHandCategory) {
+      this.activeSecondHandCategory = secondHandCategory;
+      if (secondHandCategory === '所有') {
+        this.param.secondHandCategory = null;
+      } else {
+        this.param.secondHandCategory = secondHandCategory;
+      }
+      this.param.current = 1;
+      this.getSecondHandPage(this.param);
+    },
     // 初始化二手交易添加模态框
     resetSecondHanAddModal() {
       this.secondHanAddModal = {
