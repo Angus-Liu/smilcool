@@ -229,7 +229,6 @@ header {
   width: 100%;
   height: 70px;
   background: #fff;
-  /*box-shadow: 1px 1px 1px #eee;*/
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, .1);
   z-index: 999;
   margin-bottom: 5px;

@@ -136,13 +136,13 @@ export default {
         items: ['推荐', '最新', '最热']
       },
       carouselList: [
-        'http://cst.nuc.edu.cn/__local/6/B5/CA/0C7872A9A43129FBF22FFD81FD6_A7D26F04_11FD7.jpg',
-        'http://cst.nuc.edu.cn/__local/4/BD/0A/EC16F73EAA614E63429BACDBE1D_5AC56599_AEDFD.png',
-        'http://cst.nuc.edu.cn/__local/2/36/5A/EAA656684EBA55E5462A8B8D583_C411B084_1A136.jpg',
-        'http://cst.nuc.edu.cn/__local/9/57/7B/1A89800BB01F84F9FAD9E8D979A_02F9A36A_11E41.jpg'
+        '/local-storage/img/banner01.jpg',
+        '/local-storage/img/banner02.jpg',
+        '/local-storage/img/banner03.jpg',
+        '/local-storage/img/banner04.jpg',
       ],
       param: {
-        /* page & order 参数 */
+        // page & order 参数
         desc: 'create_time',
         size: 20
       },
@@ -184,6 +184,7 @@ export default {
         'commentContent': '测试回复',
         'commentCreateTime': '2019-05-22 09:57:25'
       }],
+      // 文章类别
       articleCategory: [{
         name: '系统通知',
         img: 'http://img.angus-liu.cn/avatar/avatar01.jpg'

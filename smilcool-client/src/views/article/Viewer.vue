@@ -10,6 +10,14 @@
               <p class="article-time">{{article.createTime}}</p>
               <div class="markdown-body article-content" v-html="article.htmlContent"></div>
             </sui-card-content>
+            <sui-card-content extra>
+              <span class="article-resource-zan" slot="right" @click="addZan(article.resource)">
+                👍 {{article.resource.zanCount}}
+              </span>
+              <span class="article-resource-comment" slot="right">
+                💬 {{article.resource.commentCount}}
+              </span>
+            </sui-card-content>
           </sui-card>
           <!-- 正文 END -->
           <!-- 评论列表 -->
@@ -89,8 +97,9 @@
         </sui-card>
         <!-- 文章标签信息结束 -->
         <sui-card class="fluid">
+          <sui-message attached="top" content="相关文章"/>
           <sui-card-content>
-            相关文章
+            暂无
           </sui-card-content>
         </sui-card>
       </iCol>
@@ -224,6 +233,11 @@ export default {
       this.comment.replyUserId = replyUser.id;
       this.comment.value = `@${replyUser.nickname} `;
       this.$refs.commentInput.focus();
+    },
+    // 点赞
+    addZan(resource) {
+      this.$axios.post('/api/zan', { resourceId: resource.id })
+        .then(res => resource.zanCount++);
     }
   },
   mounted() {
@@ -260,8 +274,15 @@ export default {
     color: #aaa;
   }
 
-  .comment-input {
-    margin-bottom: 20px;
+  .article-resource-zan,
+  .article-resource-comment {
+    margin-left: 15px;
+    cursor: pointer;
+  }
+
+  .article-resource-zan:hover,
+  .article-resource-comment:hover {
+    color: #000;
   }
 }
 
