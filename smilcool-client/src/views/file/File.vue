@@ -61,10 +61,10 @@
           </sui-card-content>
           <sui-button-group attached="bottom" basic>
             <sui-button content="上一页" icon="left chevron" label-position="left" @click="previousPage"
-                        :disabled="this.page.current <= 1"/>
+                        :disabled="this.param.current <= 1"/>
             <sui-button-or/>
             <sui-button content="下一页" icon="right chevron" label-position="right" @click="nextPage"
-                        :disabled="this.page.current >= this.filePage.pages"/>
+                        :disabled="this.param.current >= this.filePage.pages"/>
           </sui-button-group>
         </sui-card>
         <!-- 文件列表 END -->
@@ -182,7 +182,7 @@ export default {
         name: '测试',
         code: 'test'
       }],
-      page: {
+      param: {
         desc: 'create_time',
         current: 1
       },
@@ -279,17 +279,17 @@ export default {
     select(item) {
       this.menu.active = item;
       if (item === '最新') {
-        this.page = {
+        this.param = {
           desc: 'create_time',
           current: 1
         }
       } else {
-        this.page = {
+        this.param = {
           desc: 'download_count, comment_count, zan_count',
           current: 1
         }
       }
-      this.getFilePage(this.page);
+      this.getFilePage(this.param);
     },
     // 初始化文件添加模态框
     resetFileAddModal() {
@@ -315,7 +315,7 @@ export default {
           this.fileCategory = result.data;
         });
     },
-    // 获取文件页面
+    // 获取文件分页
     getFilePage(param) {
       this.$axios.get('/api/file/page', param)
         .then(res => {
@@ -370,7 +370,7 @@ export default {
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '分享成功' });
             this.resetFileAddModal();
-            this.getFilePage(this.page);
+            this.getFilePage(this.param);
           }
         })
     },
@@ -436,20 +436,20 @@ export default {
     },
     // 上一页
     previousPage() {
-      this.page.current--;
-      this.getFilePage(this.page);
+      this.param.current--;
+      this.getFilePage(this.param);
       this.$refs.container.scrollIntoView();
     },
     // 下一页
     nextPage() {
-      this.page.current++;
-      this.getFilePage(this.page);
+      this.param.current++;
+      this.getFilePage(this.param);
       this.$refs.container.scrollIntoView();
     }
   },
   mounted() {
     this.getFileCategory();
-    this.getFilePage(this.page);
+    this.getFilePage(this.param);
   }
 }
 </script>

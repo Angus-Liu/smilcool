@@ -15,7 +15,7 @@
             <span slot="right">{{user.createTime}} 加入</span>
           </sui-card-content>
         </sui-card>
-        <div class="actions-buttons" v-if="id !== $store.state.user.id.toString()">
+        <div class="actions-buttons" v-if="$store.state.user && id !== $store.state.user.id.toString()">
           <sui-button-group>
             <sui-button basic color="red" icon="heart" content="关注"/>
             <sui-button basic color="blue" icon="envelope" content="私信"/>
@@ -46,7 +46,7 @@
                 <span class="emoji">👩‍🎓</span>年级：{{user.grade}}
               </iCol>
               <iCol span="8">
-                <span class="emoji">📝</span>专业：{{user.major}}
+                <span class="emoji">📖</span>专业：{{user.major}}
               </iCol>
             </Row>
             <Row>
@@ -59,66 +59,69 @@
             </Row>
           </sui-card-content>
           <sui-button basic attached="bottom" icon="pencil alternate" content="修改个人信息"
-                      v-if="id === $store.state.user.id.toString()"/>
+                      v-if="$store.state.user && id === $store.state.user.id.toString()"/>
         </sui-card>
         <!-- 用户详细信息 END -->
         <sui-tab>
-          <sui-tab-pane title="发表文章">
-            <h3>HTML</h3>
-            <p>
-              HTML (HyperText Markup Language) is the most basic building block of the Web.
-              It describes and defines the content of a webpage along with the basic layout of
-              the webpage. Other technologies besides HTML are generally used to describe a web
-              page's appearance/presentation (CSS) or functionality/ behavior (JavaScript).
-            </p>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">developer.mozilla.org</a>
+          <!-- 发表文章 -->
+          <sui-tab-pane title="📰 发表文章">
+            <ul class="list">
+              <li class="item" v-for="article in articlePage.records" :key="article.id">
+                <span class="category">
+                  <sui-label tag>{{article.articleCategory}}</sui-label>
+                </span>
+                <router-link :to="'/article/' + article.id">
+                  <span class="title">{{article.title}}</span>
+                </router-link>
+                <span class="time">{{article.createTime}}</span>
+              </li>
+            </ul>
           </sui-tab-pane>
-          <sui-tab-pane title="上传文件">
-            <h3>CSS</h3>
-            <p>
-              Cascading Style Sheets (CSS) is a stylesheet language used to describe the
-              presentation of a document written in HTML or XML (including XML dialects such as SVG
-              or XHTML). CSS describes how elements should be rendered on screen, on paper, in
-              speech, or on other media.
-            </p>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">developer.mozilla.org</a>
+          <!-- 发表文章 END -->
+          <!-- 上传文件 -->
+          <sui-tab-pane title="📁 上传文件">
+            <ul class="list">
+              <li class="item" v-for="file in filePage.records" :key="file.id">
+                <span class="category">
+                  <sui-label tag>{{file.fileCategory}}</sui-label>
+                </span>
+                <span class="title">{{file.title}}</span>
+                <span class="time">{{file.createTime}}</span>
+              </li>
+            </ul>
           </sui-tab-pane>
-          <sui-tab-pane title="发布二手">
-            <h3>JavaScript</h3>
-            <p>
-              JavaScript (JS) is a lightweight interpreted or JIT-compiled programming language
-              with first-class functions. While it is most well-known as the scripting language for
-              Web pages, many non-browser environments also use it, such as Node.js, Apache CouchDB
-              and Adobe Acrobat. JavaScript is a prototype-based, multi-paradigm, dynamic
-              language, supporting object-oriented, imperative, and declarative (e.g.
-              functional programming) styles.
-            </p>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/javascript">developer.mozilla.org</a>
+          <!-- 上传文件 END -->
+          <!-- 发布二手 -->
+          <sui-tab-pane title="🛒 发布二手">
+            <ul class="list">
+              <li class="item" v-for="secondHand in secondHandPage.records" :key="secondHand.id">
+                <span class="category">
+                  <sui-label tag>{{secondHand.secondHandCategory}}</sui-label>
+                </span>
+                <span class="title">{{secondHand.title}}</span>
+                <span class="time">{{secondHand.createTime}}</span>
+              </li>
+            </ul>
           </sui-tab-pane>
-          <sui-tab-pane title="发布失物寻物">
-            <h3>JavaScript</h3>
-            <p>
-              JavaScript (JS) is a lightweight interpreted or JIT-compiled programming language
-              with first-class functions. While it is most well-known as the scripting language for
-              Web pages, many non-browser environments also use it, such as Node.js, Apache CouchDB
-              and Adobe Acrobat. JavaScript is a prototype-based, multi-paradigm, dynamic
-              language, supporting object-oriented, imperative, and declarative (e.g.
-              functional programming) styles.
-            </p>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/javascript">developer.mozilla.org</a>
+          <!-- 发布二手 END -->
+          <!-- 发布失物寻物 -->
+          <sui-tab-pane title="👜 发布失物寻物">
+            <ul class="list">
+              <li class="item" v-for="lostFound in lostFoundPage.records" :key="lostFound.id">
+                <span class="category">
+                  <sui-label tag>{{lostFound.lostFoundCategory}}</sui-label>
+                </span>
+                <span class="title">{{lostFound.title}}</span>
+                <span class="time">{{lostFound.createTime}}</span>
+              </li>
+            </ul>
           </sui-tab-pane>
-          <sui-tab-pane title="发布帖子">
-            <h3>JavaScript</h3>
-            <p>
-              JavaScript (JS) is a lightweight interpreted or JIT-compiled programming language
-              with first-class functions. While it is most well-known as the scripting language for
-              Web pages, many non-browser environments also use it, such as Node.js, Apache CouchDB
-              and Adobe Acrobat. JavaScript is a prototype-based, multi-paradigm, dynamic
-              language, supporting object-oriented, imperative, and declarative (e.g.
-              functional programming) styles.
-            </p>
-            <a href="https://developer.mozilla.org/en-US/docs/Web/javascript">developer.mozilla.org</a>
+          <!-- 发布失物寻物 END -->
+          <!-- 发布帖子 -->
+          <sui-tab-pane title="📃 发布帖子">
+            暂无
           </sui-tab-pane>
+          <!-- 发布帖子 END -->
         </sui-tab>
       </iCol>
     </Row>
@@ -147,20 +150,155 @@ export default {
         'phone': '未填写',
         'email': 'admin@admin.com',
         'createTime': '2019-03-28'
-      }
+      },
+      // 查询参数
+      param: {
+        userId: this.id,
+        // page & order 参数
+        desc: 'create_time',
+        size: 10
+      },
+      // 文章分页
+      articlePage: {
+        'records': [{
+          'id': -1,
+          'userId': -1,
+          'resourceId': -1,
+          'articleCategory': '校园文章',
+          'title': '文章测试',
+          'createTime': '2019-05-13'
+        }],
+        'total': 7,
+        'size': 10,
+        'current': 1,
+        'searchCount': true,
+        'pages': 1
+      },
+      // 文件分页
+      filePage: {
+        'records': [
+          {
+            'id': 1,
+            'userId': 1,
+            'resourceId': 2,
+            'fileCategory': '计算机类',
+            'title': '计算机类全套PPT，你值得拥有',
+            'description': '计算机类全套PPT，你值得拥有',
+            'name': '中北大学计算机类.ppt',
+            'size': '200MB',
+            'url': 'http://bkt.angus-liu.cn/中北大学计算机类.ppt',
+            'downloadCount': 0,
+            'createTime': '2019-05-13 09:18:13'
+          }],
+        'total': 10,
+        'size': 10,
+        'current': 1,
+        'searchCount': true,
+        'pages': 1
+      },
+      // 二手交易分页
+      secondHandPage: {
+        'records': [
+          {
+            'id': 1,
+            'userId': 1,
+            'resourceId': 37,
+            'secondHandCategory': '数码',
+            'title': '小米手机9，低价转',
+            'name': '小米手机9',
+            'price': 599,
+            'address': '文瀛13#105',
+            'description': '买了华为P30，这部小米手机就低价转了，9.5成新',
+            'images': ['https://g-search2.alicdn.com/img/bao/uploaded/i4/i2/1714128138/O1CN018kA6uv29zFiGLMEsL_!!0-item_pic.jpg_250x250.jpg'],
+            'createTime': '2019-05-23 15:56:27'
+          }],
+        'total': 20,
+        'size': 1,
+        'current': 1,
+        'searchCount': true,
+        'pages': 20
+      },
+      // 失物寻物分页
+      lostFoundPage: {
+        'records': [{
+          'id': 1,
+          'userId': 1,
+          'resourceId': 16,
+          'lostFoundCategory': '寻物启事',
+          'title': '四食堂丢失一个钱包',
+          'description': '如图，钱包是黑色的，里面有少量现金和一张工行的卡',
+          'itemName': '钱包',
+          'time': '2019-05-17 12:10:01',
+          'address': '四食堂',
+          'createTime': '2019-05-17 15:39:45',
+          'images': ['https://img12.360buyimg.com/n7/jfs/t22831/61/2367409622/289066/5d9c3f/5b7d10feNe776b305.jpg']
+        }],
+        'total': 5,
+        'size': 1,
+        'current': 1,
+        'searchCount': true,
+        'pages': 5
+      },
     }
   },
   methods: {
+    // 获取用户信息
     getUser() {
       this.$axios.get(`/api/user/${this.id}`)
         .then(res => {
           let result = res.data;
           this.user = result.data;
         });
-    }
+    },
+    // 获取文章分页
+    getArticlePage(param) {
+      this.$axios.get('/api/article/page', param)
+        .then(res => {
+          let result = res.data;
+          this.articlePage = result.data;
+        });
+    },
+    // 获取文件分页
+    getFilePage(param) {
+      this.$axios.get('/api/file/page', param)
+        .then(res => {
+          let result = res.data;
+          this.filePage = result.data;
+        })
+    },
+    // 获取二手交易分页
+    getSecondHandPage(param) {
+      this.$axios.get('/api/second-hand/page', param)
+        .then(res => {
+          let result = res.data;
+          this.secondHandPage = result.data;
+          this.secondHandPage.records.forEach(secondHand => {
+            if (secondHand.images && secondHand.images.length > 0) {
+              secondHand.images = JSON.parse(secondHand.images);
+            }
+          });
+        });
+    },
+    // 获取失物寻物分页
+    getLostFoundPage(param) {
+      this.$axios.get('/api/lost-found/page', param)
+        .then(res => {
+          let result = res.data;
+          this.lostFoundPage = result.data;
+          this.lostFoundPage.records.forEach(lostFound => {
+            if (lostFound.images && lostFound.images.length > 0) {
+              lostFound.images = JSON.parse(lostFound.images);
+            }
+          })
+        })
+    },
   },
   mounted() {
     this.getUser();
+    this.getArticlePage(this.param);
+    this.getFilePage(this.param);
+    this.getSecondHandPage(this.param);
+    this.getLostFoundPage(this.param);
   }
 }
 </script>
@@ -187,6 +325,44 @@ export default {
       width: 30px;
       text-align: center;
       font-size: 1.2em;
+    }
+  }
+
+  .list {
+    margin: 10px 0 5px 0;
+    list-style: none;
+
+    .item {
+      display: block;
+      margin: 5px 0;
+      line-height: 2.5em;
+      overflow: auto;
+
+      .category {
+        float: left;
+        width: 100px;
+        margin-right: 10px;
+      }
+
+      .title {
+        display: inline-block;
+        max-width: 400px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1.1em;
+        color: #5c5c5c;
+      }
+
+      .title:hover {
+        color: #ff8364;
+        cursor: pointer;
+      }
+
+      .time {
+        color: #aaa;
+        float: right;
+      }
     }
   }
 }
