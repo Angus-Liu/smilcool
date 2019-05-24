@@ -12,7 +12,6 @@
     <!-- 菜单 -->
     <Row class="second-hand-menu">
       <iCol class="second-hand-category" span="15">
-        <div>
           <a is="sui-label" v-if="activeSecondHandCategory === '所有'" color="orange" @click="selectCategory('所有')">
             所有
           </a>
@@ -22,7 +21,6 @@
                @click="selectCategory(item.name)">{{item.name}}</a>
             <a is="sui-label" v-else @click="selectCategory(item.name)">{{item.name}}</a>
           </template>
-        </div>
       </iCol>
       <iCol span="6">
         <sui-input class="fluid" placeholder="搜好物" icon="search"

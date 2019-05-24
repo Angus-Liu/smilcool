@@ -4,7 +4,7 @@
       <iCol>
         <sui-menu secondary pointing>
           <a
-            v-for="item in items"
+            v-for="item in menuItems"
             :key="item"
             is="sui-menu-item"
             :content="item"
@@ -32,7 +32,7 @@ export default {
       return this.activeMenuItem === name;
     },
     select(name) {
-      this.active = name;
+      this.activeMenuItem = name;
     },
   },
 }
