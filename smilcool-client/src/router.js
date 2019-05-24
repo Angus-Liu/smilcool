@@ -14,9 +14,13 @@ export default new Router({
       component: Home,
       children: [
         {
+          path: 'main',
+          name: 'main',
+          component: () => import('@/views/article/Main'),
+        }, {
           path: 'article',
           name: 'article',
-          component: () => import('@/views/article/Article'),
+          component: () => import('@/views/article/Article')
         }, {
           path: 'article/editor',
           name: 'article-editor',

@@ -7,7 +7,8 @@
           <a is="sui-menu-item" v-for="item in menu.items" :key="item" :content="item"
              :active="item === menu.active" @click="select(item)"/>
           <sui-menu-item position="right">
-            <sui-input transparent icon="search" placeholder="搜索"/>
+            <sui-input transparent icon="search" placeholder="搜索"
+                       v-model="param.general" @keydown.enter="getFilePage(param)"/>
           </sui-menu-item>
         </sui-menu>
         <!-- 文件操作菜单 END -->
@@ -187,6 +188,7 @@ export default {
       param: {
         // 查询参数
         fileCategory: null,
+        general: null,
         // page & order 参数
         desc: 'create_time',
         current: 1

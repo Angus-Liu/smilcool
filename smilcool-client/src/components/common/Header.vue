@@ -2,7 +2,7 @@
   <header>
     <div class="container">
       <!-- LOGO -->
-      <router-link to="/">
+      <router-link to="/main">
         <img class="logo" src="../../assets/logo-3.png">
       </router-link>
       <!-- LOGO END -->
@@ -10,7 +10,7 @@
       <nav>
         <ul>
           <li>
-            <router-link to="/article">文章资讯</router-link>
+            <router-link to="/main">文章资讯</router-link>
           </li>
           <li>
             <router-link to="/moment">校园动态</router-link>

@@ -68,14 +68,12 @@
             论坛精华帖
           </sui-message>
           <sui-card-content>
-            <sui-feed>
+            <sui-feed v-for="(item, index) in post" :key="index">
               <sui-feed-event>
                 <sui-feed-label>
-                  <sui-image src="http://img.angus-liu.cn/avatar/avatar06.png"/>
+                  <sui-image :src="item.avatar"/>
                 </sui-feed-label>
-                <sui-feed-content>
-                  赫本发布了精华帖 <a>Thinking in java 解读</a>
-                </sui-feed-content>
+                <sui-feed-content v-html="item.content"/>
               </sui-feed-event>
             </sui-feed>
           </sui-card-content>
@@ -97,7 +95,30 @@
 
 <script>
 export default {
-  name: 'Forum'
+  name: 'Forum',
+  data() {
+    return {
+      post: [{
+        avatar: 'http://img.angus-liu.cn/avatar/avatar06.png',
+        content: '<a>赫本</a> 发布了精华帖 <a>Thinking in java 解读</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar01.jpg',
+        content: '<a>老王本王</a> 回复了帖子 <a>如何使用 Smilcool</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar02.jpg',
+        content: '<a>一双毛腿肩上扛</a> 点赞了帖子 <a>如何使用 Smilcool</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar03.jpg',
+        content: '<a>666</a> 点赞了帖子 <a>Thinking in java 解读</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar04.jpg',
+        content: '<a>007</a> 点赞了帖子 <a>Thinking in java 解读</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar05.jpg',
+        content: '<a>安妮</a> 发布了帖子 <a>BAT 面试宝典，点进来你不会后悔</a>'
+      }]
+    }
+  }
 }
 </script>
 

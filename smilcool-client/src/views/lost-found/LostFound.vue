@@ -7,7 +7,8 @@
           <sui-menu-item link v-for="item in menu.items" :key="item" :content="item"
                          :active="item === menu.active" @click="select(item)"/>
           <sui-menu-item position="right">
-            <sui-input transparent icon="search" placeholder="搜索"/>
+            <sui-input transparent icon="search" placeholder="搜索"
+                       v-model="param.general" @keydown.enter="getLostFoundPage(param)"/>
           </sui-menu-item>
         </sui-menu>
         <!-- 失物寻物菜单 END -->
@@ -176,9 +177,10 @@ export default {
         items: ['查看所有', '失物招领', '寻物启事'],
       },
       param: {
-        /* query 参数 */
+        // query 参数
         lostFoundCategory: null,
-        /* page & order 参数 */
+        general: null,
+        // page & order 参数
         desc: 'create_time',
         current: 1
       },

@@ -25,7 +25,8 @@
         </div>
       </iCol>
       <iCol span="6">
-        <sui-input class="fluid" placeholder="搜好物" icon="search"/>
+        <sui-input class="fluid" placeholder="搜好物" icon="search"
+                   v-model="param.general" @keydown.enter="getSecondHandPage(param)"/>
       </iCol>
       <iCol class="second-hand-add" span="3">
         <sui-button fluid color="orange" content="发布闲置" @click="secondHanAddModal.show = true"/>
@@ -168,6 +169,7 @@ export default {
       param: {
         // query 参数
         secondHandCategory: null,
+        general: null,
         // page & order 参数
         desc: 'create_time',
         current: 1
