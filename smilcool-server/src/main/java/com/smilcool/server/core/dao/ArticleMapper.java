@@ -1,6 +1,7 @@
 package com.smilcool.server.core.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
 import com.smilcool.server.core.pojo.vo.ArticleLatestCommentVO;
 import com.smilcool.server.core.pojo.vo.ArticleVO;
@@ -27,7 +28,7 @@ public interface ArticleMapper {
 
     ArticleVO selectArticleVOByPrimaryKey(Integer id);
 
-    Page<ArticleVO> selectArticleVOByCondition(Page page, @Param("article") Article condition);
+    Page<ArticleVO> selectByQueryForm(Page page, @Param("form") ArticleQueryForm form);
 
     List<ArticleLatestCommentVO> selectArticleLatestCommentVO();
 }

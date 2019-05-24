@@ -8,5 +8,18 @@ import lombok.Data;
  */
 @Data
 public class ArticleQueryForm {
+    /**
+     * 发布用户
+     */
     private Integer userId;
+
+    /**
+     * 文章类别
+     */
+    private String articleCategory;
+
+    /**
+     * 通用查询字段
+     */
+    private String general;
 }
