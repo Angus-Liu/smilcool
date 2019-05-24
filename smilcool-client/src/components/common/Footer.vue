@@ -44,7 +44,7 @@ footer {
     }
 
     .row {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       overflow: auto;
 
       .copyright,
@@ -79,11 +79,6 @@ footer {
         color: #808080;
       }
     }
-  }
-
-
-  .container:before {
-
   }
 }
 

@@ -40,7 +40,7 @@
                     <img v-for="img in lostFound.images" :src="img">
                   </sui-feed-extra>
                   <sui-feed-meta>
-                    <router-link to="/">
+                    <router-link :to="'/user/' + lostFound.user.id">
                       <sui-image :src="lostFound.user.avatar" size="medium" avatar/>
                       <span style="position: relative; top: 2px">{{lostFound.user.nickname}}</span>
                     </router-link>

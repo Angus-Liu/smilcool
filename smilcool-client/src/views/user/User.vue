@@ -2,6 +2,7 @@
   <div class="container">
     <Row>
       <iCol span="6">
+        <!-- 用户简要信息 -->
         <sui-card class="fluid">
           <sui-image style="width: 100%;" :src="user.avatar"/>
           <sui-card-content>
@@ -15,6 +16,7 @@
             <span slot="right">{{user.createTime}} 加入</span>
           </sui-card-content>
         </sui-card>
+        <!-- 用户简要信息 END -->
         <div class="actions-buttons" v-if="$store.state.user && id !== $store.state.user.id.toString()">
           <sui-button-group>
             <sui-button basic color="red" icon="heart" content="关注"/>

@@ -13,13 +13,15 @@
         <!-- 文件操作菜单 END -->
         <!-- 文件类别 -->
         <div class="file-category">
-          <Tag type="dot" v-if="name === '所有'" color="#32C2BC" @click.native="name ='所有'">所有</Tag>
-          <Tag type="dot" v-else @click.native="name ='所有'">所有</Tag>
+          <Tag type="dot" v-if="activeFileCategory === '所有'" color="#32C2BC" @click.native="selectCategory('所有')">所有
+          </Tag>
+          <Tag type="dot" v-else @click.native="selectCategory('所有')">所有</Tag>
           <template v-for="item in fileCategory">
-            <Tag type="dot" v-if="item.name === name" color="#32C2BC" @click.native="name = item.name">
+            <Tag type="dot" v-if="item.name === activeFileCategory" color="#32C2BC"
+                 @click.native="selectCategory(item.name)">
               {{item.name}}
             </Tag>
-            <Tag type="dot" v-else @click.native="name = item.name">{{item.name}}</Tag>
+            <Tag type="dot" v-else @click.native="selectCategory(item.name)">{{item.name}}</Tag>
           </template>
         </div>
         <!-- 文件类别 END -->
@@ -177,12 +179,15 @@ export default {
         items: ['最新', '最热']
       },
       localStorage: '/api/local-storage/upload',
-      name: '所有',
+      activeFileCategory: '所有',
       fileCategory: [{
         name: '测试',
         code: 'test'
       }],
       param: {
+        // 查询参数
+        fileCategory: null,
+        // page & order 参数
         desc: 'create_time',
         current: 1
       },
@@ -279,16 +284,22 @@ export default {
     select(item) {
       this.menu.active = item;
       if (item === '最新') {
-        this.param = {
-          desc: 'create_time',
-          current: 1
-        }
+        this.param.desc = 'create_time';
       } else {
-        this.param = {
-          desc: 'download_count, comment_count, zan_count',
-          current: 1
-        }
+        this.param.desc = 'download_count, comment_count, zan_count';
       }
+      this.param.current = 1;
+      this.getFilePage(this.param);
+    },
+    // 类别切换
+    selectCategory(fileCategory) {
+      this.activeFileCategory = fileCategory;
+      if (fileCategory === '所有') {
+        this.param.fileCategory = null;
+      } else {
+        this.param.fileCategory = fileCategory;
+      }
+      this.param.current = 1;
       this.getFilePage(this.param);
     },
     // 初始化文件添加模态框

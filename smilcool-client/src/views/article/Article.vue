@@ -140,6 +140,7 @@ export default {
         '/local-storage/img/banner02.jpg',
         '/local-storage/img/banner03.jpg',
         '/local-storage/img/banner04.jpg',
+        '/local-storage/img/banner05.jpg',
       ],
       param: {
         // page & order 参数
@@ -148,21 +149,22 @@ export default {
       },
       articlePage: {
         'records': [{
-          'id': 2,
-          'userId': 6,
-          'resourceId': 5,
-          'articleCategory': '校园文章',
-          'title': '雷锋斌副校长指导大数据学院 “改革创新 奋发有为”大讨论专题组织生活会',
+          'id': -1,
+          'userId': -1,
+          'resourceId': -1,
+          'articleCategory': '测试文章',
+          'title': '测试标题',
           'createTime': '2019-05-13',
           'user': {
-            'id': 6,
-            'username': '1713862733',
-            'nickname': '双击666',
-            'avatar': 'http://img.angus-liu.cn/avatar/avatar03.jpg',
+            'id': -1,
+            'username': 'anonymous',
+            'nickname': '游客',
+            'avatar': require('../../assets/anonymous-avatar.png'),
+            'sex': '保密',
             'sign': '一句话介绍自己'
           },
           'resource': {
-            'id': 5,
+            'id': -1,
             'zanCount': 0,
             'pvCount': 0,
             'commentCount': 0

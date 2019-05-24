@@ -119,9 +119,9 @@ export default {
     return {
       // 文章信息
       article: {
-        'id': 1,
-        'userId': 7,
-        'resourceId': 4,
+        'id': -1,
+        'userId': -1,
+        'resourceId': -1,
         'articleCategory': '校园文章',
         'title': '测试文章',
         'createTime': '2019-05-13',
@@ -129,14 +129,15 @@ export default {
         'markdownContent': '测试文章',
         'htmlContent': '测试文章',
         'user': {
-          'id': 7,
-          'username': '007',
-          'nickname': '漫步金星',
-          'avatar': 'http://img.angus-liu.cn/avatar/avatar04.jpg',
+          'id': -1,
+          'username': 'anonymous',
+          'nickname': '游客',
+          'avatar': require('../../assets/anonymous-avatar.png'),
+          'sex': '保密',
           'sign': '一句话介绍自己'
         },
         'resource': {
-          'id': 4,
+          'id': -1,
           'zanCount': 0,
           'pvCount': 0,
           'commentCount': 2
