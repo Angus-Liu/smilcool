@@ -74,7 +74,7 @@
                   <sui-image src="http://img.angus-liu.cn/avatar/avatar06.png"/>
                 </sui-feed-label>
                 <sui-feed-content>
-                  You added Elliot Fu to the group <a>Coworkers</a>
+                  赫本发布了精华帖 <a>Thinking in java 解读</a>
                 </sui-feed-content>
               </sui-feed-event>
             </sui-feed>
