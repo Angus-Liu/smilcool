@@ -262,6 +262,11 @@
         FROM second_hand
         LEFT JOIN user ON second_hand.user_id = user.id
         LEFT JOIN resource ON second_hand.resource_id = resource.id
+        <where>
+            <if test="secondHand.userId != null">
+                second_hand.user_id = #{secondHand.userId}
+            </if>
+        </where>
     </select>
 
 </mapper>

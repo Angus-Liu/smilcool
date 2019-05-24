@@ -239,5 +239,10 @@
         FROM file
         LEFT JOIN user ON file.user_id = user.id
         LEFT JOIN resource ON file.resource_id = resource.id
+        <where>
+            <if test="file.userId != null">
+                file.user_id = #{file.userId}
+            </if>
+        </where>
     </select>
 </mapper>

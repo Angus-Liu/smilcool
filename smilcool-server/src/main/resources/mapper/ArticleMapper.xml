@@ -271,6 +271,11 @@
         FROM article
         LEFT JOIN user ON article.user_id = user.id
         LEFT JOIN resource ON article.resource_id = resource.id
+        <where>
+            <if test="article.userId != null">
+                article.user_id = #{article.userId}
+            </if>
+        </where>
     </select>
 
     <select id="selectArticleLatestCommentVO" resultType="com.smilcool.server.core.pojo.vo.ArticleLatestCommentVO">
