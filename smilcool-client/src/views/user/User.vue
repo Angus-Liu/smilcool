@@ -68,7 +68,7 @@
             <ul class="list">
               <li class="item" v-for="article in articlePage.records" :key="article.id">
                 <span class="category">
-                  <sui-label tag>{{article.articleCategory}}</sui-label>
+                  <sui-label>{{article.articleCategory}}</sui-label>
                 </span>
                 <router-link :to="'/article/' + article.id">
                   <span class="title">{{article.title}}</span>
@@ -83,7 +83,7 @@
             <ul class="list">
               <li class="item" v-for="file in filePage.records" :key="file.id">
                 <span class="category">
-                  <sui-label tag>{{file.fileCategory}}</sui-label>
+                  <sui-label>{{file.fileCategory}}</sui-label>
                 </span>
                 <span class="title">{{file.title}}</span>
                 <span class="time">{{file.createTime}}</span>
@@ -96,7 +96,7 @@
             <ul class="list">
               <li class="item" v-for="secondHand in secondHandPage.records" :key="secondHand.id">
                 <span class="category">
-                  <sui-label tag>{{secondHand.secondHandCategory}}</sui-label>
+                  <sui-label>{{secondHand.secondHandCategory}}</sui-label>
                 </span>
                 <span class="title">{{secondHand.title}}</span>
                 <span class="time">{{secondHand.createTime}}</span>
@@ -109,7 +109,7 @@
             <ul class="list">
               <li class="item" v-for="lostFound in lostFoundPage.records" :key="lostFound.id">
                 <span class="category">
-                  <sui-label tag>{{lostFound.lostFoundCategory}}</sui-label>
+                  <sui-label>{{lostFound.lostFoundCategory}}</sui-label>
                 </span>
                 <span class="title">{{lostFound.title}}</span>
                 <span class="time">{{lostFound.createTime}}</span>
@@ -342,6 +342,7 @@ export default {
         float: left;
         width: 100px;
         margin-right: 10px;
+        text-align: center;
       }
 
       .title {

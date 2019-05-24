@@ -15,7 +15,7 @@
         <div class="file-category">
           <Tag type="dot" v-if="name === '所有'" color="#32C2BC" @click.native="name ='所有'">所有</Tag>
           <Tag type="dot" v-else @click.native="name ='所有'">所有</Tag>
-          <template v-for="(item, index) in fileCategory">
+          <template v-for="item in fileCategory">
             <Tag type="dot" v-if="item.name === name" color="#32C2BC" @click.native="name = item.name">
               {{item.name}}
             </Tag>
@@ -40,7 +40,7 @@
                       <router-link to="">{{file.user.nickname}}</router-link>
                     </span>
                     <span class="file-create-time"><Time :time="file.createTime"/></span>
-                    <a :href="file.url" :download="file.name" @click="downloadFile(file)">📄 {{file.name}}</a>
+                    <a :href="file.url" :download="file.name" @click="downloadFile(file)">⏬ {{file.name}}</a>
                   </sui-item-meta>
                   <sui-item-description>
                     <p>{{file.description}}</p>
