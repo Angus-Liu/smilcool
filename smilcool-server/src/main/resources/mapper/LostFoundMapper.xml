@@ -253,7 +253,7 @@
         resource.id as resource_id, zan_count, pv_count, comment_count
     </sql>
 
-    <select id="selectLostFoundVOByCondition" resultMap="ResultMapWithUserAndResource">
+    <select id="selectByQueryForm" resultMap="ResultMapWithUserAndResource">
         SELECT
         <include refid="Lost_Found_Column_List"/>,
         <include refid="User_Column_List"/>,
@@ -262,11 +262,17 @@
         LEFT JOIN user ON lost_found.user_id = user.id
         LEFT JOIN resource ON lost_found.resource_id = resource.id
         <where>
-            <if test="lostFound.userId != null">
-                AND lost_found.user_id = #{lostFound.userId}
+            <if test="form.userId != null">
+                AND lost_found.user_id = #{form.userId}
             </if>
-            <if test="lostFound.lostFoundCategory != null">
-                AND lost_found.lost_found_category = #{lostFound.lostFoundCategory}
+            <if test="form.lostFoundCategory != null">
+                AND lost_found.lost_found_category = #{form.lostFoundCategory}
+            </if>
+            <if test="form.general != null">
+                AND (lost_found.title LIKE "%"#{form.general}"%"
+                OR lost_found.description LIKE "%"#{form.general}"%"
+                OR lost_found.item_name LIKE "%"#{form.general}"%"
+                OR lost_found.address LIKE "%"#{form.general}"%")
             </if>
         </where>
     </select>

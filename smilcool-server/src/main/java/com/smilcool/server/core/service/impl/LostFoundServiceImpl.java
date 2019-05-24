@@ -57,7 +57,6 @@ public class LostFoundServiceImpl implements LostFoundService {
 
     @Override
     public Page<LostFoundVO> pageLostFoundVO(Page page, LostFoundQueryForm form) {
-        LostFound condition = BeanUtil.copyProp(form, LostFound.class);
-        return lostFoundMapper.selectLostFoundVOByCondition(page, condition);
+        return lostFoundMapper.selectByQueryForm(page, form);
     }
 }

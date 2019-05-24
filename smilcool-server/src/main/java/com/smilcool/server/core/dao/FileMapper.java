@@ -1,6 +1,7 @@
 package com.smilcool.server.core.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smilcool.server.core.pojo.form.FileQueryForm;
 import com.smilcool.server.core.pojo.po.File;
 import com.smilcool.server.core.pojo.vo.FileVO;
 import org.apache.ibatis.annotations.Param;
@@ -21,7 +22,7 @@ public interface FileMapper {
 
     /* 以下是自定义方法 */
 
-    Page<FileVO> selectFileVOByCondition(Page page, @Param("file") File condition);
+    Page<FileVO> selectByQueryForm(Page page, @Param("form") FileQueryForm form);
 
     @Update("UPDATE file SET download_count = download_count + #{count} WHERE id = #{id}")
     void updateDownloadCountByPrimaryKey(@Param("id") Integer id, @Param("count") Integer count);

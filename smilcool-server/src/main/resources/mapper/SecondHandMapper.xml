@@ -254,7 +254,7 @@
         resource.id as resource_id, zan_count, pv_count, comment_count
     </sql>
 
-    <select id="selectSecondHandVOByCondition" resultMap="ResultMapWithUserAndResource">
+    <select id="selectByQueryForm" resultMap="ResultMapWithUserAndResource">
         SELECT
         <include refid="Second_Hand_Column_List"/>,
         <include refid="User_Column_List"/>,
@@ -263,11 +263,17 @@
         LEFT JOIN user ON second_hand.user_id = user.id
         LEFT JOIN resource ON second_hand.resource_id = resource.id
         <where>
-            <if test="secondHand.userId != null">
-                second_hand.user_id = #{secondHand.userId}
+            <if test="form.userId != null">
+                second_hand.user_id = #{form.userId}
             </if>
-            <if test="secondHand.secondHandCategory != null">
-                AND second_hand.second_hand_category = #{secondHand.secondHandCategory}
+            <if test="form.secondHandCategory != null">
+                AND second_hand.second_hand_category = #{form.secondHandCategory}
+            </if>
+            <if test="form.general != null">
+                AND (second_hand.title LIKE "%"#{form.general}"%"
+                OR second_hand.name LIKE "%"#{form.general}"%"
+                OR second_hand.address LIKE "%"#{form.general}"%"
+                OR second_hand.description LIKE "%"#{form.general}"%")
             </if>
         </where>
     </select>

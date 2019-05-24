@@ -6,8 +6,6 @@ import com.smilcool.server.core.pojo.form.SecondHandQueryForm;
 import com.smilcool.server.core.pojo.po.SecondHand;
 import com.smilcool.server.core.pojo.vo.SecondHandVO;
 
-import java.util.List;
-
 /**
  * @author Angus
  * @date 2019/4/14

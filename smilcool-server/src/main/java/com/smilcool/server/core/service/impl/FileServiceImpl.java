@@ -59,8 +59,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Page<FileVO> pageFileVO(Page page, FileQueryForm form) {
-        File condition = BeanUtil.copyProp(form, File.class);
-        return fileMapper.selectFileVOByCondition(page, condition);
+        return fileMapper.selectByQueryForm(page, form);
     }
 
     @Override

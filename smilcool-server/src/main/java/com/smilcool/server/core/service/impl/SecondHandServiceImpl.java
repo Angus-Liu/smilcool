@@ -57,7 +57,6 @@ public class SecondHandServiceImpl implements SecondHandService {
 
     @Override
     public Page<SecondHandVO> pageSecondHandVO(Page page, SecondHandQueryForm form) {
-        SecondHand condition = BeanUtil.copyProp(form, SecondHand.class);
-        return secondHandMapper.selectSecondHandVOByCondition(page, condition);
+        return secondHandMapper.selectByQueryForm(page, form);
     }
 }
