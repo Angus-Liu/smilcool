@@ -43,14 +43,9 @@ export default new Vuex.Store({
     // }
   },
   mutations: {
-    userLogin(state, user) {
-      log.info('this.$store.commit.userLogin', user);
+    userUpdate(state, user) {
+      log.info('this.$store.commit.userUpdate', user);
       state.user = user;
-    },
-    userLogout(state) {
-      log.info('this.$store.commit.userLogout');
-      // 清空 vuex
-      state.user = null;
     }
   },
   actions: {},

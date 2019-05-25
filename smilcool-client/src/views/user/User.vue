@@ -31,7 +31,7 @@
           <sui-card-content>
             <Row>
               <iCol span="8">
-                <span class="emoji">🧑</span>性别：{{user.sex}}
+                <span class="emoji">💕</span>性别：{{user.sex}}
               </iCol>
               <iCol span="8">
                 <span class="emoji">🎂</span>生日：{{user.birthday}}
@@ -61,7 +61,8 @@
             </Row>
           </sui-card-content>
           <sui-button basic attached="bottom" icon="pencil alternate" content="修改个人信息"
-                      v-if="$store.state.user && id === $store.state.user.id.toString()"/>
+                      v-if="$store.state.user && id === $store.state.user.id.toString()"
+                      @click="userUpdateModal.show = true"/>
         </sui-card>
         <!-- 用户详细信息 END -->
         <sui-tab>
@@ -127,7 +128,56 @@
         </sui-tab>
       </iCol>
     </Row>
-
+    <!-- 修改个人信息模态框 -->
+    <Modal v-model="userUpdateModal.show" title="更新信息" width="600">
+      <Form :model="userUpdateModal.form" :label-width="50">
+        <FormItem label="头像" required>
+          <Upload :show-upload-list="false"
+                  :format="['jpg','jpeg','png']"
+                  :data="{type: 'avatar'}"
+                  action="/api/local-storage/upload"
+                  :on-success="res => userUpdateModal.form.avatar = res.data.url">
+            <sui-image :src="userUpdateModal.form.avatar" size="tiny" vertical-align="top"/>
+          </Upload>
+        </FormItem>
+        <FormItem label="昵称" required>
+          <Input v-model="userUpdateModal.form.nickname" size="large"/>
+        </FormItem>
+        <FormItem label="性别" required>
+          <Select v-model="userUpdateModal.form.sex" size="large">
+            <Option v-for="(item, index) in sexOption" :value="item" :key="index">{{item}}</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="生日" required>
+          <DatePicker :value="userUpdateModal.form.birthday" @on-change="time => userUpdateModal.form.birthday = time"
+                      type="date" size="large" style="width: 100%"/>
+        </FormItem>
+        <FormItem label="学院" required>
+          <Input v-model="userUpdateModal.form.college" size="large"/>
+        </FormItem>
+        <FormItem label="年级" required>
+          <Input v-model="userUpdateModal.form.grade" size="large"/>
+        </FormItem>
+        <FormItem label="专业" required>
+          <Input v-model="userUpdateModal.form.major" size="large"/>
+        </FormItem>
+        <FormItem label="手机" required>
+          <Input v-model="userUpdateModal.form.phone" size="large"/>
+        </FormItem>
+        <FormItem label="签名" required>
+          <Input v-model="userUpdateModal.form.sign" size="large"/>
+        </FormItem>
+        <FormItem label="简介" required>
+          <Input v-model="userUpdateModal.form.intro" type="textarea" size="large"
+                 :autosize="{minRows: 3, maxRows: 3}"/>
+        </FormItem>
+      </Form>
+      <template #footer>
+        <Button type="text" @click="resetUserUpdateModal">取消</Button>
+        <Button @click="updateUser">确定更新</Button>
+      </template>
+    </Modal>
+    <!-- 修改个人信息模态框 END -->
   </div>
 </template>
 
@@ -137,6 +187,8 @@ export default {
   props: ['id'],
   data() {
     return {
+      sexOption: ['男', '女', '保密'],
+      // 用户信息
       user: {
         'id': -1,
         'username': 'anonymous',
@@ -153,8 +205,26 @@ export default {
         'email': 'admin@admin.com',
         'createTime': '2019-03-28'
       },
+      // 用户信息更新模态框
+      userUpdateModal: {
+        show: false,
+        form: {
+          'nickname': '游客',
+          'avatar': require('../../assets/anonymous-avatar.png'),
+          'sex': '保密',
+          'birthday': '1970-01-01',
+          'college': '未填写',
+          'grade': '未填写',
+          'major': '未填写',
+          'phone': '未填写',
+          'sign': '一句话介绍自己',
+          'intro': '这个人很神秘，什么也没写',
+        }
+
+      },
       // 查询参数
       param: {
+        // query 参数
         userId: this.id,
         // page & order 参数
         desc: 'create_time',
@@ -244,12 +314,29 @@ export default {
     }
   },
   methods: {
+    // 重置用户信息更新模态框
+    resetUserUpdateModal() {
+      this.userUpdateModal = {
+        show: false,
+        form: { ...this.user }
+      }
+    },
     // 获取用户信息
     getUser() {
       this.$axios.get(`/api/user/${this.id}`)
         .then(res => {
           let result = res.data;
           this.user = result.data;
+          this.userUpdateModal.form = { ...this.user };
+        });
+    },
+    updateUser() {
+      this.$axios.put('/api/user', this.userUpdateModal.form)
+        .then(res => {
+          let result = res.data;
+          this.user = result.data;
+          this.resetUserUpdateModal();
+          this.$store.commit('userUpdate', this.user);
         });
     },
     // 获取文章分页

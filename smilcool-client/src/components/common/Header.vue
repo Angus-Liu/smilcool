@@ -31,9 +31,9 @@
       </nav>
       <!-- 菜单 END -->
       <!-- 头像 -->
-      <div class="avatar">
+      <div class="avatar-wrapper">
         <Dropdown v-if="user">
-          <sui-image class="avatar-img" circular :src="user.avatar"/>
+          <sui-image class="avatar-img" avatar :src="user.avatar"/>
           <DropdownMenu class="avatar-menu-list" slot="list">
             <router-link :to=" '/user/' + $store.state.user.id ">
               <DropdownItem>
@@ -55,7 +55,7 @@
               <sui-icon name="key"/>
               账号管理
             </DropdownItem>
-            <DropdownItem divided @click.native="$store.commit('userLogout')">
+            <DropdownItem divided @click.native="$store.commit('userUpdate', null)">
               <sui-icon name="power off"/>
               退出登录
             </DropdownItem>
@@ -69,7 +69,7 @@
       <div class="notification">
         <router-link to="/message">
           <Badge dot>
-            <Icon type="ios-notifications-outline" size="26"></Icon>
+            <Icon type="ios-notifications-outline" size="26"/>
           </Badge>
         </router-link>
       </div>
@@ -191,7 +191,7 @@ export default {
             if (result.success) {
               this.loginRegisterModel.show = false;
               // 保存到 vuex
-              this.$store.commit('userLogin', result.data);
+              this.$store.commit('userUpdate', result.data);
               this.loginForm = {
                 username: '',
                 password: ''
@@ -265,11 +265,16 @@ header {
     }
   }
 
-  .avatar {
+  .avatar-wrapper {
     float: right;
     width: 58px;
     height: 58px;
     margin-top: 6px;
+
+    .avatar-img {
+      width: 58px;
+      height: 58px;
+    }
   }
 
   .notification {
