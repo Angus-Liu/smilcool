@@ -2,6 +2,7 @@ package com.smilcool.server.core.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smilcool.server.core.pojo.form.UserUpdateForm;
 import com.smilcool.server.core.pojo.po.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,6 +20,10 @@ public interface UserMapper extends BaseMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    /* 以下是自定义内容 */
+
+    int updateByPrimaryKeyAndForm( @Param("id") Integer id, @Param("form") UserUpdateForm form);
 
     User selectByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 

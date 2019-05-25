@@ -254,8 +254,47 @@
             remark      = #{remark,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             update_time = #{updateTime,jdbcType=TIMESTAMP},
-            deleted      = #{deleted,jdbcType=BIT}
+            deleted     = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 以下是自定义内容 -->
+
+    <update id="updateByPrimaryKeyAndForm">
+        UPDATE user
+        <set>
+            <if test="form.nickname != null">
+                nickname = #{form.nickname},
+            </if>
+            <if test="form.avatar != null">
+                avatar = #{form.avatar},
+            </if>
+            <if test="form.sex != null">
+                sex = #{form.sex},
+            </if>
+            <if test="form.birthday != null">
+                birthday = #{form.birthday},
+            </if>
+            <if test="form.sign != null">
+                sign = #{form.sign},
+            </if>
+            <if test="form.intro != null">
+                intro = #{form.intro},
+            </if>
+            <if test="form.grade != null">
+                grade = #{form.grade},
+            </if>
+            <if test="form.college != null">
+                college = #{form.college},
+            </if>
+            <if test="form.major != null">
+                major = #{form.major},
+            </if>
+            <if test="form.phone != null">
+                phone = #{form.phone},
+            </if>
+        </set>
+        where id = #{id}
     </update>
 
     <select id="selectByUsernameAndPassword" resultType="com.smilcool.server.core.pojo.po.User">

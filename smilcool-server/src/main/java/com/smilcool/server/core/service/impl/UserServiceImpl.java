@@ -7,6 +7,7 @@ import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
+import com.smilcool.server.core.pojo.form.UserUpdateForm;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.RolePermissionService;
@@ -77,13 +78,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Integer id) {
-        return userMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public UserVO getUserVO(Integer id) {
         User user = userMapper.selectByPrimaryKey(id);
-        return BeanUtil.copyProp(user, UserVO.class);
+        if (user == null) {
+            throw new SmilcoolException("用户不存在");
+        }
+        return user;
     }
 
     @Override
@@ -98,7 +97,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public UserVO getUserTotalInfo(Integer id) {
+    public UserVO getUserVO(Integer id) {
         // 获取用户基础信息
         User user = userMapper.selectByPrimaryKey(id);
         if (user == null) {
@@ -122,7 +121,7 @@ public class UserServiceImpl implements UserService {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(form.getUsername(), form.getPassword());
         currentUser.login(token);
-        return getUserTotalInfo((Integer) currentUser.getPrincipal());
+        return this.getUserVO((Integer) currentUser.getPrincipal());
     }
 
     @Override
@@ -151,11 +150,18 @@ public class UserServiceImpl implements UserService {
         // TODO: 2019/4/24  role 表添加默认状态字段，查询获取为默认状态的 role 为新注册用户赋值
         userRoleService.addDefault(user.getId());
         // 返回用户信息
-        return getUserTotalInfo(user.getId());
+        return this.getUserVO(user.getId());
     }
 
     @Override
-    public List<UserVO> getUsers() {
+    public UserVO updateUser(UserUpdateForm form) {
+        Integer currentUserId = currentUserId();
+        userMapper.updateByPrimaryKeyAndForm(currentUserId, form);
+        return getUserVO(currentUserId);
+    }
+
+    @Override
+    public List<UserVO> listUserVO() {
         List<UserVO> userList = BeanUtil.copyProp(userMapper.select(), UserVO.class);
         userList.forEach(user -> {
             // 获取用户角色信息（角色描述）
@@ -166,7 +172,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserVO> getUsers(Page page, UserQueryForm form) {
+    public Page<UserVO> pageUserVO(Page page, UserQueryForm form) {
         User condition = BeanUtil.copyProp(form, User.class);
         Page<UserVO> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserVO.class);
         userPage.getRecords().forEach(user -> {

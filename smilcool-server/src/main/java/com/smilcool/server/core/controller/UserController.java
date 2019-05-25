@@ -5,6 +5,7 @@ import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
+import com.smilcool.server.core.pojo.form.UserUpdateForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.UserService;
 import io.swagger.annotations.Api;
@@ -52,22 +53,29 @@ public class UserController {
 
     @ApiOperation("用户列表")
     @GetMapping
-    public Result<List<UserVO>> getUserList() {
-        List<UserVO> userListPage = userService.getUsers();
-        return Result.success(userListPage);
-    }
-
-    @ApiOperation("用户列表（分页条件查询）")
-    @GetMapping("/page")
-    public Result<Page<UserVO>> getUserPage(Page page, UserQueryForm userQueryForm) {
-        Page<UserVO> userListPage = userService.getUsers(page, userQueryForm);
+    public Result<List<UserVO>> listUserVO() {
+        List<UserVO> userListPage = userService.listUserVO();
         return Result.success(userListPage);
     }
 
     @ApiOperation(value = "用户信息", notes = "通过用户 id 获取用户信息（包括角色与权限信息）")
     @GetMapping("/{id}")
-    public Result<UserVO> get(@PathVariable("id") Integer id) {
-        UserVO user = userService.getUserTotalInfo(id);
+    public Result<UserVO> getUserVO(@PathVariable("id") Integer id) {
+        UserVO user = userService.getUserVO(id);
         return Result.success(user);
+    }
+
+    @ApiOperation("用户更新")
+    @PutMapping
+    public Result<UserVO> updateUser(@RequestBody UserUpdateForm form) {
+        UserVO user = userService.updateUser(form);
+        return Result.success(user);
+    }
+
+    @ApiOperation("用户列表（分页条件查询）")
+    @GetMapping("/page")
+    public Result<Page<UserVO>> pageUserVO(Page page, UserQueryForm userQueryForm) {
+        Page<UserVO> userListPage = userService.pageUserVO(page, userQueryForm);
+        return Result.success(userListPage);
     }
 }

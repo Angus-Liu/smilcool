@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserRegisterForm;
+import com.smilcool.server.core.pojo.form.UserUpdateForm;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.vo.UserVO;
 
@@ -23,8 +24,6 @@ public interface UserService {
 
     User getUser(Integer id);
 
-    UserVO getUserVO(Integer id);
-
     /**
      * 通过用户名和密码获取用户
      *
@@ -34,7 +33,7 @@ public interface UserService {
      */
     User getUser(String username, String password);
 
-    UserVO getUserTotalInfo(Integer id);
+    UserVO getUserVO(Integer id);
 
 
     /**
@@ -58,9 +57,11 @@ public interface UserService {
      */
     UserVO register(UserRegisterForm form);
 
-    List<UserVO> getUsers();
+    UserVO updateUser(UserUpdateForm form);
 
-    Page<UserVO> getUsers(Page page, UserQueryForm form);
+    List<UserVO> listUserVO();
+
+    Page<UserVO> pageUserVO(Page page, UserQueryForm form);
 
     Set<String> getRoles(Integer id);
 
@@ -69,4 +70,5 @@ public interface UserService {
     Set<String> getPermissions(Integer id);
 
     Set<String> getPermissions(String username);
+
 }
