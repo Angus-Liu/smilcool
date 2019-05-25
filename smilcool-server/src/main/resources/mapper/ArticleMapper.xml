@@ -242,7 +242,7 @@
     </resultMap>
 
     <sql id="Article_Column_List">
-        article.id, article_category, title, article.create_time
+        article.id, article_category, title, brief, article.create_time
     </sql>
     <sql id="User_Column_List">
         user.id as user_id, username, nickname, avatar, sign
@@ -279,7 +279,8 @@
                 AND article.article_category = #{form.articleCategory}
             </if>
             <if test="form.general != null">
-                AND (article.title LIKE "%"#{form.general}"%")
+                AND (article.title LIKE "%"#{form.general}"%"
+                OR article.brief LIKE "%"#{form.general}"%")
             </if>
         </where>
     </select>

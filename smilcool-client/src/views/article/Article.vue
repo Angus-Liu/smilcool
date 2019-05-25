@@ -17,6 +17,38 @@
                    v-model="param.general" @keydown.enter="getArticlePage(param)"/>
       </iCol>
     </Row>
+    <Row>
+      <iCol>
+        <sui-feed class="article-feed">
+          <sui-feed-event v-for="article in articlePage.records" :key="article.id">
+            <sui-feed-label :image="article.user.avatar"/>
+            <sui-feed-content>
+              <sui-feed-summary>
+                <router-link :to="'/user/' + article.user.id">{{article.user.nickname}}</router-link>
+                发表{{article.articleCategory}}
+                <router-link :to="'/article/' + article.id">{{article.title}}</router-link>
+                <sui-feed-date>
+                  <Time :time="article.createTime"/>
+                </sui-feed-date>
+              </sui-feed-summary>
+              <sui-feed-extra text class="article-brief">
+                {{article.brief}}
+              </sui-feed-extra>
+              <sui-feed-meta>
+                <sui-feed-like>
+                  👍 {{article.resource.zanCount}}
+                </sui-feed-like>
+                <sui-feed-like>
+                  💬 {{article.resource.commentCount}}
+                </sui-feed-like>
+              </sui-feed-meta>
+            </sui-feed-content>
+          </sui-feed-event>
+        </sui-feed>
+        <sui-button basic content="加载更多" @click="loadMore"
+                    :disabled="param.current >= articlePage.pages"/>
+      </iCol>
+    </Row>
   </div>
 </template>
 
@@ -45,6 +77,7 @@ export default {
           'resourceId': -1,
           'articleCategory': '测试文章',
           'title': '测试标题',
+          'brief': '测试标题',
           'createTime': '2019-05-13',
           'user': {
             'id': -1,
@@ -97,6 +130,16 @@ export default {
           this.articlePage = result.data;
         });
     },
+    // 加载更多
+    loadMore() {
+      this.param.current++;
+      this.$axios.get('/api/lost-found/page', this.param)
+        .then(res => {
+          let result = res.data;
+          let morePage = result.data;
+          this.lostFoundPage.records.push(...morePage.records);
+        });
+    },
   },
   mounted() {
     this.getArticleCategory();
@@ -108,9 +151,7 @@ export default {
 <style lang="less" scoped>
 .container {
   width: 1140px;
-  margin: 0 auto;
-  height: 600px;
-  background: #ccc;
+  margin: 5px auto;
 
   .ivu-col {
     padding: 7px;
@@ -118,15 +159,16 @@ export default {
 
   .article-menu {
     .article-category {
-      padding-left: 0;
-      padding-bottom: 0;
-
       .label {
         padding: 12px 15px;
         font-size: 1em;
         margin: 0 7px 7px 0;
       }
     }
+  }
+
+  .ui.feed > .event > .content .extra.text {
+    max-width: 700px;
   }
 }
 </style>

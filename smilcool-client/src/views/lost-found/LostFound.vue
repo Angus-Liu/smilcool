@@ -59,7 +59,8 @@
         </sui-card>
         <!-- 失物寻物列表 END -->
         <!-- 加载更多 -->
-        <sui-button class="fluid" basic content="加载更多"/>
+        <sui-button class="fluid" basic content="加载更多" @click="loadMore"
+                    :disabled="param.current >= lostFoundPage.pages"/>
         <!-- 加载更多 END -->
       </iCol>
       <iCol class="column" span="8">
@@ -363,6 +364,21 @@ export default {
             this.$refs.imageUploader.clearImages();
             this.getLostFoundPage(this.param);
           }
+        });
+    },
+    // 加载更多
+    loadMore() {
+      this.param.current++;
+      this.$axios.get('/api/lost-found/page', this.param)
+        .then(res => {
+          let result = res.data;
+          let moreLostFoundPage = result.data;
+          moreLostFoundPage.records.forEach(lostFound => {
+            if (lostFound.images && lostFound.images.length > 0) {
+              lostFound.images = JSON.parse(lostFound.images);
+            }
+          });
+          this.lostFoundPage.records.push(...moreLostFoundPage.records);
         });
     },
     // 点赞
