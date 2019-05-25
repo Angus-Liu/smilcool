@@ -47,7 +47,8 @@
     </div>
     <!-- 动态列表 END -->
     <!-- 加载更多 -->
-    <sui-button class="fluid" color="grey" basic content="加载更多"/>
+    <sui-button class="fluid" color="grey" basic content="加载更多" @click="loadMore"
+                :disabled="param.current >= momentPage.pages"/>
     <!-- 加载更多 END -->
     <!-- 发布动态模态框 -->
     <Modal v-model="momentAddModal.show" title="发布动态" :closable="false" :mask-closable="false" width="600">
@@ -129,7 +130,8 @@ export default {
         active: '最新',
         items: ['最新', '最热', '关注']
       },
-      page: {
+      param: {
+        // page & order 参数
         desc: 'create_time',
         size: 20,
         current: 1
@@ -231,12 +233,13 @@ export default {
     select(item) {
       this.menu.active = item;
       if (item === '最新') {
-        this.page.desc = 'create_time';
+        this.param.desc = 'create_time';
       } else {
-        this.page.desc = 'comment_count,zan_count';
+        this.param.desc = 'comment_count,zan_count';
       }
+      this.param.current = 1;
       // 重新获取数据
-      this.getMomentPage(this.page)
+      this.getMomentPage(this.param)
     },
     // 获取动态分页
     getMomentPage(param) {
@@ -261,9 +264,24 @@ export default {
           if (result.success) {
             this.$Notice.success({ title: 'Bingo', desc: '发布成功' });
             this.resetMomentAddModal();
-            this.getMomentPage();
+            this.getMomentPage(this.param);
           }
         })
+    },
+    // 加载更多
+    loadMore() {
+      this.param.current++;
+      this.$axios.get('/api/moment/page', this.param)
+        .then(res => {
+          let result = res.data;
+          let morePage = result.data;
+          morePage.records.forEach(moment => {
+            if (moment.images && moment.images.length > 0) {
+              moment.images = JSON.parse(moment.images);
+            }
+          });
+          this.momentPage.records.push(...morePage.records);
+        });
     },
     // 点赞
     addZan(resource) {
@@ -322,7 +340,7 @@ export default {
     },
   },
   mounted() {
-    this.getMomentPage(this.page);
+    this.getMomentPage(this.param);
   }
 }
 </script>

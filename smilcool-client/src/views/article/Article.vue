@@ -137,7 +137,7 @@ export default {
         .then(res => {
           let result = res.data;
           let morePage = result.data;
-          this.lostFoundPage.records.push(...morePage.records);
+          this.articlePage.records.push(...morePage.records);
         });
     },
   },
