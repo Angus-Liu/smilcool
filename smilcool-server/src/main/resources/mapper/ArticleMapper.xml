@@ -20,11 +20,11 @@
         <result column="html_content" jdbcType="LONGVARCHAR" property="htmlContent"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_id, resource_id, article_category, title, brief, cover, remark, create_time,
+        id, user_id, resource_id, article_category, title, tags, brief, cover, remark, create_time,
     update_time, deleted
     </sql>
     <sql id="Blob_Column_List">
-        tags, markdown_content, html_content
+        markdown_content, html_content
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
         select
@@ -222,6 +222,20 @@
 
     <!-- 以下是自定义内容 -->
 
+    <select id="selectByQueryForm" resultType="com.smilcool.server.core.pojo.po.Article">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from article
+        <where>
+            <if test="form.updateTimeStart != null and form.updateTimeEnd != null">
+                update_time BETWEEN #{form.updateTimeStart} AND #{form.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+
     <resultMap extends="ResultMapWithBLOBs" id="ResultMapWithUserAndResource"
                type="com.smilcool.server.core.pojo.vo.ArticleVO">
         <!-- 发布用户信息 -->
@@ -242,7 +256,7 @@
     </resultMap>
 
     <sql id="Article_Column_List">
-        article.id, article_category, title, brief, article.create_time
+        article.id, article_category, title, tags, brief, article.create_time
     </sql>
     <sql id="User_Column_List">
         user.id as user_id, username, nickname, avatar, sign
@@ -263,7 +277,7 @@
         WHERE article.id = #{id}
     </select>
 
-    <select id="selectByQueryForm" resultMap="ResultMapWithUserAndResource">
+    <select id="selectArticleVOByQueryForm" resultMap="ResultMapWithUserAndResource">
         SELECT
         <include refid="Article_Column_List"/>,
         <include refid="User_Column_List"/>,

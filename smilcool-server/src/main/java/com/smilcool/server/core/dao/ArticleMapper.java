@@ -26,9 +26,11 @@ public interface ArticleMapper {
 
     /* 以下是自定义内容 */
 
+    List<Article> selectByQueryForm(@Param("form") ArticleQueryForm form);
+
     ArticleVO selectArticleVOByPrimaryKey(Integer id);
 
-    Page<ArticleVO> selectByQueryForm(Page page, @Param("form") ArticleQueryForm form);
+    Page<ArticleVO> selectArticleVOByQueryForm(Page page, @Param("form") ArticleQueryForm form);
 
     List<ArticleLatestCommentVO> selectArticleLatestCommentVO();
 }
