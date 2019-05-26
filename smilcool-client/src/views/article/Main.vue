@@ -93,8 +93,10 @@
             </sui-message-header>
           </sui-message>
           <sui-card-content>
-            <div class="article-tags">
-              <Tag type="dot" :color="item.color" v-for="(item,index) in articleTags" :key="index">{{item.name}}</Tag>
+            <div class="article-hot-tag">
+              <Tag color="red" v-for="(tag, index) in hotTagList" :key="index" @click.native="toSearch(tag.name)">
+                {{tag.name}}-{{tag.count}}
+              </Tag>
             </div>
           </sui-card-content>
         </sui-card>
@@ -138,8 +140,8 @@ export default {
   data() {
     return {
       menu: {
-        active: '推荐',
-        items: ['推荐', '最新', '最热']
+        active: '最新',
+        items: ['最新', '最热']
       },
       carouselList: [
         '/local-storage/img/banner01.jpg',
@@ -212,31 +214,22 @@ export default {
         name: '校务通知',
         img: 'http://img.angus-liu.cn/avatar/avatar06.png'
       }],
-      articleTags: [{
-        name: '中北奖章',
-        color: 'primary'
+      hotTagList: [{
+        'name': '中北奖章',
+        'count': 1
       }, {
-        name: 'Android实验室',
-        color: '#27bb5b'
+        'name': '学院新闻',
+        'count': 1
       }, {
-        name: '考试信息',
-        color: 'warning'
-      }, {
-        name: '求职经历分享',
-        color: 'error'
-      }, {
-        name: '中北大学',
-        color: 'success'
-      }, {
-        name: '大数据学院',
-        color: '#db415f'
+        'name': '校长奖章',
+        'count': 1
       }]
     };
   },
   methods: {
     select(item) {
       this.menu.active = item;
-      if (item === '推荐' || item === '最新') {
+      if (item === '最新') {
         this.param.desc = 'create_time';
       } else {
         this.param.desc = 'comment_count,zan_count';
@@ -258,11 +251,23 @@ export default {
           let result = res.data;
           this.articleLatestComment = result.data;
         })
+    },
+    // 获取热门标签
+    getHotTag() {
+      this.$axios.get('/api/article/hot-tag')
+        .then(res => {
+          let result = res.data;
+          this.hotTagList = result.data;
+        })
+    },
+    toSearch(q) {
+      this.$router.push({ name: 'search', query: { q } })
     }
   },
   mounted() {
     this.getArticlePage(this.param);
     this.getArticleLatestComment();
+    this.getHotTag();
   }
 };
 </script>

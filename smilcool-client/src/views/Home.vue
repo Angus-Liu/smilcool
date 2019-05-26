@@ -17,6 +17,10 @@ export default {
   components: {
     Header,
     Footer
+  },
+  mounted() {
+    // TODO 2019/5/25 启动 websoket
+    console.log("启动 websoket");
   }
 };
 </script>

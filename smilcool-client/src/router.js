@@ -9,11 +9,10 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
       component: Home,
       children: [
         {
-          path: 'main',
+          path: '/',
           name: 'main',
           meta: {
             title: '文章资讯'
@@ -94,6 +93,7 @@ const router = new Router({
         }, {
           path: 'search',
           name: 'search',
+          props: route => ({ q: route.query.q }),
           meta: {
             title: '搜索详情'
           },
@@ -110,7 +110,7 @@ const router = new Router({
     }
   ],
   scrollBehavior(to, from, savedPosition) {
-      return { x: 0, y: 0 }
+    return { x: 0, y: 0 }
   }
 });
 

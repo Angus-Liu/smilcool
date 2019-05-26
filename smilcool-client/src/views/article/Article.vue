@@ -19,32 +19,36 @@
     </Row>
     <Row>
       <iCol>
-        <sui-feed class="article-feed">
-          <sui-feed-event v-for="article in articlePage.records" :key="article.id">
-            <sui-feed-label :image="article.user.avatar"/>
-            <sui-feed-content>
-              <sui-feed-summary>
-                <router-link :to="'/user/' + article.user.id">{{article.user.nickname}}</router-link>
-                发表{{article.articleCategory}}
-                <router-link :to="'/article/' + article.id">{{article.title}}</router-link>
-                <sui-feed-date>
-                  <Time :time="article.createTime"/>
-                </sui-feed-date>
-              </sui-feed-summary>
-              <sui-feed-extra text class="article-brief">
-                {{article.brief}}
-              </sui-feed-extra>
-              <sui-feed-meta>
-                <sui-feed-like>
-                  👍 {{article.resource.zanCount}}
-                </sui-feed-like>
-                <sui-feed-like>
-                  💬 {{article.resource.commentCount}}
-                </sui-feed-like>
-              </sui-feed-meta>
-            </sui-feed-content>
-          </sui-feed-event>
-        </sui-feed>
+        <sui-card class="fluid">
+          <sui-card-content>
+            <sui-feed class="article-feed">
+              <sui-feed-event v-for="article in articlePage.records" :key="article.id">
+                <sui-feed-label :image="article.user.avatar"/>
+                <sui-feed-content>
+                  <sui-feed-summary>
+                    <router-link :to="'/user/' + article.user.id">{{article.user.nickname}}</router-link>
+                    发表{{article.articleCategory}}
+                    <router-link :to="'/article/' + article.id">{{article.title}}</router-link>
+                    <sui-feed-date>
+                      <Time :time="article.createTime"/>
+                    </sui-feed-date>
+                  </sui-feed-summary>
+                  <sui-feed-extra text class="article-brief">
+                    {{article.brief}}
+                  </sui-feed-extra>
+                  <sui-feed-meta>
+                    <sui-feed-like>
+                      👍 {{article.resource.zanCount}}
+                    </sui-feed-like>
+                    <sui-feed-like>
+                      💬 {{article.resource.commentCount}}
+                    </sui-feed-like>
+                  </sui-feed-meta>
+                </sui-feed-content>
+              </sui-feed-event>
+            </sui-feed>
+          </sui-card-content>
+        </sui-card>
         <sui-button basic content="加载更多" @click="loadMore"
                     :disabled="param.current >= articlePage.pages"/>
       </iCol>

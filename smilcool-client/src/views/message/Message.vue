@@ -13,7 +13,7 @@
                     <!-- 好友列表 -->
                     <sui-item v-for="friend in friendList"
                               :id="friend.id"
-                              :class="{activeMenuItem: currentFriend === friend}"
+                              :class="{active: currentFriend === friend}"
                               @click.native="selectFriend(friend)">
                       <sui-image circular :src="friend.avatar"/>
                       <sui-item-content>

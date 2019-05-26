@@ -128,7 +128,7 @@ export default {
     return {
       menu: {
         active: '最新',
-        items: ['最新', '最热', '关注']
+        items: ['最新', '最热']
       },
       param: {
         // page & order 参数

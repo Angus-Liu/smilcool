@@ -2,29 +2,29 @@
   <header>
     <div class="container">
       <!-- LOGO -->
-      <router-link to="/main">
+      <router-link to="/">
         <img class="logo" src="../../assets/logo-3.png">
       </router-link>
       <!-- LOGO END -->
       <!-- 菜单 -->
       <nav>
         <ul>
-          <li>
-            <router-link to="/main">文章资讯</router-link>
+          <li :class="{active: active === 1}" @click="active = 1">
+            <router-link to="/">文章资讯</router-link>
           </li>
-          <li>
+          <li :class="{active: active === 2}" @click="active = 2">
             <router-link to="/moment">校园动态</router-link>
           </li>
-          <li>
+          <li :class="{active: active === 3}" @click="active = 3">
             <router-link to="/file">文件仓库</router-link>
           </li>
-          <li>
+          <li :class="{active: active === 4}" @click="active = 4">
             <router-link to="/second-hand">二手交易</router-link>
           </li>
-          <li>
+          <li :class="{active: active === 5}" @click="active = 5">
             <router-link to="/lost-found">失物寻物</router-link>
           </li>
-          <li>
+          <li :class="{active: active === 6}" @click="active = 6">
             <router-link to="/forum">校内论坛</router-link>
           </li>
         </ul>
@@ -75,13 +75,13 @@
       </div>
       <!-- 消息通知 END -->
       <!-- 搜索框 -->
-      <div class="ui search search-container">
+      <div class="ui search search-container" @keydown.enter="toSearch">
         <div class="ui icon input">
-          <input class="prompt" type="text" placeholder="搜索校园资讯">
+          <input class="prompt" v-model="q" type="text" placeholder="搜索校园资讯">
           <i class="search icon"></i>
         </div>
         <div class="results">
-          这里会显示推荐结果
+          这里会显示推荐结果，暂时未做
         </div>
       </div>
       <!-- 搜索框 END -->
@@ -141,7 +141,8 @@ export default {
   name: 'Header',
   data() {
     return {
-      input: '',
+      q: '',
+      active: 1,
       loginRegisterModel: {
         show: false,
         title: '登录',
@@ -216,6 +217,9 @@ export default {
             let result = res.data;
           });
       }
+    },
+    toSearch() {
+      this.$router.push({ name: 'search', query: { q: this.q } })
     }
   },
   mounted() {
@@ -262,6 +266,12 @@ header {
           color: #aaa;
         }
       }
+
+      li.active {
+        a {
+          color: #ff8364;
+        }
+      }
     }
   }
 
@@ -291,10 +301,6 @@ header {
 
   .ivu-form-item:last-child {
     margin-bottom: 0;
-  }
-
-  .router-link-active {
-    color: #ff8364;
   }
 }
 </style>
