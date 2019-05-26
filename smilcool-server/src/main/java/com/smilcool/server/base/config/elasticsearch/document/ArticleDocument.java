@@ -1,5 +1,6 @@
 package com.smilcool.server.base.config.elasticsearch.document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -43,6 +44,7 @@ public class ArticleDocument {
 
     private String htmlContent;
 
+    @JsonFormat(pattern = "yyyy年MM月dd日")
     private Date createTime;
 
     private Date updateTime;

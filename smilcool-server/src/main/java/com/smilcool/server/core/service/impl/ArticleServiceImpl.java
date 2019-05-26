@@ -113,8 +113,8 @@ public class ArticleServiceImpl implements ArticleService {
                 .withIndices("article")
                 // 指定类型
                 .withTypes("_doc")
-                // 对 tagList 字段进行聚集搜索，查找热门标签
-                .addAggregation(AggregationBuilders.terms("tagList").field("tagList"))
+                // 对 tagList 字段进行聚集搜索，查找热门标签（TOP20）
+                .addAggregation(AggregationBuilders.terms("tagList").field("tagList").size(20))
                 .build();
         Aggregations aggregations = elasticsearchTemplate.query(searchQuery, SearchResponse::getAggregations);
 
