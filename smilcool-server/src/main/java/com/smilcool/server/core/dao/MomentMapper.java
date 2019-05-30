@@ -1,8 +1,10 @@
 package com.smilcool.server.core.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smilcool.server.core.pojo.form.MomentQueryForm;
 import com.smilcool.server.core.pojo.po.Moment;
 import com.smilcool.server.core.pojo.vo.MomentVO;
+import org.apache.ibatis.annotations.Param;
 
 public interface MomentMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,5 +23,5 @@ public interface MomentMapper {
 
     /* 以下是自定义内容 */
 
-    Page<MomentVO> selectMomentVO(Page page);
+    Page<MomentVO> selectMomentVOByQueryForm(Page page, @Param("form") MomentQueryForm form);
 }

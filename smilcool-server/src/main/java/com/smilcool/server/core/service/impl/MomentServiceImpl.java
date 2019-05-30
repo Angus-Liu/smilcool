@@ -6,6 +6,7 @@ import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.MomentMapper;
 import com.smilcool.server.core.pojo.form.MomentAddForm;
+import com.smilcool.server.core.pojo.form.MomentQueryForm;
 import com.smilcool.server.core.pojo.po.Moment;
 import com.smilcool.server.core.pojo.vo.MomentVO;
 import com.smilcool.server.core.service.MomentService;
@@ -58,7 +59,7 @@ public class MomentServiceImpl implements MomentService {
     }
 
     @Override
-    public Page<MomentVO> pageMomentVO(Page page) {
-        return momentMapper.selectMomentVO(page);
+    public Page<MomentVO> pageMomentVO(Page page, MomentQueryForm form) {
+        return momentMapper.selectMomentVOByQueryForm(page, form);
     }
 }

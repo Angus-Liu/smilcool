@@ -73,4 +73,6 @@ public class ArticleController {
         org.springframework.data.domain.Page<ArticleDocument> articlePage = articleService.search(q, page, size);
         return Result.success(articlePage);
     }
+
+    // TODO 2019/5/26 逻辑删除和修改功能
 }

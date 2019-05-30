@@ -19,9 +19,12 @@ import java.net.UnknownHostException;
 @RequestMapping("/sys")
 public class SystemController {
 
+    @Value("${smilcool.netty-port}")
+    private int port;
+
     @ApiOperation("获取 WebSocket Server URL")
     @GetMapping("/ws")
-    public String webSocketServerUrl(@Value("${smilcool.netty-port}") Integer port) throws UnknownHostException {
+    public String webSocketServerUrl() throws UnknownHostException {
         return "ws://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/ws";
     }
 
