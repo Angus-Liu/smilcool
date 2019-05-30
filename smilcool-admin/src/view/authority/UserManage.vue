@@ -1,52 +1,52 @@
 <template>
   <Card>
     <!-- 筛选栏 -->
-    <Form ref="userSearchForm" :model="userSearchForm" inline :label-width="70">
+    <Form ref="queryForm" :model="queryForm" inline :label-width="70">
       <FormItem label="用户名" prop="username">
-        <Input class="form-item" v-model="userSearchForm.username" placeholder="Enter something..."></Input>
+        <Input class="form-item" v-model="queryForm.username" placeholder="Enter something..."></Input>
       </FormItem>
       <FormItem label="邮箱" prop="email">
-        <Input class="form-item" v-model="userSearchForm.email" placeholder="Enter something..."></Input>
+        <Input class="form-item" v-model="queryForm.email" placeholder="Enter something..."></Input>
       </FormItem>
       <FormItem label="昵称" prop="nickname">
-        <Input class="form-item" v-model="userSearchForm.nickname" placeholder="Enter something..."></Input>
+        <Input class="form-item" v-model="queryForm.nickname" placeholder="Enter something..."></Input>
       </FormItem>
       <FormItem label="角色" prop="role">
-        <Select class="form-item" v-model="userSearchForm.role">
+        <Select class="form-item" v-model="queryForm.role">
           <Option v-for="item in sex" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
       </FormItem>
       <FormItem label="状态" prop="state">
-        <Select class="form-item" v-model="userSearchForm.state">
+        <Select class="form-item" v-model="queryForm.state">
           <Option v-for="item in state" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
       </FormItem>
       <span v-show="more.show">
             <FormItem label="手机" prop="phone">
-              <Input class="form-item" v-model="userSearchForm.phone" placeholder="Enter something..."/>
+              <Input class="form-item" v-model="queryForm.phone" placeholder="Enter something..."/>
             </FormItem>
             <FormItem label="性别" prop="sex">
-              <Select class="form-item" v-model="userSearchForm.sex">
+              <Select class="form-item" v-model="queryForm.sex">
                 <Option v-for="item in sex" :value="item.value" :key="item.value">{{ item.label }}</Option>
               </Select>
             </FormItem>
             <FormItem label="年级" prop="grade">
-              <DatePicker class="form-item" type="year" :value="userSearchForm.grade" placeholder="Select grade"
-                          @on-change="(value) => userSearchForm.grade = (value !== ''? value : null)"/>
+              <DatePicker class="form-item" type="year" :value="queryForm.grade" placeholder="Select grade"
+                          @on-change="(value) => queryForm.grade = (value !== ''? value : null)"/>
             </FormItem>
             <FormItem label="学院" prop="college">
-              <Select class="form-item" v-model="userSearchForm.college">
+              <Select class="form-item" v-model="queryForm.college">
                 <Option v-for="item in sex" :value="item.value" :key="item.value">{{ item.label }}</Option>
               </Select>
             </FormItem>
             <FormItem label="专业" props="major">
-              <Select class="form-item" v-model="userSearchForm.major">
+              <Select class="form-item" v-model="queryForm.major">
                 <Option v-for="item in sex" :value="item.value" :key="item.value">{{ item.label }}</Option>
               </Select>
             </FormItem>
           </span>
       <FormItem>
-        <Button class="btn btn-search" type="primary" icon="ios-search" @click="getUserPage">筛选</Button>
+        <Button class="btn btn-search" type="primary" icon="ios-search" @click="getPage">筛选</Button>
         <Button class="btn" @click="handleReset">清空</Button>
         <a class="drop-down" @click="showMore">{{ more.content }}
           <Icon :type="more.icon"/>
@@ -79,7 +79,7 @@
 <script>
 export default {
   name: 'UserManage',
-  data () {
+  data() {
     return {
       // 表单设置
       more: {
@@ -99,10 +99,19 @@ export default {
         { value: '保密', label: '保密' },
       ],
       // 查询表单
-      userSearchForm: {
-        username: null, nickname: null, sex: null, grade: null,
-        college: null, major: null, phone: null, email: null,
-        state: null, role: null, current: 1, size: 10
+      queryForm: {
+        username: null,
+        nickname: null,
+        sex: null,
+        grade: null,
+        college: null,
+        major: null,
+        phone: null,
+        email: null,
+        state: null,
+        role: null,
+        current: 1,
+        size: 10
       },
       // 表格设置
       loading: true,
@@ -131,7 +140,7 @@ export default {
   },
   methods: {
     // 表单操作
-    showMore () {
+    showMore() {
       if (!this.more.show) {
         this.more = {
           show: true,
@@ -146,7 +155,7 @@ export default {
         };
       }
     },
-    show (index) {
+    show(index) {
       this.$Modal.info({
         title: 'User Info',
         content: `User Name：${this.page.records[index].username}<br>
@@ -154,9 +163,9 @@ export default {
                   Sex：${this.page.records[index].sex}`
       });
     },
-    getUserPage () {
+    getPage() {
       this.loading = true;
-      this.$axios.get('/api/user/page', this.userSearchForm)
+      this.$axios.get('/api/user/page', this.queryForm)
         .then(res => {
           // 获取响应体中统一接口交互对象 result
           let result = res.data;
@@ -166,32 +175,26 @@ export default {
         });
     },
     // 表单操作
-    handleReset () {
-      // this.userSearchForm = {
-      //   username: null, nickname: null, sex: null, grade: null,
-      //   college: null, major: null, phone: null, email: null,
-      //   state: null, current: this.page.current, size: this.page.size
-      // };
-      this.$refs.userSearchForm.resetFields();
-      this.userSearchForm.current = 1;
-      this.userSearchForm.size = 10;
-      this.getUserPage();
+    handleReset() {
+      this.$refs.queryForm.resetFields();
+      this.queryForm.current = 1;
+      this.queryForm.size = 10;
+      this.getPage();
     },
     // 分页操作
-    handleCurrentChange (current) {
-      this.userSearchForm.current = current;
-      this.getUserPage();
+    handleCurrentChange(current) {
+      this.queryForm.current = current;
+      this.getPage();
     },
-    handlePageSizeChange (size) {
-      console.log(size);
-      this.userSearchForm.current = 1;
-      this.userSearchForm.size = size;
-      this.getUserPage();
+    handlePageSizeChange(size) {
+      this.queryForm.current = 1;
+      this.queryForm.size = size;
+      this.getPage();
     }
   },
-  mounted () {
+  mounted() {
     // 请求数据
-    this.getUserPage();
+    this.getPage();
   }
 };
 </script>

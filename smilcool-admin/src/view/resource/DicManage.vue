@@ -3,23 +3,26 @@
     <Row>
       <iCol span="4">
         <div class="row-action">
-          <Button class="btn" @click="addResourceType" type="primary" icon="md-add">添加资源类型</Button>
-          <Button class="btn" @click="getResourceTypeList()" icon="md-refresh">刷新</Button>
+          <Button class="btn" @click="addDicType" type="primary" icon="md-add">添加字典类型</Button>
+          <Button class="btn" @click="getDicTypeList" icon="md-refresh">刷新</Button>
         </div>
         <Alert show-icon>
-          <span v-if="selectResourceTypeIndex != null">
-            {{ parentResourceTypeList[selectResourceTypeIndex].title }}
+          <span v-if="selectedDicType != null">
+            {{ selectedDicType.title }}
             <a @click="cancelSelect">取消</a>
           </span>
-          <span v-else>未选择父类型</span>
+          <span v-else>未选择字典类型</span>
         </Alert>
         <div class="tree-bar">
-          <Tree ref="tree" :data="parentResourceTypeList" @on-select-change="selectParentResourceType"></Tree>
+          <Tree ref="tree" :data="dicTypeList" @on-select-change="selectDicType"></Tree>
         </div>
       </iCol>
       <iCol span="19" offset="1">
         <div class="table">
-          <Table :columns="columns" :data="childResourceTypeList" border stripe>
+          <Table :columns="columns" :data="dicItemList" border stripe>
+            <template slot-scope="{ row }" slot="fixed">
+              <iSwitch v-model="row.fixed"/>
+            </template>
             <template slot-scope="{ row }" slot="state">
               <Tag :color="state[row.state].color">{{state[row.state].label}}</Tag>
             </template>
@@ -36,7 +39,7 @@
         <FormItem label="父类型" prop="parentId">
           <Select class="form-item" v-model="resourceTypeAddModel.resourceType.parentId"
                   placeholder="此项不填则添加为父类型" clearable>
-            <Option v-for="item in parentResourceTypeList" :value="item.id" :key="item.id">{{ item.title }}</Option>
+            <Option v-for="item in dicTypeList" :value="item.id" :key="item.id">{{ item.title }}</Option>
           </Select>
         </FormItem>
         <FormItem label="名称" prop="name">
@@ -71,16 +74,17 @@
 
 <script>
 export default {
-  name: 'ResourceTypeManage',
+  name: 'DicManage',
   data() {
     return {
       // 表格设置
       columns: [
         { type: 'index', width: 60, align: 'center' },
-        { title: '名称', key: 'name', width: '150' },
-        { title: '标签', key: 'tag', width: '150' },
-        { title: '描述', key: 'description', width: '150', tooltip: true },
+        { title: '类型', key: 'dicTypeCode', width: '150' },
+        { title: '项目名', key: 'name', width: '150' },
+        { title: '项目码', key: 'code', width: '100' },
         { title: '排序值', key: 'seq', align: 'center', width: '100' },
+        { title: '固定', slot: 'fixed', align: 'center', width: '100' },
         { title: '状态', slot: 'state', align: 'center', width: '100' },
         { title: '备注', key: 'remark', tooltip: true },
         { title: '创建时间', key: 'createTime', align: 'center', width: '150' },
@@ -91,12 +95,31 @@ export default {
         { value: 0, label: '停用', color: 'red' },
         { value: 1, label: '正常', color: 'green' }
       ],
-      // 表格数据
-      childResourceTypeList: [],
-      // 树数据
-      parentResourceTypeList: [],
-      selectResourceTypeId: null,
-      selectResourceTypeIndex: null,
+      // 表格数据（字典项目）
+      dicItemList: [{
+        'id': 6,
+        'dicTypeCode': 'article-category',
+        'name': '校园新闻',
+        'code': '2',
+        'seq': 0,
+        'fixed': false,
+        'state': 1,
+        'createTime': '2019-05-12 17:21:29',
+        'updateTime': '2019-05-21 10:39:42',
+        'deleted': false
+      }],
+      // 树数据（字典类型）
+      dicTypeList: [{
+        'id': 1,
+        'name': '文章类别',
+        'code': 'article-category',
+        'seq': 0,
+        'state': 1,
+        'createTime': '2019-05-12T17:17:25.000+0000',
+        'updateTime': '2019-05-13T08:54:10.000+0000',
+        'deleted': false
+      }],
+      selectedDicType: null,
       // 添加资源类型模态框
       resourceTypeAddModel: {
         show: false,
@@ -115,34 +138,31 @@ export default {
     }
   },
   methods: {
-    getResourceTypeList(parentId) {
-      this.$axios.get(`/api/resource-type/`, { parentId })
+    getDicTypeList() {
+      this.$axios.get(`/api/dic/type`)
         .then(res => {
           let result = res.data;
-          if (parentId === null || parentId === undefined) {
-            // 更新父类型树
-            this.parentResourceTypeList = this.initParentResourceTypeList(result.data);
-          } else {
-            // 更新子类型表格
-            this.childResourceTypeList = result.data;
-          }
+          // 更新父类型树
+          this.dicTypeList = result.data;
+          this.dicTypeList.forEach(dicType => {
+            dicType.title = dicType.name + ' / ' + dicType.code;
+          });
         });
     },
-    initParentResourceTypeList(parentResourceTypeList) {
-      let index = 0;
-      parentResourceTypeList.forEach(parentResourceType => {
-        parentResourceType.index = index++;
-        parentResourceType.title = parentResourceType.name + ' / ' + parentResourceType.tag;
-      });
-      return parentResourceTypeList;
+    getDicItemList(dicTypeCode) {
+      this.$axios.get(`/api/dic/item`, { dicTypeCode })
+        .then(res => {
+          let result = res.data;
+          // 更新父类型树
+          this.dicItemList = result.data;
+        });
     },
-    addResourceType() {
+    addDicType() {
       this.resourceTypeAddModel = {
         show: true,
         title: '添加资源类型',
         submitLoading: false,
         resourceType: {
-          parentId: this.selectResourceTypeId,
           name: '',
           tag: '',
           description: '',
@@ -152,10 +172,9 @@ export default {
         }
       }
     },
-    selectParentResourceType(arr, item) {
-      this.selectResourceTypeId = item.id;
-      this.selectResourceTypeIndex = item.index;
-      this.getResourceTypeList(item.id);
+    selectDicType(arr, item) {
+      this.selectedDicType = item;
+      this.getDicItemList(item.code);
     },
     handleSubmit() {
       this.resourceTypeAddModel.submitLoading = true;
@@ -163,7 +182,7 @@ export default {
         .then(res => {
           this.resourceTypeAddModel.submitLoading = false;
           this.resourceTypeAddModel.show = false;
-          this.getResourceTypeList(this.resourceTypeAddModel.resourceType.parentId);
+          this.getDicTypeList(this.resourceTypeAddModel.resourceType.parentId);
         })
         .catch(error => {
           this.resourceTypeAddModel.submitLoading = false;
@@ -174,12 +193,13 @@ export default {
       if (node) {
         node.selected = false;
       }
-      this.selectResourceTypeId = null;
-      this.selectResourceTypeIndex = null;
+      this.selectedDicType = null;
+      this.getDicItemList();
     }
   },
   mounted() {
-    this.getResourceTypeList();
+    this.getDicTypeList();
+    this.getDicItemList();
   }
 }
 </script>

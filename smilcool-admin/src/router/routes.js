@@ -75,7 +75,7 @@ export default [
     name: 'project',
     meta: {
       icon: 'md-cube',
-      title: '项目管理'
+      title: '项目相关'
     },
     component: Main,
     children: [
@@ -96,24 +96,15 @@ export default [
           href: 'https://github.com/Angus-Liu/smilcool',
           icon: 'logo-github'
         }
-      },
-      {
-        path: 'doc',
-        name: 'doc',
-        meta: {
-          title: '接口文档',
-          icon: 'ios-paper'
-        },
-        component: () => import('@/view/project/doc')
       }
     ]
   },
   {
-    path: '/system',
-    name: 'system',
+    path: '/authority',
+    name: 'authority',
     meta: {
-      icon: 'md-settings',
-      title: '系统管理'
+      icon: 'md-alert',
+      title: '权限管理'
     },
     component: Main,
     children: [
@@ -124,7 +115,7 @@ export default [
           icon: 'md-person',
           title: '用户管理'
         },
-        component: () => import('@/view/system/UserManage')
+        component: () => import('@/view/authority/UserManage')
       },
       {
         path: 'role',
@@ -133,7 +124,7 @@ export default [
           icon: 'md-person-add',
           title: '角色管理'
         },
-        component: () => import('@/view/system/RoleManage')
+        component: () => import('@/view/authority/RoleManage')
       },
       {
         path: 'permission',
@@ -142,7 +133,7 @@ export default [
           icon: 'md-key',
           title: '权限管理'
         },
-        component: () => import('@/view/system/PermissionManage')
+        component: () => import('@/view/authority/PermissionManage')
       },
       {
         path: 'rule',
@@ -151,7 +142,7 @@ export default [
           icon: 'md-remove-circle',
           title: '规则配置'
         },
-        component: () => import('@/view/system/RuleMapManage')
+        component: () => import('@/view/authority/RuleMapManage')
       }
     ]
   },
@@ -165,31 +156,82 @@ export default [
     component: Main,
     children: [
       {
-        path: 'resource-type',
-        name: 'resource-type',
-        meta: {
-          icon: 'ios-restaurant',
-          title: '资源类型'
-        },
-        component: () => import('@/view/resource/ResourceTypeManage')
-      },
-      {
         path: 'article',
         name: 'article',
         meta: {
-          icon: 'md-trending-up',
+          icon: 'md-paper',
           title: '文章管理'
         },
-        component: () => import('@/view/resource/ResourceTypeManage')
-      },
-      {
+        component: () => import('@/view/resource/ArticleManage')
+      }, {
+        path: 'moment',
+        name: 'moment',
+        meta: {
+          icon: 'md-send',
+          title: '动态管理'
+        },
+        component: () => import('@/view/resource/MomentManage')
+      }, {
+        path: 'file',
+        name: 'file',
+        meta: {
+          icon: 'md-document',
+          title: '文件管理'
+        },
+        component: () => import('@/view/resource/FileManage')
+      }, {
         path: 'second-hand',
         name: 'second-hand',
         meta: {
-          icon: 'md-trending-up',
-          title: '二手交易'
+          icon: 'md-basket',
+          title: '二手交易管理'
         },
-        component: () => import('@/view/resource/ResourceTypeManage')
+        component: () => import('@/view/resource/SecondHandManage')
+      }, {
+        path: 'lost-found',
+        name: 'lost-found',
+        meta: {
+          icon: 'md-eye',
+          title: '失物寻物管理'
+        },
+        component: () => import('@/view/resource/LostFoundManage')
+      }, {
+        path: 'dic',
+        name: 'dic',
+        meta: {
+          icon: 'md-barcode',
+          title: '字典管理'
+        },
+        component: () => import('@/view/resource/DicManage')
+      }
+    ]
+  },
+  {
+    path: '/system',
+    name: 'system',
+    meta: {
+      icon: 'md-settings',
+      title: '系统管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'Doc.vue',
+        name: 'Doc.vue',
+        meta: {
+          title: '接口文档',
+          icon: 'ios-paper'
+        },
+        component: () => import('@/view/system/doc')
+      },
+      {
+        path: 'sql',
+        name: 'sql',
+        meta: {
+          title: 'SQL监控',
+          icon: 'md-lock'
+        },
+        component: () => import('@/view/system/sql')
       }
     ]
   },
