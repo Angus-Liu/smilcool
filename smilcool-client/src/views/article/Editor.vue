@@ -59,6 +59,10 @@ export default {
       },
       tag: '',
       tags: [],
+      articleCategory: [{
+        name: '测试类别',
+        code: '-1'
+      }],
       articleAddForm: {
         articleCategory: '',
         title: '',
@@ -67,17 +71,13 @@ export default {
         tags: '',
         markdownContent: '',
         htmlContent: ''
-      },
-      articleCategory: [{
-        name: '测试类别',
-        code: '-1'
-      }]
+      }
     };
   },
   methods: {
     // 获取文章类别
     getArticleCategory() {
-      this.$axios.get('/api/dic/article-category/item')
+      this.$axios.get('/api/dic/item', { dicTypeCode: 'article-category' })
         .then(res => {
           let result = res.data;
           this.articleCategory = result.data;

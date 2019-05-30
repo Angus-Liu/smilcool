@@ -12,15 +12,15 @@
     <!-- 菜单 -->
     <Row class="second-hand-menu">
       <iCol class="second-hand-category" span="15">
-          <a is="sui-label" v-if="activeSecondHandCategory === '所有'" color="orange" @click="selectCategory('所有')">
-            所有
-          </a>
-          <a is="sui-label" v-else @click="selectCategory('所有')">所有</a>
-          <template v-for="item in secondHandCategory">
-            <a is="sui-label" v-if="activeSecondHandCategory === item.name" color="orange"
-               @click="selectCategory(item.name)">{{item.name}}</a>
-            <a is="sui-label" v-else @click="selectCategory(item.name)">{{item.name}}</a>
-          </template>
+        <a is="sui-label" v-if="activeSecondHandCategory === '所有'" color="orange" @click="selectCategory('所有')">
+          所有
+        </a>
+        <a is="sui-label" v-else @click="selectCategory('所有')">所有</a>
+        <template v-for="item in secondHandCategory">
+          <a is="sui-label" v-if="activeSecondHandCategory === item.name" color="orange"
+             @click="selectCategory(item.name)">{{item.name}}</a>
+          <a is="sui-label" v-else @click="selectCategory(item.name)">{{item.name}}</a>
+        </template>
       </iCol>
       <iCol span="6">
         <sui-input class="fluid" placeholder="搜好物" icon="search"
@@ -280,7 +280,7 @@ export default {
     },
     // 获取二手交易类别
     getSecondHandCategory() {
-      this.$axios.get('/api/dic/second-hand-category/item')
+      this.$axios.get('/api/dic/item', { dicTypeCode: 'second-hand-category' })
         .then(res => {
           let result = res.data;
           this.secondHandCategory = result.data;

@@ -322,7 +322,7 @@ export default {
     },
     // 获取文件类别
     getFileCategory() {
-      this.$axios.get('/api/dic/file-category/item')
+      this.$axios.get('/api/dic/item', { dicTypeCode: 'file-category' })
         .then(res => {
           let result = res.data;
           this.fileCategory = result.data;
