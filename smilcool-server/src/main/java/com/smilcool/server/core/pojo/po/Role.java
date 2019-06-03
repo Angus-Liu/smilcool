@@ -18,7 +18,11 @@ public class Role {
 
     private String description;
 
+    private Boolean initial;
+
     private Integer state;
+
+    private Boolean fixed;
 
     private String remark;
 

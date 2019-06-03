@@ -36,8 +36,9 @@ CREATE TABLE `role` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `name`        varchar(20)  NOT NULL COMMENT '角色名',
   `description` varchar(255) NOT NULL COMMENT '角色描述',
-  `default`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '是否为默认角色：0-不是，1-是',
+  `initial`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '是否为初始化角色：0-不是，1-是',
   `state`       int(1)       NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',
+  `fixed`       tinyint(1)   NOT NULL DEFAULT '0' COMMENT '固定不可修改：0-否，1-是',
   `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
   `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -48,17 +49,11 @@ CREATE TABLE `role` (
   DEFAULT CHARSET = utf8mb4
   COMMENT ='角色表';
 
-INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-VALUES (0, 'super-admin', '超级管理员', 1, '超级管理员由系统内定，具有至高无上的权利');
+INSERT INTO `role`(`id`, `name`, `description`, `state`, `fixed`, `remark`)
+VALUES (1, 'role_admin', '管理员', 1, 1, '管理员能够登录后台');
 
-INSERT INTO `role`(`id`, `name`, `description`, `default`, `state`, `remark`)
-VALUES (1, 'normal', '普通用户', 1, 1, '注册用户默认角色为普通用户');
-
-INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-VALUES (2, 'admin', '管理员', 1, '管理员由超级管理员指定，具有相关操作权利');
-
-INSERT INTO `role`(`id`, `name`, `description`, `state`, `remark`)
-VALUES (9, 'member', '会员', 1, '会员比普通用户多了一些特殊权利');
+INSERT INTO `role`(`id`, `name`, `description`, `initial`, `state`, `fixed`, `remark`)
+VALUES (2, 'role_normal', '普通用户', 1, 1, 1, '普通用户能够访问前台');
 
 # 权限表（permissions）
 DROP TABLE IF EXISTS `permission`;

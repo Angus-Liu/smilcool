@@ -5,14 +5,16 @@
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="initial" jdbcType="BIT" property="initial"/>
         <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="fixed" jdbcType="BIT" property="fixed"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, name, description, state, remark, create_time, update_time, deleted
+        id, name, description, initial, state, fixed, remark, create_time, update_time, deleted
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -27,14 +29,13 @@
     </delete>
     <insert id="insert" parameterType="com.smilcool.server.core.pojo.po.Role">
         INSERT INTO role (id, name, description,
-                          state, remark, create_time,
-                          update_time, deleted)
+                          initial, state, fixed, remark,
+                          create_time, update_time, deleted)
         VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-                #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
-                #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+                #{initial,jdbcType=BIT}, #{state,jdbcType=INTEGER}, #{fixed,jdbcType=BIT}, #{remark,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Role"
-            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    <insert id="insertSelective" parameterType="com.smilcool.server.core.pojo.po.Role">
         insert into role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -46,8 +47,14 @@
             <if test="description != null">
                 description,
             </if>
+            <if test="initial != null">
+                initial,
+            </if>
             <if test="state != null">
                 state,
+            </if>
+            <if test="fixed != null">
+                fixed,
             </if>
             <if test="remark != null">
                 remark,
@@ -72,8 +79,14 @@
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
             </if>
+            <if test="initial != null">
+                #{initial,jdbcType=BIT},
+            </if>
             <if test="state != null">
                 #{state,jdbcType=INTEGER},
+            </if>
+            <if test="fixed != null">
+                #{fixed,jdbcType=BIT},
             </if>
             <if test="remark != null">
                 #{remark,jdbcType=VARCHAR},
@@ -98,8 +111,14 @@
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
             </if>
+            <if test="initial != null">
+                initial = #{initial,jdbcType=BIT},
+            </if>
             <if test="state != null">
                 state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="fixed != null">
+                fixed = #{fixed,jdbcType=BIT},
             </if>
             <if test="remark != null">
                 remark = #{remark,jdbcType=VARCHAR},
@@ -120,13 +139,17 @@
         UPDATE role
         SET name        = #{name,jdbcType=VARCHAR},
             description = #{description,jdbcType=VARCHAR},
+            initial     = #{initial,jdbcType=BIT},
             state       = #{state,jdbcType=INTEGER},
+            fixed       = #{fixed,jdbcType=BIT},
             remark      = #{remark,jdbcType=VARCHAR},
             create_time = #{createTime,jdbcType=TIMESTAMP},
             update_time = #{updateTime,jdbcType=TIMESTAMP},
-            deleted      = #{deleted,jdbcType=BIT}
+            deleted     = #{deleted,jdbcType=BIT}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
+    <!-- 以下为自定义内容 -->
 
     <select id="selectByName" resultType="com.smilcool.server.core.pojo.po.Role">
         select

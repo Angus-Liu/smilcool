@@ -138,7 +138,7 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
-        <!--<table tableName="roles"
+        <!--<table tableName="role"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
