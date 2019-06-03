@@ -151,6 +151,13 @@
 
     <!-- 以下为自定义内容 -->
 
+    <select id="selectInitialRole" resultType="com.smilcool.server.core.pojo.po.Role">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM role
+        WHERE initial = TRUE
+    </select>
+
     <select id="selectByName" resultType="com.smilcool.server.core.pojo.po.Role">
         select
         <include refid="Base_Column_List"/>
