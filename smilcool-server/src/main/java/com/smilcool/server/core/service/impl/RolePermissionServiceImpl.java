@@ -43,7 +43,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     public RolePermissionVO add(RolePermissionAddForm form
     ) {
         // 检查角色是否存在
-        roleService.checkExist(form.getRoleId());
+        roleService.verify(form.getRoleId());
         // 检查权限是否存在
         permissionService.checkExist(form.getPermissionId());
         // 检查角色是否已被赋予该权限

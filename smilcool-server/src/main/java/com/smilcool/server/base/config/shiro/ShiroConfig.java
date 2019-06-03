@@ -74,6 +74,7 @@ public class ShiroConfig {
         List<RuleMap> ruleMapList = ruleMapService.getRuleMapList();
         ruleMapList.forEach(ruleMap -> filterChainDefinitionMap.put(ruleMap.getUrl(), buildRule(ruleMap)));
         log.info("filterChainDefinitionMap: {}", filterChainDefinitionMap);
+        // 设置规则映射数据
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

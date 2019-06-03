@@ -19,6 +19,8 @@ public interface RoleMapper {
 
     /* 以下为自定义内容 */
 
+    Role selectInitialRole();
+
     Role selectByName(String name);
 
     List<Role> select();

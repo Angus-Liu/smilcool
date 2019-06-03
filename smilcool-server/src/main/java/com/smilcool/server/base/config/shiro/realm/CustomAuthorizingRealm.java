@@ -1,5 +1,6 @@
 package com.smilcool.server.base.config.shiro.realm;
 
+import cn.hutool.crypto.SecureUtil;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 
 /**
  * @author Angus
@@ -52,7 +52,7 @@ public class CustomAuthorizingRealm extends AuthorizingRealm {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = upToken.getUsername();
         String password = String.valueOf(upToken.getPassword());
-        User user = userService.getUser(username, password);
+        User user = userService.getUser(username, SecureUtil.md5(password));
         if (user == null) {
             throw new AccountException("用户名或密码错误");
         }

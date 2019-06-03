@@ -1,5 +1,6 @@
 package com.smilcool.server.core.service.impl;
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.common.exception.SmilcoolException;
 import com.smilcool.server.common.util.BeanUtil;
@@ -143,12 +144,13 @@ public class UserServiceImpl implements UserService {
         if (selected != null) {
             throw new SmilcoolException("邮箱已注册");
         }
+        // 密码加密
+        form.setPassword(SecureUtil.md5(form.getPassword()));
         // 添加用户记录
         User user = BeanUtil.copyProp(form, User.class);
         userMapper.insertSelective(user);
-        // 添加用户-角色记录（用户注册时角色默认为普通用户 - normal）
-        // TODO: 2019/4/24  role 表添加默认状态字段，查询获取为默认状态的 role 为新注册用户赋值
-        userRoleService.addDefault(user.getId());
+        // 为用户添加默认角色
+        userRoleService.addInitialRole(user.getId());
         // 返回用户信息
         return this.getUserVO(user.getId());
     }

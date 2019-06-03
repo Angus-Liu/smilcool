@@ -2,6 +2,7 @@ package com.smilcool.server.core.service;
 
 import com.smilcool.server.core.pojo.form.RoleAddForm;
 import com.smilcool.server.core.pojo.form.RoleUpdateForm;
+import com.smilcool.server.core.pojo.po.Role;
 import com.smilcool.server.core.pojo.vo.RoleVO;
 
 import java.util.List;
@@ -12,7 +13,14 @@ import java.util.List;
  */
 public interface RoleService {
 
-    void checkExist(Integer id);
+    void verify(Integer id);
+
+    /**
+     * 获取默认角色
+     *
+     * @return
+     */
+    Role getInitialRole();
 
     RoleVO getById(Integer id);
 

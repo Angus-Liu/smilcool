@@ -49,5 +49,10 @@ public interface UserRoleService {
 
     UserRoleVO add(UserRoleAddForm userRoleAddForm);
 
-    void addDefault(Integer userId);
+    /**
+     * 为用户添加默认角色
+     *
+     * @param userId
+     */
+    void addInitialRole(Integer userId);
 }

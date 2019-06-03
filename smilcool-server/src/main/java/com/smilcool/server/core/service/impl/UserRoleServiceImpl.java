@@ -69,7 +69,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         // 检查用户是否存在
         userService.checkExist(form.getUserId());
         // 检查角色是否存在
-        roleService.checkExist(form.getRoleId());
+        roleService.verify(form.getRoleId());
         // 检查用户是否已被赋予该角色
         UserRole userRole = userRoleMapper.selectByUserIdAndRoleId(form.getUserId(), form.getRoleId());
         if (userRole != null) {
@@ -82,8 +82,10 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public void addDefault(Integer userId) {
-        UserRole userRole = new UserRole(userId);
+    public void addInitialRole(Integer userId) {
+        // 获取默认角色
+        Role role = roleService.getInitialRole();
+        UserRole userRole = new UserRole(userId, role.getId());
         userRoleMapper.insertSelective(userRole);
     }
 }
