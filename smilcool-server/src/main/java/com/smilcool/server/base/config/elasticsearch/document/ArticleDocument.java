@@ -44,7 +44,7 @@ public class ArticleDocument {
 
     private String htmlContent;
 
-    @JsonFormat(pattern = "yyyy年MM月dd日")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
     private Date updateTime;

@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,15 +55,18 @@ public class ScheduledTask {
         List<Article> articleList = articleService.listArticle(form);
         if (articleList.size() > 0) {
             // 进行同步
-            List<ArticleDocument> articleDocumentList = new ArrayList<>();
             articleList.forEach(article -> {
-                ArticleDocument articleDocument = BeanUtil.copyProp(article, ArticleDocument.class);
-                // 将以 JSON 数组形式存储的 tags 字符串字段转化为 List<String> 类型
-                articleDocument.setTagList(JSONUtil.parseArray(article.getTags()).toList(String.class));
-                articleDocumentList.add(articleDocument);
-                // TODO 2019/5/26 根据 article deleted 字段判断是否需要删除
+                if (article.getDeleted()) {
+                    // 删除指定文章
+                    articleRepository.deleteById(article.getId());
+                } else {
+                    // 更新指定文章
+                    ArticleDocument articleDocument = BeanUtil.copyProp(article, ArticleDocument.class);
+                    // 将以 JSON 数组形式存储的 tags 字符串字段转化为 List<String> 类型
+                    articleDocument.setTagList(JSONUtil.parseArray(article.getTags()).toList(String.class));
+                    articleRepository.save(articleDocument);
+                }
             });
-            articleRepository.saveAll(articleDocumentList);
         }
         log.info("结束同步 MySQL 到 Elasticsearch，同步数据更新时间段：[{}] - [{}]，共同步 {} 条数据",
                 updateTimeStart, updateTimeEnd, articleList.size());
