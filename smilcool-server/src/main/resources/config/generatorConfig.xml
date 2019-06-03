@@ -166,6 +166,13 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>-->
 
+        <!--<table tableName="sys_param"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
         <!--<table tableName="user"
                enableCountByExample="false"
                enableUpdateByExample="false"

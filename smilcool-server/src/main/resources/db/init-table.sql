@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `user_role`;
 CREATE TABLE `user_role` (
   `id`          int(11)    NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `user_id`     int(11)    NOT NULL COMMENT '用户ID',
-  `role_id`     int(11)    NOT NULL DEFAULT '0' COMMENT '角色ID',
+  `role_id`     int(11)    NOT NULL COMMENT '角色ID',
   `state`       int(1)     NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',
   `create_time` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -395,3 +395,22 @@ CREATE TABLE `dic_item` (
 ) ENGINE = INNODB
   DEFAULT CHARSET = utf8mb4
   COMMENT ='字典项目表';
+
+# 系统参数表（sys_param）
+DROP TABLE IF EXISTS `sys_param`;
+CREATE TABLE `sys_param` (
+  `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `name`        varchar(20)  NOT NULL COMMENT '参数名',
+  `value`       varchar(255) NOT NULL COMMENT '参数值',
+  `seq`         int(11)      NOT NULL DEFAULT '0' COMMENT '排序值',
+  `fixed`       tinyint(1)   NOT NULL DEFAULT '0' COMMENT '固定不可修改：0-否，1-是',
+  `state`       int(1)       NOT NULL DEFAULT '1' COMMENT '状态：0-停用，1-正常',
+  `remark`      varchar(255)          DEFAULT NULL COMMENT '备注',
+  `create_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted`     tinyint(1)   NOT NULL DEFAULT '0' COMMENT '软删除：0-未删除，1-已删除',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_name` (`name`)
+) ENGINE = INNODB
+  DEFAULT CHARSET = utf8mb4
+  COMMENT ='系统参数表';
