@@ -105,6 +105,8 @@ export default {
         .then(res => {
           this.articleInfoModal.show = false;
           this.articleInfoModal.loading = false;
+          this.$Notice.success({ title: 'Bingo', desc: '发布成功' });
+          this.$router.push('/');
         })
         .catch(error => {
           this.articleInfoModal.loading = false;

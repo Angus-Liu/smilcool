@@ -120,7 +120,7 @@ export default {
     },
     // 获取二手交易类别
     getArticleCategory() {
-      this.$axios.get('/api/dic/article-category/item')
+      this.$axios.get('/api/dic/item', { dicTypeCode: 'article-category' })
         .then(res => {
           let result = res.data;
           this.articleCategory = result.data;
