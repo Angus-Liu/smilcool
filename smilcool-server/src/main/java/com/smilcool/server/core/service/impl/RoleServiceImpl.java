@@ -49,16 +49,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Transactional
     @Override
-    public RoleVO add(RoleAddForm roleAddForm) {
-        Role select = roleMapper.selectByName(roleAddForm.getName());
+    public RoleVO add(RoleAddForm form) {
+        Role select = roleMapper.selectByName(form.getName());
         if (select != null) {
             throw new SmilcoolException("角色已存在");
         }
-        Role role = Role.builder()
-                .name(roleAddForm.getName())
-                .description(roleAddForm.getDescription())
-                .remark(roleAddForm.getRemark())
-                .build();
+        Role role = BeanUtil.copyProp(form, Role.class);
         roleMapper.insertSelective(role);
         return getById(role.getId());
     }
@@ -70,23 +66,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleVO updateRole(Integer id, RoleUpdateForm roleUpdateForm) {
-        Role select = roleMapper.selectByPrimaryKey(id);
-        if (select == null) {
-            throw new SmilcoolException("角色不存在");
-        }
-        select = roleMapper.selectByName(roleUpdateForm.getName());
-        if (select != null && !select.getId().equals(id)) {
+    public RoleVO update(RoleUpdateForm form) {
+        Role select = roleMapper.selectByName(form.getName());
+        if (select != null && !select.getId().equals(form.getId())) {
             throw new SmilcoolException("角色已存在");
         }
-        Role role = Role.builder()
-                .id(id)
-                .name(roleUpdateForm.getName())
-                .description(roleUpdateForm.getDescription())
-                .remark(roleUpdateForm.getRemark())
-                .state(roleUpdateForm.getState())
-                .build();
+        Role role = BeanUtil.copyProp(form, Role.class);
         roleMapper.updateByPrimaryKeySelective(role);
-        return getById(id);
+        return getById(role.getId());
     }
 }

@@ -4,12 +4,11 @@ import com.smilcool.server.base.config.shiro.filter.CustomFormAuthenticationFilt
 import com.smilcool.server.base.config.shiro.filter.CustomHttpMethodPermissionFilter;
 import com.smilcool.server.base.config.shiro.filter.CustomPermissionsAuthorizationFilter;
 import com.smilcool.server.base.config.shiro.filter.CustomRolesAuthorizationFilter;
-import com.smilcool.server.base.config.shiro.realm.CustomAuthorizingRealm;
+import com.smilcool.server.base.config.shiro.util.ShiroUtil;
 import com.smilcool.server.core.pojo.po.RuleMap;
 import com.smilcool.server.core.service.RuleMapService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
@@ -38,17 +37,6 @@ public class ShiroConfig {
     private RuleMapService ruleMapService;
 
     /**
-     * 设置自定义 Realm
-     *
-     * @return
-     */
-    @Bean
-    public Realm realm() {
-        CustomAuthorizingRealm realm = new CustomAuthorizingRealm();
-        return realm;
-    }
-
-    /**
      * 为替换原过滤器，需要通过 shiroFilterFactoryBean 进行设置。不替换时，
      * 可简化为配置 shiroFilterChainDefinition，自定义过滤器采用 Bean 注入
      * 简化配置参考官网：https://shiro.apache.org/spring-boot.html
@@ -67,57 +55,15 @@ public class ShiroConfig {
         filters.put("perms", perms());
         filters.put("rest", rest());
         filters.put("roles", roles());
-        // 配置过滤器链映射
-        // TODO: 2019/4/25 后期是否可以通过修改 filterChainDefinitionMap 来动态更改权限控制
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 从数据库获取规则映射
         List<RuleMap> ruleMapList = ruleMapService.getRuleMapList();
-        ruleMapList.forEach(ruleMap -> filterChainDefinitionMap.put(ruleMap.getUrl(), buildRule(ruleMap)));
+        // 配置过滤器链映射
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+        ruleMapList.forEach(ruleMap -> filterChainDefinitionMap.put(ruleMap.getUrl(), ShiroUtil.buildRule(ruleMap)));
         log.info("filterChainDefinitionMap: {}", filterChainDefinitionMap);
-        // 设置规则映射数据
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
-
-    /**
-     * 构建过滤规则
-     *
-     * @param ruleMap
-     * @return
-     */
-    private String buildRule(RuleMap ruleMap) {
-        StringBuilder rule = new StringBuilder();
-        // 是否需要身份验证
-        if (ruleMap.getAuthc()) {
-            rule.append("authc");
-        } else {
-            rule.append("anon");
-        }
-        // 是否需要角色验证
-        if (ruleMap.getUseRoles()) {
-            rule.append(",roles[").append(ruleMap.getRoles()).append("]");
-        }
-        // 是否需要权限验证
-        if (ruleMap.getUsePerms()) {
-            rule.append(",perms[").append(ruleMap.getPerms()).append("]");
-        }
-        // 是否需要 HTTP 方法（REST）验证
-        if (ruleMap.getUseRest()) {
-            rule.append(",rest[").append(ruleMap.getRest()).append("]");
-        }
-        return rule.toString();
-    }
-
-    /**
-     * 开启缓存
-     *
-     * @return
-     */
-    // TODO: 2019/4/26 改为 Redis 托管
-//    @Bean
-//    protected CacheManager cacheManager() {
-//        return new MemoryConstrainedCacheManager();
-//    }
 
     /**
      * 使用 Bean 注入时，原过滤器仍然生效，页面依旧会跳转到 /login.jsp，无法达到替代效果
@@ -139,4 +85,16 @@ public class ShiroConfig {
     private HttpMethodPermissionFilter rest() {
         return new CustomHttpMethodPermissionFilter();
     }
+
+    /**
+     * 开启缓存
+     *
+     * @return
+     */
+    // TODO: 2019/4/26 改为 Redis 托管
+//    @Bean
+//    protected CacheManager cacheManager() {
+//        return new MemoryConstrainedCacheManager();
+//    }
+
 }

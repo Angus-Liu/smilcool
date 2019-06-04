@@ -13,7 +13,7 @@ import java.util.List;
 public interface RuleMapService {
     List<RuleMap> getRuleMapList();
 
-    RuleMap addRuleMap(RuleMapAddForm ruleMapAddForm);
+    RuleMap addRuleMap(RuleMapAddForm form);
 
-    RuleMap updateRuleMap(Integer id, RuleMapUpdateForm ruleMapUpdateForm);
+    void updateRuleMap(RuleMapUpdateForm form);
 }

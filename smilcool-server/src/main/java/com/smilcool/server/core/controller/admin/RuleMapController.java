@@ -1,5 +1,6 @@
 package com.smilcool.server.core.controller.admin;
 
+import com.smilcool.server.base.config.shiro.ShiroFilterChainManager;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.RuleMapAddForm;
 import com.smilcool.server.core.pojo.form.RuleMapUpdateForm;
@@ -24,6 +25,10 @@ public class RuleMapController {
     @Autowired
     private RuleMapService ruleMapService;
 
+    @Autowired
+    private ShiroFilterChainManager shiroFilterChainManager;
+
+
     @ApiOperation("规则映射列表")
     @GetMapping("/rule-map")
     public Result<List<RuleMap>> getRuleMapList() {
@@ -39,11 +44,12 @@ public class RuleMapController {
     }
 
     @ApiOperation("更新规则映射")
-    @PutMapping("/rule-map/{id}")
-    public Result<RuleMap> updateRuleMap(@PathVariable("id") Integer id,
-                                         @RequestBody @Valid RuleMapUpdateForm ruleMapUpdateForm) {
-        RuleMap ruleMap = ruleMapService.updateRuleMap(id, ruleMapUpdateForm);
-        return Result.success(ruleMap);
+    @PutMapping("/rule-map")
+    public Result updateRuleMap(@RequestBody @Valid RuleMapUpdateForm ruleMapUpdateForm) {
+        // 更新规则映射
+        ruleMapService.updateRuleMap(ruleMapUpdateForm);
+        // 刷新过滤器链
+        shiroFilterChainManager.refreshFilterChains();
+        return Result.success();
     }
-
 }

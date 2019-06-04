@@ -31,8 +31,8 @@ public class RoleController {
 
     @ApiOperation("角色添加")
     @PostMapping("/role")
-    public Result<RoleVO> addRole(@RequestBody @Valid RoleAddForm roleAddForm) {
-        RoleVO roleVO = roleService.add(roleAddForm);
+    public Result<RoleVO> addRole(@RequestBody @Valid RoleAddForm form) {
+        RoleVO roleVO = roleService.add(form);
         return Result.success(roleVO);
     }
 
@@ -51,10 +51,9 @@ public class RoleController {
     }
 
     @ApiOperation(value = "更新角色")
-    @PutMapping("/role/{id}")
-    public Result<RoleVO> updateRole(@PathVariable("id") Integer id,
-                                     @RequestBody @Valid RoleUpdateForm roleUpdateForm) {
-        RoleVO role = roleService.updateRole(id, roleUpdateForm);
+    @PutMapping("/role")
+    public Result<RoleVO> updateRole(@RequestBody @Valid RoleUpdateForm form) {
+        RoleVO role = roleService.update(form);
         return Result.success(role);
     }
 

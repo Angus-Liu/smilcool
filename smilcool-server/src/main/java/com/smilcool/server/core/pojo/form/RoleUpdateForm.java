@@ -5,6 +5,7 @@ import com.smilcool.server.common.util.validation.anno.CheckEnum.EnumType;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Angus
@@ -12,6 +13,10 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 public class RoleUpdateForm {
+
+    @NotNull(message = "角色 ID 不能为空")
+    Integer id;
+
     /**
      * 角色名
      */

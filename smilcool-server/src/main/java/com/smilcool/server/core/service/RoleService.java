@@ -24,9 +24,9 @@ public interface RoleService {
 
     RoleVO getById(Integer id);
 
-    RoleVO add(RoleAddForm roleAddForm);
+    RoleVO add(RoleAddForm form);
 
     List<RoleVO> list();
 
-    RoleVO updateRole(Integer id, RoleUpdateForm roleUpdateForm);
+    RoleVO update(RoleUpdateForm form);
 }

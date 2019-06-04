@@ -10,12 +10,16 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
+ * 设置自定义 Realm
+ *
  * @author Angus
  * @date 2019/4/5
  */
 @Slf4j
+@Component("authorizer")
 public class CustomAuthorizingRealm extends AuthorizingRealm {
 
     @Autowired
