@@ -2,8 +2,10 @@ package com.smilcool.server.core.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smilcool.server.core.pojo.form.UserQueryForm;
 import com.smilcool.server.core.pojo.form.UserUpdateForm;
 import com.smilcool.server.core.pojo.po.User;
+import com.smilcool.server.core.pojo.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -31,9 +33,5 @@ public interface UserMapper extends BaseMapper {
 
     User selectByEmail(String email);
 
-    List<User> select();
-
-    List<Integer> selectUserIdListAll();
-
-    Page<User> selectByCondition(Page page, @Param("user") User condition);
+    Page<UserVO> selectUserVOByQueryForm(Page page, @Param("form") UserQueryForm form);
 }

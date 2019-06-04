@@ -51,13 +51,6 @@ public class UserController {
         return Result.success(registerUser);
     }
 
-    @ApiOperation("用户列表")
-    @GetMapping
-    public Result<List<UserVO>> listUserVO() {
-        List<UserVO> userListPage = userService.listUserVO();
-        return Result.success(userListPage);
-    }
-
     @ApiOperation(value = "用户信息", notes = "通过用户 id 获取用户信息（包括角色与权限信息）")
     @GetMapping("/{id}")
     public Result<UserVO> getUserVO(@PathVariable("id") Integer id) {

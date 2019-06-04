@@ -59,8 +59,6 @@ public interface UserService {
 
     UserVO updateUser(UserUpdateForm form);
 
-    List<UserVO> listUserVO();
-
     Page<UserVO> pageUserVO(Page page, UserQueryForm form);
 
     Set<String> getRoles(Integer id);

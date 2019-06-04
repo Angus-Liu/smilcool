@@ -3,9 +3,7 @@ package com.smilcool.server.core.controller.admin;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.RoleAddForm;
 import com.smilcool.server.core.pojo.form.RoleUpdateForm;
-import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.pojo.vo.RoleVO;
-import com.smilcool.server.core.service.RolePermissionService;
 import com.smilcool.server.core.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,9 +24,6 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private RolePermissionService rolePermissionService;
-
     @ApiOperation("角色添加")
     @PostMapping("/role")
     public Result<RoleVO> addRole(@RequestBody @Valid RoleAddForm form) {
@@ -38,15 +33,15 @@ public class RoleController {
 
     @ApiOperation("角色列表")
     @GetMapping("/role")
-    public Result<List<RoleVO>> getRoleList() {
-        List<RoleVO> roles = roleService.getRoleVOList();
+    public Result<List<RoleVO>> listRoleVO() {
+        List<RoleVO> roles = roleService.listRoleVO();
         return Result.success(roles);
     }
 
     @ApiOperation(value = "角色信息", notes = "通过角色 id 获取角色信息")
     @GetMapping("/role/{id}")
-    public Result<RoleVO> getRole(@PathVariable("id") Integer id) {
-        RoleVO role = roleService.getById(id);
+    public Result<RoleVO> getRoleVO(@PathVariable("id") Integer id) {
+        RoleVO role = roleService.getRoleVO(id);
         return Result.success(role);
     }
 
@@ -55,12 +50,5 @@ public class RoleController {
     public Result<RoleVO> updateRole(@RequestBody @Valid RoleUpdateForm form) {
         RoleVO role = roleService.update(form);
         return Result.success(role);
-    }
-
-    @ApiOperation(value = "角色权限信息", notes = "通过角色 id 获取角色对应权限信息")
-    @GetMapping("/role/{id}/permission")
-    public Result<List<PermissionVO>> getPermissionList(@PathVariable("id") Integer id) {
-        List<PermissionVO> permissionList = rolePermissionService.getPermissionVOListByRoleId(id);
-        return Result.success(permissionList);
     }
 }

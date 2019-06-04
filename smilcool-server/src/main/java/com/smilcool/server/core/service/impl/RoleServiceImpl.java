@@ -38,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleVO getById(Integer id) {
+    public RoleVO getRoleVO(Integer id) {
         Role role = roleMapper.selectByPrimaryKey(id);
         if (role == null) {
             throw new SmilcoolException("角色不存在");
@@ -56,11 +56,11 @@ public class RoleServiceImpl implements RoleService {
         }
         Role role = BeanUtil.copyProp(form, Role.class);
         roleMapper.insertSelective(role);
-        return getById(role.getId());
+        return getRoleVO(role.getId());
     }
 
     @Override
-    public List<RoleVO> getRoleVOList() {
+    public List<RoleVO> listRoleVO() {
         return  roleMapper.selectRoleVO();
     }
 
@@ -72,6 +72,6 @@ public class RoleServiceImpl implements RoleService {
         }
         Role role = BeanUtil.copyProp(form, Role.class);
         roleMapper.updateByPrimaryKeySelective(role);
-        return getById(role.getId());
+        return getRoleVO(role.getId());
     }
 }

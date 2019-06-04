@@ -2,6 +2,7 @@ package com.smilcool.server.core.controller.admin;
 
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.RolePermissionAddForm;
+import com.smilcool.server.core.pojo.vo.PermissionVO;
 import com.smilcool.server.core.pojo.vo.RolePermissionVO;
 import com.smilcool.server.core.service.RolePermissionService;
 import io.swagger.annotations.Api;
@@ -34,5 +35,12 @@ public class RolePermissionController {
     public Result<List<RolePermissionVO>> list() {
         List<RolePermissionVO> rolePermissionList = rolePermissionService.list();
         return Result.success(rolePermissionList);
+    }
+
+    @ApiOperation(value = "角色权限信息", notes = "通过角色 id 获取角色对应权限信息")
+    @GetMapping("/role/{id}/permission")
+    public Result<List<PermissionVO>> getPermissionList(@PathVariable("id") Integer id) {
+        List<PermissionVO> permissionList = rolePermissionService.getPermissionVOListByRoleId(id);
+        return Result.success(permissionList);
     }
 }

@@ -22,11 +22,11 @@ public interface RoleService {
      */
     Role getInitialRole();
 
-    RoleVO getById(Integer id);
+    RoleVO getRoleVO(Integer id);
 
     RoleVO add(RoleAddForm form);
 
-    List<RoleVO> getRoleVOList();
+    List<RoleVO> listRoleVO();
 
     RoleVO update(RoleUpdateForm form);
 }

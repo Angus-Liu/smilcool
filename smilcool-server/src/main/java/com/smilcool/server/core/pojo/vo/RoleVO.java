@@ -30,5 +30,8 @@ public class RoleVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
+    /**
+     * 权限信息
+     */
     private List<Integer> permissionIdList;
 }

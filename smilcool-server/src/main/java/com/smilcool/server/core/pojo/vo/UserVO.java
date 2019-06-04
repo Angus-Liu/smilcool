@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Angus
@@ -55,10 +55,5 @@ public class UserVO {
     /**
      * 角色信息
      */
-    private Set<String> roles;
-
-    /**
-     * 权限信息
-     */
-    private Set<String> permissions;
+    private List<RoleVO> roleList;
 }

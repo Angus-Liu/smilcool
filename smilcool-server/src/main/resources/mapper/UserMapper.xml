@@ -319,51 +319,60 @@
         WHERE email = #{email}
     </select>
 
-    <select id="select" resultType="com.smilcool.server.core.pojo.po.User">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM user
-    </select>
+    <resultMap id="ResultMapWithRole" extends="BaseResultMap" type="com.smilcool.server.core.pojo.vo.UserVO">
+        <collection property="roleList" ofType="com.smilcool.server.core.pojo.vo.RoleVO">
+            <id property="id" column="role_id"/>
+            <result property="name" column="role_name"/>
+            <result property="description" column="role_description"/>
+        </collection>
+    </resultMap>
 
-    <select id="selectUserIdListAll" resultType="java.lang.Integer">
-        SELECT id
-        FROM user
-    </select>
+    <sql id="User_Column_List">
+        u.id, u.username, u.nickname, u.avatar, u.sex, u.birthday,
+        u.sign, u.intro, u.grade, u.college,u.major, u.phone, u.email,
+        u.state, u.remark, u.create_time, u.update_time
+    </sql>
+    <sql id="Role_Column_List">
+        r.id as role_id, r.name as role_name, r.description as role_description
+    </sql>
 
-    <select id="selectByCondition" resultType="com.smilcool.server.core.pojo.po.User">
+    <select id="selectUserVOByQueryForm" resultMap="ResultMapWithRole">
         SELECT
-        <include refid="Base_Column_List"/>
-        FROM user
+        <include refid="User_Column_List"/>,
+        <include refid="Role_Column_List"/>
+        FROM user u
+        LEFT JOIN user_role ur ON u.id = ur.user_id
+        LEFT JOIN role r ON ur.role_id = r.id
         <where>
-            <if test="user.username != null">
-                username = #{user.username}
+            <if test="form.username != null">
+                u.username = #{form.username}
             </if>
-            <if test="user.nickname != null">
-                AND nickname = #{user.nickname}
+            <if test="form.nickname != null">
+                AND u.nickname = #{form.nickname}
             </if>
-            <if test="user.sex != null">
-                AND sex = #{user.sex}
+            <if test="form.sex != null">
+                AND u.sex = #{form.sex}
             </if>
-            <if test="user.birthday != null">
-                AND birthday = #{user.birthday}
+            <if test="form.birthday != null">
+                AND u.birthday = #{form.birthday}
             </if>
-            <if test="user.grade != null">
-                AND grade = #{user.grade}
+            <if test="form.grade != null">
+                AND u.grade = #{form.grade}
             </if>
-            <if test="user.college != null">
-                AND college = #{user.college}
+            <if test="form.college != null">
+                AND u.college = #{form.college}
             </if>
-            <if test="user.major != null">
-                AND major = #{user.major}
+            <if test="form.major != null">
+                AND u.major = #{form.major}
             </if>
-            <if test="user.phone != null">
-                AND phone = #{user.phone}
+            <if test="form.phone != null">
+                AND u.phone = #{form.phone}
             </if>
-            <if test="user.email != null">
-                AND email = #{user.email}
+            <if test="form.email != null">
+                AND u.email = #{form.email}
             </if>
-            <if test="user.state != null">
-                AND state = #{user.state}
+            <if test="form.state != null">
+                AND u.state = #{form.state}
             </if>
         </where>
     </select>

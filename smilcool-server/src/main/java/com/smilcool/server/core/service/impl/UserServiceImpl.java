@@ -104,16 +104,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new SmilcoolException("用户不存在");
         }
-        // TODO user 不应该包含角色和权限信息
-        // 获取用户角色信息
-        Set<String> roleNames = userRoleService.getRoleNames(user.getId());
-        // 获取用户权限信息
-        Set<String> permissionNames = rolePermissionService.getPermissionNames(user.getId());
-        // 整合用户信息
-        UserVO userVO = BeanUtil.copyProp(user, UserVO.class);
-        userVO.setRoles(roleNames);
-        userVO.setPermissions(permissionNames);
-        return userVO;
+        return BeanUtil.copyProp(user, UserVO.class);
     }
 
     @Override
@@ -122,7 +113,7 @@ public class UserServiceImpl implements UserService {
         Subject currentUser = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(form.getUsername(), form.getPassword());
         currentUser.login(token);
-        return this.getUserVO((Integer) currentUser.getPrincipal());
+        return getUserVO((Integer) currentUser.getPrincipal());
     }
 
     @Override
@@ -133,7 +124,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public UserVO register(UserRegisterForm form) {
         User selected = userMapper.selectByUsername(form.getUsername());
@@ -163,26 +154,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserVO> listUserVO() {
-        List<UserVO> userList = BeanUtil.copyProp(userMapper.select(), UserVO.class);
-        userList.forEach(user -> {
-            // 获取用户角色信息（角色描述）
-            Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());
-            user.setRoles(roleDescriptions);
-        });
-        return userList;
-    }
-
-    @Override
     public Page<UserVO> pageUserVO(Page page, UserQueryForm form) {
-        User condition = BeanUtil.copyProp(form, User.class);
-        Page<UserVO> userPage = BeanUtil.copyProp(userMapper.selectByCondition(page, condition), UserVO.class);
-        userPage.getRecords().forEach(user -> {
-            // 获取用户角色信息（角色描述）
-            Set<String> roleDescriptions = userRoleService.getRoleDescriptions(user.getId());
-            user.setRoles(roleDescriptions);
-        });
-        return userPage;
+        return userMapper.selectUserVOByQueryForm(page, form);
     }
 
     @Override
