@@ -165,9 +165,21 @@
         where name = #{name}
     </select>
 
-    <select id="select" resultType="com.smilcool.server.core.pojo.po.Role">
+    <resultMap id="ResultMapWithPermissionId" extends="BaseResultMap" type="com.smilcool.server.core.pojo.vo.RoleVO">
+        <collection property="permissionIdList" ofType="integer">
+            <id column="permission_id"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Role_Column_List">
+        r.id, name, description, initial, r.state, fixed, r.remark, r.create_time, r.update_time
+    </sql>
+
+    <select id="selectRoleVO" resultMap="ResultMapWithPermissionId">
         select
-        <include refid="Base_Column_List"/>
-        from role
+        <include refid="Role_Column_List"/>, rp.permission_id
+        from role r
+        left join role_permission rp
+        on r.id = rp.role_id
     </select>
 </mapper>

@@ -6,6 +6,7 @@ import com.smilcool.server.common.util.serializer.CommonStateSerializer;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class RoleVO {
@@ -15,7 +16,11 @@ public class RoleVO {
 
     private String description;
 
+    private Boolean initial;
+
     private Integer state;
+
+    private Boolean fixed;
 
     private String remark;
 
@@ -25,5 +30,5 @@ public class RoleVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    private Boolean deleted;
+    private List<Integer> permissionIdList;
 }

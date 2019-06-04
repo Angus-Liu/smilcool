@@ -26,7 +26,7 @@ public interface RoleService {
 
     RoleVO add(RoleAddForm form);
 
-    List<RoleVO> list();
+    List<RoleVO> getRoleVOList();
 
     RoleVO update(RoleUpdateForm form);
 }

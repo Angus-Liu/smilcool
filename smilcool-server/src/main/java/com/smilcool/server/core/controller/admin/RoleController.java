@@ -39,7 +39,7 @@ public class RoleController {
     @ApiOperation("角色列表")
     @GetMapping("/role")
     public Result<List<RoleVO>> getRoleList() {
-        List<RoleVO> roles = roleService.list();
+        List<RoleVO> roles = roleService.getRoleVOList();
         return Result.success(roles);
     }
 

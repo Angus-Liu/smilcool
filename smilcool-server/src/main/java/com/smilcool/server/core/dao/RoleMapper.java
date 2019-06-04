@@ -1,6 +1,7 @@
 package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Role;
+import com.smilcool.server.core.pojo.vo.RoleVO;
 
 import java.util.List;
 
@@ -23,5 +24,5 @@ public interface RoleMapper {
 
     Role selectByName(String name);
 
-    List<Role> select();
+    List<RoleVO> selectRoleVO();
 }
