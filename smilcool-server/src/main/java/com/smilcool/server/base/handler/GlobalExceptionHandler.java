@@ -9,12 +9,14 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 1.RestControllerAdvice 结合 ExceptionHandler 实现全局异常处理
@@ -43,27 +45,27 @@ public class GlobalExceptionHandler implements ErrorController {
         String method = request.getMethod();
         Integer status = (Integer) request.getAttribute(WebUtils.ERROR_STATUS_CODE_ATTRIBUTE);
         String path = (String) request.getAttribute(WebUtils.ERROR_REQUEST_URI_ATTRIBUTE);
-        String message = (String) request.getAttribute(WebUtils.ERROR_MESSAGE_ATTRIBUTE);
+        String msg = (String) request.getAttribute(WebUtils.ERROR_MESSAGE_ATTRIBUTE);
         Exception exception = (Exception) request.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE);
-        log.info("status: {}; method: {}; path: {}; message: {};", status, method, path, message);
-        log.error("exception: ", exception);
-        String msg;
-        switch (status) {
-            case 401:
-                msg = path + " Unauthorized";
-                break;
-            case 403:
-                msg = path + " Forbidden";
-                break;
-            case 404:
-                msg = path + " Not Found";
-                break;
-            case 405:
-                msg = method + " Not Supported";
-                break;
-            default:
-                msg = "OOPS！服务器无法处理你的请求 :(";
-                break;
+        log.error("status: {}; method: {}; path: {}; message: {}; exception: {}", status, method, path, msg, exception);
+        if (StringUtils.isEmpty(msg)) {
+            switch (status) {
+                case HttpServletResponse.SC_UNAUTHORIZED:
+                    msg = "身份验证失败，请重新登录";
+                    break;
+                case HttpServletResponse.SC_FORBIDDEN:
+                    msg = "用户无相关权限，禁止访问";
+                    break;
+                case HttpServletResponse.SC_NOT_FOUND:
+                    msg = path + " Not Found";
+                    break;
+                case HttpServletResponse.SC_METHOD_NOT_ALLOWED:
+                    msg = method + " Not Allowed";
+                    break;
+                default:
+                    msg = "OOPS！服务器无法处理你的请求 :(";
+                    break;
+            }
         }
         return Result.error(status, msg);
     }

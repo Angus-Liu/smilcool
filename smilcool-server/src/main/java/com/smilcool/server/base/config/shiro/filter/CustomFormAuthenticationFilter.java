@@ -3,6 +3,7 @@ package com.smilcool.server.base.config.shiro.filter;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.common.util.HttpServletResponseUtil;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -22,10 +23,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        // TODO: 2019/4/26 也可以为 WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        HttpServletResponseUtil.sendJson((HttpServletResponse) response,
-                HttpServletResponse.SC_UNAUTHORIZED,
-                Result.error(401, "身份验证失败，请重新登录"));
+        WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
         return false;
     }
 }
