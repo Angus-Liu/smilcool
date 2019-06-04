@@ -60,7 +60,7 @@
 <script>
 export default {
   name: 'RuleMapManage',
-  data () {
+  data() {
     return {
       columns: [
         { type: 'index', width: 60, align: 'center' },
@@ -89,17 +89,17 @@ export default {
     };
   },
   methods: {
-    addRuleMap () {
+    addRuleMap() {
 
     },
-    getRuleMapList () {
+    getRuleMapList() {
       this.$axios.get('/api/rule-map')
         .then(res => {
           let result = res.data;
           this.ruleMapList = result.data;
         });
     },
-    buildRule (ruleMap) {
+    buildRule(ruleMap) {
       let rule = '';
       if (ruleMap.authc) {
         rule += 'authc';
@@ -117,19 +117,15 @@ export default {
       }
       return rule;
     },
-    updateRuleMap (ruleMap) {
-      let {
-        url, description, type, authc, useRoles, roles,
-        usePerms, perms, useRest, rest, seq, state, remark
-      } = ruleMap;
-      this.$axios.put(`/api/rule-map/${ruleMap.id}`, {
-        url, description, type, authc, useRoles, roles,
-        usePerms, perms, useRest, rest, seq, state, remark
-      })
-        .then(res => this.getRuleMapList());
+    updateRuleMap(ruleMap) {
+      this.$axios.put(`/api/rule-map`, ruleMap)
+        .then(res => {
+          this.getRuleMapList();
+          this.$Message.success("更新成功");
+        });
     }
   },
-  mounted () {
+  mounted() {
     this.getRuleMapList();
   }
 };

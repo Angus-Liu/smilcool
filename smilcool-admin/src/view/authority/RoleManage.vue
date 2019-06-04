@@ -5,24 +5,26 @@
       <Button class="btn" @click="addRole" type="primary" icon="md-add">添加角色</Button>
       <Button class="btn" @click="getRoleList" icon="md-refresh">刷新</Button>
     </Row>
+    <!-- 操作栏 END -->
     <!-- 表格 -->
     <Table :columns="columns" :data="roleList" border stripe>
       <template slot-scope="{ row }" slot="state">
         <Tag :color="state[row.state].color">{{state[row.state].label}}</Tag>
       </template>
-      <template slot-scope="{ row, index }" slot="action">
-        <Button class="btn" type="primary" size="small" @click="editRole(index)">编辑</Button>
-        <Button class="btn" type="warning" size="small" @click="editPermission(index)">权限配置</Button>
+      <template slot-scope="{ row }" slot="action">
+        <Button class="btn" type="primary" size="small" @click="editRole(row)">编辑</Button>
+        <Button class="btn" type="warning" size="small" @click="editPermission(row)">权限配置</Button>
       </template>
     </Table>
+    <!-- 表格 END -->
     <!-- 角色模态框 -->
     <Modal :title="roleModal.title" v-model="roleModal.show" :mask-closable="false" :width="450">
       <Form :model="roleModal.role" :label-width="50">
         <FormItem label="名称" prop="name">
-          <Input class="form-item" v-model="roleModal.role.name" placeholder="Enter something..."></Input>
+          <Input class="form-item" v-model="roleModal.role.name" placeholder="建议以 role_ 开头"></Input>
         </FormItem>
         <FormItem label="描述" prop="description">
-          <Input class="form-item" v-model="roleModal.role.description" placeholder="Enter something..."></Input>
+          <Input class="form-item" v-model="roleModal.role.description" placeholder="输入角色描述"></Input>
         </FormItem>
         <FormItem label="状态" prop="state">
           <Select class="form-item" v-model="roleModal.role.state">
@@ -30,7 +32,7 @@
           </Select>
         </FormItem>
         <FormItem label="备注" prop="remark">
-          <Input class="form-item" v-model="roleModal.role.remark" placeholder="Enter something..."></Input>
+          <Input class="form-item" v-model="roleModal.role.remark" placeholder="输入角色备注"></Input>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -38,14 +40,23 @@
         <Button type="primary" @click="handleSubmit" :loading="roleModal.submitLoading">提交</Button>
       </div>
     </Modal>
+    <!-- 角色模态框 END -->
     <!-- 权限模态框 -->
+    <Modal class="permission-modal" title="权限配置" v-model="permissionModal.show" :mask-closable="false" :width="450">
+      <Tree class="permission-tree" :data="permissionList" show-checkbox check-directly check-strictly/>
+      <div slot="footer">
+        <Button type="text" @click="permissionModal.show = false">关闭</Button>
+        <Button type="primary" @click="handleSubmit" :loading="permissionModal.submitLoading">提交</Button>
+      </div>
+    </Modal>
+    <!-- 权限模态框 END -->
   </Card>
 </template>
 
 <script>
 export default {
   name: 'RoleManage',
-  data () {
+  data() {
     return {
       // 表格数据
       columns: [
@@ -58,7 +69,18 @@ export default {
         { title: '更新时间', key: 'updateTime', align: 'center', width: '150' },
         { title: '操作', slot: 'action', align: 'center', width: '200' }
       ],
-      roleList: [],
+      roleList: [{
+        'id': 1,
+        'name': 'role_admin',
+        'description': '管理员',
+        'initial': false,
+        'state': 1,
+        'fixed': true,
+        'remark': '管理员能够登录后台',
+        'createTime': '2019-06-03 17:43:57',
+        'updateTime': '2019-06-03 17:43:57',
+        'permissionIdList': [1, 2, 4, 5, 6]
+      }],
       // 角色模态框数据
       roleModal: {
         isAdd: true, // 是否为添加模式
@@ -76,11 +98,19 @@ export default {
       state: [
         { value: 0, label: '停用', color: 'red' },
         { value: 1, label: '正常', color: 'green' }
-      ]
+      ],
+      // 权限列表
+      permissionList: [],
+      // 权限模态框数据
+      permissionModal: {
+        show: false,
+        submitLoading: false,
+      }
     };
   },
   methods: {
-    addRole () {
+    // 添加角色
+    addRole() {
       this.roleModal = {
         isAdd: true,
         submitLoading: false,
@@ -95,7 +125,8 @@ export default {
         }
       };
     },
-    editRole (index) {
+    // 编辑角色
+    editRole(index) {
       this.roleModal = {
         isAdd: false,
         submitLoading: false,
@@ -104,7 +135,8 @@ export default {
         role: { ...this.roleList[index] }
       };
     },
-    getRoleList () {
+    // 获取角色列表
+    getRoleList() {
       this.$axios.get('/api/role')
         .then(res => {
           // 获取响应体中统一接口交互对象 result
@@ -113,10 +145,35 @@ export default {
           this.roleList = result.data;
         });
     },
-    editPermission (index) {
-
+    // 获取权限列表
+    getPermissionList() {
+      this.$axios.get('/api/permission')
+        .then(res => {
+          let result = res.data;
+          this.permissionList = this.initPermissionList(result.data);
+        });
     },
-    handleSubmit () {
+    initPermissionList(permissionList) {
+      permissionList.forEach(permission => {
+        permission.title = permission.description;
+        permission.expand = true;
+        permission.checked = false;
+        this.initPermissionList(permission.children);
+      });
+      return permissionList;
+    },
+    // 配置权限
+    editPermission(role) {
+      this.updatePermissionList(role, this.permissionList);
+      this.permissionModal.show = true;
+    },
+    updatePermissionList(role, permissionList) {
+      permissionList.forEach(permission => {
+        permission.checked = permission.id in role.permissionIdList;
+        this.updatePermissionList(role, permission.children);
+      });
+    },
+    handleSubmit() {
       // 新增角色
       this.roleModal.submitLoading = true;
       if (this.roleModal.isAdd) {
@@ -136,7 +193,7 @@ export default {
           });
       } else {
         // 更新角色
-        this.$axios.put(`/api/role/${this.roleModal.role.id}`, this.roleModal.role)
+        this.$axios.put(`/api/role`, this.roleModal.role)
           .then(res => {
             let result = res.data;
             if (result.success) {
@@ -153,18 +210,26 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
+    this.getPermissionList();
     this.getRoleList();
   }
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .row-action {
     margin-bottom: 10px;
   }
 
   .btn {
     margin-right: 5px;
+  }
+
+  .permission-modal {
+    .permission-tree {
+      max-height: 4500px;
+      overflow: auto;
+    }
   }
 </style>

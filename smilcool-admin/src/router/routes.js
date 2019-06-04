@@ -131,7 +131,7 @@ export default [
         name: 'permission',
         meta: {
           icon: 'md-key',
-          title: '权限管理'
+          title: '权限配置'
         },
         component: () => import('@/view/authority/PermissionManage')
       },

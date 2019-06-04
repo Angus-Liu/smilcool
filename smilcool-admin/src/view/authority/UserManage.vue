@@ -53,6 +53,7 @@
         </a>
       </FormItem>
     </Form>
+    <!-- 筛选栏 END -->
     <!-- 表格 -->
     <Table :columns="columns" :data="page.records" :loading="loading" border stripe>
       <template slot-scope="{ row }" slot="username">
@@ -65,9 +66,10 @@
         <Tag :color="state[row.state].color">{{state[row.state].label}}</Tag>
       </template>
       <template slot-scope="{ row, index }" slot="action">
-        <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">详细信息</Button>
+        <Button type="warning" size="small" @click="show(index)">配置角色</Button>
       </template>
     </Table>
+    <!-- 表格 END -->
     <!-- 分页 -->
     <Row class="page" justify="end" type="flex">
       <Page :total="page.total" :current="page.current" :page-size="page.size"
@@ -76,11 +78,13 @@
     </Row>
   </Card>
 </template>
+
 <script>
 export default {
   name: 'UserManage',
   data() {
     return {
+      value1: false,
       // 表单设置
       more: {
         show: false,
@@ -119,7 +123,7 @@ export default {
       columns: [
         { type: 'index', width: 60, align: 'center', fixed: 'left' },
         { title: '用户名', slot: 'username', width: '150', fixed: 'left' },
-        { title: '昵称', key: 'nickname', width: '150' },
+        { title: '昵称', key: 'nickname', width: '100', tooltip: true },
         { title: '性别', key: 'sex', align: 'center', width: '80' },
         { title: '生日', key: 'birthday', align: 'center', width: '100' },
         { title: '年级', key: 'grade', align: 'center', width: '100' },
@@ -128,7 +132,7 @@ export default {
         { title: '手机', key: 'phone', align: 'center', width: '100' },
         { title: '邮箱', key: 'email', width: '150' },
         { title: '状态', slot: 'state', align: 'center', width: '100' },
-        { title: '角色', slot: 'roles', align: 'center', width: '200' },
+        { title: '角色', slot: 'roles', align: 'center', width: '150' },
         { title: '备注', key: 'remark', width: '100', tooltip: true },
         { title: '创建时间', key: 'createTime', align: 'center', width: '150' },
         { title: '更新时间', key: 'updateTime', align: 'center', width: '150' },

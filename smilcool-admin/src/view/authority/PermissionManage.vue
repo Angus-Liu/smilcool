@@ -2,9 +2,10 @@
   <Card>
     <!-- 操作栏 -->
     <Row class="row-action">
-      <Button class="btn" @click="addPermission" type="primary" icon="md-add">添加角色</Button>
+      <Button class="btn" @click="addPermission" type="primary" icon="md-add">添加权限</Button>
       <Button class="btn" @click="getPermissionList" icon="md-refresh">刷新</Button>
     </Row>
+    <!-- 操作栏 END -->
     <Row>
       <!-- 权限列表 -->
       <iCol span="5">
@@ -12,8 +13,9 @@
           <Tree :data="permissionList" @on-select-change="handleSelectPermission" show-checkbox></Tree>
         </div>
       </iCol>
+      <!-- 权限列表 END -->
+      <!-- 权限详情 -->
       <iCol span="7" offset="2">
-        <!-- 权限详情 -->
         <Form ref="permissionForm" :model="permission" :label-width="85">
           <FormItem label="类型" prop="type">
             <RadioGroup :value="types[permission.type].label">
@@ -44,8 +46,8 @@
           </FormItem>
         </Form>
       </iCol>
+      <!-- 权限详情 END -->
     </Row>
-    <!-- 表格 -->
   </Card>
 </template>
 
@@ -53,7 +55,7 @@
 
 export default {
   name: 'PermissionManage',
-  data () {
+  data() {
     return {
       permissionList: [],
       permission: {
@@ -79,14 +81,14 @@ export default {
   },
   watch: {},
   methods: {
-    getPermissionList () {
+    getPermissionList() {
       this.$axios.get('/api/permission')
         .then(res => {
           let result = res.data;
           this.permissionList = this.initPermissionList(result.data);
         });
     },
-    initPermissionList (permissionList) {
+    initPermissionList(permissionList) {
       permissionList.forEach(permission => {
         permission.title = permission.description;
         permission.expand = true;
@@ -94,20 +96,20 @@ export default {
       });
       return permissionList;
     },
-    addPermission () {
+    addPermission() {
 
     },
-    handleSelectPermission (arr, item) {
+    handleSelectPermission(arr, item) {
       this.permission = item;
     },
-    handleUpdate () {
+    handleUpdate() {
 
     },
-    handleReset () {
+    handleReset() {
       this.$refs.permissionForm.resetFields();
     }
   },
-  mounted () {
+  mounted() {
     this.getPermissionList();
   }
 };
