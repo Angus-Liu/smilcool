@@ -33,21 +33,10 @@ export default {
       this.handleLogin({ username, password })
         .then(res => {
           // 登录成功打开默认页
-          this.$router.push({
-            name: this.$config.homeName
-          });
-          // this.getUserInfo().then(res => {
-          //   // 登录成功打开默认页
-          //   this.$router.push({
-          //     name: this.$config.homeName
-          //   })
-          // })
+          this.$router.push({ name: this.$config.homeName });
         });
     }
   }
 };
 </script>
 
-<style>
-
-</style>

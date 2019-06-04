@@ -46,7 +46,7 @@
             </FormItem>
           </span>
       <FormItem>
-        <Button class="btn btn-search" type="primary" icon="ios-search" @click="getPage">筛选</Button>
+        <Button class="btn btn-search" type="primary" icon="ios-search" @click="getUserPage">筛选</Button>
         <Button class="btn" @click="handleReset">清空</Button>
         <a class="drop-down" @click="showMore">{{ more.content }}
           <Icon :type="more.icon"/>
@@ -60,13 +60,15 @@
         <strong>{{ row.username }}</strong>
       </template>
       <template slot-scope="{ row, index }" slot="roles">
-        <Tag v-for="(role, index) in row.roles" :key="index" type="border" color="primary">{{ role }}</Tag>
+        <Tag class="role-tag" v-for="(role, index) in row.roleList" :key="index" type="border" color="primary">
+          {{ role.description }}
+        </Tag>
       </template>
       <template slot-scope="{ row }" slot="state">
         <Tag :color="state[row.state].color">{{state[row.state].label}}</Tag>
       </template>
-      <template slot-scope="{ row, index }" slot="action">
-        <Button type="warning" size="small" @click="show(index)">配置角色</Button>
+      <template slot-scope="{ row }" slot="action">
+        <Button type="warning" size="small" @click="showRoleModal(row)">配置角色</Button>
       </template>
     </Table>
     <!-- 表格 END -->
@@ -76,6 +78,16 @@
             @on-change="handleCurrentChange" @on-page-size-change="handlePageSizeChange"
             show-sizer show-total show-elevator/>
     </Row>
+    <!-- 分页 END -->
+    <!-- 角色配置模态框 -->
+    <Modal class="role-modal" title="角色配置" v-model="roleModal.show" :mask-closable="false" :width="450">
+      <Tree class="role-tree" :data="roleList" show-checkbox check-directly check-strictly/>
+      <div slot="footer">
+        <Button type="text" @click="roleModal.show = false">关闭</Button>
+        <Button type="primary" @click="handleSubmit" :loading="roleModal.submitLoading">提交</Button>
+      </div>
+    </Modal>
+    <!-- 角色配置模态框 END -->
   </Card>
 </template>
 
@@ -139,7 +151,14 @@ export default {
         { title: '操作', slot: 'action', align: 'center', width: '150', fixed: 'right' }
       ],
       // 分页对象
-      page: { records: [], total: 0, size: 10, current: 1, pages: 1 }
+      page: { records: [], total: 0, size: 10, current: 1, pages: 1 },
+      // 角色列表
+      roleList: [],
+      // 角色模态框
+      roleModal: {
+        show: false,
+        submitLoading: false
+      }
     };
   },
   methods: {
@@ -159,15 +178,29 @@ export default {
         };
       }
     },
-    show(index) {
-      this.$Modal.info({
-        title: 'User Info',
-        content: `User Name：${this.page.records[index].username}<br>
-                  Nick Name：${this.page.records[index].nickname}<br>
-                  Sex：${this.page.records[index].sex}`
-      });
+    // 角色配置
+    showRoleModal(user) {
+      let roleIdList = [];
+      user.roleList.forEach(role => roleIdList.push(role.id));
+      this.roleList.forEach(role => role.checked = roleIdList.includes(role.id));
+      this.roleModal.show = true;
     },
-    getPage() {
+    // 获取角色列表
+    getRoleList() {
+      this.$axios.get('/api/role')
+        .then(res => {
+          // 获取响应体中统一接口交互对象 result
+          let result = res.data;
+          // 获取角色列表
+          result.data.forEach(role => {
+            role.title = role.description;
+            role.checked = false;
+          });
+          this.roleList = result.data;
+        });
+    },
+    // 获取用户分页
+    getUserPage() {
       this.loading = true;
       this.$axios.get('/api/user/page', this.queryForm)
         .then(res => {
@@ -183,22 +216,26 @@ export default {
       this.$refs.queryForm.resetFields();
       this.queryForm.current = 1;
       this.queryForm.size = 10;
-      this.getPage();
+      this.getUserPage();
     },
     // 分页操作
     handleCurrentChange(current) {
       this.queryForm.current = current;
-      this.getPage();
+      this.getUserPage();
     },
+    // 分页大小调整
     handlePageSizeChange(size) {
       this.queryForm.current = 1;
       this.queryForm.size = size;
-      this.getPage();
+      this.getUserPage();
+    },
+    handleSubmit() {
+
     }
   },
   mounted() {
-    // 请求数据
-    this.getPage();
+    this.getRoleList();
+    this.getUserPage();
   }
 };
 </script>
@@ -218,5 +255,17 @@ export default {
 
   .btn-search {
     margin-left: -35px;
+  }
+
+  .role-tag {
+    margin-top: 5px;
+  }
+
+  .role-tag:first-child {
+    margin-top: 10px;
+  }
+
+  .role-tag:last-child {
+    margin-bottom: 10px;
   }
 </style>

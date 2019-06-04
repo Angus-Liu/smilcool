@@ -117,8 +117,8 @@ export default {
             commit('setUserName', user.username);
             commit('setUserId', user.id);
             // 权限数据由用户角色和用户权限共同组成
-            const access = user.roles.concat(user.permissions);
-            commit('setAccess', access);
+            // const access = user.roles.concat(user.permissions);
+            // commit('setAccess', access);
             commit('setHasGetInfo', true);
             resolve(user);
           }).catch(err => {

@@ -10,7 +10,7 @@
       <FormItem label="关键字" prop="general">
         <Input class="form-item" v-model="queryForm.general" placeholder="请输入关键字"/>
       </FormItem>
-      <Button class="btn btn-search" type="primary" icon="ios-search" @click="getPage">筛选</Button>
+      <Button class="btn btn-search" type="primary" icon="ios-search" @click="getArticlePage">筛选</Button>
       <Button class="btn" @click="handleReset">清空</Button>
     </Form>
     <!-- 查询表单 END -->
@@ -104,7 +104,7 @@ export default {
           this.articleCategory = result.data;
         })
     },
-    getPage() {
+    getArticlePage() {
       this.loading = true;
       this.$axios.get('/api/article/page', this.queryForm)
         .then(res => {
@@ -117,22 +117,22 @@ export default {
       this.$refs.queryForm.resetFields();
       this.queryForm.current = 1;
       this.queryForm.size = 10;
-      this.getPage();
+      this.getArticlePage();
     },
     // 分页操作
     handleCurrentChange(current) {
       this.queryForm.current = current;
-      this.getPage();
+      this.getArticlePage();
     },
     handlePageSizeChange(size) {
       this.queryForm.current = 1;
       this.queryForm.size = size;
-      this.getPage();
+      this.getArticlePage();
     }
   },
   mounted() {
     this.getArticleCategory();
-    this.getPage();
+    this.getArticlePage();
   }
 }
 </script>

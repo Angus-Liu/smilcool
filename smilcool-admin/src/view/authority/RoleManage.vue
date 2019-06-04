@@ -13,7 +13,7 @@
       </template>
       <template slot-scope="{ row }" slot="action">
         <Button class="btn" type="primary" size="small" @click="editRole(row)">编辑</Button>
-        <Button class="btn" type="warning" size="small" @click="editPermission(row)">权限配置</Button>
+        <Button class="btn" type="warning" size="small" @click="showPermissionModal(row)">权限配置</Button>
       </template>
     </Table>
     <!-- 表格 END -->
@@ -69,18 +69,8 @@ export default {
         { title: '更新时间', key: 'updateTime', align: 'center', width: '150' },
         { title: '操作', slot: 'action', align: 'center', width: '200' }
       ],
-      roleList: [{
-        'id': 1,
-        'name': 'role_admin',
-        'description': '管理员',
-        'initial': false,
-        'state': 1,
-        'fixed': true,
-        'remark': '管理员能够登录后台',
-        'createTime': '2019-06-03 17:43:57',
-        'updateTime': '2019-06-03 17:43:57',
-        'permissionIdList': [1, 2, 4, 5, 6]
-      }],
+      // 角色列表
+      roleList: [],
       // 角色模态框数据
       roleModal: {
         isAdd: true, // 是否为添加模式
@@ -163,13 +153,13 @@ export default {
       return permissionList;
     },
     // 配置权限
-    editPermission(role) {
+    showPermissionModal(role) {
       this.updatePermissionList(role, this.permissionList);
       this.permissionModal.show = true;
     },
     updatePermissionList(role, permissionList) {
       permissionList.forEach(permission => {
-        permission.checked = permission.id in role.permissionIdList;
+        permission.checked = role.permissionIdList.includes(permission.id);
         this.updatePermissionList(role, permission.children);
       });
     },

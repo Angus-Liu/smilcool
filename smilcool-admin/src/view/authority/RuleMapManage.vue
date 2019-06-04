@@ -4,8 +4,8 @@
     <Row class="row-action">
       <Button class="btn" @click="addRuleMap" type="primary" icon="md-add">添加规则映射</Button>
       <Button class="btn" @click="getRuleMapList" icon="md-refresh">刷新</Button>
-      <Alert class="row-action-alert" type="warning" show-icon>为使规则生效，更新后需要重启服务端</Alert>
     </Row>
+    <!-- 操作栏 END -->
     <!-- 表格 -->
     <Table :columns="columns" :data="ruleMapList" border stripe>
       <template slot-scope="{ row }" slot="type">
@@ -17,28 +17,28 @@
         <iSwitch v-model="row.authc"/>
       </template>
       <template slot-scope="{ row }" slot="roles">
-        <Col span="6">
+        <iCol span="6">
           <iSwitch v-model="row.useRoles"/>
-        </Col>
-        <Col span="16" offset="2">
+        </iCol>
+        <iCol span="16" offset="2">
           <Input v-model="row.roles" placeholder="无" size="small"/>
-        </Col>
+        </iCol>
       </template>
       <template slot-scope="{ row }" slot="perms">
-        <Col span="6">
+        <iCol span="6">
           <iSwitch v-model="row.usePerms"/>
-        </Col>
-        <Col span="16" offset="2">
+        </iCol>
+        <iCol span="16" offset="2">
           <Input v-model="row.perms" placeholder="无" size="small"/>
-        </Col>
+        </iCol>
       </template>
       <template slot-scope="{ row }" slot="rest">
-        <Col span="6">
+        <iCol span="6">
           <iSwitch v-model="row.useRest"/>
-        </Col>
-        <Col span="16" offset="2">
+        </iCol>
+        <iCol span="16" offset="2">
           <Input v-model="row.rest" placeholder="无" size="small"/>
-        </Col>
+        </iCol>
       </template>
       <template slot-scope="{ row }" slot="rule">
         {{ buildRule(row) }}
@@ -53,6 +53,7 @@
         <Button class="btn" type="primary" size="small" @click="updateRuleMap(row)">更新</Button>
       </template>
     </Table>
+    <!-- 表格 END -->
     <!-- 规则映射模态框 -->
   </Card>
 </template>
@@ -101,27 +102,17 @@ export default {
     },
     buildRule(ruleMap) {
       let rule = '';
-      if (ruleMap.authc) {
-        rule += 'authc';
-      } else {
-        rule += 'anon';
-      }
-      if (ruleMap.useRoles) {
-        rule += `,roles[${ruleMap.roles}]`;
-      }
-      if (ruleMap.usePerms) {
-        rule += `,perms[${ruleMap.perms}]`;
-      }
-      if (ruleMap.useRest) {
-        rule += `,rest[${ruleMap.rest}]`;
-      }
+      rule += ruleMap.authc ? 'authc' : 'anon';
+      rule += ruleMap.useRoles ? `,roles[${ruleMap.roles}]` : '';
+      rule += ruleMap.usePerms ? `,perms[${ruleMap.perms}]` : '';
+      rule += ruleMap.useRest ? `,rest[${ruleMap.rest}]` : '';
       return rule;
     },
     updateRuleMap(ruleMap) {
       this.$axios.put(`/api/rule-map`, ruleMap)
         .then(res => {
           this.getRuleMapList();
-          this.$Message.success("更新成功");
+          this.$Message.success('更新成功');
         });
     }
   },
