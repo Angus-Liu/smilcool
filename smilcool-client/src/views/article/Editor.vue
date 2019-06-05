@@ -46,7 +46,7 @@
     <!-- 文章信息模态框 END -->
     <!-- 编辑器 -->
     <mavon-editor class="editor" v-model="articleAddForm.markdownContent"
-                  @change="contentChange" :boxShadow="false" style="z-index: 100"/>
+                  @change="contentChange" :boxShadow="false"/>
   </div>
 </template>
 
@@ -133,10 +133,12 @@ export default {
 
   .editor {
     height: 700px;
+    z-index: 1;
   }
 
   .fullscreen {
     height: 100%;
+    z-index: 100;
   }
 }
 
