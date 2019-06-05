@@ -4,7 +4,7 @@
     <sui-message info dismissable>
       <sui-message-header>如何发表动态？</sui-message-header>
       <p>
-        成功登录 Smilcool 系统后，在头像下拉菜单中可以找到 “发表动态” 选项，点击即可发表动态啦。快来发布你的校园动态吧 😆
+        成功登录 Smilcool 系统后，点击下方 “发布动态” 按钮即可发表动态啦。快来发布你的校园动态吧 😆
       </p>
     </sui-message>
     <!-- 消息提示 END -->

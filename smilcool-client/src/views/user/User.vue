@@ -17,12 +17,14 @@
           </sui-card-content>
         </sui-card>
         <!-- 用户简要信息 END -->
-        <div class="actions-buttons" v-if="$store.state.user && id !== $store.state.user.id.toString()">
+        <!-- 操作按钮 -->
+        <div class="actions-buttons" v-if="$store.state.user && user.id !== $store.state.user.id">
           <sui-button-group>
             <sui-button basic color="red" icon="heart" content="关注"/>
             <sui-button basic color="blue" icon="envelope" content="私信"/>
           </sui-button-group>
         </div>
+        <!-- 操作按钮 END -->
       </iCol>
       <iCol span="18">
         <!-- 用户详细信息 -->
@@ -61,7 +63,7 @@
             </Row>
           </sui-card-content>
           <sui-button basic attached="bottom" icon="pencil alternate" content="修改个人信息"
-                      v-if="$store.state.user && id === $store.state.user.id.toString()"
+                      v-if="$store.state.user && user.id === $store.state.user.id"
                       @click="userUpdateModal.show = true"/>
         </sui-card>
         <!-- 用户详细信息 END -->

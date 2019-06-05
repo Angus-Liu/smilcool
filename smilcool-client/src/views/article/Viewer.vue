@@ -75,7 +75,7 @@
       </iCol>
       <iCol span="6">
         <!-- 发布用户信息 -->
-        <sui-card class="fluid">
+        <sui-card class="fluid user-info-card">
           <sui-image style="width: 100%;" :src="article.user.avatar"/>
           <sui-card-content>
             <sui-card-header>
@@ -91,15 +91,23 @@
             文章作者
           </sui-card-content>
         </sui-card>
-        <!-- 发布用户信息结束 -->
-        <!-- 文章标签信息 -->
+        <!-- 发布用户信息 END -->
+        <!-- 操作按钮 -->
+        <div class="actions-buttons" v-if="$store.state.user && article.userId === $store.state.user.id">
+          <sui-button-group>
+            <sui-button icon="pencil" content="编辑" basic positive fluid/>
+            <sui-button icon="delete" content="删除" basic negative fluid/>
+          </sui-button-group>
+        </div>
+        <!-- 操作按钮 END -->
+        <!-- 文章信息 -->
         <sui-card class="fluid">
           <sui-message attached="top" :content="article.articleCategory"/>
           <sui-card-content>
             <Tag type="dot" color="#ff8364" v-for="(tag, index) in article.tags" :key="index">{{tag}}</Tag>
           </sui-card-content>
         </sui-card>
-        <!-- 文章标签信息结束 -->
+        <!-- 文章信息 END -->
         <sui-card class="fluid">
           <sui-message attached="top" content="相关文章"/>
           <sui-card-content>
@@ -288,6 +296,22 @@ export default {
   .article-resource-zan:hover,
   .article-resource-comment:hover {
     color: #000;
+  }
+}
+
+.user-info-card {
+  .header {
+   a {
+     color: #373737;
+   }
+  }
+}
+
+.actions-buttons {
+  text-align: center;
+
+  .button {
+    width: 134px;
   }
 }
 

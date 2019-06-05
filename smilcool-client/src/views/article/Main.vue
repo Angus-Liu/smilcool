@@ -33,8 +33,8 @@
                 <span class="article-category">
                   <sui-label tag>{{article.articleCategory}}</sui-label>
                 </span>
-                <a class="article-title" :href="'/article/' + article.id">{{article.title}}</a>
-                <!--<router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>-->
+                <!--<a class="article-title" :href="'/article/' + article.id">{{article.title}}</a>-->
+                <router-link class="article-title" :to="'/article/' + article.id">{{article.title}}</router-link>
                 <span class="article-time">{{article.createTime}}</span>
               </li>
             </ul>
