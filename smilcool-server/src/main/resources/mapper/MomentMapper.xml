@@ -219,7 +219,7 @@
                 AND moment.moment_category = #{form.momentCategory}
             </if>
             <if test="form.general != null">
-                AND moment.content LIKE "%"#{form.general}"%"
+                AND moment.content LIKE CONCAT("%",#{form.general},"%")
             </if>
         </where>
     </select>

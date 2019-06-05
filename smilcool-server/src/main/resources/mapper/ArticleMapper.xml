@@ -293,8 +293,8 @@
                 AND article.article_category = #{form.articleCategory}
             </if>
             <if test="form.general != null">
-                AND (article.title LIKE "%"#{form.general}"%"
-                OR article.brief LIKE "%"#{form.general}"%")
+                AND (article.title LIKE CONCAT("%",#{form.general},"%")
+                OR article.brief LIKE CONCAT("%",#{form.general},"%"))
             </if>
         </where>
     </select>

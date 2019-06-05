@@ -269,10 +269,10 @@
                 AND lost_found.lost_found_category = #{form.lostFoundCategory}
             </if>
             <if test="form.general != null">
-                AND (lost_found.title LIKE "%"#{form.general}"%"
-                OR lost_found.description LIKE "%"#{form.general}"%"
-                OR lost_found.item_name LIKE "%"#{form.general}"%"
-                OR lost_found.address LIKE "%"#{form.general}"%")
+                AND (lost_found.title LIKE CONCAT("%",#{form.general},"%")
+                OR lost_found.description LIKE CONCAT("%",#{form.general},"%")
+                OR lost_found.item_name LIKE CONCAT("%",#{form.general},"%")
+                OR lost_found.address LIKE CONCAT("%",#{form.general},"%"))
             </if>
         </where>
     </select>

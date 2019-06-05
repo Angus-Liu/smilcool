@@ -270,10 +270,10 @@
                 AND second_hand.second_hand_category = #{form.secondHandCategory}
             </if>
             <if test="form.general != null">
-                AND (second_hand.title LIKE "%"#{form.general}"%"
-                OR second_hand.name LIKE "%"#{form.general}"%"
-                OR second_hand.address LIKE "%"#{form.general}"%"
-                OR second_hand.description LIKE "%"#{form.general}"%")
+                AND (second_hand.title LIKE CONCAT("%",#{form.general},"%")
+                OR second_hand.name LIKE CONCAT("%",#{form.general},"%")
+                OR second_hand.address LIKE CONCAT("%",#{form.general},"%")
+                OR second_hand.description LIKE CONCAT("%",#{form.general},"%"))
             </if>
         </where>
     </select>

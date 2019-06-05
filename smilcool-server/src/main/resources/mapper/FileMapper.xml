@@ -247,9 +247,9 @@
                 AND file.file_category = #{form.fileCategory}
             </if>
             <if test="form.general != null">
-                AND (file.title LIKE "%"#{form.general}"%"
-                OR file.description LIKE "%"#{form.general}"%"
-                OR file.name LIKE "%"#{form.general}"%")
+                AND (file.title LIKE CONCAT("%",#{form.general},"%")
+                OR file.description LIKE CONCAT("%",#{form.general},"%")
+                OR file.name LIKE CONCAT("%",#{form.general},"%"))
             </if>
         </where>
     </select>
