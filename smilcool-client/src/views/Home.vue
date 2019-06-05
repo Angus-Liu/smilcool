@@ -32,7 +32,7 @@ export default {
 
   .body {
     margin: 10px 0;
-    min-height: calc(100% - 190px);
+    min-height: calc(100% - 200px);
   }
 }
 
