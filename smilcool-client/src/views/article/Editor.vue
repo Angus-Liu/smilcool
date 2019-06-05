@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <!-- 标题栏 -->
+    <!-- 标题 -->
     <div class="article-info-title">
       <Input v-model="articleAddForm.title" placeholder="输入文章标题" size="large">
         <template #append>
@@ -8,6 +8,7 @@
         </template>
       </Input>
     </div>
+    <!-- 标题 END -->
     <!-- 文章信息模态框 -->
     <Modal v-model="articleInfoModal.show" title="文章信息" :mask-closable="false" :width="600">
       <Row>
@@ -42,6 +43,7 @@
         <Button type="primary" @click="submitArticle" :loading="articleInfoModal.loading">确认提交</Button>
       </template>
     </Modal>
+    <!-- 文章信息模态框 END -->
     <!-- 编辑器 -->
     <mavon-editor class="editor" v-model="articleAddForm.markdownContent"
                   @change="contentChange" :boxShadow="false" style="z-index: 100"/>
@@ -121,16 +123,20 @@ export default {
 
 <style lang="less" scoped>
 .container {
+  height: 100%;
   width: 1260px;
-  margin: 20px auto;
-  /*background: #ccc;*/
+  margin: 5px auto;
 
   .article-info-title {
     margin-bottom: 7px;
   }
 
   .editor {
-    height: 750px;
+    height: 700px;
+  }
+
+  .fullscreen {
+    height: 100%;
   }
 }
 

@@ -27,7 +27,6 @@ export default {
 <style lang="less" scoped>
 footer {
   height: 100px;
-  margin-top: 5px;
 
   .container {
     height: 100%;

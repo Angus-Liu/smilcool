@@ -1,25 +1,23 @@
 <template>
+
   <div id="app">
     <router-view/>
+    <BackTop>
+      <Icon type="ios-arrow-up" color="#ff8364" size="30"/>
+    </BackTop>
   </div>
 </template>
 
 <style lang="less">
-.size {
-  width: 100%;
-  height: 100%;
-}
 
 html, body {
-  .size;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
+  background: #f1f1f1;
 }
 
 #app {
-  .size;
-  /*background: #EFF3F5;*/
+  width: 100%;
+  height: 100%;
   background: #f1f1f1;
 }
+
 </style>

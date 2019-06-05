@@ -118,7 +118,7 @@ export default {
       this.param.current = 1;
       this.getArticlePage(this.param);
     },
-    // 获取二手交易类别
+    // 获取文章类别
     getArticleCategory() {
       this.$axios.get('/api/dic/item', { dicTypeCode: 'article-category' })
         .then(res => {

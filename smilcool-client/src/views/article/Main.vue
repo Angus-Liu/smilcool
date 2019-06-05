@@ -276,7 +276,6 @@ export default {
 .container {
   width: 1200px;
   margin: 10px auto;
-  /*background: #ccc;*/
 
 
   .ivu-col {
