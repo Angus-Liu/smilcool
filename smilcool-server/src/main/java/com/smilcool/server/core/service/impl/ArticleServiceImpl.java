@@ -107,7 +107,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<TagVO> listHotTag() {
         List<TagVO> hotTagList = new ArrayList<>();
-
+        // 构建搜索条件
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 // 指定索引
                 .withIndices("article")
@@ -116,8 +116,9 @@ public class ArticleServiceImpl implements ArticleService {
                 // 对 tagList 字段进行聚集搜索，查找热门标签（TOP20）
                 .addAggregation(AggregationBuilders.terms("tagList").field("tagList").size(20))
                 .build();
+        // 执行聚集搜索
         Aggregations aggregations = elasticsearchTemplate.query(searchQuery, SearchResponse::getAggregations);
-
+        // 获取热门标签
         StringTerms terms = (StringTerms) aggregations.getAsMap().get("tagList");
         List<Bucket> buckets = terms.getBuckets();
         buckets.forEach(bucket -> hotTagList.add(new TagVO(bucket.getKey().toString(), bucket.getDocCount())));

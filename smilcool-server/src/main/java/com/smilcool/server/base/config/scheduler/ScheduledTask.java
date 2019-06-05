@@ -3,10 +3,12 @@ package com.smilcool.server.base.config.scheduler;
 import cn.hutool.json.JSONUtil;
 import com.smilcool.server.base.config.elasticsearch.document.ArticleDocument;
 import com.smilcool.server.base.config.elasticsearch.repository.ArticleRepository;
+import com.smilcool.server.common.enums.SysParamEnum;
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
 import com.smilcool.server.core.service.ArticleService;
+import com.smilcool.server.core.service.SysParamService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +36,9 @@ public class ScheduledTask {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private SysParamService sysParamService;
+
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
@@ -41,10 +46,12 @@ public class ScheduledTask {
      */
     @Scheduled(cron = "0 */1 * * * *")
     public void syncMySqlToElasticsearch() {
-        // 获取需同步数据更新时间段
-        // TODO 2019/5/26 updateTimeEnd 字段每次应持久化存储
+        // 从数据库获取上次更新的时间
+        String updateTimeStart = sysParamService
+                .getSysParam(SysParamEnum.LAST_SYNC_MYSQL_TO_ELASTICSEARCH_TIME)
+                .getValue();
+        // 获取当前时间
         LocalDateTime now = LocalDateTime.now();
-        String updateTimeStart = now.minusMinutes(1).format(DATE_TIME_FORMATTER);
         String updateTimeEnd = now.format(DATE_TIME_FORMATTER);
         log.info("开始同步 MySQL 到 Elasticsearch，同步数据更新时间段：[{}] - [{}]", updateTimeStart, updateTimeEnd);
         // 查询该时间端 MySQL 中更新过的数据
@@ -68,6 +75,8 @@ public class ScheduledTask {
                 }
             });
         }
+        // 将本次更新时间存储到数据库
+        sysParamService.updateSysParam(SysParamEnum.LAST_SYNC_MYSQL_TO_ELASTICSEARCH_TIME, updateTimeEnd);
         log.info("结束同步 MySQL 到 Elasticsearch，同步数据更新时间段：[{}] - [{}]，共同步 {} 条数据",
                 updateTimeStart, updateTimeEnd, articleList.size());
     }

@@ -400,7 +400,7 @@ CREATE TABLE `dic_item` (
 DROP TABLE IF EXISTS `sys_param`;
 CREATE TABLE `sys_param` (
   `id`          int(11)      NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `name`        varchar(20)  NOT NULL COMMENT '参数名',
+  `name`        varchar(255) NOT NULL COMMENT '参数名',
   `value`       varchar(255) NOT NULL COMMENT '参数值',
   `seq`         int(11)      NOT NULL DEFAULT '0' COMMENT '排序值',
   `fixed`       tinyint(1)   NOT NULL DEFAULT '0' COMMENT '固定不可修改：0-否，1-是',
