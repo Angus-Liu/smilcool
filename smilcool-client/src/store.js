@@ -14,7 +14,7 @@ export default new Vuex.Store({
       id: -1,
       username: 'anonymous',
       nickname: '游客',
-      avatar: require('./assets/img/anonymous-avatar.jpg'),
+      avatar: require('./assets/img/avatar/anonymous-avatar.jpg'),
       sex: '保密',
       birthday: '1970-01-01',
       sign: '一句话介绍自己',
