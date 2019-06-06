@@ -70,7 +70,7 @@
         <sui-tab>
           <!-- 发表文章 -->
           <sui-tab-pane title="📰 发表文章">
-            <ul class="list">
+            <ul class="list" v-if=" articlePage.records.length > 0">
               <li class="item" v-for="article in articlePage.records" :key="article.id">
                 <span class="category">
                   <sui-label>{{article.articleCategory}}</sui-label>
@@ -81,11 +81,12 @@
                 <span class="time">{{article.createTime}}</span>
               </li>
             </ul>
+            <span v-else>暂无</span>
           </sui-tab-pane>
           <!-- 发表文章 END -->
           <!-- 上传文件 -->
           <sui-tab-pane title="📁 上传文件">
-            <ul class="list">
+            <ul class="list" v-if="filePage.records.length > 0">
               <li class="item" v-for="file in filePage.records" :key="file.id">
                 <span class="category">
                   <sui-label>{{file.fileCategory}}</sui-label>
@@ -94,11 +95,12 @@
                 <span class="time">{{file.createTime}}</span>
               </li>
             </ul>
+            <span v-else>暂无</span>
           </sui-tab-pane>
           <!-- 上传文件 END -->
           <!-- 发布二手 -->
           <sui-tab-pane title="🛒 发布二手">
-            <ul class="list">
+            <ul class="list" v-if="secondHandPage.records.length > 0">
               <li class="item" v-for="secondHand in secondHandPage.records" :key="secondHand.id">
                 <span class="category">
                   <sui-label>{{secondHand.secondHandCategory}}</sui-label>
@@ -107,11 +109,12 @@
                 <span class="time">{{secondHand.createTime}}</span>
               </li>
             </ul>
+            <span v-else>暂无</span>
           </sui-tab-pane>
           <!-- 发布二手 END -->
           <!-- 发布失物寻物 -->
           <sui-tab-pane title="👜 发布失物寻物">
-            <ul class="list">
+            <ul class="list" v-if="lostFoundPage.records.length > 0">
               <li class="item" v-for="lostFound in lostFoundPage.records" :key="lostFound.id">
                 <span class="category">
                   <sui-label>{{lostFound.lostFoundCategory}}</sui-label>
@@ -120,11 +123,12 @@
                 <span class="time">{{lostFound.createTime}}</span>
               </li>
             </ul>
+            <span v-else>暂无</span>
           </sui-tab-pane>
           <!-- 发布失物寻物 END -->
           <!-- 发布帖子 -->
           <sui-tab-pane title="📃 发布帖子">
-            暂无
+            <span>暂无</span>
           </sui-tab-pane>
           <!-- 发布帖子 END -->
         </sui-tab>
