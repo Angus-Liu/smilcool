@@ -27,8 +27,17 @@
             </sui-message>
             <sui-card-content>
               <div class="article-comment">
-                <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
-                       @on-enter="addComment"/>
+                <!-- 评论框 -->
+                <sui-form class="comment-input-form">
+                  <sui-form-field>
+                    <Input ref="commentInput" v-model="comment.value" type="textarea" :rows="3" placeholder="添加评论"
+                           @keydown.ctrl.enter.native="addComment"/>
+                  </sui-form-field>
+                  <sui-form-field>
+                    <sui-button basic floated="right" content="评论(Ctrl+Enter)" @click.prevent="addComment"/>
+                  </sui-form-field>
+                </sui-form>
+                <!-- 评论框END -->
                 <!-- 父评论 -->
                 <sui-comment-group>
                   <sui-comment v-for="comment in commentList" :key="comment.id">
@@ -301,9 +310,9 @@ export default {
 
 .user-info-card {
   .header {
-   a {
-     color: #373737;
-   }
+    a {
+      color: #373737;
+    }
   }
 }
 
@@ -318,6 +327,9 @@ export default {
 .comment-card {
   .article-comment {
     margin: 1em;
+    .comment-input-form {
+      overflow: hidden;
+    }
   }
 }
 </style>
