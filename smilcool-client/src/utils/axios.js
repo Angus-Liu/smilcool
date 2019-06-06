@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Log from './log';
 import { Notice } from 'iview';
+import store from '../store'
 
 // 自定义日志工具
 const log = new Log('src/utils/axios.js');
@@ -44,7 +45,8 @@ class HttpRequest {
             log.info('业务异常');
             break;
           case 401:
-            log.info('跳转到登录页面');
+            log.info('认证异常');
+            store.commit('userUpdate', null);
             break;
           case 403:
             log.info('权限不足');

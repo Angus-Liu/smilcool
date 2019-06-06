@@ -87,8 +87,7 @@
       </iCol>
     </Row>
     <!-- 失物寻物添加模态框 -->
-    <Modal v-model="lostFoundAddModal.show" :title="lostFoundAddModal.title"
-           :closable="false" :mask-closable="false" width="600">
+    <Modal v-model="lostFoundAddModal.show" :title="lostFoundAddModal.title" width="600" scrollable>
       <Form :model="lostFoundAddModal.form" :label-width="50">
         <FormItem label="标题" required>
           <Input v-model="lostFoundAddModal.form.title" size="large" placeholder="清晰的标题能让更多人注意到"/>

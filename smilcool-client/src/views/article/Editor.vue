@@ -47,6 +47,7 @@
     <!-- 编辑器 -->
     <mavon-editor class="editor" v-model="articleAddForm.markdownContent"
                   @change="contentChange" :boxShadow="false"/>
+    <!-- 编辑器 END -->
   </div>
 </template>
 

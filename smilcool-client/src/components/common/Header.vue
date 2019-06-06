@@ -4,7 +4,7 @@
       <div class="container">
         <!-- LOGO -->
         <router-link to="/">
-          <img class="logo" src="../../assets/logo-3.png">
+          <img class="logo" src="../../assets/img/logo-3.png">
         </router-link>
         <!-- LOGO END -->
         <!-- 菜单 -->
@@ -63,7 +63,7 @@
             </DropdownMenu>
           </Dropdown>
           <sui-image class="avatar-img" v-else circular @click.native="loginRegisterModel.show = true"
-                     :src="require('../../assets/anonymous-avatar.png')"/>
+                     :src="require('../../assets/img/anonymous-avatar.jpg')"/>
         </div>
         <!-- 头像 END -->
         <!-- 消息通知 -->
@@ -213,7 +213,7 @@ export default {
         || this.registerForm.password !== this.registerForm.rePassword) {
         this.showErrorNotice('注册失败', '两次输入的密码不一致');
       } else {
-        // TODO 后期需要搬到 vuex
+        // TODO 2019/6/6 后期需要搬到 vuex
         this.$axios.post('/api/user/register', this.registerForm)
           .then(res => {
             let result = res.data;
@@ -299,6 +299,10 @@ header {
     float: right;
     margin-top: 22px;
     margin-right: 30px;
+
+    a {
+      color: #373737;
+    }
   }
 
   .search-container {

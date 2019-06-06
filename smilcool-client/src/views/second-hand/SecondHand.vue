@@ -60,7 +60,7 @@
                 @click="loadMore"/>
     <!-- 加载更多 END -->
     <!-- 二手交易添加模态框 -->
-    <Modal v-model="secondHanAddModal.show" title="发布闲置" :closable="false" :mask-closable="false" width="600">
+    <Modal v-model="secondHanAddModal.show" title="发布闲置" width="600" scrollable>
       <Form :model="secondHanAddModal.form" :label-width="50">
         <FormItem label="类别" required>
           <Select v-model="secondHanAddModal.form.secondHandCategory" size="large">

@@ -51,7 +51,7 @@
                 :disabled="param.current >= momentPage.pages"/>
     <!-- 加载更多 END -->
     <!-- 发布动态模态框 -->
-    <Modal v-model="momentAddModal.show" title="发布动态" :closable="false" :mask-closable="false" width="600">
+    <Modal v-model="momentAddModal.show" title="发布动态" width="600" scrollable>
       <Form :model="momentAddModal.form" :label-width="50">
         <FormItem label="类别" required>
           <Select v-model="momentAddModal.form.momentCategory" size="large">

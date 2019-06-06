@@ -89,7 +89,7 @@
       </iCol>
     </Row>
     <!-- 文件上传模态框 -->
-    <Modal v-model="fileAddModal.show" title="上传文件" :mask-closable="false" width="600">
+    <Modal v-model="fileAddModal.show" title="上传文件" width="600" scrollable>
       <Form :model="fileAddModal.form" :label-width="50">
         <FormItem label="类别" required>
           <Select v-model="fileAddModal.form.fileCategory" size="large">

@@ -195,7 +195,7 @@ export default {
         'id': -1,
         'username': 'anonymous',
         'nickname': '游客',
-        'avatar': require('../../assets/anonymous-avatar.png'),
+        'avatar': require('../../assets/img/anonymous-avatar.jpg'),
         'sex': '保密',
         'birthday': '1970-01-01',
         'sign': '一句话介绍自己',
@@ -212,7 +212,7 @@ export default {
         show: false,
         form: {
           'nickname': '游客',
-          'avatar': require('../../assets/anonymous-avatar.png'),
+          'avatar': require('../../assets/img/anonymous-avatar.jpg'),
           'sex': '保密',
           'birthday': '1970-01-01',
           'college': '未填写',

@@ -94,7 +94,7 @@
           </sui-message>
           <sui-card-content>
             <div class="article-hot-tag">
-              <Tag color="red" v-for="(tag, index) in hotTagList" :key="index" @click.native="toSearch(tag.name)">
+              <Tag color="orange" v-for="(tag, index) in hotTagList" :key="index" @click.native="toSearch(tag.name)">
                 {{tag.name}}-{{tag.count}}
               </Tag>
             </div>
@@ -167,7 +167,7 @@ export default {
             'id': -1,
             'username': 'anonymous',
             'nickname': '游客',
-            'avatar': require('../../assets/anonymous-avatar.png'),
+            'avatar': require('../../assets/img/anonymous-avatar.jpg'),
             'sex': '保密',
             'sign': '一句话介绍自己'
           },

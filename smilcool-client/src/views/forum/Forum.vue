@@ -5,7 +5,7 @@
       <iCol class="column">
         <sui-message dismissable>
           <div style="width: 480px; margin:0px auto; overflow: hidden;">
-            <img src="../../assets/forum.svg" style="width: 55px; float: left">
+            <img src="../../assets/img/forum.svg" style="width: 55px; float: left">
             <div style="line-height: 180%; text-align: center;">
               <div style="font-size: 15px">
                 校内论坛 <a href="#" target="_blank"> Smilcool Forum </a> 正式上线！快来畅所欲言吧~

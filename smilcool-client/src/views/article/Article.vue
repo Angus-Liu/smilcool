@@ -87,7 +87,7 @@ export default {
             'id': -1,
             'username': 'anonymous',
             'nickname': '游客',
-            'avatar': require('../../assets/anonymous-avatar.png'),
+            'avatar': require('../../assets/img/anonymous-avatar.jpg'),
             'sex': '保密',
             'sign': '一句话介绍自己'
           },
