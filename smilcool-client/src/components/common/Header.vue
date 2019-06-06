@@ -250,6 +250,7 @@ export default {
     }
   },
   mounted() {
+    // TODO 2019/6/6 也可以在这里加载 WebSocket
   }
 };
 </script>

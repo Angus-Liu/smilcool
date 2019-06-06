@@ -44,7 +44,7 @@ export default {
 
   .body {
     margin: 10px 0;
-    min-height: calc(100% - 200px);
+    min-height: calc(100% - 90px);
   }
 }
 

@@ -10,7 +10,7 @@
     </div>
     <!-- 标题 END -->
     <!-- 文章信息模态框 -->
-    <Modal v-model="articleInfoModal.show" title="文章信息" :mask-closable="false" :width="600">
+    <Modal v-model="articleInfoModal.show" title="文章信息" :mask-closable="false" :width="600" scrollable>
       <Row>
         <iCol span="8">
           <sui-image :src="articleAddForm.cover" size="medium" rounded/>
@@ -126,14 +126,14 @@ export default {
 .container {
   height: 100%;
   width: 1260px;
-  margin: 5px auto;
+  margin: 20px auto;
 
   .article-info-title {
     margin-bottom: 7px;
   }
 
   .editor {
-    height: 700px;
+    height: 780px;
     z-index: 1;
   }
 
