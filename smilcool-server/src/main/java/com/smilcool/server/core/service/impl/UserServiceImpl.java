@@ -7,7 +7,7 @@ import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.dao.UserMapper;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
-import com.smilcool.server.core.pojo.form.UserRegisterForm;
+import com.smilcool.server.core.pojo.form.UserLogonForm;
 import com.smilcool.server.core.pojo.form.UserUpdateForm;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.vo.UserVO;
@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -105,12 +104,13 @@ public class UserServiceImpl implements UserService {
         // Shiro 身份注销
         Subject currentUser = SecurityUtils.getSubject();
         currentUser.logout();
+        // Netty channel 关闭
     }
 
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public UserVO register(UserRegisterForm form) {
+    public UserVO logon(UserLogonForm form) {
         User selected = userMapper.selectByUsername(form.getUsername());
         if (selected != null) {
             throw new SmilcoolException("用户名已存在");

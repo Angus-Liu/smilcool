@@ -62,7 +62,7 @@
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
-          <sui-image class="avatar-img" v-else circular @click.native="loginRegisterModel.show = true"
+          <sui-image class="avatar-img" v-else circular @click.native="logInOnModel.show = true"
                      :src="require('../../assets/img/anonymous-avatar.jpg')"/>
         </div>
         <!-- 头像 END -->
@@ -88,10 +88,10 @@
         <!-- 搜索框 END -->
       </div>
       <!-- 登录注册模态框 -->
-      <Modal v-model="loginRegisterModel.show" :title="loginRegisterModel.title" :mask-closable="false" width="320"
+      <Modal v-model="logInOnModel.show" :title="logInOnModel.title" :mask-closable="false" width="320"
              footer-hide>
         <!-- 登录表单 -->
-        <sui-form v-if="loginRegisterModel.isLogin">
+        <sui-form v-if="logInOnModel.isLogin">
           <sui-form-field>
             <sui-input placeholder="请输入用户名或邮箱" v-model="loginForm.username"/>
           </sui-form-field>
@@ -111,19 +111,19 @@
         <!-- 注册表单 -->
         <sui-form v-else>
           <sui-form-field>
-            <sui-input placeholder="请输入用户名" v-model="registerForm.username"/>
+            <sui-input placeholder="请输入用户名" v-model="logonForm.username"/>
           </sui-form-field>
           <sui-form-field>
-            <sui-input type="email" placeholder="请输入邮箱" v-model="registerForm.email"/>
+            <sui-input type="email" placeholder="请输入邮箱" v-model="logonForm.email"/>
           </sui-form-field>
           <sui-form-field>
-            <sui-input type="password" placeholder="请输入密码" v-model="registerForm.password"/>
+            <sui-input type="password" placeholder="请输入密码" v-model="logonForm.password"/>
           </sui-form-field>
           <sui-form-field>
-            <sui-input type="password" placeholder="请确认密码" v-model="registerForm.rePassword"/>
+            <sui-input type="password" placeholder="请确认密码" v-model="logonForm.rePassword"/>
           </sui-form-field>
           <sui-form-field>
-            <sui-button style="width: 100%" basic primary @click.prevent="register">注册</sui-button>
+            <sui-button style="width: 100%" basic primary @click.prevent="logon">注册</sui-button>
           </sui-form-field>
           <sui-form-field>
             <div style="overflow: hidden">
@@ -145,7 +145,7 @@ export default {
     return {
       q: '',
       active: 1,
-      loginRegisterModel: {
+      logInOnModel: {
         show: false,
         title: '登录',
         isLogin: true,
@@ -154,7 +154,7 @@ export default {
         username: '',
         password: ''
       },
-      registerForm: {
+      logonForm: {
         username: '',
         email: '',
         password: '',
@@ -171,12 +171,12 @@ export default {
   },
   methods: {
     showLoginForm() {
-      this.loginRegisterModel.title = '登录';
-      this.loginRegisterModel.isLogin = true;
+      this.logInOnModel.title = '登录';
+      this.logInOnModel.isLogin = true;
     },
     showRegisterForm() {
-      this.loginRegisterModel.title = '注册';
-      this.loginRegisterModel.isLogin = false;
+      this.logInOnModel.title = '注册';
+      this.logInOnModel.isLogin = false;
     },
     showErrorNotice(title, desc) {
       this.$Notice.error({ title, desc });
@@ -193,7 +193,7 @@ export default {
           .then(res => {
             let result = res.data;
             if (result.success) {
-              this.loginRegisterModel.show = false;
+              this.logInOnModel.show = false;
               // 保存到 vuex
               this.$store.commit('userUpdate', result.data);
               this.loginForm = {
@@ -212,20 +212,21 @@ export default {
         })
     },
     // 注册
-    register() {
-      if (this.registerForm.username.length === 0) {
+    logon() {
+      if (this.logonForm.username.length === 0) {
         this.showErrorNotice('注册失败', '请填写用户名');
-      } else if (this.registerForm.email.length === 0
-        || !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.registerForm.email)) {
+      } else if (this.logonForm.email.length === 0
+        || !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.logonForm.email)) {
         this.showErrorNotice('注册失败', '请填写合法的邮箱');
-      } else if (this.registerForm.password.length === 0
-        || this.registerForm.password !== this.registerForm.rePassword) {
+      } else if (this.logonForm.password.length === 0
+        || this.logonForm.password !== this.logonForm.rePassword) {
         this.showErrorNotice('注册失败', '两次输入的密码不一致');
       } else {
         // TODO 2019/6/6 后期需要搬到 vuex
-        this.$axios.post('/api/user/register', this.registerForm)
+        this.$axios.post('/api/user/logon', this.logonForm)
           .then(res => {
-            let result = res.data;
+            this.$Notice.success("注册成功");
+            this.showLoginForm();
           });
       }
     },

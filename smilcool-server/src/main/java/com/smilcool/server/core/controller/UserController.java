@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.dto.Result;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
-import com.smilcool.server.core.pojo.form.UserRegisterForm;
+import com.smilcool.server.core.pojo.form.UserLogonForm;
 import com.smilcool.server.core.pojo.form.UserUpdateForm;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import com.smilcool.server.core.service.UserService;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author Angus
@@ -45,9 +44,9 @@ public class UserController {
     }
 
     @ApiOperation("用户注册")
-    @PostMapping("/register")
-    public Result<UserVO> register(@RequestBody @Valid UserRegisterForm userRegisterForm) {
-        UserVO registerUser = userService.register(userRegisterForm);
+    @PostMapping("/logon")
+    public Result<UserVO> logon(@RequestBody @Valid UserLogonForm form) {
+        UserVO registerUser = userService.logon(form);
         return Result.success(registerUser);
     }
 

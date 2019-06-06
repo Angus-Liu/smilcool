@@ -3,12 +3,11 @@ package com.smilcool.server.core.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.core.pojo.form.UserLoginForm;
 import com.smilcool.server.core.pojo.form.UserQueryForm;
-import com.smilcool.server.core.pojo.form.UserRegisterForm;
+import com.smilcool.server.core.pojo.form.UserLogonForm;
 import com.smilcool.server.core.pojo.form.UserUpdateForm;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.vo.UserVO;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -54,7 +53,7 @@ public interface UserService {
      * @param form 用户注册表单的那
      * @return 用户信息
      */
-    UserVO register(UserRegisterForm form);
+    UserVO logon(UserLogonForm form);
 
     UserVO updateUser(UserUpdateForm form);
 

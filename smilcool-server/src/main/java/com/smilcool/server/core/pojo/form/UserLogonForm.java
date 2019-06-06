@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
  * @date 2019/3/29
  */
 @Data
-public class UserRegisterForm {
+public class UserLogonForm {
 
     @NotBlank(message = "用户名不能为空")
     private String username;
