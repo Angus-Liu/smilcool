@@ -56,7 +56,7 @@
                 <sui-icon name="key"/>
                 账号管理
               </DropdownItem>
-              <DropdownItem divided @click.native="$store.commit('userUpdate', null)">
+              <DropdownItem divided @click.native="logout">
                 <sui-icon name="power off"/>
                 退出登录
               </DropdownItem>
@@ -181,6 +181,7 @@ export default {
     showErrorNotice(title, desc) {
       this.$Notice.error({ title, desc });
     },
+    // 登录
     login() {
       if (this.loginForm.username.length === 0) {
         this.showErrorNotice('登录失败', '请填写用户名或邮箱');
@@ -203,6 +204,14 @@ export default {
           });
       }
     },
+    // 注销
+    logout() {
+      this.$axios.post('/api/user/logout')
+        .then(res => {
+          this.$store.commit('userUpdate', null);
+        })
+    },
+    // 注册
     register() {
       if (this.registerForm.username.length === 0) {
         this.showErrorNotice('注册失败', '请填写用户名');
