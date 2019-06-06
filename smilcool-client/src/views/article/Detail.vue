@@ -130,7 +130,7 @@
 
 <script>
 export default {
-  name: 'Viewer',
+  name: 'Detail',
   props: ['id'],
   data() {
     return {
@@ -149,7 +149,7 @@ export default {
           'id': -1,
           'username': 'anonymous',
           'nickname': '游客',
-          'avatar': require('../../assets/img/anonymous-avatar.jpg'),
+          'avatar': require('../../assets/img/avatar/anonymous-avatar.jpg'),
           'sex': '保密',
           'sign': '一句话介绍自己'
         },
@@ -327,6 +327,7 @@ export default {
 .comment-card {
   .article-comment {
     margin: 1em;
+
     .comment-input-form {
       overflow: hidden;
     }

@@ -39,7 +39,7 @@ const router = new Router({
           meta: {
             title: '文章详情'
           },
-          component: () => import('@/views/article/Viewer')
+          component: () => import('@/views/article/Detail')
         }, {
           path: 'moment',
           name: 'moment',
@@ -109,8 +109,13 @@ const router = new Router({
       ]
     }
   ],
+  // 页面切换时滚动到顶端（好像没作用）
   scrollBehavior(to, from, savedPosition) {
-    return { x: 0, y: 0 }
+    if (to.hash) {
+      return { selector: to.hash }
+    } else {
+      return { x: 0, y: 0 }
+    }
   }
 });
 
