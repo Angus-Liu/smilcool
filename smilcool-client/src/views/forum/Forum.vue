@@ -8,7 +8,7 @@
             <img src="../../assets/img/logo/forum.svg" style="width: 55px; float: left">
             <div style="line-height: 180%; text-align: center;">
               <div style="font-size: 15px">
-                校内论坛 <a href="#" target="_blank"> Smilcool Forum </a> 正式上线！快来畅所欲言吧~
+                校内论坛 <a> Smilcool Forum </a> 正式上线！快来畅所欲言吧~
               </div>
               <p style="padding: 0 10px;">老司机不要过来开车哦，会被查水表滴 😂</p>
             </div>
@@ -99,6 +99,24 @@ export default {
   data() {
     return {
       post: [{
+        avatar: 'http://img.angus-liu.cn/avatar/avatar06.png',
+        content: '<a>赫本</a> 发布了精华帖 <a>Thinking in java 解读</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar01.jpg',
+        content: '<a>老王本王</a> 回复了帖子 <a>如何使用 Smilcool</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar02.jpg',
+        content: '<a>一双毛腿肩上扛</a> 点赞了帖子 <a>如何使用 Smilcool</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar03.jpg',
+        content: '<a>666</a> 点赞了帖子 <a>Thinking in java 解读</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar04.jpg',
+        content: '<a>007</a> 点赞了帖子 <a>Thinking in java 解读</a>'
+      }, {
+        avatar: 'http://img.angus-liu.cn/avatar/avatar05.jpg',
+        content: '<a>安妮</a> 发布了帖子 <a>BAT 面试宝典，点进来你不会后悔</a>'
+      }, {
         avatar: 'http://img.angus-liu.cn/avatar/avatar06.png',
         content: '<a>赫本</a> 发布了精华帖 <a>Thinking in java 解读</a>'
       }, {

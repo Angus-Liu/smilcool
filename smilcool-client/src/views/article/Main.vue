@@ -149,6 +149,13 @@ export default {
         '/local-storage/img/banner03.jpg',
         '/local-storage/img/banner04.jpg',
         '/local-storage/img/banner05.jpg',
+        '/local-storage/img/banner06.jpg',
+        '/local-storage/img/banner07.jpg',
+        '/local-storage/img/banner08.jpg',
+        '/local-storage/img/banner09.jpg',
+        '/local-storage/img/banner10.jpg',
+        '/local-storage/img/banner11.jpg',
+        '/local-storage/img/banner12.jpg',
       ],
       param: {
         // page & order 参数
@@ -284,6 +291,7 @@ export default {
 
   .carousel-container {
     margin-bottom: 15px;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
 
     .carousel-item {
       width: 100%;
