@@ -4,7 +4,7 @@
       <div class="container">
         <!-- LOGO -->
         <router-link to="/">
-          <img class="logo" src="../../assets/img/logo-3.png">
+          <img class="logo" src="../../assets/img/logo/logo-3.png">
         </router-link>
         <!-- LOGO END -->
         <!-- 菜单 -->
@@ -63,7 +63,7 @@
             </DropdownMenu>
           </Dropdown>
           <sui-image class="avatar-img" v-else circular @click.native="logInOnModel.show = true"
-                     :src="require('../../assets/img/anonymous-avatar.jpg')"/>
+                     :src="require('../../assets/img/avatar/anonymous-avatar.jpg')"/>
         </div>
         <!-- 头像 END -->
         <!-- 消息通知 -->
@@ -88,8 +88,8 @@
         <!-- 搜索框 END -->
       </div>
       <!-- 登录注册模态框 -->
-      <Modal v-model="logInOnModel.show" :title="logInOnModel.title" :mask-closable="false" width="320"
-             footer-hide>
+      <Modal class="login-on-modal" v-model="logInOnModel.show" :title="logInOnModel.title" :mask-closable="false"
+             width="320" scrollable footer-hide :styles="{top: '20%'}">
         <!-- 登录表单 -->
         <sui-form v-if="logInOnModel.isLogin">
           <sui-form-field>
@@ -102,9 +102,19 @@
             <sui-button fluid basic primary @click.prevent="login">登录</sui-button>
           </sui-form-field>
           <sui-form-field>
-            <div>
-              <span>没有账号？<a @click="showRegisterForm">注册</a></span>
+            <div style="color: #5c5c5c">没有账号？<a @click="showRegisterForm">注册</a>
               <a style="float:right" href="#">忘记密码</a>
+            </div>
+          </sui-form-field>
+          <sui-form-field>
+            <div style="color: #5c5c5c">第三方账号登录：</div>
+            <div class="oauth">
+              <div class="oauth-bg">
+                <img alt="微博" src="../../assets/img/icon/weibo.svg" @click="oauth"></div>
+              <div class="oauth-bg">
+                <img alt="微信" src="../../assets/img/icon/wechat.svg" @click="oauth"></div>
+              <div class="oauth-bg">
+                <img alt="GitHub" src="../../assets/img/icon/github.svg" @click="oauth"></div>
             </div>
           </sui-form-field>
         </sui-form>
@@ -225,11 +235,16 @@ export default {
         // TODO 2019/6/6 后期需要搬到 vuex
         this.$axios.post('/api/user/logon', this.logonForm)
           .then(res => {
-            this.$Notice.success("注册成功");
+            this.$Notice.success({ title: 'Bingo', desc: '注册成功' });
             this.showLoginForm();
           });
       }
     },
+    // 第三方登录
+    oauth() {
+      this.$Notice.warning({ title: 'Hey', desc: '功能正在开发中 🚀' });
+    },
+    // 全文搜索界面
     toSearch() {
       this.$router.push({ name: 'search', query: { q: this.q } })
     }
@@ -323,6 +338,31 @@ header {
 
   .ivu-form-item:last-child {
     margin-bottom: 0;
+  }
+}
+
+.login-on-modal {
+  .oauth {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 15px;
+
+    .oauth-bg {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: #f4f8fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        height: 1.7rem;
+        vertical-align: bottom;
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>
