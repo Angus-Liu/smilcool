@@ -16,11 +16,7 @@ import java.util.Set;
  * @date 2019/3/20
  */
 public interface UserService {
-    Integer currentUserId();
-
-    User getCurrentUser();
-
-    void checkExist(Integer id);
+    void validate(Integer id);
 
     User getUser(Integer id);
 
@@ -35,6 +31,9 @@ public interface UserService {
 
     UserVO getUserVO(Integer id);
 
+    Integer currentUserId();
+
+    UserVO getCurrentUser();
 
     /**
      * 用户注册

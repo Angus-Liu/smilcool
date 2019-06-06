@@ -67,7 +67,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public UserRoleVO add(UserRoleAddForm form) {
         // 检查用户是否存在
-        userService.checkExist(form.getUserId());
+        userService.validate(form.getUserId());
         // 检查角色是否存在
         roleService.verify(form.getRoleId());
         // 检查用户是否已被赋予该角色

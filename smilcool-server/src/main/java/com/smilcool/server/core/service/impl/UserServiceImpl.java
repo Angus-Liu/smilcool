@@ -45,32 +45,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Integer currentUserId() {
-        Subject currentUser = SecurityUtils.getSubject();
-        if (currentUser.isAuthenticated()) {
-            Integer userId = (Integer) currentUser.getPrincipal();
-            log.info("已登录，userId: {}", userId);
-            return userId;
-        }
-        Integer mockUserId = 1;
-        log.info("未登录，mock user id: {}", mockUserId);
-        return mockUserId;
-    }
-
-    @Override
-    public User getCurrentUser() {
-        Subject currentUser = SecurityUtils.getSubject();
-        if (currentUser.isAuthenticated()) {
-            // TODO 从缓存中获取
-            return getUser((Integer) currentUser.getPrincipal());
-        } else {
-            throw new UnauthenticatedException("用户未认证");
-        }
-    }
-
-    // TODO 2019/5/4 改为 validate
-    @Override
-    public void checkExist(Integer id) {
+    public void validate(Integer id) {
         User user = userMapper.selectByPrimaryKey(id);
         if (user == null) {
             throw new SmilcoolException("用户不存在");
@@ -91,19 +66,28 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByUsernameAndPassword(username, password);
     }
 
-    /**
-     * 获取用户信息
-     *
-     * @param id
-     * @return
-     */
+    @Override
+    public Integer currentUserId() {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser.isAuthenticated()) {
+            return (Integer) currentUser.getPrincipal();
+        }
+        throw new UnauthenticatedException("身份验证异常，请重新登录");
+    }
+
+    @Override
+    public UserVO getCurrentUser() {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser.isAuthenticated()) {
+            return getUserVO((Integer) currentUser.getPrincipal());
+        }
+        return null;
+    }
+
     @Override
     public UserVO getUserVO(Integer id) {
         // 获取用户基础信息
-        User user = userMapper.selectByPrimaryKey(id);
-        if (user == null) {
-            throw new SmilcoolException("用户不存在");
-        }
+        User user = getUser(id);
         return BeanUtil.copyProp(user, UserVO.class);
     }
 

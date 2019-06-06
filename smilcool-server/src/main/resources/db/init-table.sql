@@ -5,7 +5,7 @@ CREATE TABLE `user` (
   `username`    varchar(50)   NOT NULL COMMENT '用户名',
   `password`    varchar(80)   NOT NULL COMMENT '密码（加密）',
   `nickname`    varchar(50)   NOT NULL DEFAULT '换个好听的昵称' COMMENT '昵称',
-  `avatar`      varchar(255)  NOT NULL DEFAULT 'default-avatar.jpg' COMMENT '头像URL',
+  `avatar`      varchar(255)  NOT NULL DEFAULT '/local-storage/avatar/default-avatar.jpg' COMMENT '头像URL',
   `sex`         varchar(5)    NOT NULL DEFAULT '保密' COMMENT '性别：男、女、保密',
   `birthday`    datetime      NOT NULL DEFAULT '1970-01-01' COMMENT '生日',
   `sign`        varchar(255)  NOT NULL DEFAULT '一句话介绍自己' COMMENT '签名',

@@ -51,6 +51,13 @@ public class UserController {
         return Result.success(registerUser);
     }
 
+    @ApiOperation("获取当前登录用户")
+    @GetMapping("/current")
+    public Result<UserVO> getCurrentUser() {
+        UserVO currentUser = userService.getCurrentUser();
+        return Result.success(currentUser);
+    }
+
     @ApiOperation(value = "用户信息", notes = "通过用户 id 获取用户信息（包括角色与权限信息）")
     @GetMapping("/{id}")
     public Result<UserVO> getUserVO(@PathVariable("id") Integer id) {
