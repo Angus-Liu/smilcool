@@ -263,7 +263,7 @@ export default {
 
 header {
   position: fixed;
-  z-index: 20;
+  z-index: 2;
   width: 100%;
   height: 70px;
   background: #fff;

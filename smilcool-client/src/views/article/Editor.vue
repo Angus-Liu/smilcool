@@ -2,7 +2,7 @@
   <div class="container">
     <!-- 标题 -->
     <div class="article-info-title">
-      <Input v-model="articleAddForm.title" placeholder="输入文章标题" size="large">
+      <Input v-model="articleAddForm.title" placeholder="输入文章标题" size="large" style="z-index: 1">
         <template #append>
           <Button icon="md-create" @click="articleInfoModal.show = true">提交</Button>
         </template>
@@ -45,8 +45,8 @@
     </Modal>
     <!-- 文章信息模态框 END -->
     <!-- 编辑器 -->
-    <mavon-editor class="editor" v-model="articleAddForm.markdownContent"
-                  @change="contentChange" :boxShadow="false"/>
+    <mavon-editor class="editor" ref=editor v-model="articleAddForm.markdownContent"
+                  @change="contentChange" @imgAdd="imgAdd" :boxShadow="false"/>
     <!-- 编辑器 END -->
   </div>
 </template>
@@ -86,13 +86,28 @@ export default {
           this.articleCategory = result.data;
         })
     },
+    // 编辑器内容变化
     contentChange(value, render) {
       this.articleAddForm.markdownContent = value;
       this.articleAddForm.htmlContent = render;
     },
+    // 保存草稿
     saveArticle(value, render) {
       console.log('保存草稿');
     },
+    // 添加图片
+    imgAdd(pos, img){
+      // 第一步.将图片上传到服务器.
+      let formData = new FormData();
+      formData.append('type', 'img');
+      formData.append('file', img);
+      this.$axios.post('/api/local-storage/upload', formData)
+        .then(res => {
+        let result = res.data;
+        this.$refs.editor.$img2Url(pos, result.data.url);
+      })
+    },
+    // 添加标签
     addTag() {
       this.tags.push(this.tag);
       this.tag = '';
