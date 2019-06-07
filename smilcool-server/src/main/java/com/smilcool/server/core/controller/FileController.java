@@ -34,9 +34,16 @@ public class FileController {
 
     @ApiOperation("文件分页")
     @GetMapping("/page")
-    public Result<Page<FileVO>> getFilePageList(Page page, FileQueryForm form) {
+    public Result<Page<FileVO>> pageFileVO(Page page, FileQueryForm form) {
         Page<FileVO> filePage = fileService.pageFileVO(page, form);
         return Result.success(filePage);
+    }
+
+    @ApiOperation("文件详情")
+    @GetMapping("/{id}")
+    public Result<FileVO> getFileVO(@PathVariable Integer id) {
+        FileVO fileVO = fileService.getFileVO(id);
+        return Result.success(fileVO);
     }
 
     @ApiOperation("文件下载量更新")

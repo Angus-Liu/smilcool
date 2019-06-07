@@ -59,7 +59,16 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Page<FileVO> pageFileVO(Page page, FileQueryForm form) {
-        return fileMapper.selectByQueryForm(page, form);
+        return fileMapper.selectFileVOByQueryForm(page, form);
+    }
+
+    @Override
+    public FileVO getFileVO(Integer id) {
+        FileVO fileVO = fileMapper.selectFileVOByPrimaryKey(id);
+        if (fileVO == null) {
+            throw new SmilcoolException("文件不存在");
+        }
+        return fileVO;
     }
 
     @Override

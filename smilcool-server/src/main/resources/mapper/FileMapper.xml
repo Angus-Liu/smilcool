@@ -231,7 +231,18 @@
         resource.id as resource_id, zan_count, pv_count, comment_count
     </sql>
 
-    <select id="selectByQueryForm" resultMap="ResultMapWithUserAndResource">
+    <select id="selectFileVOByPrimaryKey" resultMap="ResultMapWithUserAndResource">
+        SELECT
+        <include refid="File_Column_List"/>,
+        <include refid="User_Column_List"/>,
+        <include refid="Resource_Column_List"/>
+        FROM file
+        LEFT JOIN user ON file.user_id = user.id
+        LEFT JOIN resource ON file.resource_id = resource.id
+        where file.id = #{id}
+    </select>
+
+    <select id="selectFileVOByQueryForm" resultMap="ResultMapWithUserAndResource">
         SELECT
         <include refid="File_Column_List"/>,
         <include refid="User_Column_List"/>,

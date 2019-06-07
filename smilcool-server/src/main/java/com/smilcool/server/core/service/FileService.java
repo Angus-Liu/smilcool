@@ -18,5 +18,7 @@ public interface FileService {
 
     Page<FileVO> pageFileVO(Page page, FileQueryForm form);
 
+    FileVO getFileVO(Integer id);
+
     void addDownloadCount(Integer id);
 }

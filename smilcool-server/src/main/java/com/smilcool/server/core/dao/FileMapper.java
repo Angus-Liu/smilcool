@@ -22,7 +22,9 @@ public interface FileMapper {
 
     /* 以下是自定义方法 */
 
-    Page<FileVO> selectByQueryForm(Page page, @Param("form") FileQueryForm form);
+    FileVO selectFileVOByPrimaryKey(Integer id);
+
+    Page<FileVO> selectFileVOByQueryForm(Page page, @Param("form") FileQueryForm form);
 
     @Update("UPDATE file SET download_count = download_count + #{count} WHERE id = #{id}")
     void updateDownloadCountByPrimaryKey(@Param("id") Integer id, @Param("count") Integer count);
