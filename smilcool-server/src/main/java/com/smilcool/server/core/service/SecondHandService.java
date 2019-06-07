@@ -17,4 +17,6 @@ public interface SecondHandService {
     SecondHand addSecondHand(SecondHandAddForm form);
 
     Page<SecondHandVO> pageSecondHandVO(Page page, SecondHandQueryForm form);
+
+    SecondHandVO getSecondHandVO(Integer id);
 }

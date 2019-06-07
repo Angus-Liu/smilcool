@@ -34,11 +34,17 @@ public class SecondHandController {
         return Result.success(secondHand);
     }
 
-
     @ApiOperation("二手交易分页")
     @GetMapping("/page")
     public Result<Page<SecondHandVO>> pageSecondHandVO(Page page, SecondHandQueryForm form) {
         Page<SecondHandVO> secondHandPage = secondHandService.pageSecondHandVO(page, form);
         return Result.success(secondHandPage);
+    }
+
+    @ApiOperation("二手交易详情")
+    @GetMapping("/{id}")
+    public Result<SecondHandVO> getSecondHandVO(@PathVariable Integer id) {
+        SecondHandVO secondHandVO = secondHandService.getSecondHandVO(id);
+        return Result.success(secondHandVO);
     }
 }

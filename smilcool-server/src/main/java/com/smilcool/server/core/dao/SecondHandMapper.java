@@ -23,5 +23,7 @@ public interface SecondHandMapper {
 
     /* 以下是自定义内容 */
 
-    Page<SecondHandVO> selectByQueryForm(Page page, @Param("form") SecondHandQueryForm form);
+    SecondHandVO selectSecondHandVOByPrimaryKey(Integer id);
+
+    Page<SecondHandVO> selectSecondHandVOByQueryForm(Page page, @Param("form") SecondHandQueryForm form);
 }

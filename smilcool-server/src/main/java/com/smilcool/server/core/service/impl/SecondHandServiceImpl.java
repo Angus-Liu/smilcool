@@ -57,6 +57,15 @@ public class SecondHandServiceImpl implements SecondHandService {
 
     @Override
     public Page<SecondHandVO> pageSecondHandVO(Page page, SecondHandQueryForm form) {
-        return secondHandMapper.selectByQueryForm(page, form);
+        return secondHandMapper.selectSecondHandVOByQueryForm(page, form);
+    }
+
+    @Override
+    public SecondHandVO getSecondHandVO(Integer id) {
+        SecondHandVO secondHandVO = secondHandMapper.selectSecondHandVOByPrimaryKey(id);
+        if (secondHandVO == null) {
+            throw new SmilcoolException("二手交易不存在");
+        }
+        return secondHandVO;
     }
 }

@@ -254,7 +254,18 @@
         resource.id as resource_id, zan_count, pv_count, comment_count
     </sql>
 
-    <select id="selectByQueryForm" resultMap="ResultMapWithUserAndResource">
+    <select id="selectSecondHandVOByPrimaryKey" resultMap="ResultMapWithUserAndResource">
+        SELECT
+        <include refid="Second_Hand_Column_List"/>,
+        <include refid="User_Column_List"/>,
+        <include refid="Resource_Column_List"/>
+        FROM second_hand
+        LEFT JOIN user ON second_hand.user_id = user.id
+        LEFT JOIN resource ON second_hand.resource_id = resource.id
+        where second_hand.id = #{id}
+    </select>
+
+    <select id="selectSecondHandVOByQueryForm" resultMap="ResultMapWithUserAndResource">
         SELECT
         <include refid="Second_Hand_Column_List"/>,
         <include refid="User_Column_List"/>,
@@ -277,5 +288,4 @@
             </if>
         </where>
     </select>
-
 </mapper>
