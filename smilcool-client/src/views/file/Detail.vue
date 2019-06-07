@@ -3,22 +3,28 @@
     <Row>
       <iCol span="18">
         <article>
-          <!-- 正文 -->
-          <sui-card class="fluid article-card">
-            <sui-card-content>
-              <h1 class="article-title">{{article.title}}</h1>
-              <p class="article-time">{{article.createTime}}</p>
-              <div class="markdown-body article-content" v-html="article.htmlContent"></div>
-            </sui-card-content>
-          </sui-card>
-          <!-- 正文 END -->
-          <!-- 评论列表 -->
-          <sui-card class="fluid comment-card">
+          <!-- 文件信息 -->
+          <sui-card class="fluid file-card">
             <sui-message attached="top">
-              评论列表
+              文件详情
             </sui-message>
-            <sui-card-content>
-              <div class="article-comment">
+            <sui-card-content class="file-content">
+
+              <sui-card-header>
+                {{file.title}}
+                <sui-label basic color="teal">{{file.fileCategory}}</sui-label>
+              </sui-card-header>
+              <p>下载链接：<a :href="file.url" :download="file.name" @click="downloadFile(file)">{{file.name}}</a></p>
+              <p>文件大小：{{file.size}}</p>
+              <p>上传日期：
+                <Time :time="file.createTime"/>
+              </p>
+              <sui-card-description>
+                {{file.description}}
+              </sui-card-description>
+
+              <!-- 评论列表 -->
+              <div class="file-comment">
                 <!-- 评论框 -->
                 <sui-form class="comment-input-form">
                   <sui-form-field>
@@ -26,11 +32,14 @@
                            @keydown.ctrl.enter.native="addComment"/>
                   </sui-form-field>
                   <sui-form-field>
-                    <span class="resource-info-item" @click="addZan(article.resource)">
-                      👍 {{article.resource.zanCount}}
+                    <span class="resource-info-item">
+                      ⏬ {{file.downloadCount}}
+                    </span>
+                    <span class="resource-info-item" @click="addZan(file.resource)">
+                      👍 {{file.resource.zanCount}}
                     </span>
                     <span class="resource-info-item">
-                      💬 {{article.resource.commentCount}}
+                      💬 {{file.resource.commentCount}}
                     </span>
                     <sui-button basic floated="right" content="评论(Ctrl+Enter)" @click.prevent="addComment"/>
                   </sui-form-field>
@@ -75,54 +84,47 @@
                 </sui-comment-group>
                 <!-- 父评论 END -->
               </div>
+              <!-- 评论列表 END -->
             </sui-card-content>
           </sui-card>
-          <!-- 评论列表 END -->
+          <!-- 文件信息 END -->
         </article>
       </iCol>
       <iCol span="6">
         <!-- 发布用户信息 -->
         <sui-card class="fluid user-info-card">
-          <sui-image style="width: 100%;" :src="article.user.avatar"/>
+          <sui-image style="width: 100%;" :src="file.user.avatar"/>
           <sui-card-content>
             <sui-card-header>
-              <router-link :to="'/user/' + article.user.id">
-                {{article.user.nickname}}
+              <router-link :to="'/user/' + file.user.id">
+                {{file.user.nickname}}
               </router-link>
             </sui-card-header>
-            <sui-card-meta>{{article.user.username}}</sui-card-meta>
-            <sui-card-description>{{article.user.sign}}</sui-card-description>
+            <sui-card-meta>{{file.user.username}}</sui-card-meta>
+            <sui-card-description>{{file.user.sign}}</sui-card-description>
           </sui-card-content>
           <sui-card-content extra>
             <sui-icon name="user"/>
-            文章作者
+            发布用户
           </sui-card-content>
         </sui-card>
         <!-- 发布用户信息 END -->
         <!-- 操作按钮 -->
-        <div class="actions-buttons" v-if="$store.state.user && article.userId === $store.state.user.id">
+        <div class="actions-buttons" v-if="$store.state.user && file.userId === $store.state.user.id">
           <sui-button-group>
             <sui-button icon="pencil" content="编辑" basic positive fluid/>
             <sui-button icon="delete" content="删除" basic negative fluid/>
           </sui-button-group>
         </div>
         <!-- 操作按钮 END -->
-        <!-- 文章信息 -->
+        <!-- 相关文件 -->
         <sui-card class="fluid">
-          <sui-message attached="top" :content="article.articleCategory"/>
+          <sui-message attached="top" content="他的文件"/>
           <sui-card-content>
-            <Tag type="dot" color="#ff8364" v-for="(tag, index) in article.tags" :key="index">{{tag}}</Tag>
+            暂无他的更多文件
           </sui-card-content>
         </sui-card>
-        <!-- 文章信息 END -->
-        <!-- 相关文章 -->
-        <sui-card class="fluid">
-          <sui-message attached="top" content="他的文章"/>
-          <sui-card-content>
-            暂无他的更多文章
-          </sui-card-content>
-        </sui-card>
-        <!-- 相关文章 END -->
+        <!-- 相关文件 END -->
       </iCol>
     </Row>
   </div>
@@ -134,28 +136,29 @@ export default {
   props: ['id'],
   data() {
     return {
-      // 文章信息
-      article: {
-        'id': -1,
-        'userId': -1,
-        'resourceId': -1,
-        'articleCategory': '校园文章',
-        'title': '测试文章',
-        'createTime': '2019-05-13',
-        'tags': ['测试标签1', '测试标签2'],
-        'markdownContent': '测试文章',
-        'htmlContent': '测试文章',
+      // 文件信息
+      file: {
+        'id': 1,
+        'userId': 1,
+        'resourceId': 2,
+        'fileCategory': '计算机',
+        'title': '计算机类全套PPT，你值得拥有',
+        'description': '计算机类全套PPT，你值得拥有',
+        'name': '中北大学计算机类.ppt',
+        'size': '200MB',
+        'url': 'http://bkt.angus-liu.cn/中北大学计算机类.ppt',
+        'downloadCount': 0,
+        'createTime': '2019-05-13 09:18:13',
         'user': {
-          'id': -1,
-          'username': 'anonymous',
-          'nickname': '游客',
-          'avatar': require('../../assets/img/avatar/anonymous-avatar.jpg'),
-          'sex': '保密',
-          'sign': '一句话介绍自己'
+          'id': 1,
+          'username': 'admin',
+          'nickname': '文刀',
+          'avatar': 'http://img.angus-liu.cn/avatar/avatar07.png',
+          'sign': '终其一生，我们都在自我救赎'
         },
         'resource': {
-          'id': -1,
-          'zanCount': 0,
+          'id': 2,
+          'zanCount': 1,
           'pvCount': 0,
           'commentCount': 2
         }
@@ -201,20 +204,19 @@ export default {
     };
   },
   methods: {
-    // 获取文章信息
-    getArticle() {
-      this.$axios.get(`/api/article/${this.id}`)
+    // 获取文件信息
+    getFile() {
+      this.$axios.get(`/api/file/${this.id}`)
         .then(res => {
           let result = res.data;
-          this.article = result.data;
-          this.article.tags = JSON.parse(this.article.tags);
+          this.file = result.data;
           // 获取评论信息
           this.getCommentList();
         });
     },
     // 获取评论信息
     getCommentList() {
-      this.$axios.get(`/api/comment/${this.article.resourceId}`)
+      this.$axios.get(`/api/comment/${this.file.resourceId}`)
         .then(res => {
           let result = res.data;
           this.commentList = result.data;
@@ -232,7 +234,7 @@ export default {
     },
     // 添加评论
     addComment() {
-      this.comment.resourceId = this.article.resourceId;
+      this.comment.resourceId = this.file.resourceId;
       // 判断是评论还是回复
       if (this.comment.value.startsWith('@') && this.comment.replyUserId !== null) {
         // 回复时去掉评论内容中的回复用户名
@@ -247,7 +249,7 @@ export default {
         .then(res => {
           this.initComment();
           this.getCommentList();
-          this.article.resource.commentCount++;
+          this.file.resource.commentCount++;
         });
     },
     // 回复评论
@@ -257,6 +259,11 @@ export default {
       this.comment.value = `@${replyUser.nickname} `;
       this.$refs.commentInput.focus();
     },
+    // 文件下载
+    downloadFile(file) {
+      this.$axios.put(`/api/file/${file.id}/download-count`)
+        .then(res => file.downloadCount++);
+    },
     // 点赞
     addZan(resource) {
       this.$axios.post('/api/zan', { resourceId: resource.id })
@@ -264,7 +271,7 @@ export default {
     }
   },
   mounted() {
-    this.getArticle();
+    this.getFile();
   }
 };
 </script>
@@ -281,20 +288,28 @@ export default {
   }
 }
 
-.article-card {
+.file-card {
   margin-bottom: 10px;
-  padding: 2em;
 
-
-  .article-title {
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: 1px dashed #eee;
+  .file-content {
+    padding: 2em 3em;
   }
 
-  .article-time {
-    text-align: center;
-    color: #aaa;
+  .resource-info-item {
+    margin-right: 15px;
+    cursor: pointer;
+  }
+
+  .resource-info-item:hover {
+    color: #ff8364;
+  }
+
+  .file-comment {
+    padding-top: 2em;
+
+    .comment-input-form {
+      overflow: hidden;
+    }
   }
 }
 
@@ -311,25 +326,6 @@ export default {
 
   .button {
     width: 134px;
-  }
-}
-
-.comment-card {
-  .article-comment {
-    margin: 1em;
-
-    .resource-info-item {
-      margin-right: 15px;
-      cursor: pointer;
-    }
-
-    .resource-info-item:hover {
-      color: #ff8364;
-    }
-
-    .comment-input-form {
-      overflow: hidden;
-    }
   }
 }
 </style>

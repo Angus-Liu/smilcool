@@ -34,7 +34,7 @@ const router = new Router({
           component: () => import('@/views/article/Editor')
         }, {
           path: 'article/:id',
-          name: 'viewer',
+          name: 'article-detail',
           props: true,
           meta: {
             title: '文章详情'
@@ -54,6 +54,14 @@ const router = new Router({
             title: '文件仓库'
           },
           component: () => import('@/views/file/File')
+        }, {
+          path: 'file/:id',
+          name: 'file-detail',
+          props: true,
+          meta: {
+            title: '文件详情'
+          },
+          component: () => import('@/views/file/Detail')
         }, {
           path: 'second-hand',
           name: 'second-hand',

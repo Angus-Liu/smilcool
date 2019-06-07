@@ -30,17 +30,18 @@
         <sui-card class="fluid file-card">
           <sui-message attached="top">文件列表</sui-message>
           <sui-card-content>
+            <!-- 文件项 -->
             <sui-item-group>
               <sui-item v-for="file in filePage.records" :key="file.id">
                 <sui-icon :name="getFileIcon(file.name)"/>
                 <sui-item-content>
                   <sui-item-header>
-                    {{file.title}}
+                    <router-link :to="'/file/' + file.id" style="color: #000;">{{file.title}}</router-link>
                     <sui-label basic color="teal">{{file.fileCategory}}</sui-label>
                   </sui-item-header>
                   <sui-item-meta>
                     <span class="file-user-nickname">
-                      <router-link to="">{{file.user.nickname}}</router-link>
+                      <router-link :to="'/user/' + file.user.id" style="color: #555">{{file.user.nickname}}</router-link>
                     </span>
                     <span class="file-create-time"><Time :time="file.createTime"/></span>
                     <a :href="file.url" :download="file.name" @click="downloadFile(file)">⏬ {{file.name}}</a>
@@ -61,6 +62,7 @@
                 </sui-item-content>
               </sui-item>
             </sui-item-group>
+            <!-- 文件项 END -->
           </sui-card-content>
           <sui-button-group attached="bottom" basic>
             <sui-button content="上一页" icon="left chevron" label-position="left" @click="previousPage"

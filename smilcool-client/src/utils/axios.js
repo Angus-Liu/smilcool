@@ -57,7 +57,7 @@ class HttpRequest {
           default:
         }
 
-        Notice.error({ title: '错误', desc: data.msg });
+        Notice.error({ title: 'OOPS', desc: data.msg });
 
         return Promise.reject(error);
       });
