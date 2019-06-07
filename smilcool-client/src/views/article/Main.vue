@@ -115,7 +115,7 @@
                 <sui-feed-label :image="item.userAvatar"/>
                 <sui-feed-content>
                   <sui-feed-summary>
-                    <sui-feed-user>{{item.userNickname}}</sui-feed-user>
+                    <router-link :to="'/user/' + item.userId">{{item.userNickname}}</router-link>
                     评论
                     <router-link :to="'/article/' + item.articleId">{{item.articleTitle}}</router-link>
                   </sui-feed-summary>

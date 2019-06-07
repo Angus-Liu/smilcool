@@ -36,7 +36,9 @@
       <sui-card class="fluid second-hand-item" v-for="secondHand in secondHandPage.records" :key="secondHand.id">
         <sui-image class="second-hand-image" :src="secondHand.images[0]"/>
         <sui-card-content>
-          <a is="sui-card-header">{{secondHand.title}}</a>
+            <sui-card-header>
+              <router-link :to="'/second-hand/' + secondHand.id" style="color: #000">{{secondHand.title}}</router-link>
+            </sui-card-header>
           <sui-card-description class="second-hand-description">{{secondHand.description}}</sui-card-description>
           <span class="second-hand-price">￥{{secondHand.price}}</span>
           <span slot="right">

@@ -4,25 +4,12 @@
       <iCol span="18">
         <article>
           <!-- 文件信息 -->
+          <sui-message>
+            物品详情
+          </sui-message>
+
           <sui-card class="fluid file-card">
-            <sui-message attached="top">
-              文件详情
-            </sui-message>
             <sui-card-content class="file-content">
-
-              <sui-card-header>
-                {{file.title}}
-                <sui-label basic color="teal">{{file.fileCategory}}</sui-label>
-              </sui-card-header>
-              <p>下载链接：<a :href="file.url" :download="file.name" @click="downloadFile(file)">{{file.name}}</a></p>
-              <p>文件大小：{{file.size}}</p>
-              <p>上传日期：
-                <Time :time="file.createTime"/>
-              </p>
-              <sui-card-description>
-                {{file.description}}
-              </sui-card-description>
-
               <!-- 评论列表 -->
               <div class="file-comment">
                 <!-- 评论框 -->
@@ -32,14 +19,11 @@
                            @keydown.ctrl.enter.native="addComment"/>
                   </sui-form-field>
                   <sui-form-field>
-                    <span class="resource-info-item">
-                      ⏬ {{file.downloadCount}}
-                    </span>
-                    <span class="resource-info-item" @click="addZan(file.resource)">
-                      👍 {{file.resource.zanCount}}
+                    <span class="resource-info-item" @click="addZan(secondHand.resource)">
+                      👍 {{secondHand.resource.zanCount}}
                     </span>
                     <span class="resource-info-item">
-                      💬 {{file.resource.commentCount}}
+                      💬 {{secondHand.resource.commentCount}}
                     </span>
                     <sui-button basic floated="right" content="评论(Ctrl+Enter)" @click.prevent="addComment"/>
                   </sui-form-field>
@@ -93,15 +77,15 @@
       <iCol span="6">
         <!-- 发布用户信息 -->
         <sui-card class="fluid user-info-card">
-          <sui-image style="width: 100%;" :src="file.user.avatar"/>
+          <sui-image style="width: 100%;" :src="secondHand.user.avatar"/>
           <sui-card-content>
             <sui-card-header>
-              <router-link :to="'/user/' + file.user.id">
-                {{file.user.nickname}}
+              <router-link :to="'/user/' + secondHand.user.id">
+                {{secondHand.user.nickname}}
               </router-link>
             </sui-card-header>
-            <sui-card-meta>{{file.user.username}}</sui-card-meta>
-            <sui-card-description>{{file.user.sign}}</sui-card-description>
+            <sui-card-meta>{{secondHand.user.username}}</sui-card-meta>
+            <sui-card-description>{{secondHand.user.sign}}</sui-card-description>
           </sui-card-content>
           <sui-card-content extra>
             <sui-icon name="user"/>
@@ -110,7 +94,7 @@
         </sui-card>
         <!-- 发布用户信息 END -->
         <!-- 操作按钮 -->
-        <div class="actions-buttons" v-if="$store.state.user && file.userId === $store.state.user.id">
+        <div class="actions-buttons" v-if="$store.state.user && secondHand.userId === $store.state.user.id">
           <sui-button-group>
             <sui-button icon="pencil" content="编辑" basic positive fluid/>
             <sui-button icon="delete" content="删除" basic negative fluid/>
@@ -119,9 +103,9 @@
         <!-- 操作按钮 END -->
         <!-- 相关文件 -->
         <sui-card class="fluid">
-          <sui-message attached="top" content="他的文件"/>
+          <sui-message attached="top" content="他的闲置"/>
           <sui-card-content>
-            暂无更多文件
+            暂无更多二手物品
           </sui-card-content>
         </sui-card>
         <!-- 相关文件 END -->
@@ -137,18 +121,18 @@ export default {
   data() {
     return {
       // 文件信息
-      file: {
+      secondHand: {
         'id': 1,
         'userId': 1,
-        'resourceId': 2,
-        'fileCategory': '计算机',
-        'title': '计算机类全套PPT，你值得拥有',
-        'description': '计算机类全套PPT，你值得拥有',
-        'name': '中北大学计算机类.ppt',
-        'size': '200MB',
-        'url': 'http://bkt.angus-liu.cn/中北大学计算机类.ppt',
-        'downloadCount': 0,
-        'createTime': '2019-05-13 09:18:13',
+        'resourceId': 37,
+        'secondHandCategory': '数码',
+        'title': '小米手机9，低价转',
+        'name': '小米手机9',
+        'price': 599,
+        'address': '文瀛13#105',
+        'description': '买了华为P30，这部小米手机就低价转了，9.5成新',
+        'images': '[https://g-search2.alicdn.com/img/bao/uploaded/i4/i2/1714128138/O1CN018kA6uv29zFiGLMEsL_!!0-item_pic.jpg_250x250.jpg]',
+        'createTime': '2019-05-23 15:56:27',
         'user': {
           'id': 1,
           'username': 'admin',
@@ -157,10 +141,10 @@ export default {
           'sign': '终其一生，我们都在自我救赎'
         },
         'resource': {
-          'id': 2,
-          'zanCount': 1,
+          'id': 37,
+          'zanCount': 0,
           'pvCount': 0,
-          'commentCount': 2
+          'commentCount': 0
         }
       },
       // 评论信息
@@ -205,18 +189,21 @@ export default {
   },
   methods: {
     // 获取文件信息
-    getFile() {
-      this.$axios.get(`/api/file/${this.id}`)
+    getSecondHand() {
+      this.$axios.get(`/api/second-hand/${this.id}`)
         .then(res => {
           let result = res.data;
-          this.file = result.data;
+          this.secondHand = result.data;
+          if (this.secondHand.images && this.secondHand.images.length > 0) {
+            this.secondHand.images = JSON.parse(this.secondHand.images);
+          }
           // 获取评论信息
           this.getCommentList();
         });
     },
     // 获取评论信息
     getCommentList() {
-      this.$axios.get(`/api/comment/${this.file.resourceId}`)
+      this.$axios.get(`/api/comment/${this.secondHand.resourceId}`)
         .then(res => {
           let result = res.data;
           this.commentList = result.data;
@@ -234,7 +221,7 @@ export default {
     },
     // 添加评论
     addComment() {
-      this.comment.resourceId = this.file.resourceId;
+      this.comment.resourceId = this.secondHand.resourceId;
       // 判断是评论还是回复
       if (this.comment.value.startsWith('@') && this.comment.replyUserId !== null) {
         // 回复时去掉评论内容中的回复用户名
@@ -249,7 +236,7 @@ export default {
         .then(res => {
           this.initComment();
           this.getCommentList();
-          this.file.resource.commentCount++;
+          this.secondHand.resource.commentCount++;
         });
     },
     // 回复评论
@@ -259,11 +246,6 @@ export default {
       this.comment.value = `@${replyUser.nickname} `;
       this.$refs.commentInput.focus();
     },
-    // 文件下载
-    downloadFile(file) {
-      this.$axios.put(`/api/file/${file.id}/download-count`)
-        .then(res => file.downloadCount++);
-    },
     // 点赞
     addZan(resource) {
       this.$axios.post('/api/zan', { resourceId: resource.id })
@@ -271,7 +253,7 @@ export default {
     }
   },
   mounted() {
-    this.getFile();
+    this.getSecondHand();
   }
 };
 </script>

@@ -70,6 +70,14 @@ const router = new Router({
           },
           component: () => import('@/views/second-hand/SecondHand')
         }, {
+          path: 'second-hand/:id',
+          name: 'second-hand-detail',
+          props: true,
+          meta: {
+            title: '二手交易详情'
+          },
+          component: () => import('@/views/second-hand/Detail')
+        }, {
           path: 'lost-found',
           name: 'lost-found',
           meta: {

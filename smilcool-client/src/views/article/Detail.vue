@@ -119,7 +119,7 @@
         <sui-card class="fluid">
           <sui-message attached="top" content="他的文章"/>
           <sui-card-content>
-            暂无他的更多文章
+            暂无更多文章
           </sui-card-content>
         </sui-card>
         <!-- 相关文章 END -->
@@ -270,7 +270,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 .container {
   width: 1140px;
   margin: 0 auto;

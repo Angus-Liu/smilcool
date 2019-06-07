@@ -135,7 +135,7 @@
       </iCol>
     </Row>
     <!-- 修改个人信息模态框 -->
-    <Modal v-model="userUpdateModal.show" title="更新信息" width="600">
+    <Modal v-model="userUpdateModal.show" title="更新信息" width="600" scrollable :styles="{top: '5%'}">
       <Form :model="userUpdateModal.form" :label-width="50">
         <FormItem label="头像" required>
           <Upload :show-upload-list="false"
