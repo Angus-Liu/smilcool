@@ -10,22 +10,22 @@
         <!-- 菜单 -->
         <nav>
           <ul>
-            <li :class="{active: active === 1}" @click="active = 1">
+            <li>
               <router-link to="/">文章资讯</router-link>
             </li>
-            <li :class="{active: active === 2}" @click="active = 2">
+            <li>
               <router-link to="/moment">校园动态</router-link>
             </li>
-            <li :class="{active: active === 3}" @click="active = 3">
+            <li>
               <router-link to="/file">文件仓库</router-link>
             </li>
-            <li :class="{active: active === 4}" @click="active = 4">
+            <li>
               <router-link to="/second-hand">二手交易</router-link>
             </li>
-            <li :class="{active: active === 5}" @click="active = 5">
+            <li>
               <router-link to="/lost-found">失物寻物</router-link>
             </li>
-            <li :class="{active: active === 6}" @click="active = 6">
+            <li>
               <router-link to="/forum">校内论坛</router-link>
             </li>
           </ul>
@@ -154,7 +154,6 @@ export default {
   data() {
     return {
       q: '',
-      active: 1,
       logInOnModel: {
         show: false,
         title: '登录',
@@ -298,10 +297,8 @@ header {
         a {
           color: #aaa;
         }
-      }
 
-      li.active {
-        a {
+        a:hover {
           color: #ff8364;
         }
       }

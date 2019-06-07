@@ -6,7 +6,7 @@
         <span class="links">
           <a href="#">帮助中心</a>
           <a href="#">加入我们</a>
-          <a href="https://github.com/Angus-Liu" target="_blank">支持作者</a>
+          <a href="https://github.com/Angus-Liu" target="_blank">关于作者</a>
           <a href="https://github.com/Angus-Liu/smilcool" target="_blank">项目地址</a>
         </span>
       </div>
@@ -35,7 +35,7 @@ footer {
     width: 1200px;
     margin: 0 auto;
     padding-top: 15px;
-    font-weight: 300;
+    font-weight: 500;
 
     .row {
       margin-top: 10px;
