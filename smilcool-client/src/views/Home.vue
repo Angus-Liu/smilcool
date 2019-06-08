@@ -31,7 +31,7 @@ export default {
   },
   mounted() {
     // TODO 2019/5/25 启动 WebSocket
-    console.log("启动 WebSocket");
+    console.log('启动 WebSocket');
     this.getCurrentUser();
   }
 };

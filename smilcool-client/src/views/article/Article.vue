@@ -137,7 +137,7 @@ export default {
     // 加载更多
     loadMore() {
       this.param.current++;
-      this.$axios.get('/api/lost-found/page', this.param)
+      this.$axios.get('/api/article/page', this.param)
         .then(res => {
           let result = res.data;
           let morePage = result.data;
