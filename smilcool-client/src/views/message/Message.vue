@@ -188,7 +188,11 @@ export default {
       this.webSocket.onconnect = () => {
         console.log('ws.connect');
         this.webSocket.onsend({ type: 0, sendUserId: this.currentUser.id });
+        // setInterval(this.keepAlive, 30 * 1000);
       }
+    },
+    keepAlive() {
+      this.webSocket.onsend({ type: 3 });
     },
     // 发送消息
     sendMessage() {
