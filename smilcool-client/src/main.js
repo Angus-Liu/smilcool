@@ -5,6 +5,7 @@ import store from './store';
 // iView: https://iviewui.com/docs/guide/install
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import { directive as clickOutside } from 'v-click-outside-x';
 // Semantic UI Vue: https://semantic-ui-vue.github.io
 import SuiVue from 'semantic-ui-vue';
 import 'semantic-ui-css/semantic.min.css';
@@ -29,6 +30,8 @@ Vue.use(mavonEditor);
 Vue.prototype.$axios = HttpRequest;
 // qiniu
 Vue.prototype.$qiniu = qiniu;
+
+Vue.directive('clickOutside', clickOutside);
 
 new Vue({
   router,

@@ -11,7 +11,7 @@
         <nav>
           <ul>
             <li>
-              <router-link to="/">文章资讯</router-link>
+              <router-link to="/article">文章资讯</router-link>
             </li>
             <li>
               <router-link to="/moment">校园动态</router-link>
@@ -67,12 +67,32 @@
         </div>
         <!-- 头像 END -->
         <!-- 消息通知 -->
-        <div class="notification">
-          <router-link to="/message">
-            <Badge dot>
-              <Icon type="ios-notifications-outline" size="26"/>
-            </Badge>
-          </router-link>
+        <div class="notification" v-click-outside="() => { this.showNotificationCard = false }">
+          <Badge dot>
+            <Icon type="ios-notifications-outline" size="26" @click="showNotificationCard = true"/>
+          </Badge>
+          <div class="notification-card-wrapper" v-show="showNotificationCard">
+            <sui-card class="notification-card">
+              <sui-button-group attached="top" basic>
+                <sui-button>
+                  <Badge dot :offset="[0,-5]">系统通知</Badge>
+                </sui-button>
+                <sui-button @click="toMessage">
+                  <Badge dot :offset="[0,-5]">消息中心</Badge>
+                </sui-button>
+              </sui-button-group>
+              <sui-card-content>
+                <sui-list class="notification-list" divided>
+                  <sui-list-item v-for="i in 30">
+                    <router-link to="">赫本</router-link>
+                    &nbsp;评论了&nbsp;
+                    <router-link to=""><b>Markdown语法</b></router-link>
+                    &nbsp;<Time time="2019-05-31 12:10"/>
+                  </sui-list-item>
+                </sui-list>
+              </sui-card-content>
+            </sui-card>
+          </div>
         </div>
         <!-- 消息通知 END -->
         <!-- 搜索框 -->
@@ -169,8 +189,8 @@ export default {
         password: '',
         rePassword: ''
       },
-      rules: {}
-
+      rules: {},
+      showNotificationCard: false
     };
   },
   computed: {
@@ -246,6 +266,15 @@ export default {
     // 全文搜索界面
     toSearch() {
       this.$router.push({ name: 'search', query: { q: this.q } })
+    },
+    // 消息中心
+    toMessage() {
+      this.showNotificationCard = false;
+      if (!this.$store.state.user) {
+        this.logInOnModel.show = true;
+      } else {
+        this.$router.push('message');
+      }
     }
   },
   mounted() {
@@ -323,8 +352,41 @@ header {
     margin-top: 22px;
     margin-right: 30px;
 
-    a {
-      color: #373737;
+
+    .notification-card-wrapper {
+      position: absolute;
+      margin-top: 20px;
+      margin-left: -300px;
+
+      .notification-card {
+        width: 400px;
+
+
+        .notification-list {
+          max-height: 400px;
+          overflow: auto;
+          margin-right: -7px;
+          padding-right: 5px;
+          font-size: .85em;
+
+          .item {
+            padding-top: 10px;
+            margin-bottom: 10px;
+
+            a {
+              color: #455A64;
+            }
+
+            a:hover {
+              color: #FF8364;
+            }
+
+            .ivu-time {
+              color: #5c5c5c;
+            }
+          }
+        }
+      }
     }
   }
 
