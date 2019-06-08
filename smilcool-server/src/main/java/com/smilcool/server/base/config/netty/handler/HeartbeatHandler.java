@@ -47,8 +47,10 @@ public class HeartbeatHandler extends ChannelInboundHandlerAdapter {
                 case ALL_IDLE:
                     log.debug("channel-{} 进入读写空闲...", channel.id().asShortText());
                     // 发送 PING 消息（副本，同时增加引用次数防止被释放），并在发送失败时关闭该连接，以防资源浪费
-                    ctx.writeAndFlush(PING.retainedDuplicate())
-                            .addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
+                    // ctx.writeAndFlush(PING.retainedDuplicate())
+                    //        .addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
+                    // 关闭 channel，节省资源
+                    channel.close();
                     break;
                 default:
                     throw new IllegalArgumentException("Unhandled: state = " + state);

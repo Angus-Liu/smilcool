@@ -36,8 +36,7 @@ public class ChildChannelInitializer extends ChannelInitializer<SocketChannel> {
                 // 对 HttpMessage 进行聚合，聚合成 FullHttpRequest 或 FullHttpResponse
                 .addLast(new HttpObjectAggregator(64 * 1024))
                 // 检测空闲状态 Handler
-                // TODO 2019/5/8 后期修改为 30s 左右
-                .addLast(new IdleStateHandler(8, 10, 12))
+                .addLast(new IdleStateHandler(30, 45, 60))
                 // 自定义心跳处理 Handler（空闲状态检测及处理）
                 .addLast(heartbeatHandler)
                 // WebSocket 服务器处理协议 Handler，用于指定给客户端连接访问的路由，以及处理一些繁杂的事务

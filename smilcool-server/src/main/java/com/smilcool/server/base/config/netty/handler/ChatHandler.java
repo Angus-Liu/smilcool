@@ -56,6 +56,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
                 // 建立连接时，将 channel 与 userId 进行进行关联
                 Integer userId = receiveMessage.getSendUserId();
                 userIdChannelMap.put(userId, channel);
+                // TODO 2019/6/8 移除并关闭旧的关联
                 log.debug("CONNECT 消息: userId = {}, channel = {}", userId, channel.id().asShortText());
                 // 获取未签收信息并发送
                 messageService.getUnsignedMessageList(userId).forEach(this::sendTo);
