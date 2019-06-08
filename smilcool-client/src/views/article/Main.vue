@@ -331,7 +331,7 @@ export default {
       }
 
       .article-title:hover {
-        color: #ff8364;
+        color: #FF8364;
       }
 
       .article-time {
@@ -347,6 +347,14 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    a {
+      color: #455A64;
+    }
+
+    a:hover {
+      color: #FF8364;
     }
   }
 }
