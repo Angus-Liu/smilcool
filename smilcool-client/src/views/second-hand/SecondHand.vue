@@ -33,12 +33,13 @@
     <!-- 菜单 END -->
     <!-- 二手列表 -->
     <div class="second-hand-list">
-      <sui-card class="fluid second-hand-item" v-for="secondHand in secondHandPage.records" :key="secondHand.id">
+      <sui-card class="fluid second-hand-card" v-for="secondHand in secondHandPage.records" :key="secondHand.id">
         <sui-image class="second-hand-image" :src="secondHand.images[0]"/>
         <sui-card-content>
-            <sui-card-header>
-              <router-link :to="'/second-hand/' + secondHand.id" style="color: #000">{{secondHand.title}}</router-link>
-            </sui-card-header>
+          <sui-card-header>
+            <router-link class="second-hand-title" :to="'/second-hand/' + secondHand.id">{{secondHand.title}}
+            </router-link>
+          </sui-card-header>
           <sui-card-description class="second-hand-description">{{secondHand.description}}</sui-card-description>
           <span class="second-hand-price">￥{{secondHand.price}}</span>
           <span slot="right">
@@ -435,7 +436,7 @@ export default {
     width: 1230px;
     overflow: auto;
 
-    .second-hand-item {
+    .second-hand-card {
       width: 216px;
       height: 373px;
       overflow: auto;
@@ -445,6 +446,14 @@ export default {
       .second-hand-image {
         width: 216px;
         height: 216px;
+      }
+
+      a.second-hand-title {
+        color: #2f2f2f;
+      }
+
+      a.second-hand-title:hover {
+        color: #FF8364;
       }
     }
 

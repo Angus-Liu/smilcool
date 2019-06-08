@@ -85,6 +85,14 @@ const router = new Router({
           },
           component: () => import('@/views/lost-found/LostFound')
         }, {
+          path: 'lost-found/:id',
+          name: 'lost-found-detail',
+          props: true,
+          meta: {
+            title: '失物寻物详情'
+          },
+          component: () => import('@/views/lost-found/Detail')
+        }, {
           path: 'forum',
           name: 'forum',
           meta: {

@@ -23,7 +23,8 @@
                                :color="lostFound.lostFoundCategory === '寻物启事'? 'red':'green'">
                       {{lostFound.lostFoundCategory}}
                     </sui-label>
-                    <span>{{lostFound.title}}</span>
+                    <router-link class="lost-found-title" :to="'/lost-found/' + lostFound.id">{{lostFound.title}}
+                    </router-link>
                     <sui-feed-date>
                       <Time :time="lostFound.createTime"/>
                     </sui-feed-date>
@@ -455,6 +456,14 @@ export default {
   .lost-found-card {
     .lost-found-category {
       margin-right: 5px;
+    }
+
+    a.lost-found-title {
+      color: #455A64;
+    }
+
+    a.lost-found-title:hover {
+      color: #FF8364;
     }
 
     .lost-found-extra {
