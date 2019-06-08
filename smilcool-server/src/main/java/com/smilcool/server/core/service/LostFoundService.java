@@ -17,4 +17,6 @@ public interface LostFoundService {
     LostFound addLostFound(LostFoundAddForm form);
 
     Page<LostFoundVO> pageLostFoundVO(Page page, LostFoundQueryForm form);
+
+    LostFoundVO getLostFoundVO(Integer id);
 }

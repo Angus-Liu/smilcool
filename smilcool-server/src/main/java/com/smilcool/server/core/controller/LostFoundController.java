@@ -39,4 +39,11 @@ public class LostFoundController {
         Page<LostFoundVO> lostFoundPage = lostFoundService.pageLostFoundVO(page, form);
         return Result.success(lostFoundPage);
     }
+
+    @ApiOperation("失物寻物详情")
+    @GetMapping("/{id}")
+    public Result<LostFoundVO> getLostFoundVO(@PathVariable Integer id) {
+        LostFoundVO lostFoundVO = lostFoundService.getLostFoundVO(id);
+        return Result.success(lostFoundVO);
+    }
 }

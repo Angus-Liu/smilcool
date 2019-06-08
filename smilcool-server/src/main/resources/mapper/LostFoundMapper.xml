@@ -253,7 +253,7 @@
         resource.id as resource_id, zan_count, pv_count, comment_count
     </sql>
 
-    <select id="selectByQueryForm" resultMap="ResultMapWithUserAndResource">
+    <select id="selectLostFoundVOByQueryForm" resultMap="ResultMapWithUserAndResource">
         SELECT
         <include refid="Lost_Found_Column_List"/>,
         <include refid="User_Column_List"/>,
@@ -275,5 +275,16 @@
                 OR lost_found.address LIKE CONCAT("%",#{form.general},"%"))
             </if>
         </where>
+    </select>
+
+    <select id="selectLostFoundVOByPrimaryKey" resultMap="ResultMapWithUserAndResource">
+        SELECT
+        <include refid="Lost_Found_Column_List"/>,
+        <include refid="User_Column_List"/>,
+        <include refid="Resource_Column_List"/>
+        FROM lost_found
+        LEFT JOIN user ON lost_found.user_id = user.id
+        LEFT JOIN resource ON lost_found.resource_id = resource.id
+        WHERE lost_found.id = #{id}
     </select>
 </mapper>

@@ -23,5 +23,7 @@ public interface LostFoundMapper {
 
     /* 以下是自定义内容 */
 
-    Page<LostFoundVO> selectByQueryForm(Page page, @Param("form") LostFoundQueryForm form);
+    Page<LostFoundVO> selectLostFoundVOByQueryForm(Page page, @Param("form") LostFoundQueryForm form);
+
+    LostFoundVO selectLostFoundVOByPrimaryKey(Integer id);
 }

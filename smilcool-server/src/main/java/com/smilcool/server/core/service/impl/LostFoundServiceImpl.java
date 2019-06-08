@@ -57,6 +57,15 @@ public class LostFoundServiceImpl implements LostFoundService {
 
     @Override
     public Page<LostFoundVO> pageLostFoundVO(Page page, LostFoundQueryForm form) {
-        return lostFoundMapper.selectByQueryForm(page, form);
+        return lostFoundMapper.selectLostFoundVOByQueryForm(page, form);
+    }
+
+    @Override
+    public LostFoundVO getLostFoundVO(Integer id) {
+        LostFoundVO lostFoundVO = lostFoundMapper.selectLostFoundVOByPrimaryKey(id);
+        if (lostFoundVO == null) {
+            throw new SmilcoolException("失物寻物不存在");
+        }
+        return lostFoundVO;
     }
 }
