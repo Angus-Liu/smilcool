@@ -1,15 +1,15 @@
 package com.smilcool.server.core.controller;
 
 import com.smilcool.server.core.pojo.dto.Result;
+import com.smilcool.server.core.pojo.form.FriendAddForm;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.service.FriendService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -29,5 +29,12 @@ public class FriendController {
     public Result<List<User>> getFriendList() {
         List<User> friendList = friendService.getFriendList();
         return Result.success(friendList);
+    }
+
+    @ApiOperation("添加好友")
+    @PostMapping
+    public Result addFriend(@RequestBody @Valid FriendAddForm form) {
+        friendService.addFriend(form);
+        return Result.success();
     }
 }

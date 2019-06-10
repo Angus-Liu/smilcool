@@ -99,7 +99,15 @@
         SELECT
         <include refid="User_Base_Column_List"/>
         FROM friend f
-          LEFT JOIN user u ON f.friend_user_id = u.id
+        LEFT JOIN user u ON f.friend_user_id = u.id
         WHERE f.user_id = #{currentUserId}
+    </select>
+
+    <select id="selectByUserIdWithFriendUserId" resultType="com.smilcool.server.core.pojo.po.Friend">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM friend
+        WHERE user_id = #{userId}
+        AND friend_user_id = #{friendUserId}
     </select>
 </mapper>

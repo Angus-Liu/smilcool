@@ -20,7 +20,7 @@
         <!-- 操作按钮 -->
         <div class="actions-buttons" v-if="$store.state.user && user.id !== $store.state.user.id">
           <sui-button-group>
-            <sui-button basic color="red" icon="heart" content="关注"/>
+            <sui-button basic color="red" icon="heart" content="关注" @click="addFriend"/>
             <sui-button basic color="blue" icon="envelope" content="私信"/>
           </sui-button-group>
         </div>
@@ -344,6 +344,13 @@ export default {
           this.resetUserUpdateModal();
           this.$store.commit('userUpdate', this.user);
         });
+    },
+    // 添加好友
+    addFriend() {
+      this.$axios.post('/api/friend', {friendUserId: this.user.id})
+        .then(res => {
+          this.$Notice.success({ title: 'Bingo', desc: '关注成功' });
+        })
     },
     // 获取文章分页
     getArticlePage(param) {

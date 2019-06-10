@@ -1,7 +1,10 @@
 package com.smilcool.server.core.pojo.po;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class Friend {
     private Integer id;
 
@@ -13,43 +16,8 @@ public class Friend {
 
     private Boolean deleted;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
+    public Friend(Integer userId, Integer friendUserId) {
         this.userId = userId;
-    }
-
-    public Integer getFriendUserId() {
-        return friendUserId;
-    }
-
-    public void setFriendUserId(Integer friendUserId) {
         this.friendUserId = friendUserId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
     }
 }
