@@ -84,7 +84,7 @@
               <sui-card-content>
                 <sui-list class="notification-list" divided>
                   <sui-list-item v-for="i in 30">
-                    <router-link to="">赫本</router-link>
+                    <router-link to=""><b>赫本</b></router-link>
                     &nbsp;评论了&nbsp;
                     <router-link to=""><b>Markdown语法</b></router-link>
                     &nbsp;<Time time="2019-05-31 12:10"/>
@@ -273,7 +273,7 @@ export default {
       if (!this.$store.state.user) {
         this.logInOnModel.show = true;
       } else {
-        this.$router.push('message');
+        this.$router.push('/message');
       }
     }
   },
@@ -382,7 +382,7 @@ header {
             }
 
             .ivu-time {
-              color: #5c5c5c;
+              color: #7a7a7a;
             }
           }
         }
