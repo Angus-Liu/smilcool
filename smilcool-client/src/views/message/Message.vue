@@ -9,7 +9,7 @@
               <iCol span="7">
                 <!-- 好友列表 -->
                 <div class="friend-list-container">
-                  <sui-item-group>
+                  <sui-item-group v-if="friendList.length > 0">
                     <!-- 好友列表 -->
                     <sui-item v-for="friend in friendList"
                               :id="friend.id"
@@ -25,6 +25,7 @@
                       </sui-item-content>
                     </sui-item>
                   </sui-item-group>
+                  <span v-else>暂无好友</span>
                 </div>
                 <!-- 好友列表 END -->
               </iCol>
@@ -41,11 +42,11 @@
                     <div class="time">7分钟前</div>
                     <template v-for="message in currentMessageList">
                       <!-- 发送的消息 -->
-                      <div class="bubble-wrapper" v-if="message.sendUserId === currentUser.id">
+                      <div class="bubble-wrapper" v-if="message.sendUserId === user.id">
                         <div class="bubble right-bubble" v-html="message.content"/>
                       </div>
                       <!-- 接收的消息 -->
-                      <div class="bubble-wrapper" v-if="message.receiveUserId === currentUser.id">
+                      <div class="bubble-wrapper" v-if="message.receiveUserId === user.id">
                         <div class="bubble left-bubble" v-html="message.content"/>
                       </div>
                     </template>
@@ -91,24 +92,21 @@ export default {
   data() {
     return {
       message: '',
-      currentUser: this.$store.state.user,
+      user: this.$store.state.user,
       currentFriend: null,
       currentMessageList: [],
       webSocket: null,
-      friendList: [{
-        id: -1,
-        username: 'angus',
-        nickname: '文刀',
-        avatar: 'http://img.angus-liu.cn/avatar/avatar07.png',
-      }]
+      friendList: [],
+      // 消息类型
+      messageType: {
+        CONNECT: 0,
+        CHAT: 1,
+        SIGNED: 2,
+        KEEP_ALIVE: 3
+      }
     }
   },
   methods: {
-    // 切换好友
-    selectFriend(friend) {
-      this.currentFriend = friend;
-      this.currentMessageList = friend.messageList;
-    },
     // 获取好友列表
     getFriendList() {
       this.$axios.get('/api/friend')
@@ -116,24 +114,22 @@ export default {
           let result = res.data;
           this.friendList = result.data;
           // 初始化消息
-          this.initFriendList();
+          this.initMessageList();
           // 建立连接
           this.connectWebSocketServer();
         })
     },
     // 初始化好友列表
-    initFriendList() {
-      let oldFriendList = storage.get(this.currentUser.id);
+    initMessageList() {
       this.friendList.forEach(friend => {
-        friend.messageList = [];
-        if (oldFriendList != null) {
-          oldFriendList.forEach(oldFriend => {
-            if (friend.id === oldFriend.id) {
-              friend.messageList = oldFriend.messageList;
-            }
-          })
-        }
+        let historyMessageList = storage.get(`${this.user.id}-${friend.id}`);
+        friend.messageList = historyMessageList != null ? historyMessageList : [];
       });
+    },
+    // 切换好友
+    selectFriend(friend) {
+      this.currentFriend = friend;
+      this.currentMessageList = friend.messageList;
     },
     connectWebSocketServer() {
       // 获取 WebSocket Server URL
@@ -163,17 +159,18 @@ export default {
           (message.sendUserId === this.currentFriend.id
             || message.receiveUserId === this.currentFriend.id)) {
           this.currentMessageList.push(message);
-          storage.set(this.currentUser.id, this.friendList);
-          return;
+          storage.set(this.user.id + '-chat-history', this.friendList);
+        } else {
+          // 根据 sendUserId 和 receiveUserId，将消息放入对应 friend 下的 messageList 中
+          this.friendList.forEach(friend => {
+            if (message.sendUserId === friend.id
+              || message.receiveUserId === friend.id) {
+              friend.messageList.push(message);
+            }
+          });
         }
-        // 根据 sendUserId 和 receiveUserId，将消息放入对应 friend 下的 messageList 中
-        this.friendList.forEach(friend => {
-          if (message.sendUserId === friend.id
-            || message.receiveUserId === friend.id) {
-            friend.messageList.push(message);
-            return;
-          }
-        });
+        // 签收消息
+        this.signedMessage(message.id);
       };
       // 关闭连接
       this.webSocket.onclose = event => console.log('ws.onclose: ', event);
@@ -187,25 +184,30 @@ export default {
       // 连接
       this.webSocket.onconnect = () => {
         console.log('ws.connect');
-        this.webSocket.onsend({ type: 0, sendUserId: this.currentUser.id });
-        // setInterval(this.keepAlive, 30 * 1000);
+        this.webSocket.onsend({ type: 0, sendUserId: this.user.id });
+        setInterval(this.keepAlive, 30 * 1000);
       }
     },
+    // 心跳包
     keepAlive() {
-      this.webSocket.onsend({ type: 3 });
+      this.webSocket.onsend({ type: this.messageType.KEEP_ALIVE });
     },
     // 发送消息
     sendMessage() {
       let data = {
-        type: 1,
-        sendUserId: this.currentUser.id,
+        type: this.messageType.CHAT,
+        sendUserId: this.user.id,
         receiveUserId: this.currentFriend.id,
         content: this.message
       };
       this.webSocket.onsend(data);
       this.currentMessageList.push(data);
-      storage.set(this.currentUser.id, this.friendList);
+      storage.set(this.user.id + '-chat-history', this.friendList);
       this.message = '';
+    },
+    // 签收消息
+    signedMessage(id) {
+      this.webSocket.onsend({ type: this.messageType.SIGNED, content: id });
     },
     lastMessage(friend) {
       if (friend.messageList && friend.messageList.length > 0) {

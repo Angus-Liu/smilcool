@@ -2,6 +2,7 @@ package com.smilcool.server.core.dao;
 
 import com.smilcool.server.core.pojo.po.Message;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -22,5 +23,6 @@ public interface MessageMapper {
 
     List<Message> selectByReceiveUserIdAndState(@Param("receiveUserId") Integer receiveUserId, @Param("state") int state);
 
-    void updateStateById(@Param("id") Integer id, @Param("state") Integer state);
+    @Update("UPDATE message SET state = #{state} WHERE id = #{id}")
+    int updateStateById(@Param("id") Integer id, @Param("state") Integer state);
 }

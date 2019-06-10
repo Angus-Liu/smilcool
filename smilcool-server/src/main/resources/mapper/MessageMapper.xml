@@ -167,10 +167,4 @@
         and state = #{state}
     </select>
 
-    <update id="updateStateById">
-        UPDATE message
-        SET state = #{state}
-        WHERE id = #{id}
-    </update>
-
 </mapper>
