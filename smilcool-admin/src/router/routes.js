@@ -235,82 +235,82 @@ export default [
       }
     ]
   },
-  {
-    path: '/components',
-    name: 'components',
-    meta: {
-      icon: 'logo-buffer',
-      title: '组件'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'count_to_page',
-        name: 'count_to_page',
-        meta: {
-          icon: 'md-trending-up',
-          title: '数字渐变'
-        },
-        component: () => import('@/view/components/count-to/count-to.vue')
-      },
-      {
-        path: 'drag_list_page',
-        name: 'drag_list_page',
-        meta: {
-          icon: 'ios-infinite',
-          title: '拖拽列表'
-        },
-        component: () => import('@/view/components/drag-list/drag-list.vue')
-      },
-      {
-        path: 'org_tree_page',
-        name: 'org_tree_page',
-        meta: {
-          icon: 'ios-people',
-          title: '组织结构树'
-        },
-        component: () => import('@/view/components/org-tree')
-      },
-      {
-        path: 'cropper_page',
-        name: 'cropper_page',
-        meta: {
-          icon: 'md-crop',
-          title: '图片裁剪'
-        },
-        component: () => import('@/view/components/cropper/cropper.vue')
-      }
-    ]
-  },
-  {
-    path: '/excel',
-    name: 'excel',
-    meta: {
-      icon: 'ios-stats',
-      title: 'EXCEL导入导出'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'upload-excel',
-        name: 'upload-excel',
-        meta: {
-          icon: 'md-add',
-          title: '导入EXCEL'
-        },
-        component: () => import('@/view/excel/upload-excel.vue')
-      },
-      {
-        path: 'export-excel',
-        name: 'export-excel',
-        meta: {
-          icon: 'md-download',
-          title: '导出EXCEL'
-        },
-        component: () => import('@/view/excel/export-excel.vue')
-      }
-    ]
-  },
+  // {
+  //   path: '/components',
+  //   name: 'components',
+  //   meta: {
+  //     icon: 'logo-buffer',
+  //     title: '组件'
+  //   },
+  //   component: Main,
+  //   children: [
+  //     {
+  //       path: 'count_to_page',
+  //       name: 'count_to_page',
+  //       meta: {
+  //         icon: 'md-trending-up',
+  //         title: '数字渐变'
+  //       },
+  //       component: () => import('@/view/components/count-to/count-to.vue')
+  //     },
+  //     {
+  //       path: 'drag_list_page',
+  //       name: 'drag_list_page',
+  //       meta: {
+  //         icon: 'ios-infinite',
+  //         title: '拖拽列表'
+  //       },
+  //       component: () => import('@/view/components/drag-list/drag-list.vue')
+  //     },
+  //     {
+  //       path: 'org_tree_page',
+  //       name: 'org_tree_page',
+  //       meta: {
+  //         icon: 'ios-people',
+  //         title: '组织结构树'
+  //       },
+  //       component: () => import('@/view/components/org-tree')
+  //     },
+  //     {
+  //       path: 'cropper_page',
+  //       name: 'cropper_page',
+  //       meta: {
+  //         icon: 'md-crop',
+  //         title: '图片裁剪'
+  //       },
+  //       component: () => import('@/view/components/cropper/cropper.vue')
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/excel',
+  //   name: 'excel',
+  //   meta: {
+  //     icon: 'ios-stats',
+  //     title: 'EXCEL导入导出'
+  //   },
+  //   component: Main,
+  //   children: [
+  //     {
+  //       path: 'upload-excel',
+  //       name: 'upload-excel',
+  //       meta: {
+  //         icon: 'md-add',
+  //         title: '导入EXCEL'
+  //       },
+  //       component: () => import('@/view/excel/upload-excel.vue')
+  //     },
+  //     {
+  //       path: 'export-excel',
+  //       name: 'export-excel',
+  //       meta: {
+  //         icon: 'md-download',
+  //         title: '导出EXCEL'
+  //       },
+  //       component: () => import('@/view/excel/export-excel.vue')
+  //     }
+  //   ]
+  // },
   {
     path: '/error_store',
     name: 'error_store',

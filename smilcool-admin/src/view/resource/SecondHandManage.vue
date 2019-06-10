@@ -46,6 +46,8 @@ export default {
       queryForm: {
         secondHandCategory: null,
         general: null,
+        // page & order 参数
+        desc: 'create_time',
         current: 1,
         size: 10
       },
