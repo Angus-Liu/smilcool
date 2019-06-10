@@ -10,19 +10,32 @@ import java.util.NoSuchElementException;
  */
 public enum MessageType {
 
-    CONNECT(0, "连接消息"),
-    CHAT(1, "聊天消息"),
-    SIGNED(2, "签收消息"),
-    KEEP_ALIVE(3, "心跳消息"),
-    PULL_FRIEND(4, "拉取好友消息"),
+    /**
+     * 连接消息
+     */
+    CONNECT(0),
+    /**
+     * 聊天消息
+     */
+    CHAT(1),
+    /**
+     * 签收消息
+     */
+    SIGNED(2),
+    /**
+     * 心跳消息
+     */
+    KEEP_ALIVE(3),
+    /**
+     * 拉取好友消息
+     */
+    PULL_FRIEND(4),
     ;
 
     public final int type;
-    public final String description;
 
-    MessageType(int type, String description) {
+    MessageType(int type) {
         this.type = type;
-        this.description = description;
     }
 
     public static MessageType of(int type) {
