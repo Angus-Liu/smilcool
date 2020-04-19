@@ -17,7 +17,7 @@ public class MailServiceTest extends SmilcoolServerApplicationTests {
 
     @Test
     public void testSendSimpleMail() {
-        mailService.sendSimpleMail("liuanguang1996@163.com", "Here is my resume", "Hi Angus, Here is my resume, I Think you will like");
+        mailService.sendSimpleMail("youremail@example.com", "Here is my resume", "Hi Angus, Here is my resume, I Think you will like");
     }
 
 }
