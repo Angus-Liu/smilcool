@@ -18,9 +18,9 @@
 
 ## 技术选型
 
-前端：Vue、Vuex、Axios、iView、Semantic UI Vue
+前端：Vue、Vuex、Axios、iView、Semantic UI Vue 等
 
-后台：SpringBoot、MyBaits、Swagger、Shiro、Redis、ElasticSearch、Netty
+后台：SpringBoot、MyBaits、Swagger、Shiro、Redis、ElasticSearch、Netty、MySQL 等
 
 ## 后台管理截图
 
