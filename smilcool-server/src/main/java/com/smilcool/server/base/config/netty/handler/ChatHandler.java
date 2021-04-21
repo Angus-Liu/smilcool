@@ -21,10 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 自定义处理消息的 Handler
- * TextWebSocketFrame 在 netty 中专门用于为 websocket 处理文本的对象，frame 是消息的载体
- *
- * @author Angus
- * @date 2018/12/13
+ * TextWebSocketFrame 在 netty 中专门用于为 WebSocket 处理文本的对象，frame 是消息的载体
  */
 @Slf4j
 @Sharable
@@ -33,7 +30,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
     /**
      * 用于记录和管理所有客户端的 channel
      */
-    private static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    private static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     /**
      * 用于记录和管理 userId 与 channel 关系
