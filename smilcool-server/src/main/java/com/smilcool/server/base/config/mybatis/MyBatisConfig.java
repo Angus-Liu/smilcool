@@ -8,12 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * MyBatis 配置：
- * ① 扫描 Mapper
- * ② 开启事务
- * ③ 开启分页、自定义排序规则
- *
- * @author Angus
- * @date 2019/3/20
+ * 1.扫描 Mapper
+ * 2.开启事务
+ * 3.开启分页、自定义排序规则
  */
 @Configuration
 @EnableTransactionManagement
