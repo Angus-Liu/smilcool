@@ -14,8 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Angus
- * @date 2018/12/13
+ * 请求 Channel 初始化器
  */
 @Component
 public class ChildChannelInitializer extends ChannelInitializer<SocketChannel> {
@@ -29,7 +28,7 @@ public class ChildChannelInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
-        // websocket 基于 http 协议，需要 http 编解码器
+        // WebSocket 基于 http 协议，需要 http 编解码器
         pipeline.addLast(new HttpServerCodec())
                 // ChunkedWriteHandler 提供对写大数据流的支持
                 .addLast(new ChunkedWriteHandler())
