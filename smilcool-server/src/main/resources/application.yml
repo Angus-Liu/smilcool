@@ -49,7 +49,7 @@ spring:
   data:
     # Elasticsearch 设置
     elasticsearch:
-      cluster-nodes: localhost:9300
+      cluster-nodes: localhost:9200
   # 邮箱配置
   mail:
     # 邮件服务器
