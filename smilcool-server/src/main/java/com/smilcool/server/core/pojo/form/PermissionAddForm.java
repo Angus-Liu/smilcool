@@ -1,15 +1,11 @@
 package com.smilcool.server.core.pojo.form;
 
-import com.smilcool.server.common.util.validation.anno.CheckEnum;
-import com.smilcool.server.common.util.validation.anno.CheckEnum.EnumType;
+import com.smilcool.server.common.enums.PermissionType;
+import com.smilcool.server.common.util.validation.EnumValidation;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
-/**
- * @author Angus
- * @date 2019/3/29
- */
 @Data
 public class PermissionAddForm {
     private Integer parentId;
@@ -23,7 +19,7 @@ public class PermissionAddForm {
     @NotBlank(message = "请求地址不能为空")
     private String url;
 
-    @CheckEnum(value = EnumType.PERMISSION_TYPE, message = "类型取值为[0-菜单，1-按钮，2-其他]")
+    @EnumValidation(value = PermissionType.class, field = "type")
     private Integer type;
 
     private Integer seq;

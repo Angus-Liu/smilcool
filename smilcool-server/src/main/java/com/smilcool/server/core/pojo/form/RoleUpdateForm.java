@@ -1,16 +1,12 @@
 package com.smilcool.server.core.pojo.form;
 
-import com.smilcool.server.common.util.validation.anno.CheckEnum;
-import com.smilcool.server.common.util.validation.anno.CheckEnum.EnumType;
+import com.smilcool.server.common.enums.CommonState;
+import com.smilcool.server.common.util.validation.EnumValidation;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * @author Angus
- * @date 2019/4/1
- */
 @Data
 public class RoleUpdateForm {
 
@@ -29,7 +25,10 @@ public class RoleUpdateForm {
     @NotBlank(message = "角色描述不能为空")
     String description;
 
-    @CheckEnum(value = EnumType.COMMON_STATE, message = "状态取值为[0-停用，1-启用]")
+    /**
+     * 角色状态
+     */
+    @EnumValidation(value = CommonState.class, field = "state")
     Integer state;
 
     /**

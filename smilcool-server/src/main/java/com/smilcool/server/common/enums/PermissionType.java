@@ -4,10 +4,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author Angus
- * @date 2019/3/29
- */
 public enum PermissionType {
     MENU(0, "菜单"),
     BUTTON(1, "按钮"),

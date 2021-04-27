@@ -4,12 +4,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * 状态：0-未激活，1-正常，2-停用
- *
- * @author Angus
- * @date 2019/3/20
- */
 public enum UserState {
     INACTIVATED(0, "未激活"),
     NORMAL(1, "正常"),
