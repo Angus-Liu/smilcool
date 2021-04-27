@@ -25,6 +25,7 @@ public class EnumValidatorTest {
 
     @AllArgsConstructor
     static class User {
+        @EnumValidation(value = SexEnum.class)
         @NotBlank
         private final String name;
 
@@ -42,8 +43,8 @@ public class EnumValidatorTest {
     public void testEnumValidate() {
         User u1 = new User("", -1, -1);
         User u2 = new User("NotBlank", -1, -1);
-        User u3 = new User("NotBlank", 200, -1);
-        User u4 = new User("NotBlank", 10, 0);
+        User u3 = new User("NotBlank", 200, 1);
+        User u4 = new User("MAN", 10, 0);
 
         Lists.newArrayList(u1, u2, u3, u4).forEach(
                 u -> {
