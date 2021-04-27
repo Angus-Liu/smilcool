@@ -25,8 +25,8 @@ public class EnumValidatorTest {
 
     @AllArgsConstructor
     static class User {
-        @EnumValidation(value = SexEnum.class)
         @NotBlank
+        @EnumValidation(value = SexEnum.class)
         private final String name;
 
         @Min(0) @Max(120)
