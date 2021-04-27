@@ -8,17 +8,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/smilcool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
-    # 使用阿里 Druid 连接池
-    druid:
-      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计
-      filters: stat,wall
-      stat-view-servlet:
-        enabled: true
-        login-username: root
-        login-password: root
-      web-stat-filter:
-        exclusions: /druid/*,/local-storage/*
-
 
   # 文件上传下载配置
   servlet:
@@ -46,10 +35,6 @@ spring:
     contact:
       name: Angus Liu
     base-package: com.smilcool.server.core.controller
-  data:
-    # Elasticsearch 设置
-    elasticsearch:
-      cluster-nodes: localhost:9200
   # 邮箱配置
   mail:
     # 邮件服务器
