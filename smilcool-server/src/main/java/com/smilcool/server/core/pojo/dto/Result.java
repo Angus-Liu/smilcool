@@ -1,31 +1,24 @@
 package com.smilcool.server.core.pojo.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
- * @author Angus
- * @date 2019/3/20
+ * 统一接口交互对象
  */
 @Data
-@AllArgsConstructor
-@ApiModel("统一接口交互对象")
+@RequiredArgsConstructor
 public class Result<T> {
 
+    private static Result<Empty> SUCCESS_EMPTY_RESULT = success(Empty.INSTANCE);
     /**
      * 请求情况
      */
-    @ApiModelProperty("请求情况")
-    private Boolean success;
-
+    private final Boolean success;
     /**
      * 时间戳
      */
-    @ApiModelProperty("时间戳")
-    private long timestamp;
-
+    private final long timestamp = System.currentTimeMillis();
     /**
      * 状态码
      * 400 Client Error
@@ -34,46 +27,33 @@ public class Result<T> {
      * 404 Not Found
      * 500 System Error
      */
-    @ApiModelProperty("状态码")
-    private Integer code;
-
+    private final Integer code;
     /**
      * 反馈消息
      */
-    @ApiModelProperty("反馈消息")
-    private String msg;
-
+    private final String msg;
     /**
      * 反馈数据
      */
-    @ApiModelProperty("反馈数据")
-    private T data;
-
-    private Result(Boolean success, Integer code, String msg, T data) {
-        this.success = success;
-        this.timestamp = System.currentTimeMillis();
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
-    }
+    private final T data;
 
     public static <T> Result<T> success(T data) {
         return new Result<>(true, 200, "OK", data);
     }
 
-    public static Result success() {
-        return success(null);
+    public static Result<Empty> success() {
+        return SUCCESS_EMPTY_RESULT;
     }
 
-    public static Result error(Integer code, String msg) {
-        return new Result<>(false, code, msg, null);
+    public static Result<Empty> error(Integer code, String msg) {
+        return new Result<>(false, code, msg, Empty.INSTANCE);
     }
 
-    public static Result error(String msg) {
+    public static Result<Empty> error(String msg) {
         return error(400, msg);
     }
 
-    public static Result error() {
-        return error(400, null);
+    public static class Empty {
+        private static final Empty INSTANCE = new Empty();
     }
 }

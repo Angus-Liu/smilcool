@@ -26,15 +26,6 @@ spring:
   jackson:
     # null 值不进行序列化
     default-property-inclusion: non_null
-  # Swagger 配置
-  swagger:
-    enabled: true # 生产环境应关闭
-    title: Smilcool API DOCS
-    description: Smilcool API DOCS - Smilcool 接口文档
-    version: 1.0
-    contact:
-      name: Angus Liu
-    base-package: com.smilcool.server.core.controller
   # 邮箱配置
   mail:
     # 邮件服务器

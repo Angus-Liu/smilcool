@@ -7,40 +7,42 @@ import com.smilcool.server.core.pojo.form.SecondHandQueryForm;
 import com.smilcool.server.core.pojo.po.SecondHand;
 import com.smilcool.server.core.pojo.vo.SecondHandVO;
 import com.smilcool.server.core.service.SecondHandService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 /**
- * @author Angus
- * @date 2019/4/1
+ * 二手交易接口
  */
-@Api(tags = "2.5", description = "二手交易接口")
+@AllArgsConstructor
 @RestController
 @RequestMapping("/second-hand")
 public class SecondHandController {
 
-    @Autowired
-    private SecondHandService secondHandService;
+    private final SecondHandService secondHandService;
 
-    @ApiOperation("二手交易添加")
+    /**
+     * 二手交易添加
+     */
     @PostMapping
     public Result<SecondHand> addSecondHand(@RequestBody @Valid SecondHandAddForm form) {
         SecondHand secondHand = secondHandService.addSecondHand(form);
         return Result.success(secondHand);
     }
 
-    @ApiOperation("二手交易分页")
+    /**
+     * 二手交易分页
+     */
     @GetMapping("/page")
-    public Result<Page<SecondHandVO>> pageSecondHandVO(Page page, SecondHandQueryForm form) {
+    public Result<Page<SecondHandVO>> pageSecondHandVO(Page<?> page, SecondHandQueryForm form) {
         Page<SecondHandVO> secondHandPage = secondHandService.pageSecondHandVO(page, form);
         return Result.success(secondHandPage);
     }
 
-    @ApiOperation("二手交易详情")
+    /**
+     * 二手交易详情
+     */
     @GetMapping("/{id}")
     public Result<SecondHandVO> getSecondHandVO(@PathVariable Integer id) {
         SecondHandVO secondHandVO = secondHandService.getSecondHandVO(id);

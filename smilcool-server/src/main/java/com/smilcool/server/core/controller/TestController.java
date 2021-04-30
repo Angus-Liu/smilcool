@@ -3,11 +3,10 @@ package com.smilcool.server.core.controller;
 import com.smilcool.server.base.config.elasticsearch.document.ArticleDocument;
 import com.smilcool.server.base.config.elasticsearch.repository.ArticleRepository;
 import com.smilcool.server.core.service.TestService;
-import io.swagger.annotations.Api;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -15,31 +14,26 @@ import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author Angus
- * @date 2019/4/26
+ * 测试接口
  */
-@Api(tags = "4.1", description = "测试接口")
 @Slf4j
+@AllArgsConstructor
 @RestController
 @RequestMapping("/test")
 public class TestController {
 
-    @Autowired
-    private TestService testService;
+    private final TestService testService;
 
-    @Autowired
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
     @GetMapping("/cache")
     public Object getCache(@RequestParam String key) {
-        Object res = testService.getCache(key);
-        return res;
+        return testService.getCache(key);
     }
 
     @PutMapping("/cache")
     public Object updateCache(@RequestParam String key) {
-        Object res = testService.updateCache(key);
-        return res;
+        return testService.updateCache(key);
     }
 
     @GetMapping("/search")
