@@ -7,10 +7,6 @@ import com.smilcool.server.core.service.SysParamService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * @author Angus
- * @date 2019/6/4
- */
 public class SysParamServiceImplTest extends SmilcoolServerApplicationTests {
 
     @Autowired

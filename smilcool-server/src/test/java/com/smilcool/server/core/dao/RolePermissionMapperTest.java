@@ -6,10 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
-/**
- * @author Angus
- * @date 2019/4/5
- */
 public class RolePermissionMapperTest extends SmilcoolServerApplicationTests {
     @Autowired
     private RolePermissionMapper rolePermissionMapper;

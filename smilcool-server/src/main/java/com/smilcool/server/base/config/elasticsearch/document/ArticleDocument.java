@@ -10,10 +10,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Angus
- * @date 2019/4/29
- */
 @Data
 @Document(indexName = "article", type = "_doc")
 public class ArticleDocument {

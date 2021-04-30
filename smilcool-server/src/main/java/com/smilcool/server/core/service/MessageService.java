@@ -1,18 +1,29 @@
 package com.smilcool.server.core.service;
 
+import com.smilcool.server.base.config.netty.enums.MessageState;
+import com.smilcool.server.core.dao.MessageMapper;
 import com.smilcool.server.core.pojo.po.Message;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @author Angus
- * @date 2019/5/8
- */
-public interface MessageService {
+@Service
+@AllArgsConstructor
+public class MessageService {
 
-    Message addMessage(Message message);
+    private final MessageMapper messageMapper;
 
-    List<Message> getUnsignedMessageList(Integer receiveUserId);
+    public Message addMessage(Message message) {
+        messageMapper.insertSelective(message);
+        return messageMapper.selectByPrimaryKey(message.getId());
+    }
 
-    void signMessage(Integer id);
+    public List<Message> getUnsignedMessageList(Integer receiveUserId) {
+        return messageMapper.selectByReceiveUserIdAndState(receiveUserId, MessageState.UNSIGNED.state);
+    }
+
+    public void signMessage(Integer id) {
+        messageMapper.updateStateById(id, MessageState.SIGNED.state);
+    }
 }

@@ -6,10 +6,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-/**
- * @author Angus
- * @date 2019/4/25
- */
 public class RedisConfigTest extends SmilcoolServerApplicationTests {
 
     @Autowired

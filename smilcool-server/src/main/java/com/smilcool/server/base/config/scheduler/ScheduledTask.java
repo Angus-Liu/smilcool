@@ -21,9 +21,6 @@ import java.util.List;
 
 /**
  * 定时任务配置
- *
- * @author Angus
- * @date 2019/5/16
  */
 @Slf4j
 @Configuration

@@ -32,7 +32,7 @@ public class CustomAuthorizingRealm extends AuthorizingRealm {
         log.info("获取用户 {} 授权信息", id);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         // 获取角色信息
-        authorizationInfo.setRoles(userService.getRoles(id));
+        authorizationInfo.setRoles(userService.getRoleNames(id));
         // 获取权限信息
         authorizationInfo.setStringPermissions(userService.getPermissions(id));
         return authorizationInfo;

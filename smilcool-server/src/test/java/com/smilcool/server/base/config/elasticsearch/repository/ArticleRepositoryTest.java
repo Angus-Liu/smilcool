@@ -1,13 +1,11 @@
 package com.smilcool.server.base.config.elasticsearch.repository;
 
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smilcool.server.SmilcoolServerApplicationTests;
 import com.smilcool.server.base.config.elasticsearch.document.ArticleDocument;
 import com.smilcool.server.common.util.BeanUtil;
 import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
-import com.smilcool.server.core.pojo.vo.ArticleVO;
 import com.smilcool.server.core.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -16,10 +14,6 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 
 import java.util.List;
 
-/**
- * @author Angus
- * @date 2019/5/26
- */
 @Slf4j
 public class ArticleRepositoryTest extends SmilcoolServerApplicationTests {
 
