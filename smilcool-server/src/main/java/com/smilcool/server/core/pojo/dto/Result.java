@@ -9,33 +9,32 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class Result<T> {
-
-    private static Result<Empty> SUCCESS_EMPTY_RESULT = success(Empty.INSTANCE);
     /**
      * 请求情况
      */
     private final Boolean success;
+
     /**
      * 时间戳
      */
     private final long timestamp = System.currentTimeMillis();
+
     /**
      * 状态码
-     * 400 Client Error
-     * 401 Unauthorized
-     * 403 Forbidden
-     * 404 Not Found
-     * 500 System Error
      */
     private final Integer code;
+
     /**
      * 反馈消息
      */
     private final String msg;
+
     /**
      * 反馈数据
      */
     private final T data;
+
+    private static Result<Empty> SUCCESS_EMPTY_RESULT = success(Empty.INSTANCE);
 
     public static <T> Result<T> success(T data) {
         return new Result<>(true, 200, "OK", data);

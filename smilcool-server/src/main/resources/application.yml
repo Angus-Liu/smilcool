@@ -26,6 +26,8 @@ spring:
   jackson:
     # null 值不进行序列化
     default-property-inclusion: non_null
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
   # 邮箱配置
   mail:
     # 邮件服务器
