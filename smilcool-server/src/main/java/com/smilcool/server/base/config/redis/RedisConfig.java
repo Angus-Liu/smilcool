@@ -17,9 +17,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
  * <p>
  * TODO: 2019/4/24 缓存
  * TODO: 2019/4/24 限流
- *
- * @author Angus
- * @date 2019/4/24
  */
 @EnableCaching
 @Configuration
@@ -29,9 +26,6 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 定义 StringRedisTemplate ，指定序列化和反序列化的处理类
      * http://www.importnew.com/29554.html
      * http://blog.didispace.com/springbootredis/
-     *
-     * @param factory 默认实现为 LettuceConnectionFactory
-     * @return
      */
     @Bean
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
@@ -48,6 +42,4 @@ public class RedisConfig extends CachingConfigurerSupport {
         template.afterPropertiesSet();
         return template;
     }
-
-    // TODO: 2019/4/26 配置自定义 CacheManager
 }
