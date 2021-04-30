@@ -4,10 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
-/**
- * @author Angus
- * @date 2019/5/12
- */
 @Data
 public class FileAddForm {
     @NotBlank(message = "文件类型不能为空")

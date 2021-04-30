@@ -6,10 +6,6 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * @author Angus
- * @date 2019/4/12
- */
 @Data
 @AllArgsConstructor
 public class ResourceAddForm {

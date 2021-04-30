@@ -3,12 +3,7 @@ package com.smilcool.server.core.pojo.form;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/5/12
- */
 @Data
 public class DicItemAddForm {
     @NotBlank(message = "字典类型码不能为空")

@@ -8,9 +8,7 @@ import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.pojo.vo.UserVO;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-public interface UserMapper extends BaseMapper {
+public interface UserMapper extends BaseMapper<User> {
     int deleteByPrimaryKey(Integer id);
 
     int insert(User record);
@@ -33,5 +31,5 @@ public interface UserMapper extends BaseMapper {
 
     User selectByEmail(String email);
 
-    Page<UserVO> selectUserVOByQueryForm(Page page, @Param("form") UserQueryForm form);
+    Page<UserVO> selectUserVOByQueryForm(Page<?> page, @Param("form") UserQueryForm form);
 }

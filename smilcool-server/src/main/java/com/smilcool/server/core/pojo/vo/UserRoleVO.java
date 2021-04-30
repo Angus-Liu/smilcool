@@ -7,10 +7,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/3/29
- */
 @Data
 public class UserRoleVO {
     private Integer id;

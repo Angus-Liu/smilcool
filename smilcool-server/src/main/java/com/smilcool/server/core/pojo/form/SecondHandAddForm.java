@@ -5,10 +5,6 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-/**
- * @author Angus
- * @date 2019/4/10
- */
 @Data
 public class SecondHandAddForm {
     @NotBlank(message = "二手交易类别不能为空")

@@ -7,10 +7,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/5/17
- */
 @Data
 public class LostFoundAddForm {
 

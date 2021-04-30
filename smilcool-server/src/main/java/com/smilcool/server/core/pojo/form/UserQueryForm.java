@@ -4,10 +4,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/3/31
- */
 @Data
 public class UserQueryForm {
 

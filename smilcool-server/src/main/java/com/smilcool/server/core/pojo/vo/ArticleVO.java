@@ -5,10 +5,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/4/29
- */
 @Data
 public class ArticleVO {
     private Integer id;

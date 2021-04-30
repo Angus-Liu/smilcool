@@ -7,10 +7,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/3/21
- */
 @Data
 public class ResourceVO {
     private Integer id;

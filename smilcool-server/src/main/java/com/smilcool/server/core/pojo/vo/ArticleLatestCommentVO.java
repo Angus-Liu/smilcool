@@ -7,9 +7,6 @@ import java.util.Date;
 
 /**
  * 文章最新评论
- *
- * @author Angus
- * @date 2019/5/22
  */
 @Data
 public class ArticleLatestCommentVO {

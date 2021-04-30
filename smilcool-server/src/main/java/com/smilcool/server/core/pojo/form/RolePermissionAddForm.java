@@ -4,11 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
-
-/**
- * @author Angus
- * @date 2019/3/29
- */
 @Data
 public class RolePermissionAddForm {
     @NotNull(message = "角色 ID 不能为空")

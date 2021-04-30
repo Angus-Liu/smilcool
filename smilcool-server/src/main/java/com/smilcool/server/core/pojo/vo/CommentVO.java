@@ -6,10 +6,6 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Angus
- * @date 2019/4/23
- */
 @Data
 public class CommentVO {
     private Integer id;

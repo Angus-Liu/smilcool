@@ -4,10 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
-/**
- * @author Angus
- * @date 2019/4/12
- */
 @Data
 public class ArticleAddForm {
     @NotBlank(message = "文章类别不能为空")

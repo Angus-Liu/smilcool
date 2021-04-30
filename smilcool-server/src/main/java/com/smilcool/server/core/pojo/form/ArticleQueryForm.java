@@ -5,12 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
-/**
- * @author Angus
- * @date 2019/5/21
- */
 @Data
 @Builder
 @NoArgsConstructor

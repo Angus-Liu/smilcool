@@ -5,10 +5,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/5/25
- */
 @Data
 public class UserUpdateForm {
     private String nickname;

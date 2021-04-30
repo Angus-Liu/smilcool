@@ -26,10 +26,6 @@ public class UserRole {
 
     private Boolean deleted;
 
-    public UserRole(Integer userId) {
-        this.userId = userId;
-    }
-
     public UserRole(Integer userId, Integer roleId) {
         this.userId = userId;
         this.roleId = roleId;

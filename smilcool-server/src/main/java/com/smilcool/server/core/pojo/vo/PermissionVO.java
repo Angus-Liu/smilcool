@@ -8,9 +8,6 @@ import lombok.Data;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author Angus
- */
 @Data
 public class PermissionVO {
     private Integer id;

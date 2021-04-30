@@ -5,10 +5,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * @author Angus
- * @date 2019/5/18
- */
 @Data
 public class FileVO {
     private Integer id;

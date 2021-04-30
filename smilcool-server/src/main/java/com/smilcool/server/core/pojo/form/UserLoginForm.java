@@ -7,9 +7,6 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * 用户登录表单
- *
- * @author Angus
- * @date 2019/3/28
  */
 @Data
 public class UserLoginForm {
