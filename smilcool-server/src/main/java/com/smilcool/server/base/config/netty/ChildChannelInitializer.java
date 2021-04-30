@@ -10,23 +10,22 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
  * 请求 Channel 初始化器
  */
 @Component
+@AllArgsConstructor
 public class ChildChannelInitializer extends ChannelInitializer<SocketChannel> {
 
-    @Autowired
-    private ChatHandler chatHandler;
+    private final ChatHandler chatHandler;
 
-    @Autowired
-    private HeartbeatHandler heartbeatHandler;
+    private final HeartbeatHandler heartbeatHandler;
 
     @Override
-    protected void initChannel(SocketChannel ch) throws Exception {
+    protected void initChannel(SocketChannel ch) {
         ChannelPipeline pipeline = ch.pipeline();
         // WebSocket 基于 http 协议，需要 http 编解码器
         pipeline.addLast(new HttpServerCodec())

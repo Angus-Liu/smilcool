@@ -1,13 +1,13 @@
 package com.smilcool.server.base.config.netty.enums;
 
+import lombok.AllArgsConstructor;
+
 import java.util.NoSuchElementException;
 
 /**
- * Websocket 传输的内容实体对应的动作枚举
- *
- * @author Angus
- * @date 2018/12/20
+ * WebSocket 传输的内容实体对应的动作枚举
  */
+@AllArgsConstructor
 public enum MessageType {
 
     /**
@@ -33,10 +33,6 @@ public enum MessageType {
     ;
 
     public final int type;
-
-    MessageType(int type) {
-        this.type = type;
-    }
 
     public static MessageType of(int type) {
         for (MessageType value : MessageType.values()) {

@@ -1,7 +1,6 @@
 package com.smilcool.server.base.config.netty.handler;
 
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -13,9 +12,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * 自定义心跳机制 Handler
- *
- * @author Angus
- * @date 2018/12/24
  */
 @Slf4j
 @Sharable

@@ -12,8 +12,8 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -26,7 +26,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @Sharable
 @Component
+@RequiredArgsConstructor
 public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+
+    private final MessageService messageService;
+
     /**
      * 用于记录和管理所有客户端的 channel
      */
@@ -35,13 +39,10 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
     /**
      * 用于记录和管理 userId 与 channel 关系
      */
-    private static ConcurrentHashMap<Integer, Channel> userIdChannelMap = new ConcurrentHashMap<>();
-
-    @Autowired
-    private MessageService messageService;
+    private static final ConcurrentHashMap<Integer, Channel> userIdChannelMap = new ConcurrentHashMap<>();
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msgFrame) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msgFrame) {
         Channel channel = ctx.channel();
         // 获取客户端传输过来的消息
         Message receiveMessage = JSONUtil.toBean(msgFrame.text(), Message.class);
@@ -87,21 +88,21 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
     }
 
     @Override
-    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+    public void handlerAdded(ChannelHandlerContext ctx) {
         // 当客户端连接服务端之后，获取客户端的 channel，放到 ChannelGroup 中进行管理
         channelGroup.add(ctx.channel());
         log.debug("客户端连接: channel = {}", ctx.channel().id().asShortText());
     }
 
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+    public void handlerRemoved(ChannelHandlerContext ctx) {
         // 当触发 handlerRemoved 方法时，从 ChannelGroup 移除对应的客户端的 channel
         channelGroup.remove(ctx.channel());
         log.debug("客户端断开: channel = {}", ctx.channel().id().asShortText());
     }
 
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         log.error("发生异常", cause);
         // 关闭 channel 并移除
         ctx.channel().close();

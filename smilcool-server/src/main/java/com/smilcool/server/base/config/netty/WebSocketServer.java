@@ -14,15 +14,14 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
- * @author Angus
- * @date 2018/12/13
+ * WebSocket Server
  */
 @Slf4j
 @Component
 public class WebSocketServer {
 
-    private EventLoopGroup eventLoopGroup;
-    private ServerBootstrap serverBootstrap;
+    private final EventLoopGroup eventLoopGroup;
+    private final ServerBootstrap serverBootstrap;
     private ChannelFuture channelFuture;
 
     @Value("${smilcool.netty-port}")
@@ -40,14 +39,11 @@ public class WebSocketServer {
 
     /**
      * PostConstruct 注解作用为 Spring Bean 初始化之后执行该方法
-     * <p>
-     * 注解 @PostConstruct 与 @PreDestroy 详解及实例
-     * https://blog.csdn.net/wo541075754/article/details/52174900
      */
     @PostConstruct
     public void start() throws InterruptedException {
         channelFuture = serverBootstrap.bind(port).sync();
-        log.debug("Netty 启动...");
+        log.debug("WebSocket Server start...");
     }
 
     /**
@@ -59,6 +55,6 @@ public class WebSocketServer {
         channelFuture.channel().close().sync();
         // 关闭 EventLoopGroup
         eventLoopGroup.shutdownGracefully().sync();
-        log.debug("Netty 关闭...");
+        log.debug("WebSocket Server close...");
     }
 }
