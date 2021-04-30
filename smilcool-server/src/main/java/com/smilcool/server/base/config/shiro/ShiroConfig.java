@@ -10,11 +10,13 @@ import com.smilcool.server.core.service.RuleMapService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.boot.autoconfigure.ShiroAnnotationProcessorAutoConfiguration;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,11 +26,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Shiro 配置
+ * Shiro 配置。因代理方式冲突（JDK Dynamic / CGLib）问题，关掉 Shiro 的注解支持，参考：
+ * <a href="https://juejin.cn/post/6844904127525306382">Spring Boot 加入Shiro导致AOP失效的坑</a>
+ * <a href="https://zhuanlan.zhihu.com/p/143126919">Shiro权限注解与Aop冲突问题探究</a>
  */
 @Slf4j
-@Configuration
 @AllArgsConstructor
+@Configuration
+@EnableAutoConfiguration(exclude = {ShiroAnnotationProcessorAutoConfiguration.class})
 public class ShiroConfig {
 
     private final RuleMapService ruleMapService;
