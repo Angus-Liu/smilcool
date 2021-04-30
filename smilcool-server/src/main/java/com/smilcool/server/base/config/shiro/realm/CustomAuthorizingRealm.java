@@ -3,33 +3,27 @@ package com.smilcool.server.base.config.shiro.realm;
 import cn.hutool.crypto.SecureUtil;
 import com.smilcool.server.core.pojo.po.User;
 import com.smilcool.server.core.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * 设置自定义 Realm
- *
- * @author Angus
- * @date 2019/4/5
  */
 @Slf4j
+@AllArgsConstructor
 @Component("authorizer")
 public class CustomAuthorizingRealm extends AuthorizingRealm {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     /**
      * 授权
-     *
-     * @param principals
-     * @return
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -46,10 +40,6 @@ public class CustomAuthorizingRealm extends AuthorizingRealm {
 
     /**
      * 认证
-     *
-     * @param token
-     * @return
-     * @throws AuthenticationException
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {

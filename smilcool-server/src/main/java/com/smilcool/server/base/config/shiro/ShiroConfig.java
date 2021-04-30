@@ -4,9 +4,10 @@ import com.smilcool.server.base.config.shiro.filter.CustomFormAuthenticationFilt
 import com.smilcool.server.base.config.shiro.filter.CustomHttpMethodPermissionFilter;
 import com.smilcool.server.base.config.shiro.filter.CustomPermissionsAuthorizationFilter;
 import com.smilcool.server.base.config.shiro.filter.CustomRolesAuthorizationFilter;
-import com.smilcool.server.base.config.shiro.util.ShiroUtil;
+import com.smilcool.server.base.config.shiro.util.ShiroUtils;
 import com.smilcool.server.core.pojo.po.RuleMap;
 import com.smilcool.server.core.service.RuleMapService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -14,7 +15,6 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,24 +25,18 @@ import java.util.Map;
 
 /**
  * Shiro 配置
- *
- * @author Angus
- * @date 2019/4/5
  */
 @Slf4j
 @Configuration
+@AllArgsConstructor
 public class ShiroConfig {
 
-    @Autowired
-    private RuleMapService ruleMapService;
+    private final RuleMapService ruleMapService;
 
     /**
-     * 为替换原过滤器，需要通过 shiroFilterFactoryBean 进行设置。不替换时，
-     * 可简化为配置 shiroFilterChainDefinition，自定义过滤器采用 Bean 注入
-     * 简化配置参考官网：https://shiro.apache.org/spring-boot.html
-     *
-     * @param securityManager
-     * @return
+     * 为替换原过滤器，需要通过 shiroFilterFactoryBean 进行设置。不替换时，可简化
+     * 为配置 shiroFilterChainDefinition，自定义过滤器采用 Bean 注入简化配置参考
+     * 官网：https://shiro.apache.org/spring-boot.html
      */
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
@@ -59,7 +53,7 @@ public class ShiroConfig {
         List<RuleMap> ruleMapList = ruleMapService.getRuleMapList();
         // 配置过滤器链映射
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        ruleMapList.forEach(ruleMap -> filterChainDefinitionMap.put(ruleMap.getUrl(), ShiroUtil.buildRule(ruleMap)));
+        ruleMapList.forEach(ruleMap -> filterChainDefinitionMap.put(ruleMap.getUrl(), ShiroUtils.buildRule(ruleMap)));
         log.info("filterChainDefinitionMap: {}", filterChainDefinitionMap);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -67,8 +61,6 @@ public class ShiroConfig {
 
     /**
      * 使用 Bean 注入时，原过滤器仍然生效，页面依旧会跳转到 /login.jsp，无法达到替代效果
-     *
-     * @return
      */
     private FormAuthenticationFilter authc() {
         return new CustomFormAuthenticationFilter();

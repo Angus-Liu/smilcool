@@ -3,15 +3,11 @@ package com.smilcool.server.base.config.shiro.util;
 import com.smilcool.server.core.pojo.po.RuleMap;
 
 /**
- * @author Angus
- * @date 2019/6/4
+ * Shiro Utils
  */
-public class ShiroUtil {
+public class ShiroUtils {
     /**
      * 构建过滤规则
-     *
-     * @param ruleMap
-     * @return
      */
     public static String buildRule(RuleMap ruleMap) {
         StringBuilder rule = new StringBuilder();
