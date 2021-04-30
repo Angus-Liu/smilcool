@@ -1,7 +1,8 @@
 package com.smilcool.server.common.util.validation;
 
-import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class EnumValidatorTest {
 
     @AllArgsConstructor
@@ -55,9 +57,8 @@ public class EnumValidatorTest {
                         String validationMsg = constraintViolations.stream()
                                 .map(ConstraintViolation::getMessage)
                                 .collect(Collectors.joining(", "));
-                        System.out.println("validate fail: " + validationMsg);
+                        System.out.printf("validate fail: %s\n", validationMsg);
                     }
-                    System.out.println("---- split ----");
                 }
         );
     }
