@@ -1,11 +1,11 @@
 package com.smilcool.server.common.enums;
 
+import lombok.AllArgsConstructor;
+
 /**
  * 字典类型枚举
- *
- * @author Angus
- * @date 2019/5/12
  */
+@AllArgsConstructor
 public enum DicTypeEnum {
 
     /**
@@ -42,9 +42,4 @@ public enum DicTypeEnum {
      * 字典类型码
      */
     public final String code;
-
-    DicTypeEnum(String name, String code) {
-        this.name = name;
-        this.code = code;
-    }
 }

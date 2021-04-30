@@ -1,9 +1,12 @@
 package com.smilcool.server.common.enums;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 public enum UserState {
     INACTIVATED(0, "未激活"),
     NORMAL(1, "正常"),
@@ -12,11 +15,6 @@ public enum UserState {
 
     int state;
     String desc;
-
-    UserState(int state, String desc) {
-        this.state = state;
-        this.desc = desc;
-    }
 
     public static UserState of(int state) {
         for (UserState userState : UserState.values()) {

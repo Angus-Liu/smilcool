@@ -1,9 +1,8 @@
 package com.smilcool.server.common.enums;
 
-/**
- * @author Angus
- * @date 2019/6/4
- */
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public enum SysParamEnum {
 
     /**
@@ -13,8 +12,4 @@ public enum SysParamEnum {
     ;
 
     public final String name;
-
-    SysParamEnum(String name) {
-        this.name = name;
-    }
 }

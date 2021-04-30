@@ -1,9 +1,12 @@
 package com.smilcool.server.common.enums;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 public enum CommonState {
     Disable(0, "停用"),
     Normal(1, "正常"),
@@ -12,11 +15,6 @@ public enum CommonState {
 
     int state;
     String desc;
-
-    CommonState(int state, String desc) {
-        this.state = state;
-        this.desc = desc;
-    }
 
     public static CommonState of(int state) {
         for (CommonState commonState : CommonState.values()) {

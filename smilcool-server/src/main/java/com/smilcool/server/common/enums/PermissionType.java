@@ -1,9 +1,12 @@
 package com.smilcool.server.common.enums;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 public enum PermissionType {
     MENU(0, "菜单"),
     BUTTON(1, "按钮"),
@@ -12,13 +15,6 @@ public enum PermissionType {
 
     int type;
     String desc;
-
-    public static final int[] x = {2};
-
-    PermissionType(int type, String desc) {
-        this.type = type;
-        this.desc = desc;
-    }
 
     public static PermissionType of(int type) {
         for (PermissionType permissionType : PermissionType.values()) {
