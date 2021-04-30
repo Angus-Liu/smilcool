@@ -10,14 +10,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Result<T> {
     /**
-     * 请求情况
-     */
-    private final Boolean success;
-
-    /**
      * 时间戳
      */
     private final long timestamp = System.currentTimeMillis();
+
+    /**
+     * 请求情况
+     */
+    private final Boolean success;
 
     /**
      * 状态码
