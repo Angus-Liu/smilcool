@@ -9,8 +9,8 @@ import com.smilcool.server.core.pojo.form.ArticleQueryForm;
 import com.smilcool.server.core.pojo.po.Article;
 import com.smilcool.server.core.service.ArticleService;
 import com.smilcool.server.core.service.SysParamService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,16 +28,12 @@ import java.util.List;
 @Slf4j
 @Configuration
 @EnableScheduling
+@AllArgsConstructor
 public class ScheduledTask {
 
-    @Autowired
-    private ArticleService articleService;
-
-    @Autowired
-    private ArticleRepository articleRepository;
-
-    @Autowired
-    private SysParamService sysParamService;
+    private final ArticleService articleService;
+    private final ArticleRepository articleRepository;
+    private final SysParamService sysParamService;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
