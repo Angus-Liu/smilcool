@@ -1,6 +1,8 @@
 package com.smilcool.server.base.config.mybatis;
 
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +21,14 @@ public class MyBatisConfig {
 
     /**
      * MyBatis Plus 提供的分页、自定义排序规则插件
+     *
+     * @see <a href="https://baomidou.com/guide/page.html#%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6">分页插件</a>
      */
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        PaginationInnerInterceptor pagination = new PaginationInnerInterceptor(DbType.MYSQL);
+        interceptor.addInnerInterceptor(pagination);
+        return interceptor;
     }
 }
