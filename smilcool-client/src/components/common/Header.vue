@@ -235,11 +235,11 @@ export default {
     logon () {
       if (this.logonForm.username.length === 0) {
         this.showErrorNotice('注册失败', '请填写用户名');
-      } else if (this.logonForm.email.length === 0
-        || !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.logonForm.email)) {
+      } else if (this.logonForm.email.length === 0 ||
+        !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.logonForm.email)) {
         this.showErrorNotice('注册失败', '请填写合法的邮箱');
-      } else if (this.logonForm.password.length === 0
-        || this.logonForm.password !== this.logonForm.rePassword) {
+      } else if (this.logonForm.password.length === 0 ||
+        this.logonForm.password !== this.logonForm.rePassword) {
         this.showErrorNotice('注册失败', '两次输入的密码不一致');
       } else {
         // TODO 2019/6/6 后期需要搬到 vuex
@@ -343,7 +343,6 @@ header {
     margin-top: 22px;
     margin-right: 30px;
 
-
     .notification-card-wrapper {
       position: absolute;
       margin-top: 20px;
@@ -351,7 +350,6 @@ header {
 
       .notification-card {
         width: 400px;
-
 
         .notification-list {
           max-height: 400px;
