@@ -4,7 +4,7 @@
       <div class="container">
         <!-- LOGO -->
         <router-link to="/">
-          <img class="logo" src="../../assets/img/logo/logo-3.png">
+          <img class="logo" src="@/assets/img/logo/logo-3.png">
         </router-link>
         <!-- LOGO END -->
         <!-- 菜单 -->
@@ -14,16 +14,7 @@
               <router-link to="/article">文章资讯</router-link>
             </li>
             <li>
-              <router-link to="/moment">校园动态</router-link>
-            </li>
-            <li>
               <router-link to="/file">文件仓库</router-link>
-            </li>
-            <li>
-              <router-link to="/second-hand">二手交易</router-link>
-            </li>
-            <li>
-              <router-link to="/lost-found">失物寻物</router-link>
             </li>
             <li>
               <router-link to="/forum">校内论坛</router-link>
@@ -171,7 +162,7 @@
 <script>
 export default {
   name: 'Header',
-  data() {
+  data () {
     return {
       q: '',
       logInOnModel: {
@@ -181,37 +172,37 @@ export default {
       },
       loginForm: {
         username: '',
-        password: ''
+        password: '',
       },
       logonForm: {
         username: '',
         email: '',
         password: '',
-        rePassword: ''
+        rePassword: '',
       },
       rules: {},
-      showNotificationCard: false
+      showNotificationCard: false,
     };
   },
   computed: {
-    user() {
+    user () {
       return this.$store.state.user;
-    }
+    },
   },
   methods: {
-    showLoginForm() {
+    showLoginForm () {
       this.logInOnModel.title = '登录';
       this.logInOnModel.isLogin = true;
     },
-    showRegisterForm() {
+    showRegisterForm () {
       this.logInOnModel.title = '注册';
       this.logInOnModel.isLogin = false;
     },
-    showErrorNotice(title, desc) {
+    showErrorNotice (title, desc) {
       this.$Notice.error({ title, desc });
     },
     // 登录
-    login() {
+    login () {
       if (this.loginForm.username.length === 0) {
         this.showErrorNotice('登录失败', '请填写用户名或邮箱');
       } else if (this.loginForm.password.length === 0) {
@@ -227,21 +218,21 @@ export default {
               this.$store.commit('userUpdate', result.data);
               this.loginForm = {
                 username: '',
-                password: ''
-              }
+                password: '',
+              };
             }
           });
       }
     },
     // 注销
-    logout() {
+    logout () {
       this.$axios.post('/api/user/logout')
         .then(res => {
           this.$store.commit('userUpdate', null);
-        })
+        });
     },
     // 注册
-    logon() {
+    logon () {
       if (this.logonForm.username.length === 0) {
         this.showErrorNotice('注册失败', '请填写用户名');
       } else if (this.logonForm.email.length === 0
@@ -260,26 +251,26 @@ export default {
       }
     },
     // 第三方登录
-    oauth() {
+    oauth () {
       this.$Notice.warning({ title: 'Hey', desc: '功能正在开发中 🚀' });
     },
     // 全文搜索界面
-    toSearch() {
-      this.$router.push({ name: 'search', query: { q: this.q } })
+    toSearch () {
+      this.$router.push({ name: 'search', query: { q: this.q } });
     },
     // 消息中心
-    toMessage() {
+    toMessage () {
       this.showNotificationCard = false;
       if (!this.$store.state.user) {
         this.logInOnModel.show = true;
       } else {
         this.$router.push('/message');
       }
-    }
+    },
   },
-  mounted() {
+  mounted () {
     // TODO 2019/6/6 也可以在这里加载 WebSocket
-  }
+  },
 };
 </script>
 
