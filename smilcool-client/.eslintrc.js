@@ -10,7 +10,8 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'semi': [2, 'always'] // 语句强制分号结尾
+    'semi': ["warn", 'always'],
+    'comma-dangle': ["warn", "always-multiline"]
   },
   parserOptions: {
     parser: 'babel-eslint'
