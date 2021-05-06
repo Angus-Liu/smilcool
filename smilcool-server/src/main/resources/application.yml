@@ -55,5 +55,5 @@ logging:
 smilcool:
   # netty 监听端口
   netty-port: 8088
-  # 本地存储位置
-  local-storage: D:/Smilcool/
+  # 自定义本地存储位置，需根据系统修改，例如：Windows - D:/temp/、Mac/Linux - /Users/xxx/temp/
+  local-storage: /Users/angus/temp/
