@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 统一接口交互对象
+ * 接口统一返回值
  */
 @Data
 @RequiredArgsConstructor
@@ -54,5 +54,8 @@ public class Result<T> {
 
     public static class Empty {
         private static final Empty INSTANCE = new Empty();
+
+        private Empty() {
+        }
     }
 }
