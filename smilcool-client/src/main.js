@@ -15,26 +15,17 @@ import HttpRequest from '@/utils/axios';
 import mavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
 // Qiniu-JavaScript-SDK : https://developer.qiniu.com/kodo/sdk/1283/javascript
-import * as qiniu from 'qiniu-js'
+import * as qiniu from 'qiniu-js';
 
 Vue.config.productionTip = false;
 
-// iView
 Vue.use(iView);
-// Semantic UI Vue
 Vue.use(SuiVue);
-// mavonEditor
 Vue.use(mavonEditor);
 
-// axios
 Vue.prototype.$axios = HttpRequest;
-// qiniu
 Vue.prototype.$qiniu = qiniu;
 
 Vue.directive('clickOutside', clickOutside);
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app');
+new Vue({ router, store, render: h => h(App) }).$mount('#app');

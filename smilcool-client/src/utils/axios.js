@@ -1,13 +1,13 @@
 import axios from 'axios';
 import Log from './log';
 import { Notice } from 'iview';
-import store from '../store'
+import store from '../store';
 
 // 自定义日志工具
 const log = new Log('src/utils/axios.js');
 
 class HttpRequest {
-  interceptors(instance, url) {
+  interceptors (instance, url) {
     // 请求拦截
     instance.interceptors.request.use(config => {
       // 打印请求参数
@@ -32,7 +32,6 @@ class HttpRequest {
         log.info('Status', status);
         log.info('Data', data);
         return { status, data };
-
       }, error => {
         const { status, data } = error.response;
         log.info('Error Response <---');
@@ -63,33 +62,33 @@ class HttpRequest {
       });
   }
 
-  request(options) {
+  request (options) {
     const instance = axios.create();
     this.interceptors(instance, options.url);
     return instance(options);
   }
 
-  get(url, params) {
+  get (url, params) {
     return this.request({
       method: 'get',
       url,
-      params
+      params,
     });
   }
 
-  post(url, data) {
+  post (url, data) {
     return this.request({
       method: 'post',
       url,
-      data
+      data,
     });
   }
 
-  put(url, data) {
+  put (url, data) {
     return this.request({
       method: 'put',
       url,
-      data
+      data,
     });
   }
 }
