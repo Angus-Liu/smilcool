@@ -26,9 +26,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Shiro 配置。因代理方式冲突（JDK Dynamic / CGLib）问题，关掉 Shiro 的注解支持，参考：
- * <a href="https://juejin.cn/post/6844904127525306382">Spring Boot 加入Shiro导致AOP失效的坑</a>
- * <a href="https://zhuanlan.zhihu.com/p/143126919">Shiro权限注解与Aop冲突问题探究</a>
+ * Shiro 配置因 Service 层未使用接口，出现代理方式冲突（JDK Dynamic / CGLib）问题，关掉
+ * Shiro 的注解支持（本项目未用到），参考：
+ * <a href="https://juejin.cn/post/6844904127525306382">Spring Boot 加入 Shiro 导致 AOP 失效的坑</a>
+ * <a href="https://zhuanlan.zhihu.com/p/143126919">Shiro 权限注解与 AOP 冲突问题探究</a>
  */
 @Slf4j
 @AllArgsConstructor
@@ -85,6 +86,7 @@ public class ShiroConfig {
 
     /**
      * 开启缓存
+     * // TODO: angus on 2021/5/6 待处理用户角色和权限动态变化问题，设置缓存过期/刷新
      *
      * @return
      */
