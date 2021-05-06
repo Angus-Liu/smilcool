@@ -3,8 +3,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 // iView: https://iviewui.com/docs/guide/install
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
 import { directive as clickOutside } from 'v-click-outside-x';
 // Semantic UI Vue: https://semantic-ui-vue.github.io
 import SuiVue from 'semantic-ui-vue';
@@ -19,7 +19,7 @@ import * as qiniu from 'qiniu-js';
 
 Vue.config.productionTip = false;
 
-Vue.use(iView);
+Vue.use(ViewUI);
 Vue.use(SuiVue);
 Vue.use(mavonEditor);
 

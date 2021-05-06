@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Log from './log';
-import { Notice } from 'iview';
+import { Notice } from 'view-design';
 import store from '../store';
 
 // 自定义日志工具
