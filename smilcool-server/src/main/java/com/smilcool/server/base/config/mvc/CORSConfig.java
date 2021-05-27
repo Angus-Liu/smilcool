@@ -6,9 +6,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
- * 跨域访问配置
+ * 跨域访问配。smilcool-client/smilcool-admin 的 vue.config.js 已进行代理配置，这里不再需要配置
  */
-// smilcool-client/smilcool-admin 的 vue.config.js 已进行跨域配置，这里不再需要配置
 // @Configuration
 public class CORSConfig {
 

@@ -8,20 +8,19 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/smilcool?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: root
     password: root
-
   # 文件上传下载配置
   servlet:
     multipart:
       max-file-size: 500MB
       max-request-size: 500MB
+  # Cache 配置
+  cache:
+    type: redis
   # Redis 配置
   redis:
     host: 127.0.0.1
     port: 6379
     password: root
-  # Cache 配置
-  cache:
-    type: redis
   # Jackson 配置
   jackson:
     # null 值不进行序列化
@@ -55,5 +54,7 @@ logging:
 smilcool:
   # netty 监听端口
   netty-port: 8088
-  # 自定义本地存储位置，需根据系统修改，例如：Windows - D:/temp/、Mac/Linux - /Users/xxx/temp/
+  # 自定义本地存储位置，需根据系统修改，例如：
+  # Windows - D:/temp/
+  # Mac & Linux - /Users/xxx/temp/
   local-storage: /Users/angus/temp/
