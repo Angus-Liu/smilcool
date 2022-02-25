@@ -7,7 +7,7 @@
 [演示视频（点击播放）](./assets/演示视频.mp4)
 <center>
 <a href="./assets/演示视频.mp4">
-  <img src="./assets/演示视频.jpg" width="600"/>
+  <img src="./assets/demo.gif" width="600"/>
 </a>
 </center>
   
