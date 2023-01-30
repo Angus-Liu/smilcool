@@ -3,7 +3,6 @@ package com.smilcool.server.core.pojo.form;
 import com.smilcool.server.common.enums.PermissionType;
 import com.smilcool.server.common.util.validation.EnumValidation;
 import lombok.Data;
-import sun.jvm.hotspot.debugger.cdbg.EnumType;
 
 import javax.validation.constraints.NotBlank;
 
