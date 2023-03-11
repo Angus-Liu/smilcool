@@ -12,7 +12,7 @@
     "axios": "^0.21.1",
     "core-js": "^2.6.5",
     "iview": "^3.3.3",
-    "mavon-editor": "^2.7.3",
+    "mavon-editor": "^2.8.2",
     "qiniu-js": "^2.5.4",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.8.1",
